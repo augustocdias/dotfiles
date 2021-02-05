@@ -1,2 +1,3 @@
-# personal-nvim
-Just my NeoVim settings
+# Personal NeoVim
+
+Those are my opionated settings for using NeoVim.
