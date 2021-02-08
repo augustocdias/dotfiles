@@ -28,6 +28,7 @@ Plug 'airblade/vim-rooter' " Auto identify the root directory
 " VIM enhancements
 Plug 'scrooloose/nerdtree' " adds a file browser in the side
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'ryanoasis/vim-devicons' " Adds icons to nerdtree
 Plug 'vim-airline/vim-airline' " adds a status bar
 Plug 'vim-airline/vim-airline-themes'
 Plug 'dense-analysis/ale' " show linter indicators next to the line number
