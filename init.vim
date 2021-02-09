@@ -31,7 +31,6 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'ryanoasis/vim-devicons' " Adds icons to nerdtree
 Plug 'vim-airline/vim-airline' " adds a status bar
 Plug 'vim-airline/vim-airline-themes'
-Plug 'dense-analysis/ale' " show linter indicators next to the line number
 Plug 'airblade/vim-gitgutter' " show git indicators next to the line numbers (lines changed, added, etc.)
 Plug 'Yggdroot/indentLine' " Adds a | to show indentation levels
 Plug 'machakann/vim-highlightedyank' " Highlights what was yanked (copied)
@@ -124,24 +123,6 @@ let g:secure_modelines_allowed_items = [
                 \ "colorcolumn"
                 \ ]
 
-" Lightline
-let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \   'cocstatus': 'coc#status'
-      \ },
-      \ }
-function! LightlineFilename()
-  return expand('%:t') !=# '' ? @% : '[No Name]'
-endfunction
-
-" Use auocmd to force lightline update.
-autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
-
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
@@ -157,7 +138,6 @@ let g:localvimrc_ask = 0
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
-let g:rust_clip_command = 'xclip -selection clipboard'
 let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/library"
 
 " Completion
@@ -232,7 +212,7 @@ let g:session_command_aliases = 1
 let g:airline_theme = 'powerlineish'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#coc#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_skip_empty_sections = 1
