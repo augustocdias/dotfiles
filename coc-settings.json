@@ -1,5 +1,7 @@
 {
+  "diagnostic.warningSign": "",
+  "diagnostic.errorSign": "✗",
+  "diagnostic.hintSign": "ℹ",
   "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.diagnostics.disabled": ["unresolved-proc-macro"],
-  "rust-analyzer.cargo.loadOutDirsFromCheck": true
+  "rust-analyzer.diagnostics.disabled": ["unresolved-proc-macro"]
 }

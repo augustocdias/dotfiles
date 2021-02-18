@@ -24,6 +24,7 @@ Plug 'editorconfig/editorconfig-vim' " Adds editor config support to vim
 Plug 'justinmk/vim-sneak' " Type s{char}{char} to jump into the next 2 typed chars in text
 Plug 'andymass/vim-matchup' " Enhances the %
 Plug 'airblade/vim-rooter' " Auto identify the root directory
+Plug 'mg979/vim-visual-multi', {'branch': 'master'} " multi cursor :help visual-multi
 
 " VIM enhancements
 Plug 'scrooloose/nerdtree' " adds a file browser in the side
@@ -207,6 +208,7 @@ let g:session_directory = "~/.config/nvim/session"
 let g:session_autoload = "no"
 let g:session_autosave = "yes"
 let g:session_command_aliases = 1
+let g:session_autosave_periodic = 10
 
 " vim-airline
 let g:airline_theme = 'powerlineish'
@@ -377,10 +379,10 @@ noremap <C-s> :wa<CR>
 inoremap <C-e> <C-o>$
 
 " Go to beggining of line on insert mode
-inoremap <C-0> <C-o>0
+" inoremap <C-0> <C-o>0
 
 " Go to beggining of expression in insert mode
-inoremap <C-b> <C-o>^
+inoremap <C-z> <C-o>^
 
 " Leave insert mode on terminal with esc
 tnoremap <Esc> <C-\><C-n>
@@ -460,11 +462,13 @@ nnoremap <silent> <space>i  :call CocActionAsync('codeAction', '', 'Implement mi
 " Show actions available at this location
 nnoremap <silent> <space>a  :CocAction<cr>
 
-" On doc popups C-z goes down and C-a goes up
-nnoremap <nowait><expr> <C-z> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-z>"
-nnoremap <nowait><expr> <C-a> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-a>"
-inoremap <nowait><expr> <C-z> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <nowait><expr> <C-a> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+" On popups C-b goes down and C-f goes up
+nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
 " =============================================================================
 " # AUTO COMMAND
