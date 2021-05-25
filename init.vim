@@ -25,6 +25,7 @@ Plug 'justinmk/vim-sneak' " Type s{char}{char} to jump into the next 2 typed cha
 Plug 'andymass/vim-matchup' " Enhances the %
 Plug 'airblade/vim-rooter' " Auto identify the root directory
 Plug 'mg979/vim-visual-multi', {'branch': 'master'} " multi cursor :help visual-multi
+Plug 'segeljakt/vim-silicon' " Generates an image from selected text. Needs silicon installed (cargo install silicon)
 
 " VIM enhancements
 Plug 'scrooloose/nerdtree' " adds a file browser in the side
@@ -35,6 +36,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter' " show git indicators next to the line numbers (lines changed, added, etc.)
 Plug 'Yggdroot/indentLine' " Adds a | to show indentation levels
 Plug 'machakann/vim-highlightedyank' " Highlights what was yanked (copied)
+Plug 'skanehira/preview-markdown.vim' " Preview markdown in terminal
 
 " Themes
 Plug 'chriskempson/base16-vim'
@@ -123,6 +125,10 @@ let g:secure_modelines_allowed_items = [
                 \ "rightleft",   "rl",   "norightleft", "norl",
                 \ "colorcolumn"
                 \ ]
+
+let g:preview_markdown_vertical = 1 " open markdown preview in vertical
+let g:preview_markdown_auto_update = 1 " auto update preview markdown
+let g:preview_markdown_parser = 'mdcat' " markdown renderer
 
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 if executable('ag')
@@ -267,6 +273,10 @@ let g:coc_sources_disable_map={
 " =============================================================================
 " # KEYMAPS
 " =============================================================================
+
+" Visual Multi Cursors
+" nnoremap <M-Down> <Plug>(VM-Add-Cursor-Down)
+" nnoremap <M-Up> <Plug>(VM-Add-Cursor-Up)
 
 " Open hotkeys
 nmap <leader>; :Buffers<CR>
@@ -451,16 +461,18 @@ omap af <Plug>(coc-funcobj-a)
 "xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Find symbol of current document.
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
 
 " Search workspace symbols.
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
 
 " Implement methods for trait
-nnoremap <silent> <space>i  :call CocActionAsync('codeAction', '', 'Implement missing members')<cr>
+nnoremap <silent> <leader>i  :call CocActionAsync('codeAction', '', 'Implement missing members')
 
 " Show actions available at this location
-nnoremap <silent> <space>a  :CocAction<cr>
+" nnoremap <silent> <space>a  :CocAction<cr>
+nmap <leader>a  <Plug>(coc-codeaction-cursor)
+xmap <leader>a  <Plug>(coc-codeaction-cursor)
 
 " On popups C-b goes down and C-f goes up
 nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
