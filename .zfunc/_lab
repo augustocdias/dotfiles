@@ -1,0 +1,657 @@
+#compdef _lab lab
+
+
+function __lab_completion_remote {
+  _values 'remote' $(git remote)
+}
+
+function __lab_completion_project {
+  searchterm=$(echo $words[2] | sed -r 's_^-*|/$__g')
+  projects=($(lab project list $searchterm))
+  [ -z "$projects" ] || _values 'project' $projects
+}
+
+function __lab_completion_remote_branches {
+  local remote=$@[-1]
+  local IFS=$'\n'
+  branches=($(git branch -r -v | grep "^ *$remote" | grep -v 'HEAD' | sed -r -e 's/:/\\:/g' -e "s/'//g" -e "s/  $remote\/([^ ]*)[ ]*(.*)/\1:\2/"))
+  [ -z "$branches" ] || _describe 'branch' branches
+}
+
+function __lab_completion_issue {
+  local remote=$@[-1]
+  local IFS=$'\n'
+  issues=($(lab issue list $remote | sed -r -e 's/:/\\:/g' -e "s/'//g" -e 's/#([0-9]*) (.*)/\1:\2/'))
+  [ -z "$issues" ] || _describe 'issue' issues
+}
+
+function __lab_completion_merge_request {
+  local remote=$@[-1]
+  local IFS=$'\n'
+  merge_requests=($(lab mr list $remote | sed -r -e 's/:/\\:/g' -e "s/'//g" -e 's/#([0-9]*) (.*)/\1:\2/'))
+  [ -z "$merge_requests" ] || _describe 'merge request' merge_requests
+}
+
+function __lab_completion_snippet {
+  local remote=$@[-1]
+  local IFS=$'\n'
+  snippets=($(lab snippet list $remote | sed -r -e 's/:/\\:/g' -e "s/'//g" -e 's/#([0-9]*) (.*)/\1:\2/'))
+  [ -z "$snippets" ] || _describe 'snippet' snippets
+}
+
+
+
+function _lab {
+  local -a commands
+
+  _arguments -C \
+    '--version[Show the lab version]' \
+    "1: :->cmnds" \
+    "*::arg:->args"
+
+  case $state in
+  cmnds)
+    commands=(
+      "ci:Work with GitLab CI pipelines and jobs"
+      "clone:GitLab repo aware clone command"
+      "completion:Generates the shell autocompletion"
+      "fork:Fork a remote repository on GitLab and add as remote"
+      "help:Show the help for lab"
+      "issue:Describe, list, and create issues"
+      "label:List and search labels"
+      "merge-request:Open a merge request on GitLab"
+      "mr:Describe, list, and create merge requests"
+      "project:Perform project level operations on GitLab"
+      "snippet:Create a personal or project snippet"
+      "version:"
+    )
+    _describe "command" commands
+    ;;
+  esac
+
+  case "$words[1]" in
+  ci)
+    _lab_ci
+    ;;
+  clone)
+    _lab_clone
+    ;;
+  completion)
+    _lab_completion
+    ;;
+  fork)
+    _lab_fork
+    ;;
+  help)
+    _lab_help
+    ;;
+  issue)
+    _lab_issue
+    ;;
+  label)
+    _lab_label
+    ;;
+  merge-request)
+    _lab_merge-request
+    ;;
+  mr)
+    _lab_mr
+    ;;
+  project)
+    _lab_project
+    ;;
+  snippet)
+    _lab_snippet
+    ;;
+  version)
+    _lab_version
+    ;;
+  esac
+}
+
+
+function _lab_ci {
+  local -a commands
+
+  _arguments -C \
+    "1: :->cmnds" \
+    "*::arg:->args"
+
+  case $state in
+  cmnds)
+    commands=(
+      "create:Create a CI pipeline"
+      "lint:Validate .gitlab-ci.yml against GitLab"
+      "status:Textual representation of a CI pipeline"
+      "trace:Trace the output of a ci job"
+      "trigger:Trigger a CI pipeline"
+      "view:View, run, trace, and/or cancel CI jobs current pipeline"
+    )
+    _describe "command" commands
+    ;;
+  esac
+
+  case "$words[1]" in
+  create)
+    _lab_ci_create
+    ;;
+  lint)
+    _lab_ci_lint
+    ;;
+  status)
+    _lab_ci_status
+    ;;
+  trace)
+    _lab_ci_trace
+    ;;
+  trigger)
+    _lab_ci_trigger
+    ;;
+  view)
+    _lab_ci_view
+    ;;
+  esac
+}
+
+function _lab_ci_create {
+  _arguments \
+    '(-p --project)'{-p,--project}'[Project to create pipeline on]:()' \
+    '1: :__lab_completion_remote_branches origin'
+}
+
+function _lab_ci_lint {
+  _arguments
+}
+
+function _lab_ci_status {
+  _arguments \
+    '--wait[Continuously print the status and wait to exit until the pipeline finishes. Exit code indicates pipeline status]' \
+    '1: :__lab_completion_remote_branches'
+}
+
+function _lab_ci_trace {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_remote_branches $words[2]'
+}
+
+function _lab_ci_trigger {
+  _arguments \
+    '(-p --project)'{-p,--project}'[Project to run pipeline trigger on]:()' \
+    '(-t --token)'{-t,--token}'[Pipeline trigger token, optional if run within GitLabCI]:()' \
+    '(*-v *--variable)'{\*-v,\*--variable}'[Variables to pass to pipeline]:()' \
+    '1: :__lab_completion_remote_branches'
+}
+
+function _lab_ci_view {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_remote_branches $words[2]'
+}
+
+function _lab_clone {
+  _arguments
+}
+
+function _lab_completion {
+  _arguments \
+    '(-h --help)'{-h,--help}'[help for completion]' \
+    '1: :("bash" "zsh")'
+}
+
+function _lab_fork {
+  _arguments
+}
+
+function _lab_help {
+  _arguments
+}
+
+
+function _lab_issue {
+  local -a commands
+
+  _arguments -C \
+    '(-b --browse)'{-b,--browse}'[View issue <id> in a browser]' \
+    '(-d --close)'{-d,--close}'[Close issue <id> on remote]:()' \
+    '(-l --list)'{-l,--list}'[List issues on a remote]' \
+    "1: :->cmnds" \
+    "*::arg:->args"
+
+  case $state in
+  cmnds)
+    commands=(
+      "browse:View issue in a browser"
+      "close:Close issue by id"
+      "create:Open an issue on GitLab"
+      "edit:Edit or update an issue"
+      "list:List issues"
+      "note:Add a note or comment to an issue on GitLab"
+      "show:Describe an issue"
+    )
+    _describe "command" commands
+    ;;
+  esac
+
+  case "$words[1]" in
+  browse)
+    _lab_issue_browse
+    ;;
+  close)
+    _lab_issue_close
+    ;;
+  create)
+    _lab_issue_create
+    ;;
+  edit)
+    _lab_issue_edit
+    ;;
+  list)
+    _lab_issue_list
+    ;;
+  note)
+    _lab_issue_note
+    ;;
+  show)
+    _lab_issue_show
+    ;;
+  esac
+}
+
+function _lab_issue_browse {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_issue $words[2]'
+}
+
+function _lab_issue_close {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_issue $words[2]'
+}
+
+function _lab_issue_create {
+  _arguments \
+    '(*-a *--assignees)'{\*-a,\*--assignees}'[Set assignees by username]:()' \
+    '(*-l *--label)'{\*-l,\*--label}'[Set the given label(s) on the created issue]:()' \
+    '(*-m *--message)'{\*-m,\*--message}'[Use the given <msg>; multiple -m are concatenated as separate paragraphs]:()' \
+    '1: :__lab_completion_remote'
+}
+
+function _lab_issue_edit {
+  _arguments \
+    '(*-a *--assign)'{\*-a,\*--assign}'[Add an assignee by username]:()' \
+    '(*-l *--label)'{\*-l,\*--label}'[Add the given label(s) to the issue]:()' \
+    '(*-m *--message)'{\*-m,\*--message}'[Use the given <msg>; multiple -m are concatenated as separate paragraphs]:()' \
+    '*--unassign[Remove an assigne by username]:()' \
+    '*--unlabel[Remove the given label(s) from the issue]:()' \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_issue $words[2]'
+}
+
+function _lab_issue_list {
+  _arguments \
+    '(-a --all)'{-a,--all}'[List all issues on the project]' \
+    '(*-l *--label)'{\*-l,\*--label}'[Filter issues by label]:()' \
+    '(-n --number)'{-n,--number}'[Number of issues to return]:()' \
+    '(-s --state)'{-s,--state}'[Filter issues by state (opened/closed)]: :(opened closed)' \
+    '1: :__lab_completion_remote'
+}
+
+function _lab_issue_note {
+  _arguments \
+    '(*-m *--message)'{\*-m,\*--message}'[Use the given <msg>; multiple -m are concatenated as separate paragraphs]:()' \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_issue $words[2]'
+}
+
+function _lab_issue_show {
+  _arguments \
+    '(-c --comments)'{-c,--comments}'[Show comments for the issue]' \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_issue $words[2]'
+}
+
+
+function _lab_label {
+  local -a commands
+
+  _arguments -C \
+    "1: :->cmnds" \
+    "*::arg:->args"
+
+  case $state in
+  cmnds)
+    commands=(
+      "list:List labels"
+    )
+    _describe "command" commands
+    ;;
+  esac
+
+  case "$words[1]" in
+  list)
+    _lab_label_list
+    ;;
+  esac
+}
+
+function _lab_label_list {
+  _arguments
+}
+
+function _lab_merge-request {
+  _arguments \
+    '--allow-collaboration[Allow commits from other members]' \
+    '(-a --assignee)'{-a,--assignee}'[Set assignee by username]:()' \
+    '(*-l *--label)'{\*-l,\*--label}'[Add label <label>; can be specified multiple times for multiple labels]:()' \
+    '(*-m *--message)'{\*-m,\*--message}'[Use the given <msg>; multiple -m are concatenated as separate paragraphs]:()' \
+    '--milestone[Set milestone by milestone ID]:()' \
+    '(-d --remove-source-branch)'{-d,--remove-source-branch}'[Remove source branch from remote after merge]' \
+    '(-s --squash)'{-s,--squash}'[Squash commits when merging]'
+}
+
+
+function _lab_mr {
+  local -a commands
+
+  _arguments -C \
+    '(-b --browse)'{-b,--browse}'[View merge request <id> in a browser]' \
+    '(-d --close)'{-d,--close}'[Close merge request <id> on remote]:()' \
+    '(-l --list)'{-l,--list}'[List merge requests on a remote]' \
+    "1: :->cmnds" \
+    "*::arg:->args"
+
+  case $state in
+  cmnds)
+    commands=(
+      "approve:Approve merge request"
+      "browse:View merge request in a browser"
+      "checkout:Checkout an open merge request"
+      "close:Close merge request"
+      "create:Open a merge request on GitLab"
+      "list:List merge requests"
+      "merge:Merge an open merge request"
+      "rebase:Rebase an open merge request"
+      "show:Describe a merge request"
+      "thumb:Thumb operations on merge requests"
+    )
+    _describe "command" commands
+    ;;
+  esac
+
+  case "$words[1]" in
+  approve)
+    _lab_mr_approve
+    ;;
+  browse)
+    _lab_mr_browse
+    ;;
+  checkout)
+    _lab_mr_checkout
+    ;;
+  close)
+    _lab_mr_close
+    ;;
+  create)
+    _lab_mr_create
+    ;;
+  list)
+    _lab_mr_list
+    ;;
+  merge)
+    _lab_mr_merge
+    ;;
+  rebase)
+    _lab_mr_rebase
+    ;;
+  show)
+    _lab_mr_show
+    ;;
+  thumb)
+    _lab_mr_thumb
+    ;;
+  esac
+}
+
+function _lab_mr_approve {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_merge_request $words[2]'
+}
+
+function _lab_mr_browse {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_merge_request $words[2]'
+}
+
+function _lab_mr_checkout {
+  _arguments \
+    '(-b --branch)'{-b,--branch}'[checkout merge request with <branch> name]:()' \
+    '(-t --track)'{-t,--track}'[set checked out branch to track mr author remote branch, adds remote if needed]' \
+    '1: :__lab_completion_merge_request origin'
+}
+
+function _lab_mr_close {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_merge_request $words[2]'
+}
+
+function _lab_mr_create {
+  _arguments \
+    '--allow-collaboration[Allow commits from other members]' \
+    '(-a --assignee)'{-a,--assignee}'[Set assignee by username]:()' \
+    '(*-l *--label)'{\*-l,\*--label}'[Add label <label>; can be specified multiple times for multiple labels]:()' \
+    '(*-m *--message)'{\*-m,\*--message}'[Use the given <msg>; multiple -m are concatenated as separate paragraphs]:()' \
+    '--milestone[Set milestone by milestone ID]:()' \
+    '(-d --remove-source-branch)'{-d,--remove-source-branch}'[Remove source branch from remote after merge]' \
+    '(-s --squash)'{-s,--squash}'[Squash commits when merging]' \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_remote_branches $words[2]'
+}
+
+function _lab_mr_list {
+  _arguments \
+    '(-a --all)'{-a,--all}'[List all MRs on the project]' \
+    '(*-l *--label)'{\*-l,\*--label}'[filter merge requests by label]:()' \
+    '(-n --number)'{-n,--number}'[number of merge requests to return]:()' \
+    '(-s --state)'{-s,--state}'[filter merge requests by state (opened/closed/merged)]: :(opened closed merged)' \
+    '(-t --target-branch)'{-t,--target-branch}'[filter merge requests by target branch]:()' \
+    '1: :__lab_completion_remote'
+}
+
+function _lab_mr_merge {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_merge_request $words[2]'
+}
+
+function _lab_mr_rebase {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_merge_request $words[2]'
+}
+
+function _lab_mr_show {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_merge_request $words[2]'
+}
+
+
+function _lab_mr_thumb {
+  local -a commands
+
+  _arguments -C \
+    "1: :->cmnds" \
+    "*::arg:->args"
+
+  case $state in
+  cmnds)
+    commands=(
+      "down:Thumbs down merge request"
+      "up:Thumb up merge request"
+    )
+    _describe "command" commands
+    ;;
+  esac
+
+  case "$words[1]" in
+  down)
+    _lab_mr_thumb_down
+    ;;
+  up)
+    _lab_mr_thumb_up
+    ;;
+  esac
+}
+
+function _lab_mr_thumb_down {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_merge_request $words[2]'
+}
+
+function _lab_mr_thumb_up {
+  _arguments \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_merge_request $words[2]'
+}
+
+
+function _lab_project {
+  local -a commands
+
+  _arguments -C \
+    "1: :->cmnds" \
+    "*::arg:->args"
+
+  case $state in
+  cmnds)
+    commands=(
+      "browse:View project in a browser"
+      "create:Create a new project on GitLab"
+      "list:List your projects"
+    )
+    _describe "command" commands
+    ;;
+  esac
+
+  case "$words[1]" in
+  browse)
+    _lab_project_browse
+    ;;
+  create)
+    _lab_project_create
+    ;;
+  list)
+    _lab_project_list
+    ;;
+  esac
+}
+
+function _lab_project_browse {
+  _arguments
+}
+
+function _lab_project_create {
+  _arguments \
+    '(-d --description)'{-d,--description}'[description of the new project]:()' \
+    '--internal[Make project internal: visible to any authenticated user (default)]' \
+    '(-n --name)'{-n,--name}'[name of the new project]:()' \
+    '(-p --private)'{-p,--private}'[Make project private: visible only to project members]' \
+    '--public[Make project public: visible without any authentication]'
+}
+
+function _lab_project_list {
+  _arguments \
+    '(-a --all)'{-a,--all}'[List all projects on the instance]' \
+    '--member[limit by projects which you are a member]' \
+    '(-m --mine)'{-m,--mine}'[limit by your projects]' \
+    '(-n --number)'{-n,--number}'[Number of projects to return]:()' \
+    '--starred[limit by your starred projects]' \
+    '1: :()'
+}
+
+
+function _lab_snippet {
+  local -a commands
+
+  _arguments -C \
+    '(-b --browse)'{-b,--browse}'[browse snippets]' \
+    '(-d --delete)'{-d,--delete}'[delete snippet with id]:()' \
+    '(-g --global)'{-g,--global}'[create as a personal snippet]' \
+    '(-l --list)'{-l,--list}'[list snippets]' \
+    '(*-m *--message)'{\*-m,\*--message}'[Use the given <msg>; multiple -m are concatenated as separate paragraphs]:()' \
+    '(-n --name)'{-n,--name}'[(optional) Name snippet to add code highlighting, e.g. potato.go for GoLang]:()' \
+    '(-p --private)'{-p,--private}'[Make snippet private; visible only to project members (default: internal)]' \
+    '--public[Make snippet public; can be accessed without any authentication (default: internal)]' \
+    "1: :->cmnds" \
+    "*::arg:->args"
+
+  case $state in
+  cmnds)
+    commands=(
+      "browse:View personal or project snippet in a browser"
+      "create:Create a personal or project snippet"
+      "delete:Delete a project or personal snippet"
+      "list:List personal or project snippets"
+    )
+    _describe "command" commands
+    ;;
+  esac
+
+  case "$words[1]" in
+  browse)
+    _lab_snippet_browse
+    ;;
+  create)
+    _lab_snippet_create
+    ;;
+  delete)
+    _lab_snippet_delete
+    ;;
+  list)
+    _lab_snippet_list
+    ;;
+  esac
+}
+
+function _lab_snippet_browse {
+  _arguments \
+    '(-g --global)'{-g,--global}'[create as a personal snippet]' \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_snippet $words[2]'
+}
+
+function _lab_snippet_create {
+  _arguments \
+    '(*-m *--message)'{\*-m,\*--message}'[Use the given <msg>; multiple -m are concatenated as separate paragraphs]:()' \
+    '(-n --name)'{-n,--name}'[(optional) Name snippet to add code highlighting, e.g. potato.go for GoLang]:()' \
+    '(-p --private)'{-p,--private}'[Make snippet private; visible only to project members (default: internal)]' \
+    '--public[Make snippet public; can be accessed without any authentication (default: internal)]' \
+    '(-g --global)'{-g,--global}'[create as a personal snippet]' \
+    '1: :__lab_completion_remote'
+}
+
+function _lab_snippet_delete {
+  _arguments \
+    '(-g --global)'{-g,--global}'[create as a personal snippet]' \
+    '1: :__lab_completion_remote' \
+    '2: :__lab_completion_snippet $words[2]'
+}
+
+function _lab_snippet_list {
+  _arguments \
+    '(-a --all)'{-a,--all}'[List all snippets]' \
+    '(-n --number)'{-n,--number}'[Number of snippets to return]:()' \
+    '(-g --global)'{-g,--global}'[create as a personal snippet]' \
+    '1: :__lab_completion_remote'
+}
+
+function _lab_version {
+  _arguments
+}
+
