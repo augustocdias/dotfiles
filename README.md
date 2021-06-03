@@ -6,7 +6,8 @@ My personal mac os settings and tools
 
 Install [brew](https://brew.sh)
 
-To generate the dumb: `brew bundle dump`
+To generate the dump: `brew bundle dump`
+
 To install from the bundle: `brew bundle install`
 
 ## iTerm2
