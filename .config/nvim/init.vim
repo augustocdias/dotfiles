@@ -24,7 +24,7 @@ Plug 'editorconfig/editorconfig-vim' " Adds editor config support to vim
 Plug 'justinmk/vim-sneak' " Type s{char}{char} to jump into the next 2 typed chars in text
 Plug 'andymass/vim-matchup' " Enhances the %
 Plug 'airblade/vim-rooter' " Auto identify the root directory
-Plug 'mg979/vim-visual-multi', {'branch': 'master'} " multi cursor :help visual-multi
+" Plug 'mg979/vim-visual-multi', {'branch': 'master'} " multi cursor :help visual-multi
 Plug 'segeljakt/vim-silicon' " Generates an image from selected text. Needs silicon installed (cargo install silicon)
 
 " VIM enhancements
@@ -47,8 +47,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Semantic language support/ IDE things
-" Plug 'neoclide/coc.nvim', {'branch': 'release'} " LSP implementation
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'} " LSP implementation dev branch
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " LSP implementation
+" Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'} " LSP implementation dev branch
 Plug 'puremourning/vimspector' " Debugger
 
 " Syntactic language support
@@ -300,7 +300,7 @@ let g:coc_sources_disable_map={
 " nnoremap <M-Up> <Plug>(VM-Add-Cursor-Up)
 
 " Open hotkeys
-nmap <leader>; :Buffers<CR>
+nmap <M-p> :Buffers<CR>
 
 " Search results centered please
 nnoremap <silent> n nzz
@@ -443,6 +443,13 @@ endfunction
 
 " Call prettier to format file
 nnoremap <leader>f :CocCommand prettier.formatFile<CR>
+
+" C-c adds a cursor at position. C-d adds cursor at word (in visual at
+" selection). Normal commands can be applied but cursor must be on one of the
+" selected cursors
+nmap <silent> <C-c> <Plug>(coc-cursors-position)
+nmap <silent> <C-d> <Plug>(coc-cursors-word)
+xmap <silent> <C-d> <Plug>(coc-cursors-range)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 'Smart' nevigation
