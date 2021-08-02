@@ -302,6 +302,9 @@ let g:coc_sources_disable_map={
 " Open hotkeys
 nmap <M-p> :Buffers<CR>
 
+" Copy visually selected text to system clipboard
+xmap <leader>c "*y
+
 " Search results centered please
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
@@ -426,7 +429,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 

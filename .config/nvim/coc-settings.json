@@ -1,5 +1,6 @@
 {
   "coc.preferences.enableMarkdown": true,
+  "coc.preferences.semanticTokensHighlights": false,
   "diagnostic.warningSign": "❢",
   "diagnostic.errorSign": "✗",
   "diagnostic.hintSign": "*",

@@ -6,18 +6,8 @@
 	<true/>
 	<key>AlternateMouseScroll</key>
 	<true/>
-	<key>AppleAntiAliasingThreshold</key>
-	<integer>1</integer>
-	<key>ApplePressAndHoldEnabled</key>
-	<false/>
-	<key>AppleScrollAnimationEnabled</key>
-	<integer>0</integer>
-	<key>AppleSmoothFixedFontsSizeThreshold</key>
-	<integer>1</integer>
-	<key>AppleWindowTabbingMode</key>
-	<string>manual</string>
 	<key>Default Bookmark Guid</key>
-	<string>55B18F9A-CE4E-44A3-A4B1-8F9B860C627B</string>
+	<string>6F3A31E1-306A-41B3-9CE3-AF213AED07C2</string>
 	<key>DoubleClickPerformsSmartSelection</key>
 	<true/>
 	<key>GlobalKeyMap</key>
@@ -123,6 +113,8 @@
 	</dict>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
+	<key>HideActivityIndicator</key>
+	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -143,7 +135,7 @@
 				<key>Green Component</key>
 				<real>0.21176470588235294</real>
 				<key>Red Component</key>
-				<real>0.027450980392156862</real>
+				<real>0.027450980392156866</real>
 			</dict>
 			<key>Ansi 1 Color</key>
 			<dict>
@@ -225,7 +217,7 @@
 			<key>Ansi 2 Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.0</real>
+				<integer>0</integer>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
@@ -236,7 +228,7 @@
 			<key>Ansi 3 Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.0</real>
+				<integer>0</integer>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
@@ -297,12 +289,12 @@
 				<key>Green Component</key>
 				<real>0.16862745098039217</real>
 				<key>Red Component</key>
-				<real>0.0</real>
+				<integer>0</integer>
 			</dict>
 			<key>Ansi 9 Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.086274509803921567</real>
+				<real>0.086274509803921581</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
@@ -321,7 +313,7 @@
 				<key>Green Component</key>
 				<real>0.16862745098039217</real>
 				<key>Red Component</key>
-				<real>0.0</real>
+				<integer>0</integer>
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
@@ -330,13 +322,13 @@
 				<key>Alpha Component</key>
 				<real>0.5</real>
 				<key>Blue Component</key>
-				<real>0.0</real>
+				<integer>0</integer>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.1491314172744751</real>
 				<key>Red Component</key>
-				<real>1</real>
+				<integer>1</integer>
 			</dict>
 			<key>Blinking Cursor</key>
 			<false/>
@@ -377,7 +369,7 @@
 				<key>Alpha Component</key>
 				<real>0.25</real>
 				<key>Blue Component</key>
-				<real>1</real>
+				<integer>1</integer>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
@@ -394,7 +386,7 @@
 				<key>Green Component</key>
 				<real>0.21176470588235294</real>
 				<key>Red Component</key>
-				<real>0.027450980392156862</real>
+				<real>0.027450980392156866</real>
 			</dict>
 			<key>Custom Command</key>
 			<string>No</string>
@@ -422,7 +414,7 @@
 				<real>0.51372549019607838</real>
 			</dict>
 			<key>Guid</key>
-			<string>55B18F9A-CE4E-44A3-A4B1-8F9B860C627B</string>
+			<string>6F3A31E1-306A-41B3-9CE3-AF213AED07C2</string>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
 			<key>Icon</key>
@@ -869,7 +861,7 @@
 			<key>Link Color</key>
 			<dict>
 				<key>Alpha Component</key>
-				<real>1</real>
+				<integer>1</integer>
 				<key>Blue Component</key>
 				<real>0.73423302173614502</real>
 				<key>Color Space</key>
@@ -877,7 +869,7 @@
 				<key>Green Component</key>
 				<real>0.35916060209274292</real>
 				<key>Red Component</key>
-				<real>0.0</real>
+				<integer>0</integer>
 			</dict>
 			<key>Mouse Reporting</key>
 			<true/>
@@ -891,6 +883,8 @@
 			<true/>
 			<key>Normal Font</key>
 			<string>FiraCodeNerdFontCompleteM-Retina 12</string>
+			<key>Open Toolbelt</key>
+			<false/>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -923,12 +917,14 @@
 				<key>Green Component</key>
 				<real>0.21176470588235294</real>
 				<key>Red Component</key>
-				<real>0.027450980392156862</real>
+				<real>0.027450980392156866</real>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
 			<key>Shortcut</key>
 			<string></string>
+			<key>Show Mark Indicators</key>
+			<false/>
 			<key>Show Status Bar</key>
 			<true/>
 			<key>Silence Bell</key>
@@ -956,9 +952,9 @@
 								<key>base: compression resistance</key>
 								<integer>1</integer>
 								<key>base: priority</key>
-								<real>5</real>
+								<integer>5</integer>
 								<key>maxwidth</key>
-								<real>+infinity</real>
+								<real>1.7976931348623157e+308</real>
 								<key>minwidth</key>
 								<integer>0</integer>
 							</dict>
@@ -981,7 +977,7 @@
 								<key>base: compression resistance</key>
 								<integer>1</integer>
 								<key>base: priority</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 							<key>layout advanced configuration dictionary value</key>
 							<dict>
@@ -1002,7 +998,7 @@
 								<key>base: compression resistance</key>
 								<integer>1</integer>
 								<key>base: priority</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 							<key>layout advanced configuration dictionary value</key>
 							<dict>
@@ -1023,7 +1019,7 @@
 								<key>base: compression resistance</key>
 								<integer>1</integer>
 								<key>base: priority</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 							<key>layout advanced configuration dictionary value</key>
 							<dict>
@@ -1044,7 +1040,7 @@
 								<key>base: compression resistance</key>
 								<integer>1</integer>
 								<key>base: priority</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 							<key>layout advanced configuration dictionary value</key>
 							<dict>
@@ -1064,7 +1060,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.0</real>
+			<integer>0</integer>
 			<key>Unlimited Scrollback</key>
 			<true/>
 			<key>Use Bold Font</key>
@@ -1128,6 +1124,8 @@
 	<false/>
 	<key>ShowFullScreenTabBar</key>
 	<false/>
+	<key>ShowNewOutputIndicator</key>
+	<true/>
 	<key>ShowPaneTitles</key>
 	<false/>
 	<key>SoundForEsc</key>
