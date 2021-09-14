@@ -40,7 +40,7 @@ vim.o.splitright = true
 vim.o.splitbelow = true
 
 -- Permanent undo
--- vim.o.undodir = getenv('HOME') .. '/.vimdid'
+vim.o.undodir = os.getenv('HOME') .. '/.vimdid'
 vim.o.undofile = true
 
 -- Decent wildmenu
@@ -71,7 +71,7 @@ vim.o.smartcase = true
 vim.o.gdefault = true
 
 -- session management
---vim.g.session_directory = getenv('HOME') .. '/.config/nvim/session'
+vim.g.session_directory = os.getenv('HOME') .. '/.config/nvim/session'
 vim.g.session_autoload = 'no'
 vim.g.session_autosave = 'yes'
 vim.g.session_command_aliases = 1
