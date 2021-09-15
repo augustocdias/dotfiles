@@ -131,6 +131,11 @@ vim.g.nvim_tree_git_hl = 1
 vim.g.nvim_tree_highlight_opened_files = 1
 vim.g.nvim_tree_group_empty = 1
 vim.g.nvim_tree_lsp_diagnostics = 1
+vim.g.nvim_tree_window_picker_exclude = {
+    filetype = {'notify', 'packer', 'qf'},
+    buftype = { 'terminal' }
+}
+vim.cmd('highlight NvimTreeFolderIcon guibg=blue')
 
 -- Tabline
 -- Set barbar's options
@@ -168,5 +173,5 @@ vim.g.bufferline = {
 vim.g.dap_virtual_text = 'all frames'
 
 -- Use OSX clipboard to copy and to paste
-vim.o.clipboard = 'unnamedplus'
+-- vim.o.clipboard = 'unnamedplus'
 

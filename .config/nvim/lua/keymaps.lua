@@ -135,6 +135,8 @@ end
 wk.register({
     s = {
         name = 'Shell',
+        a = {':ToggleTermOpenAll<CR>', 'Open All' },
+        c = {':ToggleTermCloseAll<CR>', 'Open All' },
         h = {':ToggleTerm<CR>', 'Horizontal' },
         v = {':ToggleTerm direction=vertical<CR>', 'Vertical' },
         f = {':ToggleTerm direction=float<CR>', 'Float' },
@@ -192,9 +194,6 @@ keymap('t', '<F1>', '<Esc>', {})
 -- save
 keymap('n', '<C-s>', ':wa<CR>', no_remap_opt)
 keymap('i', '<C-s>', '<C-o>:wa<CR>', no_remap_opt)
-
--- leave insert mode in terminal with esc
-keymap('t', '<Esc>', '<C-\\><C-n>', silent_opt)
 
 -- Goto previous/next diagnostic warning/error
 -- Use `[g` and `]g` to navigate diagnostics

@@ -6,7 +6,7 @@ require("toggleterm").setup{
       return vim.o.columns * 0.4
     end
   end,
-  hide_numbers = true,
+  hide_numbers = false,
   shade_terminals = true,
   start_in_insert = true,
   insert_mappings = false, -- no default mapping
@@ -33,4 +33,4 @@ function _G.set_terminal_keymaps()
     vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
 end
 
-vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+vim.cmd('autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()')

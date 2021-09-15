@@ -114,23 +114,23 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
 end
 
-require'navigator'.setup({
-    code_action_icon = ' ',
-    default_mapping = false,
-    treesitter_analysis = true,
-    transparency = 30,
-    -- check if already has it
-    -- default_mapping = false,
-    treesitter_analysis = true,
-    code_action_prompt = { enable = true, sign = false, sign_priority = 40, virtual_text = true },
-    lsp = {
-        disable_lsp = {
-            "angularls", "gopls", "flow", "julials", "pylsp", "jedi_language_server", "html", "solargraph", "cssls",
-            "clangd", "ccls",   "graphql", "dartls", "dotls", "nimls", "intelephense", "vuels", "phpactor", "omnisharp",
-            "r_language_server", "terraformls"
-        },
-        format_on_save = true,
-        diagnostic_virtual_text = false,
-    }
-})
+-- require'navigator'.setup({
+--     code_action_icon = ' ',
+--     default_mapping = false,
+--     treesitter_analysis = true,
+--     transparency = 30,
+--     -- check if already has it
+--     -- default_mapping = false,
+--     treesitter_analysis = true,
+--     code_action_prompt = { enable = true, sign = false, sign_priority = 40, virtual_text = true },
+--     lsp = {
+--         disable_lsp = {
+--             "angularls", "gopls", "flow", "julials", "pylsp", "jedi_language_server", "html", "solargraph", "cssls",
+--             "clangd", "ccls",   "graphql", "dartls", "dotls", "nimls", "intelephense", "vuels", "phpactor", "omnisharp",
+--             "r_language_server", "terraformls"
+--         },
+--         format_on_save = true,
+--         diagnostic_virtual_text = false,
+--     }
+-- })
 

@@ -2,7 +2,7 @@
 vim.cmd([[
     augroup packer_user_config
         autocmd!
-        autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+        autocmd BufWritePost plugins.lua source <afile> | PackerSync
     augroup end
 ]])
 
@@ -19,8 +19,8 @@ vim.cmd([[
 -- auto format file on save
 vim.cmd([[
     augroup Format
-        autocmd! * <buffer>
-        autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
+        autocmd!
+        autocmd BufWritePre * undojoin | lua vim.lsp.buf.formatting_seq_sync()
     augroup END
 ]])
 

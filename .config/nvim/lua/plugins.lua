@@ -21,6 +21,7 @@ require('packer').startup(function()
     use 'nvim-lua/lsp-status.nvim'
     use 'rafamadriz/friendly-snippets' -- snippets for many languages
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' } -- enhancements in highlighting and virtual text
+    -- use 'jose-elias-alvarez/null-ls.nvim' -- can be useful to integrate with non LSP sources like eslint
 
     -- Helpers
     use {
@@ -64,10 +65,10 @@ require('packer').startup(function()
     use { 'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons' }
     use { 'xolox/vim-session', requires = 'xolox/vim-misc' } -- session management
     use { 'akinsho/toggleterm.nvim' } -- better terminal
-    use {
-        'ray-x/navigator.lua',
-        requires = { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' }
-    } -- code analysis.
+    -- use {
+    --     'ray-x/navigator.lua',
+    --     requires = { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' }
+    -- } -- code analysis.
     use {
         'ibhagwan/fzf-lua',
         requires = {
