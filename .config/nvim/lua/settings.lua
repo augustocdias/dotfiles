@@ -89,7 +89,6 @@ vim.cmd('cnoreabbrev W w')
 vim.cmd('cnoreabbrev Q q')
 vim.cmd('cnoreabbrev Qall qall')
 
-
 -- Set completeopt to have a better completion experience
 -- :help completeopt
 -- menuone: popup even when there's only one match
@@ -97,33 +96,14 @@ vim.cmd('cnoreabbrev Qall qall')
 -- noselect: Do not select, force user to select one from the menu
 vim.o.completeopt = 'menuone,noinsert,noselect'
 
--- Avoid showing extra messages when using completion
-vim.o.shortmess = vim.o.shortmess .. 'c'
--- gui settings
--- Remove toolbar
-vim.cmd('set guioptions-=T')
--- No more beeps
-vim.o.vb = true
-vim.go.t_vb= ''
-vim.o.foldenable = false
--- https://github.com/vim/vim/issues/1735#issuecomment-383353563
-vim.o.lazyredraw = true
-vim.o.synmaxcol = 500
-vim.o.laststatus = 2
--- Relative line numbers
-vim.o.relativenumber = true
--- Also show current absolute line
-vim.o.number = true
 -- No whitespace in vimdiff
 vim.o.diffopt = vim.o.diffopt .. ',iwhite'
 -- Make diffing better: https://vimways.org/2018/the-power-of-diff/
 vim.o.diffopt = vim.o.diffopt .. ',algorithm:patience'
 vim.o.diffopt = vim.o.diffopt .. ',indent-heuristic'
--- Show (partial) command in status line.
-vim.o.showcmd = true
--- Enable mouse usage (all modes) in terminals
-vim.o.mouse = 'a'
 
+-- Avoid showing extra messages when using completion
+vim.o.shortmess = vim.o.shortmess .. 'c'
 -- remove trailing whitespaces
 vim.cmd('command! FixWhitespace :%s/\\s\\+$//e')
 
