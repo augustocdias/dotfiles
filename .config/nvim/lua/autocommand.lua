@@ -16,11 +16,17 @@ vim.cmd([[
     autocmd FileType markdown lua require('cmp').setup.buffer { sources = { { name = 'buffer' } } }
 ]])
 
+-- show box with diagnostics
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]]
+
+-- auto show code lenses
+vim.cmd [[autocmd BufEnter,InsertLeave * silent! lua vim.lsp.codelens.refresh()]]
+
 -- auto format file on save
 vim.cmd([[
     augroup Format
         autocmd!
-        autocmd BufWritePre * undojoin | lua vim.lsp.buf.formatting_seq_sync()
+        autocmd BufWritePre * silent! undojoin | lua vim.lsp.buf.formatting_seq_sync()
     augroup END
 ]])
 
@@ -55,6 +61,6 @@ vim.cmd([[
 ]])
 
 -- Highlight text at cursor position
-vim.api.nvim_command [[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
-vim.api.nvim_command [[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]]
-vim.api.nvim_command [[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
+vim.api.nvim_command [[autocmd CursorHold  * lua vim.lsp.buf.document_highlight()]]
+vim.api.nvim_command [[autocmd CursorHoldI * lua vim.lsp.buf.document_highlight()]]
+vim.api.nvim_command [[autocmd CursorMoved * lua vim.lsp.buf.clear_references()]]

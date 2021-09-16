@@ -12,17 +12,22 @@ require('rust-tools').setup({
         autoSetHints = true,
         hover_with_actions = true,
         inlay_hints = {
-            show_parameter_hints = false,
+            show_parameter_hints = true,
             parameter_hints_prefix = '',
             other_hints_prefix = '',
         },
     },
     server = {
+        on_attach = lsp_status.on_attach,
+        capabilities = lsp_status.capabilities,
         settings = {
             ['rust-analyzer'] = {
                 assist = {
                     importGranularity = 'module',
                     importPrefix = 'by_self',
+                },
+                diagnostics = {
+                    disabled = { 'unresolved-proc-macro' }
                 },
                 completion = {
                     autoimport = {
@@ -63,10 +68,6 @@ require('rust-tools').setup({
         }
     }
 })
-nvim_lsp.rust_analyzer.setup({
-    on_attach = lsp_status.on_attach,
-    capabilities = lsp_status.capabilities
-})
 -- json
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -102,9 +103,6 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     -- }
   }
 )
-
--- show box with diagnostics
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]]
 
 -- show icons in the sidebar
 local signs = { Error = ' ', Warning = ' ', Hint = ' ', Information = ' ' }

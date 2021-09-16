@@ -39,7 +39,7 @@ wk.register({
         s = {'<cmd>lua require("fzf-lua").lines()<CR>', 'Open Buffers Lines' },
         b = {'<cmd>lua require("fzf-lua").blines()<CR>', 'Current Buffer Lines' },
     },
-    r = {
+    p = {
         name = 'Grep',
         g = {'<cmd>lua require("fzf-lua").grep()<CR>', 'Grep' },
         l = {'<cmd>lua require("fzf-lua").grep_last()<CR>', 'Grep Last Pattern' },
@@ -67,8 +67,9 @@ wk.register({
         i = {'<cmd>lua require("fzf-lua").lsp_implementations()<CR>', 'Implementations' },
         s = {'<cmd>lua require("fzf-lua").lsp_document_symbols()<CR>', 'Document Symbols' },
         w = {'<cmd>lua require("fzf-lua").lsp_workspace_symbols()<CR>', 'Workspace Symbols' },
-        l = {'<cmd>lua require("fzf-lua").lsp_live_workspace_symbols()<CR>', 'Live Workspace Symbols' },
+        v = {'<cmd>lua require("fzf-lua").lsp_live_workspace_symbols()<CR>', 'Live Workspace Symbols' },
         a = {'<cmd>lua require("fzf-lua").lsp_code_actions()<CR>', 'Code Actions' },
+        l = {'<cmd>FzfLua lua vim.lsp.codelens.display()<CR>', 'Code Lens' },
         g = {'<cmd>lua require("fzf-lua").lsp_document_diagnostics()<CR>', 'Document Diagnostics' },
         o = {'<cmd>lua require("fzf-lua").lsp_workspace_diagnostics()<CR>', 'Workspace Diagnostics' },
     },
@@ -81,6 +82,21 @@ wk.register({
         m = {'<cmd>lua require("fzf-lua").marks()<CR>', 'Marks' },
         r = {'<cmd>lua require("fzf-lua").registers()<CR>', 'Registers' },
         k = {'<cmd>lua require("fzf-lua").keymaps()<CR>', 'Keymaps' },
+    },
+    r = {
+        name = 'Rust',
+        r = {':RustRunnables<CR>', 'Runnables' },
+        d = {':RustDebuggables<CR>', 'Debuggables' },
+        e = {':RustExpandMacro<CR>', 'Expand Macro' },
+        c = {':RustOpenCargo<CR>', 'Open Cargo.toml' },
+        g = {':RustViewCrateGraph<CR>', 'View Crate Graph' },
+        m = {':RustParentModule<CR>', 'Parent Module' },
+        j = {':RustJoinLines<CR>', 'Join Lines' },
+        a = {':RustHoverActions<CR>', 'Hover Actions' },
+        h = {':RustHoverRange<CR>', 'Range Hover Actions' },
+        b = {':RustMoveItemDown<CR>', 'Move Item Down' },
+        u = {':RustMoveItemUp<CR>', 'Move Item Up' },
+        n = {':RustStartStandaloneServerForBuffer<CR>', 'New Server for Buffer' },
     }
 }, { prefix = '<leader>', noremap = true, silent = true })
 
@@ -147,6 +163,23 @@ wk.register({
 -- close current buffer without closing window
 keymap('n', '<C-x>', ':BufferClose<CR>', no_remap_opt)
 
+-- Left and right can switch buffers
+keymap('n', '<leader><left>', ':BufferPrevious<CR>', no_remap_opt)
+keymap('n', '<leader><right>', ':BufferNext<CR>', no_remap_opt)
+keymap('n', '<M><left>', ':BufferMovePrevious<CR>', no_remap_opt)
+keymap('n', '<M><right>', ':BufferMoveNext<CR>', no_remap_opt)
+keymap('n', '<M-1>', ':BufferGoto 1<CR>', no_remap_opt)
+keymap('n', '<M-2>', ':BufferGoto 2<CR>', no_remap_opt)
+keymap('n', '<M-3>', ':BufferGoto 3<CR>', no_remap_opt)
+keymap('n', '<M-4>', ':BufferGoto 4<CR>', no_remap_opt)
+keymap('n', '<M-5>', ':BufferGoto 5<CR>', no_remap_opt)
+keymap('n', '<M-6>', ':BufferGoto 6<CR>', no_remap_opt)
+keymap('n', '<M-7>', ':BufferGoto 7<CR>', no_remap_opt)
+keymap('n', '<M-8>', ':BufferGoto 8<CR>', no_remap_opt)
+keymap('n', '<M-9>', ':BufferGoto 9<CR>', no_remap_opt)
+keymap('n', '<M-0>', ':BufferLast<CR>', no_remap_opt)
+keymap('n', '<M-i>', ':BufferPick<CR>', no_remap_opt)
+
 -- Ctrl+h to stop searching
 keymap('v', '<C-h>', ':nohlsearch<CR>', no_remap_opt)
 keymap('n', '<C-h>', ':nohlsearch<CR>', no_remap_opt)
@@ -167,10 +200,6 @@ keymap('c', '<C-h>', '<Left>', no_remap_opt)
 keymap('c', '<C-j>', '<Down>', no_remap_opt)
 keymap('c', '<C-k>', '<Up>', no_remap_opt)
 keymap('c', '<C-l>', '<Right>', no_remap_opt)
-
--- Left and right can switch buffers
-keymap('n', '<leader><left>', ':bp<CR>', no_remap_opt)
-keymap('n', '<leader><right>', ':bn<CR>', no_remap_opt)
 
 -- Move between windows with arrow keys
 keymap('n', '<left>', '<C-w><left>', no_remap_opt)
@@ -197,29 +226,31 @@ keymap('i', '<C-s>', '<C-o>:wa<CR>', no_remap_opt)
 
 -- Goto previous/next diagnostic warning/error
 -- Use `[g` and `]g` to navigate diagnostics
-buf_set_keymap('n', '[g', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', silent_opt)
-buf_set_keymap('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', silent_opt)
+keymap('n', '[g', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', silent_opt)
+keymap('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', silent_opt)
 
 -- GoTo code navigation
-buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', silent_opt)
-buf_set_keymap('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', silent_opt)
-buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', silent_opt)
-buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', silent_opt)
-buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', silent_opt)
+keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', silent_opt)
+keymap('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', silent_opt)
+keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', silent_opt)
+keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', silent_opt)
+keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', silent_opt)
 
 -- Documentation
-buf_set_keymap('i', '<M-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent_opt)
-buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', silent_opt)
+keymap('i', '<M-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent_opt)
+-- calling twice make the cursor go into the float window. good for navigating big docs
+keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover() vim.lsp.buf.hover()<CR>', silent_opt)
 
 -- Refactor rename
-buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silent_opt)
+keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silent_opt)
 
 -- Code action
-buf_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', silent_opt)
-buf_set_keymap('x', '<leader>a', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', silent_opt)
-buf_set_keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', silent_opt)
-buf_set_keymap("n", "<M-f>", "<cmd>lua vim.lsp.buf.formatting()<CR>", silent_opt)
-buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', silent_opt)
+keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', {})
+keymap('n', '<leader>x', '<cmd>lua vim.lsp.codelens.run()<CR>', {})
+keymap('x', '<leader>a', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', {})
+keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', silent_opt)
+keymap("n", "<M-f>", "<cmd>lua vim.lsp.buf.formatting()<CR>", silent_opt)
+keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', silent_opt)
 
 -- Debug Mappings
 keymap('n', '<F4>', ':lua require"dap".repl.toggle()', silent_opt)

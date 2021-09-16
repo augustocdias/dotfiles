@@ -6,6 +6,8 @@
 	<true/>
 	<key>AlternateMouseScroll</key>
 	<true/>
+	<key>Command</key>
+	<string></string>
 	<key>Default Bookmark Guid</key>
 	<string>6F3A31E1-306A-41B3-9CE3-AF213AED07C2</string>
 	<key>DoubleClickPerformsSmartSelection</key>
@@ -1131,9 +1133,9 @@
 	<key>SoundForEsc</key>
 	<false/>
 	<key>SwitchPaneModifier</key>
-	<integer>4</integer>
+	<integer>1</integer>
 	<key>SwitchTabModifier</key>
-	<integer>5</integer>
+	<integer>4</integer>
 	<key>SwitchWindowModifier</key>
 	<integer>9</integer>
 	<key>TabStyleWithAutomaticOption</key>

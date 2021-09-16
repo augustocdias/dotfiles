@@ -49,8 +49,7 @@ require('packer').startup(function()
     -- UI and Themes
     use { 'shadmansaleh/lualine.nvim', requires = 'kyazdani42/nvim-web-devicons' } -- status line
     use 'monsonjeremy/onedark.nvim' -- theme
-    -- TODO: check buffer shortcuts
-    use { 'romgrk/barbar.nvim', requires = 'kyazdani42/nvim-web-devicons' } -- tabline TODO: check https://github.com/akinsho/bufferline.nvim
+    use { 'romgrk/barbar.nvim', requires = 'kyazdani42/nvim-web-devicons' } -- tabline
     use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } } -- show git indicators next to the line numbers (lines changed, added, etc.)
     use 'Yggdroot/indentLine' -- Adds a | to show indentation levels
     use 'machakann/vim-highlightedyank' -- Highlights what was yanked (copied)
