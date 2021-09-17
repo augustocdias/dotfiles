@@ -96,7 +96,7 @@ wk.register({
         h = {':RustHoverRange<CR>', 'Range Hover Actions' },
         b = {':RustMoveItemDown<CR>', 'Move Item Down' },
         u = {':RustMoveItemUp<CR>', 'Move Item Up' },
-        n = {':RustStartStandaloneServerForBuffer<CR>', 'New Server for Buffer' },
+        s = {':RustStartStandaloneServerForBuffer<CR>', 'New Server for Buffer' },
     }
 }, { prefix = '<leader>', noremap = true, silent = true })
 

@@ -1,3 +1,13 @@
+require'nvim-web-devicons'.setup { default = true }
+require'onedark'.setup {
+    -- transparent = true,
+    darkSidebar = true,
+    darkFloat = true,
+    hideInactiveStatusline = true,
+    sidebars = { 'packer', 'terminal', 'toggleterm' }
+}
+require('gitsigns').setup({ signcolumn = false, numhl = true })
+
 vim.o.termguicolors = true
 vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor'
 vim.o.guifont = 'FiraCode Nerd Font Mono:12'
@@ -28,7 +38,3 @@ vim.o.mouse = 'a'
 vim.cmd('syntax on')
 vim.cmd('hi Normal ctermbg=NONE')
 vim.cmd('highlight NvimTreeFolderIcon guibg=blue')
-
-require'nvim-web-devicons'.setup { default = true }
-require'onedark'.setup { transparent = true }
-require('gitsigns').setup({ signcolumn = false, numhl = true })
