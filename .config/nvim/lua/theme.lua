@@ -38,3 +38,7 @@ vim.o.mouse = 'a'
 vim.cmd('syntax on')
 vim.cmd('hi Normal ctermbg=NONE')
 vim.cmd('highlight NvimTreeFolderIcon guibg=blue')
+
+-- tokio night theme config
+vim.g.tokyonight_hide_inactive_statusline = true
+vim.g.tokyonight_sidebars = { 'terminal', 'toggleterm', 'packer' }

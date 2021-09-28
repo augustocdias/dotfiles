@@ -71,11 +71,13 @@ vim.o.smartcase = true
 vim.o.gdefault = true
 
 -- session management
-vim.g.session_directory = os.getenv('HOME') .. '/.config/nvim/session'
-vim.g.session_autoload = 'no'
-vim.g.session_autosave = 'yes'
-vim.g.session_command_aliases = 1
-vim.g.session_autosave_periodic = 10
+require('auto-session').setup({
+    auto_save_enabled = true,
+    auto_restore_enabled = true,
+    auto_session_enable_last_session = false,
+    auto_session_allowed_dirs = { os.getenv('HOME') .. '/projects' }
+})
+vim.o.sessionoptions='buffers,curdir,folds,help,tabpages,winsize,resize,winpos,terminal'
 
 -- Abbreviations
 vim.cmd('cnoreabbrev W! w!')
@@ -136,6 +138,7 @@ vim.g.nvim_tree_window_picker_exclude = {
     filetype = {'notify', 'packer', 'qf'},
     buftype = { 'terminal' }
 }
+require'nvim-tree'.setup {}
 
 -- Tabline
 -- Set barbar's options
@@ -172,6 +175,46 @@ vim.g.bufferline = {
 -- enable virtual text for debugging
 vim.g.dap_virtual_text = 'all frames'
 
--- Use OSX clipboard to copy and to paste
--- vim.o.clipboard = 'unnamedplus'
+-- surround
+vim.g.surround_pairs = {
+    nestable = { { '(', ')' }, { '{', '}' }, { '[', ']' }, { '<', '>' } },
+    linear = { { '"', '"' }, { "'", "'" }, { 'r#"', '"#' } }
+}
+vim.g.surround_brackets = { '(', '{', '[', '<' }
+require('surround').setup({
+    mappings_style = 'sandwich'
+})
+
+-- hop tree-sitter integration
+local hint = require('hop.hint')
+hint.treesitter_queries(query, inners, outers, queryfile)
+hint.treesitter_locals()
+
+-- todo comments config
+require('todo-comments').setup({
+    signs = false,
+    highlight = {
+        comments_only = true
+    },
+    search = {
+        command = 'rg',
+        args = {
+            '--max-depth=10',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+        }
+  }
+})
+
+require('sidebar-nvim').setup({
+    open = false,
+    side = 'left',
+    initial_width = 30,
+    update_interval = 1000,
+    sections = { 'git-status', 'lsp-diagnostics', 'todos', 'containers' },
+    ignored_paths = { '~' }
+})
 

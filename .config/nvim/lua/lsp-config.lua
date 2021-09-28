@@ -27,7 +27,7 @@ require('rust-tools').setup({
                     importPrefix = 'by_self',
                 },
                 diagnostics = {
-                    disabled = { 'unresolved-proc-macro' }
+                    disabled = { 'unresolved-proc-macro', 'macro-error' }
                 },
                 completion = {
                     autoimport = {

@@ -125,6 +125,9 @@ function _tree_toggle()
         require'bufferline.state'.set_offset(0)
     else
         require'bufferline.state'.set_offset(31, 'FileTree')
+        if require('sidebar-nvim.view').win_open() then
+            require'sidebar-nvim'.close()
+        end
     end
     require'nvim-tree'.toggle()
 end
@@ -210,15 +213,28 @@ keymap('n', '<down>', '<C-w><down>', no_remap_opt)
 -- Delete on insert mode
 keymap('i', '<C-d>', '<C-o>x', no_remap_opt)
 
+-- Hop
+keymap('n', '&', '<cmd>lua require"hop".hint_words()<cr>', {})
+
 -- shows/hides hidden characters
 keymap('n', '<leader>,', ':set invlist<CR>', no_remap_opt)
 
 -- I can type :help on my own, thanks.
-keymap('n', '<F1>', '<Esc>', {})
+function _sidebar_toggle()
+    if not require'nvim-tree.view'.win_open() then
+        if require('sidebar-nvim.view').win_open() then
+            require'bufferline.state'.set_offset(0)
+        else
+            require'bufferline.state'.set_offset(31, 'FileTree')
+        end
+        require'sidebar-nvim'.toggle()
+    end
+end
 keymap('i', '<F1>', '<Esc>', {})
 keymap('c', '<F1>', '<Esc>', {})
 keymap('v', '<F1>', '<Esc>', {})
 keymap('t', '<F1>', '<Esc>', {})
+keymap('n', '<F1>', '<cmd>lua _sidebar_toggle()<CR>', no_remap_opt)
 
 -- save
 keymap('n', '<C-s>', ':wa<CR>', no_remap_opt)

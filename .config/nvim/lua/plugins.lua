@@ -3,6 +3,7 @@ require('packer').startup(function()
 
     -- Auto completion and LSP
     use 'neovim/nvim-lspconfig' -- collection of LSP configurations for nvim
+    use 'williamboman/nvim-lsp-installer' -- auto installers for language servers
     use {
         'hrsh7th/nvim-cmp', -- auto completion
         requires = {
@@ -38,9 +39,10 @@ require('packer').startup(function()
         end,
     }
     -- check https://github.com/blackCauldron7/surround.nvim
-    use 'tpope/vim-surround' -- Add surround command to surround text with selected delimitter: http://futurile.net/2016/03/19/vim-surround-plugin-tutorial/
+    -- use 'tpope/vim-surround' -- Add surround command to surround text with selected delimitter: http://futurile.net/2016/03/19/vim-surround-plugin-tutorial/
+    use 'blackCauldron7/surround.nvim'
     use { -- enhance motion
-        'phaazon/hop.nvim',
+        'IndianBoy42/hop.nvim',
         config = function()
             require('hop').setup()
         end,
@@ -49,10 +51,11 @@ require('packer').startup(function()
     -- UI and Themes
     use { 'shadmansaleh/lualine.nvim', requires = 'kyazdani42/nvim-web-devicons' } -- status line
     use 'monsonjeremy/onedark.nvim' -- theme
+    use 'folke/tokyonight.nvim' -- theme
     use { 'romgrk/barbar.nvim', requires = 'kyazdani42/nvim-web-devicons' } -- tabline
     use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } } -- show git indicators next to the line numbers (lines changed, added, etc.)
     use 'Yggdroot/indentLine' -- Adds a | to show indentation levels
-    use 'machakann/vim-highlightedyank' -- Highlights what was yanked (copied)
+    use { 'folke/todo-comments.nvim', requires = 'nvim-lua/plenary.nvim' } -- todo comments helper
 
     -- Misc
     use 'segeljakt/vim-silicon' -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
@@ -62,7 +65,7 @@ require('packer').startup(function()
 
     -- IDE stuff
     use { 'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons' }
-    use { 'xolox/vim-session', requires = 'xolox/vim-misc' } -- session management
+    use 'rmagatti/auto-session' -- session management
     use { 'akinsho/toggleterm.nvim' } -- better terminal
     -- use {
     --     'ray-x/navigator.lua',
@@ -75,6 +78,7 @@ require('packer').startup(function()
             'kyazdani42/nvim-web-devicons'
         }
     }
+    use 'GustavoKatel/sidebar.nvim'
 
     -- rust
     use 'simrat39/rust-tools.nvim' -- rust support enhancements
