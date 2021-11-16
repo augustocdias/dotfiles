@@ -17,16 +17,16 @@ vim.cmd([[
 ]])
 
 -- show box with diagnostics
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]]
+vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]])
 
 -- auto show code lenses
-vim.cmd [[autocmd BufEnter,InsertLeave * silent! lua vim.lsp.codelens.refresh()]]
+vim.cmd([[autocmd BufEnter,InsertLeave * silent! lua vim.lsp.codelens.refresh()]])
 
 -- auto format file on save
 vim.cmd([[
     augroup Format
         autocmd!
-        autocmd BufWritePre * silent! undojoin | lua vim.lsp.buf.formatting_seq_sync()
+        autocmd BufWritePre *.{py,rs,js,ts,c,cpp,h,hpp,sh,fish,go,md,lua,json,java,cs} silent! undojoin | lua vim.lsp.buf.formatting_seq_sync()
     augroup END
 ]])
 
@@ -61,9 +61,9 @@ vim.cmd([[
 ]])
 
 -- Highlight text at cursor position
-vim.api.nvim_command [[autocmd CursorHold  * lua vim.lsp.buf.document_highlight()]]
-vim.api.nvim_command [[autocmd CursorHoldI * lua vim.lsp.buf.document_highlight()]]
-vim.api.nvim_command [[autocmd CursorMoved * lua vim.lsp.buf.clear_references()]]
+vim.api.nvim_command([[autocmd CursorHold  * lua vim.lsp.buf.document_highlight()]])
+vim.api.nvim_command([[autocmd CursorHoldI * lua vim.lsp.buf.document_highlight()]])
+vim.api.nvim_command([[autocmd CursorMoved * lua vim.lsp.buf.clear_references()]])
 
 -- Highlight yanked text
-vim.api.nvim_command [[autocmd TextYankPost * lua require'vim.highlight'.on_yank({ higroup = 'IncSearch', timeout = 1000 })]]
+vim.api.nvim_command([[autocmd TextYankPost * lua require'vim.highlight'.on_yank({ higroup = 'IncSearch', timeout = 1000 })]])

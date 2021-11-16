@@ -1,11 +1,12 @@
-require'nvim-web-devicons'.setup { default = true }
-require'onedark'.setup {
-    -- transparent = true,
-    darkSidebar = true,
-    darkFloat = true,
-    hideInactiveStatusline = true,
-    sidebars = { 'packer', 'terminal', 'toggleterm' }
-}
+require('nvim-web-devicons').setup({ default = true })
+-- require('onedark').setup({
+--     transparent = true,
+--     darkSidebar = true,
+--     darkFloat = true,
+--     hideInactiveStatusline = true,
+--     sidebars = { 'packer', 'terminal', 'toggleterm' },
+-- })
+
 require('gitsigns').setup({ signcolumn = false, numhl = true })
 
 vim.o.termguicolors = true
@@ -23,7 +24,7 @@ vim.o.foldenable = false
 vim.o.lazyredraw = true
 -- No more beeps
 vim.o.vb = true
-vim.go.t_vb= ''
+vim.go.t_vb = ''
 vim.o.synmaxcol = 500
 vim.o.laststatus = 2
 -- Relative line numbers
@@ -41,4 +42,10 @@ vim.cmd('highlight NvimTreeFolderIcon guibg=blue')
 
 -- tokio night theme config
 vim.g.tokyonight_hide_inactive_statusline = true
-vim.g.tokyonight_sidebars = { 'terminal', 'toggleterm', 'packer' }
+vim.g.tokyonight_sidebars = { 'terminal', 'toggleterm', 'packer', 'NvimTree', 'trouble' }
+vim.g.tokyonight_transparent = true
+vim.g.tokyonight_style = 'night'
+vim.g.tokyonight_dark_sidebar = true
+vim.g.tokyight_dark_float = true
+-- when using onedark, uncomment line 48 and comment this
+vim.cmd([[colorscheme tokyonight]])
