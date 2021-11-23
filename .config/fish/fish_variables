@@ -1,0 +1,56 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR --export CRATES_TOKEN:fcY4VpkdXwvTpfzL1HeKHAaoAEclR3AX
+SETUVAR --export FZF_ALT_C_COMMAND:fd\x20\x2d\x2dtype\x20d\x20
+SETUVAR --export FZF_CTRL_T_COMMAND:fd\x20
+SETUVAR --export FZF_DEFAULT_COMMAND:rg\x20\x2d\x2dfiles\x20\x2d\x2dno\x2dignore\x2dexclude\x20\x2d\x2dignore\x2dfile\x20\x7e/\x2econfig/nvim/\x2efzf\x2dignore
+SETUVAR --export FZF_DEFAULT_OPTS:\x2d\x2dlayout\x3dreverse\x20\x2d\x2dinline\x2dinfo\x20\x2d\x2dmulti\x20\x2d\x2dpreview\x3d\x27\x5b\x5b\x20\x24\x28file\x20\x2d\x2dmime\x20\x7b\x7d\x29\x20\x3d\x7e\x20binary\x20\x5d\x5d\x20\x26\x26\x20echo\x20\x7b\x7d\x20is\x20a\x20binary\x20file\x20\x7c\x7c\x20\x28bat\x20\x2d\x2dstyle\x3dnumbers\x20\x2d\x2dcolor\x3dalways\x20\x7b\x7d\x20\x7c\x7c\x20cat\x20\x7b\x7d\x29\x202\x3e\x20/dev/null\x20\x7c\x20head\x20\x2d300\x27\x20\x2d\x2dpreview\x2dwindow\x3d\x27right\x3awrap\x27\x20\x2d\x2dbind\x3d\x27f3\x3aexecute\x28bat\x20\x2d\x2dpaging\x20always\x20\x2d\x2dpager\x20\x22less\x20\x2dR\x22\x20\x7b\x7d\x29\x2cf2\x3atoggle\x2dpreview\x2cctrl\x2dd\x3ahalf\x2dpage\x2ddown\x2cctrl\x2du\x3ahalf\x2dpage\x2dup\x2cctrl\x2da\x3aselect\x2dall\x2baccept\x2cctrl\x2dy\x3aexecute\x2dsilent\x28echo\x7b\x2b\x7d\x20\x7c\x20pbcopy\x29\x27
+SETUVAR FZF_DISABLE_KEYBINDINGS:0
+SETUVAR FZF_LEGACY_KEYBINDINGS:1
+SETUVAR FZF_PREVIEW_DIR_CMD:ls
+SETUVAR FZF_PREVIEW_FILE_CMD:head\x20\x2dn\x2010
+SETUVAR FZF_TMUX_HEIGHT:40\x25
+SETUVAR --export GITHUB_REGISTRY_TOKEN:01faf45aa2055c0a1626b2a8ed2ab53d0abe508a
+SETUVAR --export GPG_TTY:/dev/ttys005
+SETUVAR --export LANG:en_US\x2eUTF\x2d8
+SETUVAR --export LC_ALL:en_US\x2eUTF\x2d8
+SETUVAR --export LC_TERMINAL:iTerm2
+SETUVAR --export LC_TYPE:UTF\x2d8
+SETUVAR --export --path PATH:/Users/augusto/\x2ecargo/bin\x1e/Users/augusto/\x2epyenv/libexec/pyenv\x1e/Users/augusto/\x2epyenv/libexec\x1e/Users/augusto/\x2epyenv/shims\x1e/Users/augusto/\x2epyenv/bin\x1e/Users/augusto/\x2esdkman/candidates/maven/current/bin\x1e/Users/augusto/\x2esdkman/candidates/java/current/bin\x1e/Users/augusto/\x2esdkman/candidates/gradle/current/bin\x1e/Users/augusto/\x2ebin\x1e/Users/augusto/Library/Python/3\x2e9/bin\x1e/Users/augusto/Library/Python/2\x2e7/bin/\x1e/Library/Apple/usr/bin\x1e/usr/local/bin\x1e/usr/bin\x1e/bin\x1e/usr/local/sbin\x1e/usr/sbin\x1e/sbin\x1e/Users/augusto/\x2elocal/bin/
+SETUVAR --export REGISTRY_TOKEN:xAZCrytLXo96zQ1aoaPi
+SETUVAR --export --path RUST_SRC_PATH:/Users/augusto/\x2erustup/toolchains/stable\x2dx86_64\x2dapple\x2ddarwin/lib/rustlib/src/rust/library
+SETUVAR --export SSH_AUTH_SOCK:/Users/augusto/\x2egnupg/S\x2egpg\x2dagent\x2essh
+SETUVAR --export TEST:test123
+SETUVAR --export ZLUA_LUAEXE:/usr/local/bin/lua
+SETUVAR --export ZLUA_SCRIPT:/Users/augusto/\x2elocal/share/omf/pkg/zlua/z\x2elua
+SETUVAR --export _ZL_DATA:/Users/augusto/\x2elocal/share/zlua/zlua\x2etxt
+SETUVAR _ZL_DATA_DIR:/Users/augusto/\x2elocal/share/zlua
+SETUVAR __fish_initialized:3100
+SETUVAR fish_color_autosuggestion:555\x1ebrblack
+SETUVAR fish_color_cancel:\x2dr
+SETUVAR fish_color_command:005fd7
+SETUVAR fish_color_comment:990000
+SETUVAR fish_color_cwd:green
+SETUVAR fish_color_cwd_root:red
+SETUVAR fish_color_end:009900
+SETUVAR fish_color_error:ff0000
+SETUVAR fish_color_escape:00a6b2
+SETUVAR fish_color_history_current:\x2d\x2dbold
+SETUVAR fish_color_host:normal
+SETUVAR fish_color_host_remote:yellow
+SETUVAR fish_color_normal:normal
+SETUVAR fish_color_operator:00a6b2
+SETUVAR fish_color_param:00afff
+SETUVAR fish_color_quote:999900
+SETUVAR fish_color_redirection:00afff
+SETUVAR fish_color_search_match:bryellow\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_status:red
+SETUVAR fish_color_user:brgreen
+SETUVAR fish_color_valid_path:\x2d\x2dunderline
+SETUVAR fish_key_bindings:fish_vi_key_bindings
+SETUVAR fish_pager_color_completion:\x1d
+SETUVAR fish_pager_color_description:B3A06D\x1eyellow
+SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
+SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
+SETUVAR fish_user_paths:/Users/augusto/Library/Python/3\x2e9/bin\x1e/Users/augusto/Library/Python/2\x2e7/bin/\x1e/usr/local/bin

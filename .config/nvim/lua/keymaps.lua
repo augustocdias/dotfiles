@@ -62,6 +62,7 @@ wk.register({
         name = 'Grep',
         g = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String' },
         l = { '<cmd>lua require("telescope.builtin").live_grep()<CR>', 'Live Grep' },
+        r = { '<cmd>lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>', 'Live Grep Raw' },
     },
     g = {
         name = 'Git',

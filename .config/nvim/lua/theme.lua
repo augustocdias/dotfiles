@@ -36,6 +36,10 @@ vim.o.showcmd = true
 -- Enable mouse usage (all modes) in terminals
 vim.o.mouse = 'a'
 
+-- highlight all tabs and trailing whitespace characters.
+vim.cmd('highlight ExtraWhitespace ctermbg=lightyellow guibg=lightyellow')
+vim.cmd('match ExtraWhitespace /\\s\\+$\\|\\t/')
+
 vim.cmd('syntax on')
 vim.cmd('hi Normal ctermbg=NONE')
 vim.cmd('highlight NvimTreeFolderIcon guibg=blue')
@@ -49,3 +53,31 @@ vim.g.tokyonight_dark_sidebar = true
 vim.g.tokyight_dark_float = true
 -- when using onedark, uncomment line 48 and comment this
 vim.cmd([[colorscheme tokyonight]])
+
+local alpha = require('alpha')
+local dashboard = require('alpha.themes.dashboard')
+
+-- Set header
+dashboard.section.header.val = {
+    '',
+    '  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗',
+    '  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║',
+    '  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║',
+    '  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
+    '  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
+    '  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
+    '',
+}
+
+-- Set menu
+dashboard.section.buttons.val = {
+    dashboard.button('e', '  > New file', ':ene <BAR> startinsert <CR>'),
+    dashboard.button('f', '  > Open Session', '<cmd>lua require("session-lens").search_session()<CR>'),
+    dashboard.button('r', '  > Recent', ':Telescope oldfiles<CR>'),
+    dashboard.button('s', '  > Settings', ':e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd<CR>'),
+    dashboard.button('q', '  > Quit NVIM', ':qa<CR>'),
+}
+dashboard.section.footer.val = require('alpha.fortune')
+
+-- Send config to alpha
+alpha.setup(dashboard.opts)

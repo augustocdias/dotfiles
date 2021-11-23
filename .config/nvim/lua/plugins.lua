@@ -14,16 +14,21 @@ require('packer').startup({
                 'hrsh7th/cmp-buffer',
                 'hrsh7th/cmp-path',
                 'hrsh7th/cmp-nvim-lua',
-                { 'tzachar/cmp-tabnine', run = './install.sh' },
+                { 'tzachar/cmp-tabnine', run = 'bash ./install.sh' },
                 'windwp/nvim-autopairs',
                 { 'Saecki/crates.nvim', requires = { 'nvim-lua/plenary.nvim' }, branch = 'main' },
             },
         })
-        use('onsails/lspkind-nvim')
-        use('nvim-lua/lsp-status.nvim')
+        use('onsails/lspkind-nvim') -- show pictograms in the auto complete popup
+        use('nvim-lua/lsp-status.nvim') -- get status from lsp to show in status line
         use('rafamadriz/friendly-snippets') -- snippets for many languages
         use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }) -- enhancements in highlighting and virtual text
         use({ 'jose-elias-alvarez/null-ls.nvim', requires = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' } }) -- can be useful to integrate with non LSP sources like eslint
+        use({
+            'jose-elias-alvarez/nvim-lsp-ts-utils',
+            requires = { 'jose-elias-alvarez/null-ls.nvim', 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+        }) -- improve typescript
+        use({ 'ray-x/lsp_signature.nvim' }) -- show signature from methods as float windows
 
         -- Helpers
         use({
@@ -34,18 +39,17 @@ require('packer').startup({
         }) -- help with vim commands.
         use('andymass/vim-matchup') -- Enhances the %
         use('numToStr/Comment.nvim') -- gcc to comment/uncomment line
-        use('blackCauldron7/surround.nvim')
-        use({ -- enhance motion
-            'IndianBoy42/hop.nvim',
-            config = function()
-                require('hop').setup()
-            end,
-        })
+        use('blackCauldron7/surround.nvim') -- add surround commands
+        use('ggandor/lightspeed.nvim') -- hop to different parts of the buffer with s + character
 
         -- UI and Themes
+        use({
+            'goolord/alpha-nvim',
+            requires = { 'kyazdani42/nvim-web-devicons' },
+        })
         use({ 'nvim-lualine/lualine.nvim', requires = 'kyazdani42/nvim-web-devicons' }) -- status line
         -- use 'windwp/windline.nvim' -- global status line TODO learn to setup
-        use('monsonjeremy/onedark.nvim') -- theme alternative: olimorris/onedarkpro.nvim
+        -- use('monsonjeremy/onedark.nvim') -- theme alternative: olimorris/onedarkpro.nvim
         use('folke/tokyonight.nvim') -- theme
         use({ 'romgrk/barbar.nvim', requires = 'kyazdani42/nvim-web-devicons' }) -- tabline
         use({ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }) -- show git indicators next to the line numbers (lines changed, added, etc.)
@@ -77,6 +81,7 @@ require('packer').startup({
                 'kyazdani42/nvim-web-devicons',
                 'gbrlsnchs/telescope-lsp-handlers.nvim',
                 'nvim-telescope/telescope-dap.nvim',
+                'nvim-telescope/telescope-live-grep-raw.nvim',
                 { 'rmagatti/session-lens', requires = { 'rmagatti/auto-session' } },
                 { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
             },

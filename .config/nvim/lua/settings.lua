@@ -1,5 +1,5 @@
 -- default shell
--- vim.o.shell= '/bin/fish'
+vim.o.shell = '/usr/local/bin/fish'
 -- secure modelines
 vim.g.secure_modelines_allowed_items = {
     'textwidth',
@@ -57,6 +57,8 @@ vim.o.joinspaces = false
 vim.o.printfont = ':h10'
 vim.o.printencoding = 'utf-8'
 vim.o.printoptions = 'paper:letter'
+-- current line will have a background
+vim.o.cursorline = true
 -- Always draw sign column. Prevent buffer moving when adding/deleting sign.
 vim.o.signcolumn = 'yes'
 
@@ -102,10 +104,7 @@ vim.o.gdefault = true
 
 -- session management
 require('auto-session').setup({
-    auto_save_enabled = true,
-    auto_restore_enabled = true,
-    auto_session_enable_last_session = false,
-    auto_session_allowed_dirs = { os.getenv('HOME') .. '/projects' },
+    auto_session_create_enabled = false,
 })
 require('session-lens').setup({})
 vim.o.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,resize,winpos,terminal'
@@ -150,10 +149,6 @@ vim.o.listchars = 'nbsp:¬,extends:»,precedes:«,trail:•'
 -- Show problematic characters.
 vim.o.list = true
 
--- Also highlight all tabs and trailing whitespace characters.
-vim.cmd('highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen')
-vim.cmd('match ExtraWhitespace /\\s\\+$\\|\\t/')
-
 -- Nvim Tree settings
 vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_indent_markers = 1
@@ -179,7 +174,7 @@ require('nvim-tree').setup({
 -- banlkline
 require('indent_blankline').setup({
     char = '|',
-    filetype_exclude = { 'packer' },
+    filetype_exclude = { 'packer', 'alpha' },
     buftype_exclude = { 'terminal' },
 })
 
@@ -229,12 +224,8 @@ require('surround').setup({
     },
     mappings_style = 'sandwich',
     surround_map_insert_mode = false,
+    prefix = ',',
 })
-
--- hop tree-sitter integration
-local hint = require('hop.hint')
-hint.treesitter_queries(query, inners, outers, queryfile)
-hint.treesitter_locals()
 
 -- todo comments config
 require('todo-comments').setup({

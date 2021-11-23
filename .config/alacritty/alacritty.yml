@@ -203,7 +203,7 @@ live_config_reload: true
 #   - (Windows) powershell
 shell:
   # program: /usr/local/bin/fish
-  program: /usr/local/bin/zsh
+  program: /usr/local/bin/fish
 #  args:
 #    - --login
 

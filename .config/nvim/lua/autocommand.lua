@@ -61,9 +61,21 @@ vim.cmd([[
 ]])
 
 -- Highlight text at cursor position
-vim.api.nvim_command([[autocmd CursorHold  * lua vim.lsp.buf.document_highlight()]])
-vim.api.nvim_command([[autocmd CursorHoldI * lua vim.lsp.buf.document_highlight()]])
-vim.api.nvim_command([[autocmd CursorMoved * lua vim.lsp.buf.clear_references()]])
+vim.api.nvim_command([[autocmd CursorHold  * silent! lua vim.lsp.buf.document_highlight()]])
+vim.api.nvim_command([[autocmd CursorHoldI * silent! lua vim.lsp.buf.document_highlight()]])
+vim.api.nvim_command([[autocmd CursorMoved * silent! lua vim.lsp.buf.clear_references()]])
 
 -- Highlight yanked text
-vim.api.nvim_command([[autocmd TextYankPost * lua require'vim.highlight'.on_yank({ higroup = 'IncSearch', timeout = 1000 })]])
+vim.api.nvim_command(
+    [[autocmd TextYankPost * lua require'vim.highlight'.on_yank({ higroup = 'IncSearch', timeout = 1000 })]]
+)
+
+-- Disable folding on alpha buffer
+-- disable highlight for aplpha buffer
+vim.cmd([[
+    augroup alpha-dashboard
+        autocmd!
+        autocmd FileType alpha hi clear ExtraWhitespace
+        autocmd FileType alpha setlocal nofoldenable
+    augroup END
+]])
