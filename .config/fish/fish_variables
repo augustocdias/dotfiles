@@ -19,8 +19,6 @@ SETUVAR --export LC_TYPE:UTF\x2d8
 SETUVAR --export --path PATH:/Users/augusto/\x2ecargo/bin\x1e/Users/augusto/\x2epyenv/libexec/pyenv\x1e/Users/augusto/\x2epyenv/libexec\x1e/Users/augusto/\x2epyenv/shims\x1e/Users/augusto/\x2epyenv/bin\x1e/Users/augusto/\x2esdkman/candidates/maven/current/bin\x1e/Users/augusto/\x2esdkman/candidates/java/current/bin\x1e/Users/augusto/\x2esdkman/candidates/gradle/current/bin\x1e/Users/augusto/\x2ebin\x1e/Users/augusto/Library/Python/3\x2e9/bin\x1e/Users/augusto/Library/Python/2\x2e7/bin/\x1e/Library/Apple/usr/bin\x1e/usr/local/bin\x1e/usr/bin\x1e/bin\x1e/usr/local/sbin\x1e/usr/sbin\x1e/sbin\x1e/Users/augusto/\x2elocal/bin/
 SETUVAR --export REGISTRY_TOKEN:xAZCrytLXo96zQ1aoaPi
 SETUVAR --export --path RUST_SRC_PATH:/Users/augusto/\x2erustup/toolchains/stable\x2dx86_64\x2dapple\x2ddarwin/lib/rustlib/src/rust/library
-SETUVAR --export SSH_AUTH_SOCK:/Users/augusto/\x2egnupg/S\x2egpg\x2dagent\x2essh
-SETUVAR --export TEST:test123
 SETUVAR --export ZLUA_LUAEXE:/usr/local/bin/lua
 SETUVAR --export ZLUA_SCRIPT:/Users/augusto/\x2elocal/share/omf/pkg/zlua/z\x2elua
 SETUVAR --export _ZL_DATA:/Users/augusto/\x2elocal/share/zlua/zlua\x2etxt
