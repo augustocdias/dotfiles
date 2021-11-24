@@ -204,19 +204,21 @@ ensure_server('sqlls'):setup({
     cmd = { 'sql-language-server', 'up', '--method', 'stdio' },
 })
 -- java
--- TODO: config to not auto start
--- local java_server = ensure_server('jdtls')
--- java_server:setup({capabilities = capabilities, on_attach = lsp_status.on_attach,})
--- require('jdtls').start_or_attach({
---     cmd = java_server:get_default_options().cmd,
---     root_dir = require('jdtls.setup').find_root({
---         'pom.xml',
---         'settings.gradle',
---         'settings.gradle.kts',
---         'build.gradle',
---         'build.gradle.kts'
---     })
--- })
+local java_server = ensure_server('jdtls')
+java_server:setup({ capabilities = capabilities, on_attach = lsp_status.on_attach })
+local function start_java()
+    require('jdtls').start_or_attach({
+        cmd = java_server:get_default_options().cmd,
+        root_dir = require('jdtls.setup').find_root({
+            'pom.xml',
+            'settings.gradle',
+            'settings.gradle.kts',
+            'build.gradle',
+            'build.gradle.kts',
+        }),
+    })
+end
+vim.api.nvim_command([[autocmd FileType java,gradle lua start_java() ]])
 
 -- general LSP config
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {

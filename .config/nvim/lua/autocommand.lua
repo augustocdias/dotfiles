@@ -75,7 +75,6 @@ vim.api.nvim_command(
 vim.cmd([[
     augroup alpha-dashboard
         autocmd!
-        autocmd FileType alpha hi clear ExtraWhitespace
         autocmd FileType alpha setlocal nofoldenable
     augroup END
 ]])
