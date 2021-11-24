@@ -10,18 +10,37 @@ local function ensure_server(name)
     return server
 end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = vim.tbl_extend('keep', capabilities, lsp_status.capabilities)
+
 --lua
-ensure_server('sumneko_lua'):setup({})
+ensure_server('sumneko_lua'):setup({
+    on_attach = lsp_status.on_attach,
+    capabilities = capabilities,
+})
 -- bash
-ensure_server('bashls'):setup({})
+ensure_server('bashls'):setup({
+    on_attach = lsp_status.on_attach,
+    capabilities = capabilities,
+})
 -- C#
-ensure_server('omnisharp'):setup({})
+ensure_server('omnisharp'):setup({
+    on_attach = lsp_status.on_attach,
+    capabilities = capabilities,
+})
 -- python
-ensure_server('pyright'):setup({})
+ensure_server('pyright'):setup({
+    on_attach = lsp_status.on_attach,
+    capabilities = capabilities,
+})
 -- typescript
 ensure_server('tsserver'):setup({
     init_options = require('nvim-lsp-ts-utils').init_options,
+    capabilities = capabilities,
     on_attach = function(client, bufnr)
+        lsp_status.on_attach(client)
         -- disable tsserver formatting if you plan on formatting via null-ls
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
@@ -97,7 +116,7 @@ require('rust-tools').setup({
     },
     server = {
         on_attach = lsp_status.on_attach,
-        capabilities = lsp_status.capabilities,
+        capabilities = capabilities,
         -- cmd = rust_server:get_default_options().cmd,
         settings = {
             ['rust-analyzer'] = {
@@ -149,15 +168,19 @@ require('rust-tools').setup({
     },
 })
 -- Cargo.toml
-require('crates').setup({})
+require('crates').setup({
+    on_attach = lsp_status.on_attach,
+    capabilities = capabilities,
+})
 -- yaml
-ensure_server('yamlls'):setup({})
+ensure_server('yamlls'):setup({
+    on_attach = lsp_status.on_attach,
+    capabilities = capabilities,
+})
 -- json
 local jsonls = ensure_server('jsonls')
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 jsonls:setup({
+    on_attach = lsp_status.on_attach,
     capabilities = capabilities,
     commands = {
         Format = {
@@ -168,17 +191,22 @@ jsonls:setup({
     },
 })
 -- docker
-ensure_server('dockerls'):setup({})
+ensure_server('dockerls'):setup({
+    on_attach = lsp_status.on_attach,
+    capabilities = capabilities,
+})
 -- deno
 -- ensure_server('denols'):setup({})
 -- sql
 ensure_server('sqlls'):setup({
+    on_attach = lsp_status.on_attach,
+    capabilities = capabilities,
     cmd = { 'sql-language-server', 'up', '--method', 'stdio' },
 })
 -- java
 -- TODO: config to not auto start
 -- local java_server = ensure_server('jdtls')
--- java_server:setup()
+-- java_server:setup({capabilities = capabilities, on_attach = lsp_status.on_attach,})
 -- require('jdtls').start_or_attach({
 --     cmd = java_server:get_default_options().cmd,
 --     root_dir = require('jdtls.setup').find_root({

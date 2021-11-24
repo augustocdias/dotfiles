@@ -37,12 +37,12 @@ vim.o.showcmd = true
 vim.o.mouse = 'a'
 
 -- highlight all tabs and trailing whitespace characters.
-vim.cmd('highlight ExtraWhitespace ctermbg=lightyellow guibg=lightyellow')
+vim.cmd('highlight ExtraWhitespace ctermbg=darkcyan guibg=darkcyan')
 vim.cmd('match ExtraWhitespace /\\s\\+$\\|\\t/')
 
 vim.cmd('syntax on')
 vim.cmd('hi Normal ctermbg=NONE')
-vim.cmd('highlight NvimTreeFolderIcon guibg=blue')
+vim.cmd('highlight NvimTreeFolderIcon guibg=darkblue')
 
 -- tokio night theme config
 vim.g.tokyonight_hide_inactive_statusline = true
