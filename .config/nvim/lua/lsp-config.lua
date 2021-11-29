@@ -109,9 +109,19 @@ require('rust-tools').setup({
         autoSetHints = true,
         hover_with_actions = true,
         inlay_hints = {
+            only_current_line = false,
             show_parameter_hints = true,
             parameter_hints_prefix = '',
             other_hints_prefix = '',
+        },
+        hover_actions = {
+            auto_focus = true,
+        },
+        debuggables = {
+            use_telescope = true,
+        },
+        runnables = {
+            use_telescope = true,
         },
     },
     server = {
@@ -205,9 +215,13 @@ ensure_server('sqlls'):setup({
 })
 -- java
 local java_server = ensure_server('jdtls')
-java_server:setup({ capabilities = capabilities, on_attach = lsp_status.on_attach })
-local function start_java()
+function start_java()
     require('jdtls').start_or_attach({
+        capabilities = capabilities,
+        on_attach = function(client)
+            lsp_status.on_attach(client)
+            require('jdtls.setup').add_commands()
+        end,
         cmd = java_server:get_default_options().cmd,
         root_dir = require('jdtls.setup').find_root({
             'pom.xml',
@@ -218,7 +232,7 @@ local function start_java()
         }),
     })
 end
-vim.api.nvim_command([[autocmd FileType java,gradle lua start_java() ]])
+vim.api.nvim_command([[autocmd FileType java lua start_java() ]])
 
 -- general LSP config
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {

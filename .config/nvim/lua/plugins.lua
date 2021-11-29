@@ -14,7 +14,7 @@ require('packer').startup({
                 'hrsh7th/cmp-buffer',
                 'hrsh7th/cmp-path',
                 'hrsh7th/cmp-nvim-lua',
-                { 'tzachar/cmp-tabnine', run = 'bash ./install.sh' },
+                { 'tzachar/cmp-tabnine', run = './install.sh' },
                 'windwp/nvim-autopairs',
                 { 'Saecki/crates.nvim', requires = { 'nvim-lua/plenary.nvim' }, branch = 'main' },
             },
@@ -89,9 +89,6 @@ require('packer').startup({
         use({
             'folke/trouble.nvim',
             requires = 'kyazdani42/nvim-web-devicons',
-            config = function()
-                require('trouble').setup()
-            end,
         }) -- adds a bottom panel with lsp diagnostics, quickfixes, etc.
         use('GustavoKatel/sidebar.nvim') -- useful sidebar with todos, git status, etc.
 

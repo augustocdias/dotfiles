@@ -104,9 +104,8 @@ vim.o.gdefault = true
 
 -- session management
 local function restore_nvim_tree()
-    local nvim_tree = require('nvim-tree')
-    nvim_tree.change_dir(vim.fn.getcwd())
-    nvim_tree.refresh()
+    require('nvim-tree').change_dir(vim.fn.getcwd())
+    require('nvim-tree.lib').refresh_tree()
 end
 
 require('auto-session').setup({
@@ -115,6 +114,11 @@ require('auto-session').setup({
 })
 require('session-lens').setup({})
 vim.o.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,resize,winpos,terminal'
+
+-- Trouble
+require('trouble').setup({
+    use_lsp_diagnostic_signs = true,
+})
 
 -- Abbreviations
 vim.cmd('cnoreabbrev W! w!')
@@ -171,6 +175,9 @@ require('nvim-tree').setup({
     auto_open = false,
     auto_close = true,
     diagnostics = {
+        enable = false,
+    },
+    git = {
         enable = true,
     },
     filters = {

@@ -33,6 +33,7 @@ keymap('n', '<M-w>', '<cmd>lua require("session-lens").search_session()<CR>', no
 -- Open Trouble Panel
 keymap('n', '<M-t>', ':TroubleToggle<CR>', no_remap_silent_opt)
 
+-- Which-key for normal mode
 wk.register({
     f = {
         name = 'File',
@@ -124,10 +125,38 @@ wk.register({
         u = { ':RustMoveItemUp<CR>', 'Move Item Up' },
         s = { ':RustStartStandaloneServerForBuffer<CR>', 'New Server for Buffer' },
     },
+    j = {
+        name = 'Java',
+        a = { '<cmd>lua require("jdtls").code_action()', 'Code Action' },
+        r = { '<cmd>lua require("jdtls").code_action(false, "refactor")', 'Refactor' },
+        o = { '<cmd>lua require("jdtls").organize_imports()', 'Organize Imports' },
+        e = { '<cmd>lua require("jdtls").extract_variable()', 'Extract Variable' },
+        c = { '<cmd>lua require("jdtls").extract_constant()', 'Extract Constant' },
+        m = { '<cmd>lua require("jdtls").extract_method()', 'Extract Method' },
+        t = { '<cmd>lua require("jdtls").test_class()', 'Test Class' },
+        n = { '<cmd>lua require("jdtls").test_nearest_method()', 'Test Nearest Method' },
+    },
 }, {
     prefix = '<leader>',
     noremap = true,
     silent = true,
+    mode = 'n',
+})
+
+-- Which-key visual keymaps
+wk.register({
+    j = {
+        name = 'Java',
+        a = { '<cmd>lua require("jdtls").code_action(true)', 'Code Action' },
+        e = { '<cmd>lua require("jdtls").extract_variable(true)', 'Extract Variable' },
+        c = { '<cmd>lua require("jdtls").extract_constant(true)', 'Extract Constant' },
+        m = { '<cmd>lua require("jdtls").extract_method(true)', 'Extract Method' },
+    },
+}, {
+    prefix = '<leader>',
+    noremap = true,
+    silent = true,
+    mode = 'v',
 })
 
 -- Copy visually selected text to system clipboard

@@ -78,3 +78,8 @@ vim.cmd([[
         autocmd FileType alpha setlocal nofoldenable
     augroup END
 ]])
+
+-- Auto close NvimTree when a file is opened
+vim.api.nvim_command(
+    [[autocmd BufHidden NvimTree lua vim.schedule(function() require('bufferline.state').set_offset(0) end)]]
+)

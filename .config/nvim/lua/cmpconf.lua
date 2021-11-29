@@ -4,14 +4,17 @@ local cmp = require('cmp')
 local Rule = require('nvim-autopairs.rule')
 local npairs = require('nvim-autopairs')
 
-lspkind.init({})
+lspkind_opts = {
+    with_text = true,
+    preset = 'codicons', -- need to install font https://github.com/microsoft/vscode-codicons/blob/main/dist/codicon.ttf
+}
 
 local source_mapping = {
     nvim_lsp = '[LSP]',
     luasnip = '[Snippet]',
     treesitter = '[TS]',
     cmp_tabnine = '[TN]',
-    nvim_lua = '[Lua]',
+    nvim_lua = '[Vim]',
     path = '[Path]',
     buffer = '[Buffer]',
     crates = '[Crates]',
@@ -24,11 +27,12 @@ end
 
 cmp.setup({
     sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'nvim_lua' },
-        { name = 'cmp_tabnine' },
-        { name = 'path' },
+        { name = 'nvim_lsp', priority = 99 },
+        { name = 'luasnip', priority = 90 },
+        { name = 'nvim_lua', priority = 80 },
+        { name = 'cmp_tabnine', priority = 80 },
+        { name = 'path', priority = 10 },
+        { name = 'buffer', priority = 0 },
     },
     snippet = {
         expand = function(args)
@@ -37,13 +41,13 @@ cmp.setup({
     },
     formatting = {
         format = function(entry, vim_item)
-            vim_item.kind = lspkind.presets.default[vim_item.kind]
+            vim_item.kind = lspkind.symbolic(vim_item.kind, lspkind_opts)
             local menu = source_mapping[entry.source.name]
             if entry.source.name == 'cmp_tabnine' then
                 if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
                     menu = entry.completion_item.data.detail .. ' ' .. menu
                 end
-                vim_item.kind = ''
+                vim_item.kind = ' TabNine'
             end
             vim_item.menu = menu
             return vim_item

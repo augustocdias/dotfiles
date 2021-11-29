@@ -7,7 +7,7 @@ require('nvim-web-devicons').setup({ default = true })
 --     sidebars = { 'packer', 'terminal', 'toggleterm' },
 -- })
 
-require('gitsigns').setup({ signcolumn = false, numhl = true })
+require('gitsigns').setup({ signcolumn = true, numhl = true })
 
 vim.o.termguicolors = true
 vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor'
@@ -37,15 +37,15 @@ vim.o.showcmd = true
 vim.o.mouse = 'a'
 
 -- highlight all tabs and trailing whitespace characters.
-vim.cmd('highlight ExtraWhitespace ctermbg=darkcyan guibg=darkcyan')
+vim.cmd('highlight ExtraWhitespace ctermbg=lightyellow guibg=lightyellow')
 vim.cmd('match ExtraWhitespace /\\s\\+$\\|\\t/')
 
 vim.cmd('syntax on')
 vim.cmd('hi Normal ctermbg=NONE')
-vim.cmd('highlight NvimTreeFolderIcon guibg=darkblue')
+vim.cmd('highlight NvimTreeFolderIcon guibg=blue')
 
 -- tokio night theme config
-vim.g.tokyonight_hide_inactive_statusline = true
+vim.g.tokyonight_hide_inactive_statusline = false
 vim.g.tokyonight_sidebars = { 'terminal', 'toggleterm', 'packer', 'NvimTree', 'trouble' }
 vim.g.tokyonight_transparent = true
 vim.g.tokyonight_style = 'night'
