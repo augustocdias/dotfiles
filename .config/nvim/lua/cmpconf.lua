@@ -105,6 +105,13 @@ require('nvim-treesitter.configs').setup({
     matchup = {
         enable = true,
     },
+    textobjects = {
+        select = {
+            keymaps = {
+                ['uc'] = '@comment.outer',
+            },
+        },
+    },
     incremental_selection = {
         enable = true,
         keymaps = {

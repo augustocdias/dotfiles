@@ -175,7 +175,7 @@ require('nvim-tree').setup({
     auto_open = false,
     auto_close = true,
     diagnostics = {
-        enable = false,
+        enable = true,
     },
     git = {
         enable = true,

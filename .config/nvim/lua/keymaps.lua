@@ -187,6 +187,7 @@ function _tree_toggle()
         if require('sidebar-nvim.view').win_open() then
             require('sidebar-nvim').close()
         end
+        require('nvim-tree.lib').refresh_tree()
     end
     require('nvim-tree').toggle()
 end
@@ -320,7 +321,7 @@ keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', silent_opt)
 keymap('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', silent_opt)
 keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', silent_opt)
 keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', silent_opt)
-keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', silent_opt)
+keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references({ includeDeclaration = false })<CR>', silent_opt)
 
 -- Documentation
 keymap('i', '<M-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent_opt)

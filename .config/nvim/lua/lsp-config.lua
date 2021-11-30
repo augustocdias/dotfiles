@@ -178,10 +178,7 @@ require('rust-tools').setup({
     },
 })
 -- Cargo.toml
-require('crates').setup({
-    on_attach = lsp_status.on_attach,
-    capabilities = capabilities,
-})
+require('crates').setup({})
 -- yaml
 ensure_server('yamlls'):setup({
     on_attach = lsp_status.on_attach,
