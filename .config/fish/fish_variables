@@ -1,6 +1,21 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export CRATES_TOKEN:fcY4VpkdXwvTpfzL1HeKHAaoAEclR3AX
+SETUVAR --export ENHANCD_COMMAND:cd
+SETUVAR --export ENHANCD_COMPLETION_BEHAVIOR:default
+SETUVAR --export ENHANCD_COMPLETION_DEFAULT:1
+SETUVAR --export ENHANCD_COMPLETION_KEYBIND:\x5eI
+SETUVAR --export ENHANCD_DIR:/Users/augusto/\x2eenhancd
+SETUVAR --export ENHANCD_DISABLE_DOT:0
+SETUVAR --export ENHANCD_DISABLE_HOME:0
+SETUVAR --export ENHANCD_DISABLE_HYPHEN:0
+SETUVAR --export ENHANCD_DOT_ARG:\x2e\x2e
+SETUVAR --export ENHANCD_FILTER:fzy\x3afzf\x2dtmux\x3afzf\x3apeco\x3apercol\x3agof\x3apick\x3aicepick\x3asentaku\x3aselecta
+SETUVAR --export ENHANCD_HOME_ARG:
+SETUVAR --export ENHANCD_HYPHEN_ARG:\x2d
+SETUVAR --export ENHANCD_HYPHEN_NUM:10
+SETUVAR --export ENHANCD_ROOT:/Users/augusto/\x2econfig/fish/functions/enhancd
+SETUVAR --export ENHANCD_USE_FUZZY_MATCH:1
 SETUVAR --export FZF_ALT_C_COMMAND:fd\x20\x2d\x2dtype\x20d\x20
 SETUVAR --export FZF_CTRL_T_COMMAND:fd\x20
 SETUVAR --export FZF_DEFAULT_COMMAND:rg\x20\x2d\x2dfiles\x20\x2d\x2dno\x2dignore\x2dexclude\x20\x2d\x2dignore\x2dfile\x20\x7e/\x2econfig/nvim/\x2efzf\x2dignore
@@ -21,9 +36,34 @@ SETUVAR --export REGISTRY_TOKEN:xAZCrytLXo96zQ1aoaPi
 SETUVAR --export --path RUST_SRC_PATH:/Users/augusto/\x2erustup/toolchains/stable\x2dx86_64\x2dapple\x2ddarwin/lib/rustlib/src/rust/library
 SETUVAR --export ZLUA_LUAEXE:/usr/local/bin/lua
 SETUVAR --export ZLUA_SCRIPT:/Users/augusto/\x2elocal/share/omf/pkg/zlua/z\x2elua
+SETUVAR ZO_CMD:zo
+SETUVAR Z_CMD:z
+SETUVAR Z_DATA:/Users/augusto/\x2elocal/share/z/data
+SETUVAR Z_DATA_DIR:/Users/augusto/\x2elocal/share/z
+SETUVAR Z_EXCLUDE:\x5e/Users/augusto\x24
+SETUVAR --export _ENHANCD_FAILURE:60
+SETUVAR --export _ENHANCD_SUCCESS:0
+SETUVAR --export _ENHANCD_VERSION:2\x2e2\x2e4
 SETUVAR --export _ZL_DATA:/Users/augusto/\x2elocal/share/zlua/zlua\x2etxt
 SETUVAR _ZL_DATA_DIR:/Users/augusto/\x2elocal/share/zlua
 SETUVAR __fish_initialized:3100
+SETUVAR _fisher_PatrickF1_2F_colored__man__pages_2E_fish_files:/Users/augusto/\x2econfig/fish/functions/cless\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/man\x2efish
+SETUVAR _fisher_b4b4r07_2F_enhancd_files:/Users/augusto/\x2econfig/fish/functions/_enhancd_alias\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_cd_after\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_cd_before\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_cd_builtin\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_command_awk\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_command_grep\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_command_nl\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_command_run\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_command_which\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_complete\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_entry_git_root\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filepath_abs\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filepath_current_dir\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filepath_list_step\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filepath_split\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filepath_split_list\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filepath_walk\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_exclude\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_exclude_commented\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_exclude_gitignore\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_exists\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_fuzzy\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_interactive\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_join\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_limit\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_replace\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_reverse\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_trim\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_filter_unique\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_flag_is_default\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_flag_parse\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_flag_print_help\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_help\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_history_list\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_history_open\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_history_update\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_ltsv_get\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_ltsv_open\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_ltsv_parse\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_source_argument\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_source_default\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_source_go_up\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_source_is_available\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/_enhancd_source_mru\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/enhancd\x1e/Users/augusto/\x2econfig/fish/functions/enhancd\x2efish\x1e/Users/augusto/\x2econfig/fish/conf\x2ed/enhancd\x2efish
+SETUVAR _fisher_deather_2F_omf_2D_sdk_files:/Users/augusto/\x2econfig/fish/functions/sdk\x2efish\x1e/Users/augusto/\x2econfig/fish/completions/sdk\x2efish
+SETUVAR _fisher_derekstavis_2F_plugin_2D_nvm_files:/Users/augusto/\x2econfig/fish/functions/nvm\x2efish\x1e/Users/augusto/\x2econfig/fish/completions/nvm\x2efish
+SETUVAR _fisher_jethrokuan_2F_fzf_files:/Users/augusto/\x2econfig/fish/functions/__fzf_cd\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/__fzf_complete\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/__fzf_complete_preview\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/__fzf_find_file\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/__fzf_get_dir\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/__fzf_open\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/__fzf_parse_commandline\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/__fzf_reverse_isearch\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/__fzfcmd\x2efish\x1e/Users/augusto/\x2econfig/fish/conf\x2ed/fzf\x2efish
+SETUVAR _fisher_jethrokuan_2F_z_files:/Users/augusto/\x2econfig/fish/functions/__z\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/__z_add\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/__z_clean\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/__z_complete\x2efish\x1e/Users/augusto/\x2econfig/fish/conf\x2ed/z\x2efish
+SETUVAR _fisher_jorgebucaran_2F_fisher_files:/Users/augusto/\x2econfig/fish/functions/fisher\x2efish\x1e/Users/augusto/\x2econfig/fish/completions/fisher\x2efish
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_aws_files:/Users/augusto/\x2econfig/fish/functions/aws\x2efish\x1e/Users/augusto/\x2econfig/fish/conf\x2ed/aws\x2efish\x1e/Users/augusto/\x2econfig/fish/completions/aws\x2efish
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_brew_files:/Users/augusto/\x2econfig/fish/conf\x2ed/brew\x2efish
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_cd_files:/Users/augusto/\x2econfig/fish/functions/__plugin_cd\x2efish\x1e/Users/augusto/\x2econfig/fish/conf\x2ed/cd\x2efish\x1e/Users/augusto/\x2econfig/fish/completions/cd\x2efish
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_foreign_2D_env_files:/Users/augusto/\x2econfig/fish/functions/fenv\x2eapply\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/fenv\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/fenv\x2emain\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/fenv\x2eparse\x2eafter\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/fenv\x2eparse\x2ebefore\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/fenv\x2eparse\x2ediff\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/fenv\x2eparse\x2edivider\x2efish
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_osx_files:/Users/augusto/\x2econfig/fish/functions/cdf\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/flushdns\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/itunes\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/manp\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/pfd\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/pfs\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/pushdf\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/ql\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/showhidden\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/trash\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/unset\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/updatedb\x2efish
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_pyenv_files:/Users/augusto/\x2econfig/fish/functions/pyenv\x2efish\x1e/Users/augusto/\x2econfig/fish/conf\x2ed/pyenv\x2efish\x1e/Users/augusto/\x2econfig/fish/completions/pyenv\x2efish
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_rustup_files:/Users/augusto/\x2econfig/fish/conf\x2ed/rustup\x2efish
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_wttr_files:/Users/augusto/\x2econfig/fish/functions/moon\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/wttr\x2efish
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_theme_2D_agnoster_files:/Users/augusto/\x2econfig/fish/functions/fish_mode_prompt\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/fish_prompt\x2efish\x1e/Users/augusto/\x2econfig/fish/functions/fish_right_prompt\x2efish
+SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejethrokuan/z\x1eoh\x2dmy\x2dfish/theme\x2dagnoster\x1eoh\x2dmy\x2dfish/plugin\x2daws\x1eoh\x2dmy\x2dfish/plugin\x2dbrew\x1eoh\x2dmy\x2dfish/plugin\x2dcd\x1ePatrickF1/colored_man_pages\x2efish\x1eb4b4r07/enhancd\x1eoh\x2dmy\x2dfish/plugin\x2dforeign\x2denv\x1ejethrokuan/fzf\x1eiamruinous/plugin\x2dhome\x2dbinpath\x1ederekstavis/fish\x2dneovim\x1eoh\x2dmy\x2dfish/plugin\x2dnode\x2dbinpath\x1ederekstavis/plugin\x2dnvm\x1eoh\x2dmy\x2dfish/plugin\x2dosx\x1eoh\x2dmy\x2dfish/plugin\x2dpyenv\x1eoh\x2dmy\x2dfish/plugin\x2drustup\x1edeather/omf\x2dsdk\x1eoh\x2dmy\x2dfish/plugin\x2dwttr
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:005fd7
