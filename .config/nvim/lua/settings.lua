@@ -29,9 +29,6 @@ vim.g.secure_modelines_allowed_items = {
     'colorcolumn',
 }
 
--- Do not source the default filetype.vim TODO: remove after nvim 0.6
-vim.g.did_load_filetypes = 1
-
 -- replace grep with rg
 vim.go.grepprg = 'rg --no-heading --vimgrep'
 vim.go.grepformat = '%f:%l:%c:%m'

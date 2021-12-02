@@ -7,7 +7,7 @@ require('toggleterm').setup({
         end
     end,
     hide_numbers = false,
-    shade_terminals = true,
+    shade_terminals = false,
     start_in_insert = true,
     insert_mappings = false, -- no default mapping
     persist_size = true,

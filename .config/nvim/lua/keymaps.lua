@@ -284,9 +284,6 @@ keymap('n', '<down>', '<C-w><down>', no_remap_opt)
 -- Delete on insert mode
 keymap('i', '<C-d>', '<C-o>x', no_remap_opt)
 
--- Hop
-keymap('n', '&', '<cmd>lua require"hop".hint_words()<cr>', {})
-
 -- shows/hides hidden characters
 keymap('n', '<leader>,', ':set invlist<CR>', no_remap_opt)
 
@@ -326,7 +323,7 @@ keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references({ includeDeclaration = false 
 -- Documentation
 keymap('i', '<M-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent_opt)
 -- calling twice make the cursor go into the float window. good for navigating big docs
-keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover() vim.lsp.buf.hover()<CR>', silent_opt)
+keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', silent_opt)
 
 -- Refactor rename
 keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silent_opt)

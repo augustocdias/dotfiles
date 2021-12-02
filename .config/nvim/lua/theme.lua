@@ -21,7 +21,7 @@ vim.o.background = 'dark'
 vim.g.base16colorspace = 256
 vim.o.foldenable = false
 -- https://github.com/vim/vim/issues/1735#issuecomment-383353563
-vim.o.lazyredraw = true
+-- vim.o.lazyredraw = true
 -- No more beeps
 vim.o.vb = true
 vim.go.t_vb = ''
@@ -46,7 +46,7 @@ vim.cmd('highlight NvimTreeFolderIcon guibg=blue')
 
 -- tokio night theme config
 vim.g.tokyonight_hide_inactive_statusline = false
-vim.g.tokyonight_sidebars = { 'terminal', 'toggleterm', 'packer', 'NvimTree', 'trouble' }
+vim.g.tokyonight_sidebars = { 'terminal', 'toggleterm', 'packer', 'NvimTree', 'Trouble' }
 vim.g.tokyonight_transparent = true
 vim.g.tokyonight_style = 'night'
 vim.g.tokyonight_dark_sidebar = true
@@ -59,12 +59,12 @@ local dashboard = require('alpha.themes.dashboard')
 
 -- Set header
 dashboard.section.header.val = {
-    '  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗',
-    '  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║',
-    '  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║',
-    '  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
-    '  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
-    '  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
+    '███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗',
+    '████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║',
+    '██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║',
+    '██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
+    '██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
+    '╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
 }
 
 -- Set menu
