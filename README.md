@@ -16,23 +16,31 @@ To install from the bundle: `brew bundle install`
    load the `plist` on this repo.
 2. In the profiles, load the profile in this repo and set as default.
 
-## Oh My ZSH
+## Alacritty
 
-Install [Oh My ZSH!](https://ohmyz.sh/)
+Install [Alacrity](https://github.com/alacritty/alacritty)
+
+## Fish and Fisher
+
+Install [Fisher](https://github.com/jorgebucaran/fisher)
+Run `fisher update`
 
 ## Neovim & tmux
 
-1. Install pynvim:
+First install pynvim:
 
 ```shell
 python2 -m pip install --user --upgrade pynvim
 python3 -m pip install --user --upgrade pynvim
 ```
 
+Then:
+
+1. Install [codicon](https://github.com/microsoft/vscode-codicons/blob/main/dist/codicon.ttf) font
 2. Clone [.tmux](https://github.com/gpakosz/.tmux) into ~ directory.
 3. Install NeoVim.
-4. Run :PlugInstall and restart NeoVim
-5. Run :VimspectorInstall
+4. Install Packer
+5. Run :PackerSync and restart NeoVim
 
 ## Dev
 
@@ -57,6 +65,7 @@ Install sdkman, rustup and run `nvm install node`
 * rusty-man
 * silicon
 * sqlx-cli
+* stylua
 * wasm-pack
 * websocat
 
@@ -65,7 +74,6 @@ Install sdkman, rustup and run `nvm install node`
 * alfred-kotlink
 * pyright
 * redoc-cli
-* sql-language-server
 * tslint
 * typescript
 * typings
@@ -85,8 +93,7 @@ Install sdkman, rustup and run `nvm install node`
 
 1. Meeter
 2. GameTrack
-3. sdkman
-4. [EurKey](https://eurkey.steffen.bruentjen.eu)
-5. MarkText (cask) or Marxico
-6. Dash
-7. ngrok (cask)
+3. [EurKey](https://eurkey.steffen.bruentjen.eu)
+4. MarkText (cask) or Marxico
+5. Dash
+6. ngrok (cask)
