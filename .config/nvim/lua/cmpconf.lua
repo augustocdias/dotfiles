@@ -4,7 +4,7 @@ local cmp = require('cmp')
 local Rule = require('nvim-autopairs.rule')
 local npairs = require('nvim-autopairs')
 
-lspkind_opts = {
+local lspkind_opts = {
     with_text = true,
     preset = 'codicons', -- need to install font https://github.com/microsoft/vscode-codicons/blob/main/dist/codicon.ttf
 }
@@ -93,14 +93,15 @@ require('nvim-treesitter.configs').setup({
     ensure_installed = 'maintained', -- one of 'all', 'maintained' (parsers with maintainers), or a list of languages
     highlight = {
         enable = true,
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = true,
+        -- add languages not supported by treesitter here
+        additional_vim_regex_highlighting = false,
     },
     indent = {
         enable = true,
+        disable = {
+            'rust',
+            'python',
+        },
     },
     matchup = {
         enable = true,
@@ -122,6 +123,17 @@ require('nvim-treesitter.configs').setup({
         },
     },
 })
+
+require('vim.treesitter.query').set_query(
+    'rust',
+    'injections',
+    [[
+((
+  (raw_string_literal) @constant
+  (#match? @constant "(SELECT|select|INSERT|insert|UPDATE|update|DELETE|delete).*")
+) @injection.content (#set! injection.language "sql"))
+]]
+) -- inject sql in raw_string_literals
 
 -- auto pairs setup
 npairs.setup()

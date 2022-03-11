@@ -17,18 +17,7 @@ vim.cmd([[
 ]])
 
 -- show box with diagnostics
-vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]])
-
--- auto show code lenses
-vim.cmd([[autocmd BufEnter,InsertLeave * silent! lua vim.lsp.codelens.refresh()]])
-
--- auto format file on save
-vim.cmd([[
-    augroup Format
-        autocmd!
-        autocmd BufWritePre *.{py,rs,js,ts,c,cpp,h,hpp,sh,fish,go,md,lua,json,java,cs} silent! undojoin | lua vim.lsp.buf.formatting_seq_sync()
-    augroup END
-]])
+vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float({focusable=false})]])
 
 -- Prevent accidental writes to buffers that shouldn't be edited
 vim.cmd([[
@@ -60,26 +49,27 @@ vim.cmd([[
     autocmd BufRead *.md set filetype=markdown
 ]])
 
--- Highlight text at cursor position
-vim.api.nvim_command([[autocmd CursorHold  * silent! lua vim.lsp.buf.document_highlight()]])
-vim.api.nvim_command([[autocmd CursorHoldI * silent! lua vim.lsp.buf.document_highlight()]])
-vim.api.nvim_command([[autocmd CursorMoved * silent! lua vim.lsp.buf.clear_references()]])
-
 -- Highlight yanked text
 vim.api.nvim_command(
     [[autocmd TextYankPost * lua require'vim.highlight'.on_yank({ higroup = 'IncSearch', timeout = 1000 })]]
 )
 
--- Disable folding on alpha buffer
--- disable highlight for aplpha buffer
-vim.cmd([[
-    augroup alpha-dashboard
-        autocmd!
-        autocmd FileType alpha setlocal nofoldenable
-    augroup END
-]])
-
 -- Auto close NvimTree when a file is opened
 vim.api.nvim_command(
-    [[autocmd BufHidden NvimTree lua vim.schedule(function() require('bufferline.state').set_offset(0) end)]]
+    [[autocmd BufWipeout NvimTree_* lua vim.schedule(function() require('bufferline.state').set_offset(0) end)]]
 )
+
+function leave_snippet()
+    if
+        ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
+        and require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
+        and not require('luasnip').session.jump_active
+    then
+        require('luasnip').unlink_current()
+    end
+end
+
+-- stop snippets when you leave to normal mode
+vim.api.nvim_command([[
+    autocmd ModeChanged * lua leave_snippet()
+]])

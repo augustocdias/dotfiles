@@ -1,6 +1,24 @@
 local lsp_status = require('lsp-status')
 lsp_status.register_progress()
 
+local default_on_attach = function(client, bufnr)
+    lsp_status.on_attach(client)
+    if client.resolved_capabilities.code_lens then
+        -- auto show code lenses
+        vim.cmd([[autocmd BufEnter,InsertLeave <buffer> silent! lua vim.lsp.codelens.refresh()]])
+    end
+    if client.resolved_capabilities.document_highlight then
+        -- Highlight text at cursor position
+        vim.cmd([[autocmd CursorHold  <buffer> silent! lua vim.lsp.buf.document_highlight()]])
+        vim.cmd([[autocmd CursorHoldI <buffer> silent! lua vim.lsp.buf.document_highlight()]])
+        vim.cmd([[autocmd CursorMoved <buffer> silent! lua vim.lsp.buf.clear_references()]])
+    end
+    if client.resolved_capabilities.document_formatting then
+        -- auto format file on save
+        vim.cmd([[autocmd BufWritePre <buffer> silent! undojoin | lua vim.lsp.buf.formatting_seq_sync()]])
+    end
+end
+
 local function ensure_server(name)
     local lsp_installer = require('nvim-lsp-installer.servers')
     local _, server = lsp_installer.get_server(name)
@@ -17,22 +35,22 @@ capabilities = vim.tbl_extend('keep', capabilities, lsp_status.capabilities)
 
 --lua
 ensure_server('sumneko_lua'):setup({
-    on_attach = lsp_status.on_attach,
+    on_attach = default_on_attach,
     capabilities = capabilities,
 })
 -- bash
 ensure_server('bashls'):setup({
-    on_attach = lsp_status.on_attach,
+    on_attach = default_on_attach,
     capabilities = capabilities,
 })
 -- C#
 ensure_server('omnisharp'):setup({
-    on_attach = lsp_status.on_attach,
+    on_attach = default_on_attach,
     capabilities = capabilities,
 })
 -- python
 ensure_server('pyright'):setup({
-    on_attach = lsp_status.on_attach,
+    on_attach = default_on_attach,
     capabilities = capabilities,
 })
 -- typescript
@@ -40,10 +58,7 @@ ensure_server('tsserver'):setup({
     init_options = require('nvim-lsp-ts-utils').init_options,
     capabilities = capabilities,
     on_attach = function(client, bufnr)
-        lsp_status.on_attach(client)
-        -- disable tsserver formatting if you plan on formatting via null-ls
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
+        lsp_status.on_attach(client, bufnr)
 
         local ts_utils = require('nvim-lsp-ts-utils')
 
@@ -125,7 +140,7 @@ require('rust-tools').setup({
         },
     },
     server = {
-        on_attach = lsp_status.on_attach,
+        on_attach = default_on_attach,
         capabilities = capabilities,
         -- cmd = rust_server:get_default_options().cmd,
         settings = {
@@ -181,13 +196,13 @@ require('rust-tools').setup({
 require('crates').setup({})
 -- yaml
 ensure_server('yamlls'):setup({
-    on_attach = lsp_status.on_attach,
+    on_attach = default_on_attach,
     capabilities = capabilities,
 })
 -- json
 local jsonls = ensure_server('jsonls')
 jsonls:setup({
-    on_attach = lsp_status.on_attach,
+    on_attach = default_on_attach,
     capabilities = capabilities,
     commands = {
         Format = {
@@ -196,17 +211,22 @@ jsonls:setup({
             end,
         },
     },
+    settings = {
+        json = {
+            schemas = require('schemastore').json.schemas(),
+        },
+    },
 })
 -- docker
 ensure_server('dockerls'):setup({
-    on_attach = lsp_status.on_attach,
+    on_attach = default_on_attach,
     capabilities = capabilities,
 })
 -- deno
 -- ensure_server('denols'):setup({})
 -- sql
 ensure_server('sqlls'):setup({
-    on_attach = lsp_status.on_attach,
+    on_attach = default_on_attach,
     capabilities = capabilities,
     cmd = { 'sql-language-server', 'up', '--method', 'stdio' },
 })
@@ -215,8 +235,8 @@ local java_server = ensure_server('jdtls')
 function start_java()
     require('jdtls').start_or_attach({
         capabilities = capabilities,
-        on_attach = function(client)
-            lsp_status.on_attach(client)
+        on_attach = function(client, bufnr)
+            default_on_attach(client, bufnr)
             require('jdtls.setup').add_commands()
         end,
         cmd = java_server:get_default_options().cmd,
@@ -253,7 +273,7 @@ vim.diagnostic.config({
 
 -- null-ls
 local null_ls = require('null-ls')
-null_ls.config({
+null_ls.setup({
     sources = {
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.clang_format,
@@ -281,6 +301,6 @@ null_ls.config({
         null_ls.builtins.diagnostics.yamllint,
         null_ls.builtins.code_actions.refactoring,
     },
+    on_attach = default_on_attach,
 })
-require('lspconfig')['null-ls'].setup({})
 require('lsp_signature').setup({})

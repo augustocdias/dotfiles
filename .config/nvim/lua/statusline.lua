@@ -19,20 +19,24 @@ lualine.setup({
             },
             {
                 function()
-                    return require('lsp-status').status()
+                    local sig = require('lsp_signature').status_line()
+                    return sig.hint
                 end,
             },
         },
         lualine_x = {
+            require('weather.lualine').default_c({}),
             'encoding',
             'filetype',
         },
-        lualine_y = { 'progress' },
+        lualine_y = {
+            'progress',
+        },
         lualine_z = {
             'location',
             {
                 'diagnostics',
-                sources = { 'nvim_lsp' },
+                sources = { 'nvim_diagnostic' },
                 symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
             },
         },

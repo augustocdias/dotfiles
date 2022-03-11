@@ -29,6 +29,10 @@ vim.g.secure_modelines_allowed_items = {
     'colorcolumn',
 }
 
+-- disable legacy vim filetype detection in favor of new lua based from neovim
+vim.g.do_filetype_lua = true
+vim.g.did_load_filetypes = false
+
 -- replace grep with rg
 vim.go.grepprg = 'rg --no-heading --vimgrep'
 vim.go.grepformat = '%f:%l:%c:%m'
@@ -114,7 +118,7 @@ vim.o.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,resize,winpos
 
 -- Trouble
 require('trouble').setup({
-    use_lsp_diagnostic_signs = true,
+    use_diagnostic_signs = true,
 })
 
 -- Abbreviations
@@ -158,16 +162,10 @@ vim.o.listchars = 'nbsp:¬,extends:»,precedes:«,trail:•'
 vim.o.list = true
 
 -- Nvim Tree settings
-vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_git_hl = 1
 vim.g.nvim_tree_highlight_opened_files = 1
 vim.g.nvim_tree_group_empty = 1
-vim.g.nvim_tree_disable_window_picker = 1
-vim.g.nvim_tree_window_picker_exclude = {
-    filetype = { 'notify', 'packer', 'qf' },
-    buftype = { 'terminal' },
-}
 require('nvim-tree').setup({
     auto_open = false,
     auto_close = true,
@@ -180,12 +178,24 @@ require('nvim-tree').setup({
     filters = {
         custom = { '.rbc$', '~$', '.pyc$', '.db$', '.sqlite$', '__pycache__', '.git', '.cache' },
     },
+    actions = {
+        open_file = {
+            quit_on_open = true,
+            window_picker = {
+                enable = false,
+                exclude = {
+                    filetype = { 'notify', 'packer', 'qf' },
+                    buftype = { 'terminal' },
+                },
+            },
+        },
+    },
 })
 
 -- banlkline
 require('indent_blankline').setup({
     char = '|',
-    filetype_exclude = { 'packer', 'alpha' },
+    filetype_exclude = { 'packer', 'startup' },
     buftype_exclude = { 'terminal' },
 })
 
@@ -262,16 +272,20 @@ require('sidebar-nvim').setup({
     side = 'left',
     initial_width = 30,
     update_interval = 1000,
-    sections = { 'git-status', 'lsp-diagnostics', 'todos', 'containers' },
-    ignored_paths = { '~' },
+    hide_statusline = true,
+    sections = { 'git', 'todos', 'symbols', 'diagnostics', 'containers' },
+    todos = {
+        ignored_paths = { '~' },
+        initially_closed = false,
+    },
 })
 
 -- Telescope
 require('telescope').setup({
     defaults = {
-        file_previewer = require('telescope.previewers').cat.new,
-        grep_previewer = require('telescope.previewers').vimgrep.new,
-        qflist_previewer = require('telescope.previewers').qflist.new,
+        -- file_previewer = require('telescope.previewers').cat.new,
+        -- grep_previewer = require('telescope.previewers').vimgrep.new,
+        -- qflist_previewer = require('telescope.previewers').qflist.new,
     },
 })
 require('telescope').load_extension('fzf')
@@ -296,3 +310,13 @@ require('Comment').setup({
 vim.g.neovide_no_idle = true
 vim.g.neovide_input_use_logo = true
 vim.g.neovide_cursor_antialiasing = true
+
+-- Enhanced line movements. Default mappings A+hjkl
+require('gomove').setup({})
+
+-- setup spectre
+require('spectre').setup()
+
+-- enable colors for ulttest
+vim.g.ultest_use_pty = true
+vim.g.ultest_running_sign = '⦿'

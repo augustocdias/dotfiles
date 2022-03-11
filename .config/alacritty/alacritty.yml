@@ -25,6 +25,12 @@ window:
 
   # Allow terminal applications to change Alacritty's window title.
   dynamic_title: true
+  # Background opacity
+  #
+  # Window opacity as a floating point number from `0.0` to `1.0`.
+  # The value `0.0` is completely transparent and `1.0` is opaque.
+  opacity: 0.95
+
 
 #scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -66,7 +72,7 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Victor Mono
+    family: VictorMono Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
     style: Italic
@@ -134,12 +140,6 @@ font:
   #     args: ["Hello, World!"]
   #
   #command: None
-
-# Background opacity
-#
-# Window opacity as a floating point number from `0.0` to `1.0`.
-# The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.95
 
 selection:
   # This string contains all characters that are used as separators for
@@ -690,39 +690,7 @@ key_bindings:
   # Print all received window events.
   #print_events: false
 
-# Colors (One Dark)
-# colors:
-#   # Default colors
-#   primary:
-#     background: '#282c34'
-#     foreground: '#abb2bf'
-
-#   # Normal colors
-#   normal:
-#     # NOTE: Use '#131613' for the `black` color if you'd like to see
-#     # black text on the background.
-#     black:   '#282c34'
-#     red:     '#e06c75'
-#     green:   '#98c379'
-#     yellow:  '#d19a66'
-#     blue:    '#61afef'
-#     magenta: '#c678dd'
-#     cyan:    '#56b6c2'
-#     white:   '#abb2bf'
-
-#   # Bright colors
-#   bright:
-#     black:   '#5c6370'
-#     red:     '#e06c75'
-#     green:   '#98c379'
-#     yellow:  '#d19a66'
-#     blue:    '#61afef'
-#     magenta: '#c678dd'
-#     cyan:    '#56b6c2'
-#     white:   '#ffffff'
-
 # Colors TokyoNight
-# TokyoNight Alacritty Colors
 colors:
   # Default colors
   primary:

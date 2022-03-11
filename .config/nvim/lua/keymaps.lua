@@ -64,6 +64,8 @@ wk.register({
         g = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String' },
         l = { '<cmd>lua require("telescope.builtin").live_grep()<CR>', 'Live Grep' },
         r = { '<cmd>lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>', 'Live Grep Raw' },
+        s = { '<cmd>lua require("spectre").open()<CR>', 'Spectre' },
+        w = { '<cmd>lua require("spectre").open_visual({select_word = true})<CR>', 'Spectre Current Word' },
     },
     g = {
         name = 'Git',
@@ -73,6 +75,11 @@ wk.register({
         l = { '<cmd>lua require("telescope.builtin").git_bcommits()<CR>', 'Commit Log Current Buffer' },
         b = { '<cmd>lua require("telescope.builtin").git_branches()<CR>', 'Branches' },
         t = { '<cmd>lua require("telescope.builtin").git_stash()<CR>', 'Stash' },
+        d = { ':DiffviewOpen<CR>', 'Open Diff View' },
+        x = { ':DiffviewClose<CR>', 'Close Diff View' },
+        r = { ':DiffviewRefresh<CR>', 'Diff View Refresh' },
+        e = { ':DiffviewFocusFiles<CR>', 'Diff View Focus Files' },
+        h = { ':DiffviewFileHistory<CR>', 'Diff View File History' },
     },
     l = {
         name = 'LSP',
@@ -175,24 +182,20 @@ keymap('n', '/', '/\\v', no_remap_opt)
 keymap('c', '%s/', '%sm/', no_remap_opt)
 
 -- NvimTree
-function _tree_find()
-    require('bufferline.state').set_offset(31, 'FileTree')
-    require('nvim-tree').find_file(true)
-end
 function _tree_toggle()
-    if require('nvim-tree.view').win_open() then
-        require('bufferline.state').set_offset(0)
-    else
-        require('bufferline.state').set_offset(31, 'FileTree')
-        if require('sidebar-nvim.view').win_open() then
-            require('sidebar-nvim').close()
+    if not require('sidebar-nvim.view').is_win_open() then
+        if require('nvim-tree.view').is_visible() then
+            require('bufferline.state').set_offset(0)
+        else
+            require('bufferline.state').set_offset(31, 'FileTree')
+            require('nvim-tree.lib').refresh_tree()
         end
-        require('nvim-tree.lib').refresh_tree()
+    else
+        require('sidebar-nvim').close()
     end
     require('nvim-tree').toggle()
 end
-keymap('n', '<F2>', '<cmd>lua _tree_find()<CR>', no_remap_opt)
-keymap('n', '<F3>', '<cmd>lua _tree_toggle()<CR>', no_remap_opt)
+keymap('n', '<F2>', '<cmd>lua _tree_toggle()<CR>', no_remap_opt)
 
 -- terminal
 -- lazygit
@@ -268,12 +271,12 @@ keymap('c', '<C-k>', '<Up>', no_remap_opt)
 keymap('c', '<C-l>', '<Right>', no_remap_opt)
 
 -- Move lines
-keymap('n', '<A-j>', ':m .+0<CR>==', no_remap_opt)
-keymap('n', '<A-k>', ':m .-2<CR>==', no_remap_opt)
-keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', no_remap_opt)
-keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', no_remap_opt)
-keymap('v', '<A-j>', ":m '>+1<CR>gv=gv", no_remap_opt)
-keymap('v', '<A-k>', ":m '<-2<CR>gv=gv", no_remap_opt)
+-- keymap('n', '<A-j>', ':m .+1<CR>==', no_remap_opt)
+-- keymap('n', '<A-k>', ':m .-2<CR>==', no_remap_opt)
+-- keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', no_remap_opt)
+-- keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', no_remap_opt)
+-- keymap('v', '<A-j>', ":m '>+1<CR>gv=gv", no_remap_opt)
+-- keymap('v', '<A-k>', ":m '<-2<CR>gv=gv", no_remap_opt)
 
 -- Move between windows with arrow keys
 keymap('n', '<left>', '<C-w><left>', no_remap_opt)
@@ -289,14 +292,16 @@ keymap('n', '<leader>,', ':set invlist<CR>', no_remap_opt)
 
 -- I can type :help on my own, thanks.
 function _sidebar_toggle()
-    if not require('nvim-tree.view').win_open() then
-        if require('sidebar-nvim.view').win_open() then
+    if not require('nvim-tree.view').is_visible() then
+        if require('sidebar-nvim.view').is_win_open() then
             require('bufferline.state').set_offset(0)
         else
             require('bufferline.state').set_offset(31, 'FileTree')
         end
-        require('sidebar-nvim').toggle()
+    else
+        require('nvim-tree.view').close()
     end
+    require('sidebar-nvim').toggle()
 end
 keymap('i', '<F1>', '<Esc>', {})
 keymap('c', '<F1>', '<Esc>', {})
@@ -310,8 +315,8 @@ keymap('i', '<C-s>', '<C-o>:wa<CR>', no_remap_opt)
 
 -- Goto previous/next diagnostic warning/error
 -- Use `[g` and `]g` to navigate diagnostics
-keymap('n', '[g', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', silent_opt)
-keymap('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', silent_opt)
+keymap('n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<CR>', silent_opt)
+keymap('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>', silent_opt)
 
 -- GoTo code navigation
 keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', silent_opt)
@@ -322,6 +327,7 @@ keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references({ includeDeclaration = false 
 
 -- Documentation
 keymap('i', '<M-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent_opt)
+keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent_opt)
 -- calling twice make the cursor go into the float window. good for navigating big docs
 keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', silent_opt)
 
@@ -355,3 +361,22 @@ keymap('n', '<S-F10>', ':lua require"dap".run_to_cursor()', silent_opt)
 keymap('n', '<F11>', ':lua require"dap".step_into()', silent_opt)
 keymap('n', '<S-F11>', ':lua require"dap".step_out()', silent_opt)
 keymap('x', '<leader>e', ':lua require("dap.ui.widgets").hover()', silent_opt)
+
+-- workaround for neovide
+-- keymap('n', '¡', '<M-1>', {})
+-- keymap('n', 'ª', '<M-2>', {})
+-- keymap('n', 'º', '<M-3>', {})
+-- keymap('n', '£', '<M-4>', {})
+-- keymap('n', '€', '<M-5>', {})
+-- keymap('n', '^', '<M-6>', {})
+-- keymap('n', '˚', '<M-8>', {})
+-- keymap('n', '„', '<M-9>', {})
+-- keymap('n', '”', '<M-0>', {})
+-- keymap('n', 'ï', '<M-i>', {})
+-- keymap('n', 'ú', '<A-j>', {})
+-- keymap('n', 'ĳ', '<A-k>', {})
+-- keymap('i', 'ú', '<A-j>', {})
+-- keymap('i', 'ĳ', '<A-k>', {})
+-- keymap('v', 'ú', '<A-j>', {})
+-- keymap('v', 'ĳ', '<A-k>', {})
+-- keymap('n', 'è', '<M-f>', {})

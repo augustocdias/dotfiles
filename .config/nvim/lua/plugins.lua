@@ -29,8 +29,10 @@ require('packer').startup({
             requires = { 'jose-elias-alvarez/null-ls.nvim', 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
         }) -- improve typescript
         use({ 'ray-x/lsp_signature.nvim' }) -- show signature from methods as float windows
+        use('b0o/schemastore.nvim') -- adds schemas for json lsp
 
         -- Helpers
+        use('tpope/vim-repeat') -- adds repeat functionality for other plugins
         use({
             'folke/which-key.nvim',
             config = function()
@@ -41,20 +43,27 @@ require('packer').startup({
         use('numToStr/Comment.nvim') -- gcc to comment/uncomment line
         use('blackCauldron7/surround.nvim') -- add surround commands
         use('ggandor/lightspeed.nvim') -- hop to different parts of the buffer with s + character
+        use('booperlv/nvim-gomove') -- makes better line moving
+        use('nvim-pack/nvim-spectre') -- special search and replace buffer
 
         -- UI and Themes
-        use({
-            'goolord/alpha-nvim',
-            requires = { 'kyazdani42/nvim-web-devicons' },
-        })
+        use('stevearc/dressing.nvim') -- overrides the default vim input to provide better visuals
+        use('rcarriga/nvim-notify') -- overides the default vim notify method for a floating window
+        use('j-hui/fidget.nvim') -- status progress for lsp servers
         use({ 'nvim-lualine/lualine.nvim', requires = 'kyazdani42/nvim-web-devicons' }) -- status line
-        -- use 'windwp/windline.nvim' -- global status line TODO learn to setup
-        -- use('monsonjeremy/onedark.nvim') -- theme alternative: olimorris/onedarkpro.nvim
         use('folke/tokyonight.nvim') -- theme
+        use({ 'lalitmee/cobalt2.nvim', requires = 'tjdevries/colorbuddy.nvim' }) -- theme
         use({ 'romgrk/barbar.nvim', requires = 'kyazdani42/nvim-web-devicons' }) -- tabline
         use({ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }) -- show git indicators next to the line numbers (lines changed, added, etc.)
+        use({ 'sindrets/diffview.nvim', requires = { 'nvim-lua/plenary.nvim', 'kyazdani42/nvim-web-devicons' } }) -- creates a tab focused on diff view and git history
         use('lukas-reineke/indent-blankline.nvim') -- Adds a | to show indentation levels
         use({ 'folke/todo-comments.nvim', requires = 'nvim-lua/plenary.nvim' }) -- todo comments helper
+        use({
+            'wyattjsmith1/weather.nvim',
+            requires = {
+                'nvim-lua/plenary.nvim',
+            },
+        }) -- adds weather information to status line
 
         -- Misc
         use('segeljakt/vim-silicon') -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
@@ -71,7 +80,7 @@ require('packer').startup({
         use('nvim-lua/plenary.nvim')
 
         -- IDE stuff
-        use({ 'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons' })
+        use({ 'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons' }) -- file browser
         use('rmagatti/auto-session') -- session management
         use({ 'akinsho/toggleterm.nvim' }) -- better terminal
         use({
@@ -91,6 +100,7 @@ require('packer').startup({
             requires = 'kyazdani42/nvim-web-devicons',
         }) -- adds a bottom panel with lsp diagnostics, quickfixes, etc.
         use('GustavoKatel/sidebar.nvim') -- useful sidebar with todos, git status, etc.
+        use({ 'rcarriga/vim-ultest', requires = { 'vim-test/vim-test' }, run = ':UpdateRemotePlugins' }) -- test helpers. runs and show signs of test runs
 
         -- rust
         use('simrat39/rust-tools.nvim') -- rust support enhancements
@@ -104,5 +114,5 @@ require('packer').startup({
         use('theHamsta/nvim-dap-virtual-text') -- virtual text during debugging
         use('rcarriga/nvim-dap-ui') -- ui for nvim-dap
     end,
-    config = { compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua' },
+    config = { compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua', max_jobs = 10 },
 })

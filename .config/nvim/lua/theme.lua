@@ -1,13 +1,6 @@
 require('nvim-web-devicons').setup({ default = true })
--- require('onedark').setup({
---     transparent = true,
---     darkSidebar = true,
---     darkFloat = true,
---     hideInactiveStatusline = true,
---     sidebars = { 'packer', 'terminal', 'toggleterm' },
--- })
-
 require('gitsigns').setup({ signcolumn = true, numhl = true })
+require('diffview').setup({})
 
 vim.o.termguicolors = true
 vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor'
@@ -51,31 +44,37 @@ vim.g.tokyonight_transparent = true
 vim.g.tokyonight_style = 'night'
 vim.g.tokyonight_dark_sidebar = true
 vim.g.tokyight_dark_float = true
--- when using onedark, uncomment line 48 and comment this
+
 vim.cmd([[colorscheme tokyonight]])
+-- require('colorbuddy').colorscheme('cobalt2')
 
-local alpha = require('alpha')
-local dashboard = require('alpha.themes.dashboard')
+-- Notify
+local colors = require('tokyonight.colors').setup({})
+require('notify').setup({
+    stages = 'fade_in_slide_out',
+    background_colour = colors.bg_dark,
+})
+-- overrides vim notification method
+vim.notify = require('notify')
 
--- Set header
-dashboard.section.header.val = {
-    '███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗',
-    '████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║',
-    '██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║',
-    '██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
-    '██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
-    '╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
-}
+-- weather config
+require('weather').setup({
+    openweathermap = {
+        app_id = {
+            var_name = 'WEATHER_TOKEN',
+        },
+    },
+    weather_icons = require('weather.other_icons').nerd_font,
+})
+require('weather.notify').start(70, 'info')
 
--- Set menu
-dashboard.section.buttons.val = {
-    dashboard.button('e', '  > New file', ':ene <BAR> startinsert <CR>'),
-    dashboard.button('f', '  > Open Session', '<cmd>lua require("session-lens").search_session()<CR>'),
-    dashboard.button('r', '  > Recent', ':Telescope oldfiles<CR>'),
-    dashboard.button('s', '  > Settings', ':e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd<CR>'),
-    dashboard.button('q', '  > Quit NVIM', ':qa<CR>'),
-}
-dashboard.section.footer.val = require('alpha.fortune')
-
--- Send config to alpha
-alpha.setup(dashboard.opts)
+-- lsp status progress
+require('fidget').setup({
+    window = {
+        blend = 0,
+        relative = 'editor',
+    },
+    text = {
+        spinner = 'dots',
+    },
+})
