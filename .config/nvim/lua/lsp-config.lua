@@ -1,21 +1,39 @@
-local lsp_status = require('lsp-status')
-lsp_status.register_progress()
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = function(name)
+    vim.api.nvim_create_augroup(name, { clear = true })
+end
 
 local default_on_attach = function(client, bufnr)
-    lsp_status.on_attach(client)
     if client.resolved_capabilities.code_lens then
-        -- auto show code lenses
-        vim.cmd([[autocmd BufEnter,InsertLeave <buffer> silent! lua vim.lsp.codelens.refresh()]])
+        autocmd({ 'BufEnter', 'InsertLeave' }, {
+            desc = 'Auto show code lenses',
+            pattern = '<buffer>',
+            command = 'silent! lua vim.lsp.codelens.refresh()',
+        })
     end
     if client.resolved_capabilities.document_highlight then
+        local group = augroup('HighlightLSPSymbols')
         -- Highlight text at cursor position
-        vim.cmd([[autocmd CursorHold  <buffer> silent! lua vim.lsp.buf.document_highlight()]])
-        vim.cmd([[autocmd CursorHoldI <buffer> silent! lua vim.lsp.buf.document_highlight()]])
-        vim.cmd([[autocmd CursorMoved <buffer> silent! lua vim.lsp.buf.clear_references()]])
+        autocmd({ 'CursorHold', 'CursorHoldI' }, {
+            desc = 'Highlight references to current symbol under cursor',
+            pattern = '<buffer>',
+            command = 'silent! lua vim.lsp.buf.document_highlight()',
+            group = group,
+        })
+        autocmd({ 'CursorMoved' }, {
+            desc = 'Clear highlights when cursor is moved',
+            pattern = '<buffer>',
+            command = 'silent! lua vim.lsp.buf.clear_references()',
+            group = group,
+        })
     end
     if client.resolved_capabilities.document_formatting then
         -- auto format file on save
-        vim.cmd([[autocmd BufWritePre <buffer> silent! undojoin | lua vim.lsp.buf.formatting_seq_sync()]])
+        autocmd({ 'BufWritePre' }, {
+            desc = 'Auto format file before saving',
+            pattern = '<buffer>',
+            command = 'silent! undojoin | lua vim.lsp.buf.formatting_seq_sync()',
+        })
     end
 end
 
@@ -31,7 +49,6 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-capabilities = vim.tbl_extend('keep', capabilities, lsp_status.capabilities)
 
 --lua
 ensure_server('sumneko_lua'):setup({
@@ -58,8 +75,7 @@ ensure_server('tsserver'):setup({
     init_options = require('nvim-lsp-ts-utils').init_options,
     capabilities = capabilities,
     on_attach = function(client, bufnr)
-        lsp_status.on_attach(client, bufnr)
-
+        default_on_attach(client, bufnr)
         local ts_utils = require('nvim-lsp-ts-utils')
 
         -- defaults
@@ -132,26 +148,21 @@ require('rust-tools').setup({
         hover_actions = {
             auto_focus = true,
         },
-        debuggables = {
-            use_telescope = true,
-        },
-        runnables = {
-            use_telescope = true,
-        },
     },
     server = {
         on_attach = default_on_attach,
         capabilities = capabilities,
+        standalone = false,
         -- cmd = rust_server:get_default_options().cmd,
         settings = {
             ['rust-analyzer'] = {
                 assist = {
-                    importGranularity = 'module',
                     importPrefix = 'by_self',
                 },
                 diagnostics = {
                     -- https://github.com/rust-analyzer/rust-analyzer/issues/6835
                     disabled = { 'unresolved-macro-call' },
+                    enableExperimental = true,
                 },
                 completion = {
                     autoimport = {
@@ -185,7 +196,8 @@ require('rust-tools').setup({
                 },
                 checkOnSave = {
                     enable = true,
-                    command = 'clippy',
+                    -- https://github.com/rust-analyzer/rust-analyzer/issues/9768
+                    -- command = 'clippy',
                     allFeatures = true,
                 },
             },
@@ -232,24 +244,27 @@ ensure_server('sqlls'):setup({
 })
 -- java
 local java_server = ensure_server('jdtls')
-function start_java()
-    require('jdtls').start_or_attach({
-        capabilities = capabilities,
-        on_attach = function(client, bufnr)
-            default_on_attach(client, bufnr)
-            require('jdtls.setup').add_commands()
-        end,
-        cmd = java_server:get_default_options().cmd,
-        root_dir = require('jdtls.setup').find_root({
-            'pom.xml',
-            'settings.gradle',
-            'settings.gradle.kts',
-            'build.gradle',
-            'build.gradle.kts',
-        }),
-    })
-end
-vim.api.nvim_command([[autocmd FileType java lua start_java() ]])
+autocmd({ 'FileType' }, {
+    desc = 'Start java LSP server',
+    pattern = 'java',
+    callback = function()
+        require('jdtls').start_or_attach({
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+                default_on_attach(client, bufnr)
+                require('jdtls.setup').add_commands()
+            end,
+            cmd = java_server:get_default_options().cmd,
+            root_dir = require('jdtls.setup').find_root({
+                'pom.xml',
+                'settings.gradle',
+                'settings.gradle.kts',
+                'build.gradle',
+                'build.gradle.kts',
+            }),
+        })
+    end,
+})
 
 -- general LSP config
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {

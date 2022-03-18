@@ -20,7 +20,6 @@ require('packer').startup({
             },
         })
         use('onsails/lspkind-nvim') -- show pictograms in the auto complete popup
-        use('nvim-lua/lsp-status.nvim') -- get status from lsp to show in status line
         use('rafamadriz/friendly-snippets') -- snippets for many languages
         use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }) -- enhancements in highlighting and virtual text
         use({ 'jose-elias-alvarez/null-ls.nvim', requires = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' } }) -- can be useful to integrate with non LSP sources like eslint
@@ -41,7 +40,7 @@ require('packer').startup({
         }) -- help with vim commands.
         use('andymass/vim-matchup') -- Enhances the %
         use('numToStr/Comment.nvim') -- gcc to comment/uncomment line
-        use('blackCauldron7/surround.nvim') -- add surround commands
+        use('ur4ltz/surround.nvim') -- add surround commands
         use('ggandor/lightspeed.nvim') -- hop to different parts of the buffer with s + character
         use('booperlv/nvim-gomove') -- makes better line moving
         use('nvim-pack/nvim-spectre') -- special search and replace buffer
@@ -64,6 +63,7 @@ require('packer').startup({
                 'nvim-lua/plenary.nvim',
             },
         }) -- adds weather information to status line
+        use('meznaric/conmenu')
 
         -- Misc
         use('segeljakt/vim-silicon') -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
@@ -76,6 +76,7 @@ require('packer').startup({
                 require('stabilize').setup()
             end,
         }) -- stabilize buffer content on window open/close events
+        use('farmergreg/vim-lastplace') -- remembers cursor position with nice features in comparison to just an autocmd
         use('nvim-lua/popup.nvim')
         use('nvim-lua/plenary.nvim')
 
@@ -114,5 +115,5 @@ require('packer').startup({
         use('theHamsta/nvim-dap-virtual-text') -- virtual text during debugging
         use('rcarriga/nvim-dap-ui') -- ui for nvim-dap
     end,
-    config = { compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua', max_jobs = 10 },
+    config = { max_jobs = 10 },
 })

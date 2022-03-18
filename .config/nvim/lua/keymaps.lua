@@ -18,6 +18,9 @@ local no_remap_silent_opt = { noremap = true, silent = true }
 -- keymap('n', '<M-Down>' '<Plug>(VM-Add-Cursor-Down)', no_remap_opt)
 -- keymap('n', '<M-Up>' '<Plug>(VM-Add-Cursor-Up)', no_remap_opt)
 
+-- Context Menu
+keymap('n', '<M-c>', ':ConMenu<CR>', no_remap_opt)
+
 -- Increment/decrement
 keymap('n', '+', '<C-a>', no_remap_opt)
 keymap('n', '-', '<C-x>', no_remap_opt)

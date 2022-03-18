@@ -7,6 +7,7 @@ lualine.setup({
         section_separators = { left = '', right = '' },
         component_separators = { left = '', right = '' },
         disabled_filetypes = {},
+        globalstatus = true,
     },
     sections = {
         lualine_a = { 'mode' },
@@ -28,17 +29,24 @@ lualine.setup({
             require('weather.lualine').default_c({}),
             'encoding',
             'filetype',
+            {
+                'diagnostics',
+                sources = { 'nvim_diagnostic' },
+                symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+                diagnostics_color = {
+                    error = 'DiagnosticError',
+                    warn = 'DiagnosticWarn',
+                    info = 'DiagnosticInfo',
+                    hint = 'DiagnosticHint',
+                },
+                always_visible = true,
+            },
         },
         lualine_y = {
             'progress',
         },
         lualine_z = {
             'location',
-            {
-                'diagnostics',
-                sources = { 'nvim_diagnostic' },
-                symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
-            },
         },
     },
     inactive_sections = {
