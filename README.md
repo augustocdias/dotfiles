@@ -40,7 +40,7 @@ Then:
 2. Clone [.tmux](https://github.com/gpakosz/.tmux) into ~ directory.
 3. Install NeoVim.
 4. Install Packer
-5. Run :PackerSync and restart NeoVim
+5. Run `:PackerSync` and restart NeoVim
 
 ## Dev
 
@@ -104,3 +104,9 @@ Install sdkman, rustup and run `nvm install node`
 4. MarkText (cask) or Marxico
 5. Dash
 6. ngrok (cask)
+
+## To Remember
+
+1. If ssh doesn't work with the yubikey connected, run `gpg --card-status` and `ssh-add -L`. Both must work otherwise something is wrong. Check environment vars for the `SSH_AUTH_SOCK`.
+2. `ykman oath accounts code -s "SEARCH_QUERY"` returns the 2FA from the service queried in the yubikey.
+3. Create a file in the home with the name `.fish_variables` and call in it `set -xU VAR_NAME VAR_VAULE` to set secret values in fish env.
