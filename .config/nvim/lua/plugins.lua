@@ -1,5 +1,8 @@
 require('packer').startup({
     function(use)
+        use('lewis6991/impatient.nvim') -- speedup lua module load time
+        use('ciaranm/securemodelines') -- https://vim.fandom.com/wiki/Modeline_magic
+        use('nathom/filetype.nvim') -- replaces filetype load from vim for a more performant one
         use('wbthomason/packer.nvim') -- package manager
 
         -- Auto completion and LSP
@@ -14,9 +17,11 @@ require('packer').startup({
                 'hrsh7th/cmp-buffer',
                 'hrsh7th/cmp-path',
                 'hrsh7th/cmp-nvim-lua',
+                'hrsh7th/cmp-cmdline',
                 { 'tzachar/cmp-tabnine', run = './install.sh' },
                 'windwp/nvim-autopairs',
                 { 'Saecki/crates.nvim', requires = { 'nvim-lua/plenary.nvim' }, branch = 'main' },
+                'hrsh7th/cmp-nvim-lsp-document-symbol',
             },
         })
         use('onsails/lspkind-nvim') -- show pictograms in the auto complete popup
@@ -27,8 +32,9 @@ require('packer').startup({
             'jose-elias-alvarez/nvim-lsp-ts-utils',
             requires = { 'jose-elias-alvarez/null-ls.nvim', 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
         }) -- improve typescript
-        use({ 'ray-x/lsp_signature.nvim' }) -- show signature from methods as float windows
+        use('ray-x/lsp_signature.nvim') -- show signature from methods as float windows
         use('b0o/schemastore.nvim') -- adds schemas for json lsp
+        -- use({ 'github/copilot.vim', requires = { 'hrsh7th/cmp-copilot' } }) -- github copilot
 
         -- Helpers
         use('tpope/vim-repeat') -- adds repeat functionality for other plugins
@@ -50,7 +56,7 @@ require('packer').startup({
         use('rcarriga/nvim-notify') -- overides the default vim notify method for a floating window
         use('j-hui/fidget.nvim') -- status progress for lsp servers
         use({ 'nvim-lualine/lualine.nvim', requires = 'kyazdani42/nvim-web-devicons' }) -- status line
-        use('folke/tokyonight.nvim') -- theme
+        use('augustocdias/tokyonight.nvim') -- theme TODO: switch back to folke when PR is merged
         use({ 'lalitmee/cobalt2.nvim', requires = 'tjdevries/colorbuddy.nvim' }) -- theme
         use({ 'romgrk/barbar.nvim', requires = 'kyazdani42/nvim-web-devicons' }) -- tabline
         use({ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }) -- show git indicators next to the line numbers (lines changed, added, etc.)
@@ -67,9 +73,6 @@ require('packer').startup({
 
         -- Misc
         use('segeljakt/vim-silicon') -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
-        use('ciaranm/securemodelines') -- https://vim.fandom.com/wiki/Modeline_magic
-        use('lewis6991/impatient.nvim') -- speedup lua module load time
-        use('nathom/filetype.nvim') -- replaces filetype load from vim for a more performant one
         use({
             'luukvbaal/stabilize.nvim',
             config = function()
@@ -83,7 +86,7 @@ require('packer').startup({
         -- IDE stuff
         use({ 'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons' }) -- file browser
         use('rmagatti/auto-session') -- session management
-        use({ 'akinsho/toggleterm.nvim' }) -- better terminal
+        use('akinsho/toggleterm.nvim') -- better terminal
         use({
             'nvim-telescope/telescope.nvim',
             requires = {

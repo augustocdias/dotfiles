@@ -13,6 +13,7 @@ end
 local no_remap_opt = { noremap = true }
 local silent_opt = { silent = true }
 local no_remap_silent_opt = { noremap = true, silent = true }
+local no_remap_silent_expr_script_opt = { noremap = true, silent = true, expr = true, script = true }
 
 -- Visual Multi Cursors
 -- keymap('n', '<M-Down>' '<Plug>(VM-Add-Cursor-Down)', no_remap_opt)
@@ -20,6 +21,9 @@ local no_remap_silent_opt = { noremap = true, silent = true }
 
 -- Context Menu
 keymap('n', '<M-c>', ':ConMenu<CR>', no_remap_opt)
+
+-- Copilot accept
+keymap('i', '<M-c>', 'copilot#Accept("\\<CR>")', no_remap_silent_expr_script_opt)
 
 -- Increment/decrement
 keymap('n', '+', '<C-a>', no_remap_opt)
@@ -182,6 +186,7 @@ keymap('n', 'g*', 'g*zz', no_remap_silent_opt)
 -- Very magic by default
 keymap('n', '?', '?\\v', no_remap_opt)
 keymap('n', '/', '/\\v', no_remap_opt)
+keymap('n', '\\', '/@', no_remap_opt)
 keymap('c', '%s/', '%sm/', no_remap_opt)
 
 -- NvimTree

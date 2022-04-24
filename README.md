@@ -53,6 +53,7 @@ Install sdkman, rustup and run `nvm install node`
 * cargo-expand
 * cargo-generate
 * cargo-license
+* cargo-nextest
 * cargo-make
 * cargo-tree
 * cargo-update
@@ -62,7 +63,7 @@ Install sdkman, rustup and run `nvm install node`
 * hors
 * miri
 * rust-script
-* rusty-man
+* rusty-man (--locked)
 * silicon
 * sqlx-cli
 * stylua
@@ -79,6 +80,12 @@ Install sdkman, rustup and run `nvm install node`
 * typings
 * vsce
 * yarn
+* eslint
+* eslint_d
+* tslint
+* write-good
+* fixjson
+* redoc-cli
 
 ## Safari Extensions
 

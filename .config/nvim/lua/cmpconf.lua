@@ -4,6 +4,10 @@ local cmp = require('cmp')
 local Rule = require('nvim-autopairs.rule')
 local npairs = require('nvim-autopairs')
 
+-- copilot settings
+vim.g.copilot_no_tab_map = true
+vim.g.copilot_assume_mapped = true
+
 local lspkind_opts = {
     with_text = true,
     preset = 'codicons', -- need to install font https://github.com/microsoft/vscode-codicons/blob/main/dist/codicon.ttf
@@ -84,6 +88,20 @@ cmp.setup({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
         }),
+    },
+})
+
+require('cmp').setup.cmdline('/', {
+    sources = {
+        { name = 'nvim_lsp_document_symbol' },
+        { name = 'buffer' },
+    },
+})
+
+require('cmp').setup.cmdline(':', {
+    sources = {
+        { name = 'cmdline' },
+        { name = 'path' },
     },
 })
 

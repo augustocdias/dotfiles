@@ -162,13 +162,11 @@ vim.o.listchars = 'nbsp:¬,extends:»,precedes:«,trail:•'
 vim.o.list = true
 
 -- Nvim Tree settings
-vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_git_hl = 1
 vim.g.nvim_tree_highlight_opened_files = 1
 vim.g.nvim_tree_group_empty = 1
 require('nvim-tree').setup({
     auto_open = false,
-    auto_close = true,
     diagnostics = {
         enable = true,
     },
@@ -177,6 +175,11 @@ require('nvim-tree').setup({
     },
     filters = {
         custom = { '.rbc$', '~$', '.pyc$', '.db$', '.sqlite$', '__pycache__', '.git', '.cache' },
+    },
+    renderer = {
+        indent_markers = {
+            enable = true,
+        },
     },
     actions = {
         open_file = {
