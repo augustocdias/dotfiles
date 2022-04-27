@@ -95,6 +95,7 @@ require('packer').startup({
                 'gbrlsnchs/telescope-lsp-handlers.nvim',
                 'nvim-telescope/telescope-dap.nvim',
                 'nvim-telescope/telescope-live-grep-raw.nvim',
+                'nvim-telescope/telescope-file-browser.nvim',
                 { 'rmagatti/session-lens', requires = { 'rmagatti/auto-session' } },
                 { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
             },

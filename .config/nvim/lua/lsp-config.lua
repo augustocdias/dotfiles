@@ -190,6 +190,7 @@ require('rust-tools').setup({
                     enable = true,
                 },
                 inlayHints = {
+                    enable = true,
                     chainingHintsSeparator = '‣ ',
                     typeHintsSeparator = '‣ ',
                     typeHints = true,
@@ -197,7 +198,7 @@ require('rust-tools').setup({
                 checkOnSave = {
                     enable = true,
                     -- https://github.com/rust-analyzer/rust-analyzer/issues/9768
-                    -- command = 'clippy',
+                    command = 'clippy',
                     allFeatures = true,
                 },
             },

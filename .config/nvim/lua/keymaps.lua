@@ -46,7 +46,7 @@ wk.register({
         name = 'File',
         b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
         f = { '<cmd>lua require("telescope.builtin").find_files()<CR>', 'Files' },
-        w = { '<cmd>lua require("telescope.builtin").file_browser()<CR>', 'File Browser' },
+        w = { '<cmd>lua require("telescope").extensions.file_browser.file_browser()<CR>', 'File Browser' },
         o = { '<cmd>lua require("telescope.builtin").oldfiles()<CR>', 'Prev Open Files' },
     },
     v = {

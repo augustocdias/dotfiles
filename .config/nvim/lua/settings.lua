@@ -285,16 +285,13 @@ require('sidebar-nvim').setup({
 
 -- Telescope
 require('telescope').setup({
-    defaults = {
-        -- file_previewer = require('telescope.previewers').cat.new,
-        -- grep_previewer = require('telescope.previewers').vimgrep.new,
-        -- qflist_previewer = require('telescope.previewers').qflist.new,
-    },
+    defaults = {},
 })
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('lsp_handlers')
 require('telescope').load_extension('dap')
 require('telescope').load_extension('session-lens')
+require('telescope').load_extension('file_browser')
 
 require('filetype').setup({
     overrides = {
