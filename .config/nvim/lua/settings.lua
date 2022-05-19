@@ -43,7 +43,7 @@ vim.g.localvimrc_ask = 0
 -- size of cmd bar
 vim.go.cmdheight = 2
 -- You will have bad experience for diagnostic messages when it's default 4000.
-vim.go.updatetime = 300
+vim.go.updatetime = 100
 
 -- Editor settings
 vim.cmd('filetype plugin indent on')
@@ -322,3 +322,4 @@ vim.g.ultest_running_sign = '⦿'
 
 -- sets the winbar
 require('nvim-gps').setup()
+vim.wo.winbar = vim.api.nvim_eval("expand('%:t')")

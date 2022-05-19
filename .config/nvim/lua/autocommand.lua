@@ -50,7 +50,7 @@ autocmd({ 'CursorHold', 'CursorHoldI' }, {
     callback = function()
         local gps = require('nvim-gps')
         if gps.is_available() then
-            vim.wo.winbar = gps.get_location()
+            vim.wo.winbar = vim.api.nvim_eval("expand('%:t')") .. ' > ' .. gps.get_location()
         else
             vim.wo.winbar = vim.api.nvim_buf_get_name(0)
         end
