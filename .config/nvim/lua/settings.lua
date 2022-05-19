@@ -166,7 +166,6 @@ vim.g.nvim_tree_git_hl = 1
 vim.g.nvim_tree_highlight_opened_files = 1
 vim.g.nvim_tree_group_empty = 1
 require('nvim-tree').setup({
-    auto_open = false,
     diagnostics = {
         enable = true,
     },
@@ -320,3 +319,6 @@ require('spectre').setup()
 -- enable colors for ulttest
 vim.g.ultest_use_pty = true
 vim.g.ultest_running_sign = '⦿'
+
+-- sets the winbar
+require('nvim-gps').setup()

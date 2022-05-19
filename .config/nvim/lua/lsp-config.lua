@@ -4,14 +4,14 @@ local augroup = function(name)
 end
 
 local default_on_attach = function(client, bufnr)
-    if client.resolved_capabilities.code_lens then
+    if client.server_capabilities.code_lens then
         autocmd({ 'BufEnter', 'InsertLeave' }, {
             desc = 'Auto show code lenses',
             pattern = '<buffer>',
             command = 'silent! lua vim.lsp.codelens.refresh()',
         })
     end
-    if client.resolved_capabilities.document_highlight then
+    if client.server_capabilities.document_highlight then
         local group = augroup('HighlightLSPSymbols')
         -- Highlight text at cursor position
         autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -27,12 +27,12 @@ local default_on_attach = function(client, bufnr)
             group = group,
         })
     end
-    if client.resolved_capabilities.document_formatting then
+    if client.server_capabilities.document_formatting then
         -- auto format file on save
         autocmd({ 'BufWritePre' }, {
             desc = 'Auto format file before saving',
             pattern = '<buffer>',
-            command = 'silent! undojoin | lua vim.lsp.buf.formatting_seq_sync()',
+            command = 'silent! undojoin | lua vim.lsp.buf.formatting()',
         })
     end
 end

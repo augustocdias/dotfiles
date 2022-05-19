@@ -100,6 +100,7 @@ require('packer').startup({
                 { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
             },
         })
+        use('SmiteshP/nvim-gps') -- adds breadcrumbs
         use({
             'folke/trouble.nvim',
             requires = 'kyazdani42/nvim-web-devicons',
