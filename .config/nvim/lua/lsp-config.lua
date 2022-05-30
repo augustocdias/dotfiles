@@ -27,12 +27,12 @@ local default_on_attach = function(client, bufnr)
             group = group,
         })
     end
-    if client.server_capabilities.document_formatting then
+    if client.server_capabilities.document_formatting or client.server_capabilities.documentFormattingProvider then
         -- auto format file on save
         autocmd({ 'BufWritePre' }, {
             desc = 'Auto format file before saving',
             pattern = '<buffer>',
-            command = 'silent! undojoin | lua vim.lsp.buf.formatting()',
+            command = 'silent! undojoin | lua vim.lsp.buf.format({async = false})',
         })
     end
 end
@@ -320,3 +320,48 @@ null_ls.setup({
     on_attach = default_on_attach,
 })
 require('lsp_signature').setup({})
+require('nvim-gps').setup()
+
+local eval_gps = function()
+    local gps = require('nvim-gps')
+    if gps.is_available() then
+        return vim.api.nvim_eval("expand('%:t')") .. ' > ' .. gps.get_location()
+    else
+        return vim.api.nvim_buf_get_name(0)
+    end
+end
+
+function winbar_eval()
+    local columns = vim.api.nvim_get_option('columns')
+    local sig = require('lsp_signature').status_line(columns)
+
+    if sig == nil or sig.label == nil or sig.range == nil then
+        return ' ' .. eval_gps()
+    end
+    local label1 = sig.label
+    local label2 = ''
+    if sig.range then
+        label1 = sig.label:sub(1, sig.range['start'] - 1)
+        label2 = sig.label:sub(sig.range['end'] + 1, #sig.label)
+    end
+    local doc = sig.doc or ''
+    if #doc + #sig.label >= columns then
+        local trim = math.max(5, columns - #sig.label - #sig.hint - 10)
+        doc = doc:sub(1, trim) .. '...'
+        -- lprint(doc)
+    end
+
+    return eval_gps()
+        .. ' Signature: %#WinBarSignature#'
+        .. label1
+        .. '%*'
+        .. '%#WinBarSigActParm#'
+        .. sig.hint
+        .. '%*'
+        .. '%#WinBarSignature#'
+        .. label2
+end
+
+-- sets the winbar
+-- vim.wo.winbar = vim.api.nvim_eval("expand('%:t')")
+vim.o.winbar = '%{%v:lua.winbar_eval()%}'

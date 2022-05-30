@@ -319,7 +319,3 @@ require('spectre').setup()
 -- enable colors for ulttest
 vim.g.ultest_use_pty = true
 vim.g.ultest_running_sign = '⦿'
-
--- sets the winbar
-require('nvim-gps').setup()
-vim.wo.winbar = vim.api.nvim_eval("expand('%:t')")
