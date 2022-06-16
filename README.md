@@ -75,7 +75,6 @@ Install sdkman, rustup and run `nvm install node`
 * alfred-kotlink
 * pyright
 * redoc-cli
-* tslint
 * typescript
 * typings
 * vsce
@@ -85,7 +84,6 @@ Install sdkman, rustup and run `nvm install node`
 * tslint
 * write-good
 * fixjson
-* redoc-cli
 
 ## Safari Extensions
 
