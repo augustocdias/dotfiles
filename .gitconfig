@@ -1,7 +1,7 @@
 [user]
-	email = augusto@flowciety.de
+	email = augusto.c.dias@wire.com
 	name = Augusto
-	signingkey = 5E3BDCACC5117EF021966D024CBE3D4E4A19D53E
+	signingkey = 4CBE3D4E4A19D53E
 [pull]
 	rebase = true
 [diff]
