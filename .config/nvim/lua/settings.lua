@@ -1,5 +1,5 @@
 -- default shell
-vim.o.shell = '/usr/local/bin/fish'
+vim.o.shell = '/opt/homebrew/bin/fish'
 -- secure modelines
 vim.g.secure_modelines_allowed_items = {
     'textwidth',
