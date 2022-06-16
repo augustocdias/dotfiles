@@ -31,7 +31,6 @@ brew "tesseract"
 brew "ffmpeg"
 brew "fish"
 brew "flex", args: ["HEAD"]
-brew "fontforge", link: false
 brew "fswatch"
 brew "fzf"
 brew "gdb"
