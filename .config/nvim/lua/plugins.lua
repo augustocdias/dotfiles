@@ -6,8 +6,14 @@ require('packer').startup({
         use('wbthomason/packer.nvim') -- package manager
 
         -- Auto completion and LSP
-        use('neovim/nvim-lspconfig') -- collection of LSP configurations for nvim
-        use('williamboman/nvim-lsp-installer') -- auto installers for language servers
+        use({
+            'neovim/nvim-lspconfig',
+            requires = {
+                'williamboman/mason.nvim',
+                'williamboman/mason-lspconfig.nvim',
+                'WhoIsSethDaniel/mason-tool-installer.nvim',
+            },
+        }) -- collection of LSP configurations for nvim
         use({
             'hrsh7th/nvim-cmp', -- auto completion
             requires = {
@@ -22,11 +28,18 @@ require('packer').startup({
                 'windwp/nvim-autopairs',
                 { 'Saecki/crates.nvim', requires = { 'nvim-lua/plenary.nvim' }, branch = 'main' },
                 'hrsh7th/cmp-nvim-lsp-document-symbol',
+                {
+                    'zbirenbaum/copilot-cmp',
+                    module = 'copilot_cmp',
+                    requires = { 'zbirenbaum/copilot.lua' },
+                },
+                -- use({ 'github/copilot.vim' }), -- before first time using the lua version, this has to be installed and then run :Copilot to setup. Uninstall afterwards
             },
         })
         use('onsails/lspkind-nvim') -- show pictograms in the auto complete popup
         use('rafamadriz/friendly-snippets') -- snippets for many languages
         use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }) -- enhancements in highlighting and virtual text
+        use('nvim-treesitter/playground') -- TS PLayground for creating queries
         use({ 'jose-elias-alvarez/null-ls.nvim', requires = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' } }) -- can be useful to integrate with non LSP sources like eslint
         use({
             'jose-elias-alvarez/nvim-lsp-ts-utils',
@@ -46,8 +59,8 @@ require('packer').startup({
         }) -- help with vim commands.
         use('andymass/vim-matchup') -- Enhances the %
         use('numToStr/Comment.nvim') -- gcc to comment/uncomment line
-        use('ur4ltz/surround.nvim') -- add surround commands
-        use('ggandor/lightspeed.nvim') -- hop to different parts of the buffer with s + character
+        use('kylechui/nvim-surround') -- add surround commands
+        use('ggandor/leap.nvim') -- hop to different parts of the buffer with s + character
         use('booperlv/nvim-gomove') -- makes better line moving
         use('nvim-pack/nvim-spectre') -- special search and replace buffer
 
@@ -56,8 +69,9 @@ require('packer').startup({
         use('rcarriga/nvim-notify') -- overides the default vim notify method for a floating window
         use('j-hui/fidget.nvim') -- status progress for lsp servers
         use({ 'nvim-lualine/lualine.nvim', requires = 'kyazdani42/nvim-web-devicons' }) -- status line
-        use('augustocdias/tokyonight.nvim') -- theme TODO: switch back to folke when PR is merged
-        use({ 'lalitmee/cobalt2.nvim', requires = 'tjdevries/colorbuddy.nvim' }) -- theme
+        use({ 'augustocdias/tokyonight.nvim', opt = true }) -- theme TODO: switch back to folke when PR is merged
+        use({ 'olimorris/onedarkpro.nvim' }) -- theme
+        use({ 'catppuccin/nvim' }) -- theme
         use({ 'romgrk/barbar.nvim', requires = 'kyazdani42/nvim-web-devicons' }) -- tabline
         use({ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }) -- show git indicators next to the line numbers (lines changed, added, etc.)
         use({ 'sindrets/diffview.nvim', requires = { 'nvim-lua/plenary.nvim', 'kyazdani42/nvim-web-devicons' } }) -- creates a tab focused on diff view and git history
@@ -69,7 +83,8 @@ require('packer').startup({
                 'nvim-lua/plenary.nvim',
             },
         }) -- adds weather information to status line
-        use('meznaric/conmenu')
+        use({ 'dgrbrady/nvim-docker', opt = true }) -- docker manager. TODO: enable and configure when needed
+        use({ 'zbirenbaum/neodim', event = 'LspAttach', config = require('setup.neodim').setup })
 
         -- Misc
         use('segeljakt/vim-silicon') -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
@@ -80,6 +95,8 @@ require('packer').startup({
             end,
         }) -- stabilize buffer content on window open/close events
         use('farmergreg/vim-lastplace') -- remembers cursor position with nice features in comparison to just an autocmd
+        use({ 'bennypowers/nvim-regexplainer', opt = true }) -- shows popup explaining regex under cursor
+        use('augustocdias/gatekeeper.nvim') -- sets buffers outside the cwd as readonly
         use('nvim-lua/popup.nvim')
         use('nvim-lua/plenary.nvim')
 
@@ -96,17 +113,37 @@ require('packer').startup({
                 'nvim-telescope/telescope-dap.nvim',
                 'nvim-telescope/telescope-live-grep-raw.nvim',
                 'nvim-telescope/telescope-file-browser.nvim',
+                'nvim-telescope/telescope-symbols.nvim',
                 { 'rmagatti/session-lens', requires = { 'rmagatti/auto-session' } },
                 { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
             },
         })
-        use('SmiteshP/nvim-gps') -- adds breadcrumbs
+        use('SmiteshP/nvim-navic') -- adds breadcrumbs
         use({
             'folke/trouble.nvim',
             requires = 'kyazdani42/nvim-web-devicons',
         }) -- adds a bottom panel with lsp diagnostics, quickfixes, etc.
         use('GustavoKatel/sidebar.nvim') -- useful sidebar with todos, git status, etc.
-        use({ 'rcarriga/vim-ultest', requires = { 'vim-test/vim-test' }, run = ':UpdateRemotePlugins' }) -- test helpers. runs and show signs of test runs
+        use({
+            'nvim-neotest/neotest',
+            requires = {
+                'nvim-lua/plenary.nvim',
+                'nvim-treesitter/nvim-treesitter',
+                'antoinemadec/FixCursorHold.nvim',
+                'rouge8/neotest-rust',
+            },
+        }) -- test helpers. runs and show signs of test runs
+        use({
+            'pwntester/octo.nvim',
+            requires = {
+                'nvim-lua/plenary.nvim',
+                'nvim-telescope/telescope.nvim',
+                'kyazdani42/nvim-web-devicons',
+            },
+            config = function()
+                require('octo').setup()
+            end,
+        }) -- github manager for issues and pull requests
 
         -- rust
         use('simrat39/rust-tools.nvim') -- rust support enhancements

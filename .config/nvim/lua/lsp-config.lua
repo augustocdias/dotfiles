@@ -1,49 +1,81 @@
+require('mason').setup()
+require('mason-lspconfig').setup({
+    ensure_installed = { 'jdtls' },
+    automatic_installation = true,
+})
+require('mason-tool-installer').setup({
+    ensure_installed = {
+        'codelldb',
+        'eslint_d',
+        'black',
+        'clangd',
+        'ktlint',
+        'markdownlint',
+        'shfmt',
+        'stylua',
+        'codespell',
+        'vale',
+        'luacheck',
+        'pylint',
+        'write-good',
+        'yamllint',
+        'cmakelang',
+    },
+})
+
+local lspconfig = require('lspconfig')
+
 local autocmd = vim.api.nvim_create_autocmd
+-- local clearcmd = vim.api.nvim_clear_autocmds
 local augroup = function(name)
-    vim.api.nvim_create_augroup(name, { clear = true })
+    return vim.api.nvim_create_augroup(name, { clear = false })
 end
 
 local default_on_attach = function(client, bufnr)
-    if client.server_capabilities.code_lens then
+    if client.server_capabilities.documentSymbolProvider then
+        require('nvim-navic').attach(client, bufnr)
+    end
+    if client.server_capabilities.code_lens or client.server_capabilities.codeLensProvider then
+        local group = augroup('LSPRefreshLens')
+
+        -- Code Lens
         autocmd({ 'BufEnter', 'InsertLeave' }, {
             desc = 'Auto show code lenses',
-            pattern = '<buffer>',
-            command = 'silent! lua vim.lsp.codelens.refresh()',
+            buffer = bufnr,
+            callback = vim.lsp.codelens.refresh,
+            group = group,
         })
     end
-    if client.server_capabilities.document_highlight then
-        local group = augroup('HighlightLSPSymbols')
+    if client.server_capabilities.document_highlight or client.server_capabilities.documentHighlightProvider then
+        local group = augroup('LSPHighlightSymbols')
+
         -- Highlight text at cursor position
         autocmd({ 'CursorHold', 'CursorHoldI' }, {
             desc = 'Highlight references to current symbol under cursor',
-            pattern = '<buffer>',
-            command = 'silent! lua vim.lsp.buf.document_highlight()',
+            buffer = bufnr,
+            callback = vim.lsp.buf.document_highlight,
             group = group,
         })
         autocmd({ 'CursorMoved' }, {
             desc = 'Clear highlights when cursor is moved',
-            pattern = '<buffer>',
-            command = 'silent! lua vim.lsp.buf.clear_references()',
+            buffer = bufnr,
+            callback = vim.lsp.buf.clear_references,
             group = group,
         })
     end
     if client.server_capabilities.document_formatting or client.server_capabilities.documentFormattingProvider then
+        local group = augroup('LSPAutoFormat')
+
         -- auto format file on save
         autocmd({ 'BufWritePre' }, {
             desc = 'Auto format file before saving',
-            pattern = '<buffer>',
+            buffer = bufnr,
             command = 'silent! undojoin | lua vim.lsp.buf.format({async = false})',
+            group = group,
         })
     end
-end
-
-local function ensure_server(name)
-    local lsp_installer = require('nvim-lsp-installer.servers')
-    local _, server = lsp_installer.get_server(name)
-    if not server:is_installed() then
-        server:install()
-    end
-    return server
+    -- check if this is applicable (for rust for example it is not)
+    -- https://github.com/L3MON4D3/LuaSnip/wiki/Misc#improve-language-server-snippets
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -51,27 +83,53 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 --lua
-ensure_server('sumneko_lua'):setup({
+local lua_runtime = {
+    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+}
+for _, v in pairs(vim.api.nvim_get_runtime_file('', true)) do
+    lua_runtime[v] = true
+end
+lspconfig.sumneko_lua.setup({
     on_attach = default_on_attach,
     capabilities = capabilities,
+    settings = {
+        Lua = {
+            runtime = {
+                version = 'LuaJIT',
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = { 'vim' },
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = lua_runtime,
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
 })
 -- bash
-ensure_server('bashls'):setup({
+lspconfig.bashls.setup({
     on_attach = default_on_attach,
     capabilities = capabilities,
 })
 -- C#
-ensure_server('omnisharp'):setup({
+lspconfig.omnisharp.setup({
     on_attach = default_on_attach,
     capabilities = capabilities,
 })
 -- python
-ensure_server('pyright'):setup({
+lspconfig.pyright.setup({
     on_attach = default_on_attach,
     capabilities = capabilities,
 })
 -- typescript
-ensure_server('tsserver'):setup({
+lspconfig.tsserver.setup({
     init_options = require('nvim-lsp-ts-utils').init_options,
     capabilities = capabilities,
     on_attach = function(client, bufnr)
@@ -133,8 +191,11 @@ ensure_server('tsserver'):setup({
     end,
 })
 -- rust
--- FIXME: version used by lspinstall is too old
--- local rust_server = ensure_server('rust_analyzer')
+local mason_registry = require('mason-registry')
+local codelldb = mason_registry.get_package('codelldb')
+local extension_path = codelldb:get_install_path()
+local codelldb_path = extension_path .. '/adapter/codelldb'
+local liblldb_path = extension_path .. '/lldb/lib/liblldb.so'
 require('rust-tools').setup({
     tools = {
         autoSetHints = true,
@@ -142,12 +203,13 @@ require('rust-tools').setup({
         inlay_hints = {
             only_current_line = false,
             show_parameter_hints = true,
-            parameter_hints_prefix = '',
-            other_hints_prefix = '',
+            parameter_hints_prefix = '◂ ',
+            other_hints_prefix = '▸ ',
         },
-        hover_actions = {
-            auto_focus = true,
-        },
+        hover_actions = { auto_focus = true },
+    },
+    dap = {
+        adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
     },
     server = {
         on_attach = default_on_attach,
@@ -156,50 +218,75 @@ require('rust-tools').setup({
         -- cmd = rust_server:get_default_options().cmd,
         settings = {
             ['rust-analyzer'] = {
-                assist = {
-                    importPrefix = 'by_self',
-                },
                 diagnostics = {
+                    enable = true,
                     -- https://github.com/rust-analyzer/rust-analyzer/issues/6835
                     disabled = { 'unresolved-macro-call' },
                     enableExperimental = true,
                 },
                 completion = {
-                    autoimport = {
-                        enable = true,
-                    },
-                    postfix = {
-                        enable = true,
+                    autoself = { enable = true },
+                    autoimport = { enable = true },
+                    postfix = { enable = true },
+                },
+                imports = {
+                    group = { enable = true },
+                    merge = { glob = false },
+                    prefix = 'self',
+                    granularity = {
+                        enforce = true,
+                        group = 'crate',
                     },
                 },
                 cargo = {
                     loadOutDirsFromCheck = true,
                     autoreload = true,
                     runBuildScripts = true,
+                    features = 'all',
                 },
-                procMacro = {
-                    enable = true,
-                },
+                procMacro = { enable = true },
                 lens = {
                     enable = true,
-                    run = true,
-                    methodReferences = true,
-                    implementations = true,
+                    run = { enable = true },
+                    debug = { enable = true },
+                    implementations = { enable = true },
+                    references = {
+                        adt = { enable = true },
+                        enumVariant = { enable = true },
+                        method = { enable = true },
+                        trait = { enable = true },
+                    },
                 },
-                hoverActions = {
-                    enable = true,
+                hover = {
+                    actions = {
+                        enable = true,
+                        run = { enable = true },
+                        debug = { enable = true },
+                        gotoTypeDef = { enable = true },
+                        implementations = { enable = true },
+                        references = { enable = true },
+                    },
+                    links = { enable = true },
+                    documentation = { enable = true },
                 },
                 inlayHints = {
                     enable = true,
-                    chainingHintsSeparator = '‣ ',
-                    typeHintsSeparator = '‣ ',
-                    typeHints = true,
+                    bindingModeHints = { enable = true },
+                    chainingHints = { enable = true },
+                    closingBraceHints = {
+                        enable = true,
+                        minLines = 0,
+                    },
+                    closureReturnTypeHints = { enable = 'always' },
+                    lifetimeElisionHints = { enable = 'skip_trivial' },
+                    typeHints = { enable = true },
                 },
                 checkOnSave = {
                     enable = true,
                     -- https://github.com/rust-analyzer/rust-analyzer/issues/9768
                     command = 'clippy',
-                    allFeatures = true,
+                    features = 'all',
+                    allTargets = true,
                 },
             },
         },
@@ -208,13 +295,12 @@ require('rust-tools').setup({
 -- Cargo.toml
 require('crates').setup({})
 -- yaml
-ensure_server('yamlls'):setup({
+lspconfig.yamlls.setup({
     on_attach = default_on_attach,
     capabilities = capabilities,
 })
 -- json
-local jsonls = ensure_server('jsonls')
-jsonls:setup({
+lspconfig.jsonls.setup({
     on_attach = default_on_attach,
     capabilities = capabilities,
     commands = {
@@ -231,20 +317,25 @@ jsonls:setup({
     },
 })
 -- docker
-ensure_server('dockerls'):setup({
+lspconfig.dockerls.setup({
     on_attach = default_on_attach,
     capabilities = capabilities,
 })
 -- deno
 -- ensure_server('denols'):setup({})
 -- sql
-ensure_server('sqlls'):setup({
+lspconfig.sqlls.setup({
     on_attach = default_on_attach,
     capabilities = capabilities,
     cmd = { 'sql-language-server', 'up', '--method', 'stdio' },
 })
+-- kotlin
+lspconfig.kotlin_language_server.setup({
+    on_attach = default_on_attach,
+    capabilities = capabilities,
+})
+
 -- java
-local java_server = ensure_server('jdtls')
 autocmd({ 'FileType' }, {
     desc = 'Start java LSP server',
     pattern = 'java',
@@ -276,7 +367,7 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagn
 })
 
 -- show icons in the sidebar
-local signs = { Error = ' ', Warn = ' ', Hint = ' ', Information = ' ' }
+local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
 
 for type, icon in pairs(signs) do
     local hl = 'DiagnosticSign' .. type
@@ -299,33 +390,60 @@ null_ls.setup({
         null_ls.builtins.formatting.fixjson,
         null_ls.builtins.formatting.gofmt,
         null_ls.builtins.formatting.goimports,
+        null_ls.builtins.formatting.ktlint,
         null_ls.builtins.formatting.markdownlint,
         null_ls.builtins.formatting.shfmt,
         null_ls.builtins.formatting.stylua.with({
             extra_args = { '--config-path', vim.fn.expand('~/.config/stylua.toml') },
         }),
         null_ls.builtins.diagnostics.codespell.with({
-            filetypes = { 'txt', 'md' },
+            filetypes = { 'markdown', 'tex', 'asciidoc' },
         }),
         null_ls.builtins.diagnostics.eslint_d,
         null_ls.builtins.diagnostics.hadolint,
-        null_ls.builtins.diagnostics.luacheck,
+        null_ls.builtins.diagnostics.ktlint,
+        null_ls.builtins.diagnostics.luacheck.with({
+            args = {
+                '--formatter',
+                'plain',
+                '--config',
+                '~/.config/nvim/.luacheckrc',
+                '--codes',
+                '--ranges',
+                '--filename',
+                '$FILENAME',
+                '-',
+            },
+        }),
         null_ls.builtins.diagnostics.cppcheck,
         null_ls.builtins.diagnostics.write_good,
         null_ls.builtins.diagnostics.markdownlint,
         null_ls.builtins.diagnostics.pylint,
         null_ls.builtins.diagnostics.yamllint,
+        null_ls.builtins.diagnostics.vale.with({
+            -- filetypes = {},
+            diagnostics_postprocess = function(diagnostic)
+                -- reduce the severity
+                if diagnostic.severity == vim.diagnostic.severity['ERROR'] then
+                    diagnostic.severity = vim.diagnostic.severity['WARN']
+                elseif diagnostic.severity == vim.diagnostic.severity['WARN'] then
+                    diagnostic.severity = vim.diagnostic.severity['INFO']
+                end
+            end,
+        }),
         null_ls.builtins.code_actions.refactoring,
     },
     on_attach = default_on_attach,
 })
 require('lsp_signature').setup({})
-require('nvim-gps').setup()
+require('nvim-navic').setup({
+    highlight = true,
+})
 
-local eval_gps = function()
-    local gps = require('nvim-gps')
-    if gps.is_available() then
-        return vim.api.nvim_eval("expand('%:t')") .. ' > ' .. gps.get_location()
+local eval_navic = function()
+    local navic = require('nvim-navic')
+    if navic.is_available() then
+        return vim.api.nvim_eval("expand('%:t')") .. ' > ' .. navic.get_location()
     else
         return vim.api.nvim_buf_get_name(0)
     end
@@ -336,7 +454,7 @@ function winbar_eval()
     local sig = require('lsp_signature').status_line(columns)
 
     if sig == nil or sig.label == nil or sig.range == nil then
-        return ' ' .. eval_gps()
+        return ' ' .. eval_navic()
     end
     local label1 = sig.label
     local label2 = ''
@@ -351,7 +469,7 @@ function winbar_eval()
         -- lprint(doc)
     end
 
-    return eval_gps()
+    return eval_navic()
         .. ' Signature: %#WinBarSignature#'
         .. label1
         .. '%*'

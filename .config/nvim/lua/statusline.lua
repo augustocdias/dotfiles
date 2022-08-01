@@ -1,10 +1,22 @@
 local lualine = require('lualine')
 
+local function search_result()
+    if vim.v.hlsearch == 0 then
+        return ''
+    end
+    local last_search = vim.fn.getreg('/')
+    if not last_search or last_search == '' then
+        return ''
+    end
+    local searchcount = vim.fn.searchcount({ maxcount = 9999 })
+    return last_search .. '(' .. searchcount.current .. '/' .. searchcount.total .. ')'
+end
+
 lualine.setup({
     options = {
         icons_enabled = true,
-        theme = 'tokyonight',
-        section_separators = { left = '', right = '' },
+        theme = 'auto',
+        section_separators = { right = ' ', left = ' ' },
         component_separators = { left = '', right = '' },
         disabled_filetypes = {},
         globalstatus = true,
@@ -26,27 +38,22 @@ lualine.setup({
             },
         },
         lualine_x = {
-            require('weather.lualine').default_c({}),
+            search_result,
             'encoding',
             'filetype',
             {
                 'diagnostics',
                 sources = { 'nvim_diagnostic' },
                 symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
-                diagnostics_color = {
-                    error = 'DiagnosticError',
-                    warn = 'DiagnosticWarn',
-                    info = 'DiagnosticInfo',
-                    hint = 'DiagnosticHint',
-                },
                 always_visible = true,
             },
         },
         lualine_y = {
+            'location',
             'progress',
         },
         lualine_z = {
-            'location',
+            require('weather.lualine').default_c({}),
         },
     },
     inactive_sections = {

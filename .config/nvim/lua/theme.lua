@@ -29,13 +29,13 @@ vim.o.showcmd = true
 -- Enable mouse usage (all modes) in terminals
 vim.o.mouse = 'a'
 
--- highlight all tabs and trailing whitespace characters.
+-- Create a new highlight group for unwanted whitespaces or tabs
 vim.cmd('highlight ExtraWhitespace ctermbg=lightyellow guibg=lightyellow')
-vim.cmd('match ExtraWhitespace /\\s\\+$\\|\\t/')
+-- Dims the text when using Leap▎
+vim.cmd('highlight LeapBackdrop guifg=#777777')
 
 vim.cmd('syntax on')
 vim.cmd('hi Normal ctermbg=NONE')
-vim.cmd('highlight NvimTreeFolderIcon guibg=blue')
 
 -- tokio night theme config
 vim.g.tokyonight_hide_inactive_statusline = false
@@ -45,15 +45,130 @@ vim.g.tokyonight_style = 'night'
 vim.g.tokyonight_dark_sidebar = true
 vim.g.tokyight_dark_float = true
 
-vim.cmd([[colorscheme tokyonight]])
--- require('colorbuddy').colorscheme('cobalt2')
+-- vim.cmd([[colorscheme tokyonight]])
 
 -- Notify
-local colors = require('tokyonight.colors').setup({})
+-- local colors = require('tokyonight.colors').setup({})
 require('notify').setup({
     stages = 'fade_in_slide_out',
-    background_colour = colors.bg_dark,
 })
+
+vim.g.catppuccin_flavour = 'latte'
+local colors = require('catppuccin.palettes').get_palette()
+local ucolors = require('catppuccin.utils.colors')
+local telescope_prompt = ucolors.darken(colors.crust, 0.95, '#000000')
+local telescope_results = ucolors.darken(colors.mantle, 0.95, '#000000')
+local telescope_text = colors.text
+local telescope_prompt_title = colors.sky
+local telescope_preview_title = colors.teal
+require('catppuccin').setup({
+    dim_inactive = {
+        enabled = true,
+        shade = 'dark',
+        percentage = 0.15,
+    },
+    transparent_background = true,
+    term_colors = true,
+    compile = {
+        enabled = false,
+        path = vim.fn.stdpath('cache') .. '/catppuccin',
+    },
+    styles = {
+        comments = { 'italic' },
+        conditionals = { 'italic' },
+        loops = {},
+        functions = {},
+        keywords = { 'italic' },
+        strings = {},
+        variables = {},
+        numbers = {},
+        booleans = {},
+        properties = {},
+        types = {},
+        operators = {},
+    },
+    integrations = {
+        treesitter = true,
+        native_lsp = {
+            enabled = true,
+            virtual_text = {
+                errors = { 'italic' },
+                hints = { 'italic' },
+                warnings = { 'italic' },
+                information = { 'italic' },
+            },
+            underlines = {
+                errors = { 'underline' },
+                hints = { 'underline' },
+                warnings = { 'underline' },
+                information = { 'underline' },
+            },
+        },
+        lsp_trouble = true,
+        cmp = true,
+        lsp_saga = true,
+        gitgutter = true,
+        gitsigns = true,
+        leap = true,
+        telescope = true,
+        nvimtree = {
+            enabled = true,
+            show_root = true,
+            transparent_panel = false,
+        },
+        neotree = {
+            enabled = true,
+            show_root = true,
+            transparent_panel = false,
+        },
+        dap = {
+            enabled = true,
+            enable_ui = true,
+        },
+        which_key = true,
+        indent_blankline = {
+            enabled = true,
+            colored_indent_levels = false,
+        },
+        dashboard = true,
+        neogit = true,
+        barbar = true,
+        markdown = true,
+        notify = true,
+        symbols_outline = true,
+        aerial = true,
+    },
+    color_overrides = {},
+    highlight_overrides = {
+        all = {
+            TelescopeBorder = { bg = telescope_results, fg = telescope_results },
+            TelescopePromptBorder = { bg = telescope_prompt, fg = telescope_prompt },
+            TelescopePromptCounter = { fg = telescope_text },
+            TelescopePromptNormal = { fg = telescope_text, bg = telescope_prompt },
+            TelescopePromptPrefix = { fg = telescope_prompt_title, bg = telescope_prompt },
+            TelescopePromptTitle = { fg = telescope_prompt, bg = telescope_prompt_title },
+            TelescopePreviewTitle = { fg = telescope_results, bg = telescope_preview_title },
+            TelescopePreviewBorder = {
+                bg = ucolors.darken(telescope_results, 0.95, '#000000'),
+                fg = ucolors.darken(telescope_results, 0.95, '#000000'),
+            },
+            TelescopePreviewNormal = {
+                bg = ucolors.darken(telescope_results, 0.95, '#000000'),
+                fg = telescope_results,
+            },
+            TelescopeResultsTitle = { fg = telescope_results, bg = telescope_preview_title },
+            TelescopeMatching = { fg = telescope_prompt_title },
+            TelescopeNormal = { bg = telescope_results },
+            TelescopeSelection = { bg = telescope_prompt },
+            TelescopeSelectionCaret = { fg = telescope_text },
+            TelescopeResultsNormal = { bg = telescope_results },
+            TelescopeResultsBorder = { bg = telescope_results, fg = telescope_results },
+        },
+    },
+})
+
+vim.cmd('colorscheme catppuccin')
+
 -- overrides vim notification method
 vim.notify = require('notify')
 

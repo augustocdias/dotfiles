@@ -23,7 +23,7 @@ local no_remap_silent_expr_script_opt = { noremap = true, silent = true, expr = 
 keymap('n', '<M-c>', ':ConMenu<CR>', no_remap_opt)
 
 -- Copilot accept
-keymap('i', '<M-c>', 'copilot#Accept("\\<CR>")', no_remap_silent_expr_script_opt)
+-- keymap('i', '<M-c>', 'copilot#Accept("\\<CR>")', no_remap_silent_expr_script_opt)
 
 -- Increment/decrement
 keymap('n', '+', '<C-a>', no_remap_opt)
@@ -100,19 +100,22 @@ wk.register({
             '<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>',
             'Dynamic Workspace Symbols',
         },
-        a = { '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', 'Code Actions' },
-        n = { '<cmd>lua require("telescope.builtin").lsp_range_code_actions()<CR>', 'Range Code Actions' },
+        a = { '<cmd>lua vim.lsp.buf.code_action()<CR>', 'Code Actions' },
+        n = { '<cmd>lua vim.lsp.buf.range_code_action()<CR>', 'Range Code Actions' },
         g = { '<cmd>lua require("telescope.builtin").lsp_document_diagnostics()<CR>', 'Document Diagnostics' },
         o = { '<cmd>lua require("telescope.builtin").lsp_workspace_diagnostics()<CR>', 'Workspace Diagnostics' },
         e = { '<cmd>lua require("telescope.builtin").treesitter()<CR>', 'Treesitter' },
-        l = { '<cmd>lua vim.lsp.codelens.display()<CR>', 'Code Lens' },
+        l = { '<cmd>lua vim.lsp.codelens.run()<CR>', 'Code Lens' },
     },
     t = {
         name = 'Telescope',
         s = { '<cmd>lua require("telescope.builtin").planets()<CR>', 'Use Telescope...' },
         c = { '<cmd>lua require("telescope.builtin").builtin()<CR>', 'Builtin Pickers' },
         h = { '<cmd>lua require("telescope.builtin").reloader()<CR>', 'Reload Lua Modules' },
-        y = { '<cmd>lua require("telescope.builtin").symbols()<CR>', 'List Symbols' },
+        y = {
+            '<cmd>lua require("telescope.builtin").symbols({"emoji", "kaomoji", "gitmoji", "julia", "math", "nerd"})<CR>',
+            'List Symbols',
+        },
         m = { '<cmd>lua require("telescope.builtin").resume()<CR>', 'Resume Last Picker' },
         r = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Previous Pickers' },
     },
@@ -195,7 +198,7 @@ function _tree_toggle()
         if require('nvim-tree.view').is_visible() then
             require('bufferline.state').set_offset(0)
         else
-            require('bufferline.state').set_offset(31, 'FileTree')
+            require('bufferline.state').set_offset(31, 'Sidebar')
             require('nvim-tree.lib').refresh_tree()
         end
     else
@@ -203,6 +206,7 @@ function _tree_toggle()
     end
     require('nvim-tree').toggle()
 end
+
 keymap('n', '<F2>', '<cmd>lua _tree_toggle()<CR>', no_remap_opt)
 
 -- terminal
@@ -304,13 +308,14 @@ function _sidebar_toggle()
         if require('sidebar-nvim.view').is_win_open() then
             require('bufferline.state').set_offset(0)
         else
-            require('bufferline.state').set_offset(31, 'FileTree')
+            require('bufferline.state').set_offset(31, 'Sidebar')
         end
     else
         require('nvim-tree.view').close()
     end
     require('sidebar-nvim').toggle()
 end
+
 keymap('i', '<F1>', '<Esc>', {})
 keymap('c', '<F1>', '<Esc>', {})
 keymap('v', '<F1>', '<Esc>', {})
@@ -351,24 +356,19 @@ keymap('n', '<M-f>', '<cmd>lua vim.lsp.buf.formatting()<CR>', silent_opt)
 keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', silent_opt)
 
 -- Debug Mappings
-keymap('n', '<F4>', ':lua require"dap".repl.toggle()', silent_opt)
-keymap('n', '<F5>', ':lua require"dap".continue()', silent_opt)
-keymap('n', '<S-F5>', ':lua require"dap".close()', silent_opt)
-keymap('n', '<C-S-F5>', ':lua require"dap".run_last()', silent_opt)
-keymap('n', '<F6>', ':lua require"dap".pause()', silent_opt)
-keymap('n', '<F9>', ':lua require"dap".toggle_breakpoint()', silent_opt)
-keymap('n', '<S-F9>', ':lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))', silent_opt)
-keymap(
-    'n',
-    '<leader><F9>',
-    ':lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))',
-    silent_opt
-)
-keymap('n', '<F10>', ':lua require"dap".step_over()', silent_opt)
-keymap('n', '<S-F10>', ':lua require"dap".run_to_cursor()', silent_opt)
-keymap('n', '<F11>', ':lua require"dap".step_into()', silent_opt)
-keymap('n', '<S-F11>', ':lua require"dap".step_out()', silent_opt)
-keymap('x', '<leader>e', ':lua require("dap.ui.widgets").hover()', silent_opt)
+keymap('n', '<F4>', ':lua require"dap".repl.toggle()<CR>', silent_opt)
+keymap('n', '<F5>', ':lua require"dap".continue()<CR>', silent_opt)
+keymap('n', '<S-F5>', ':lua require"dap".close()<CR>', silent_opt)
+keymap('n', '<C-S-F5>', ':lua require"dap".run_last()<CR>', silent_opt)
+keymap('n', '<F6>', ':lua require"dap".pause()<CR>', silent_opt)
+keymap('n', '<F9>', ':lua require"dap".toggle_breakpoint()<CR>', silent_opt)
+keymap('n', '<S-F9>', ':lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', silent_opt)
+keymap('n', '<C-F9>', ':lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', silent_opt)
+keymap('n', '<F10>', ':lua require"dap".step_over()<CR>', silent_opt)
+keymap('n', '<S-F10>', ':lua require"dap".run_to_cursor()<CR>', silent_opt)
+keymap('n', '<F11>', ':lua require"dap".step_into()<CR>', silent_opt)
+keymap('n', '<S-F11>', ':lua require"dap".step_out()<CR>', silent_opt)
+keymap('x', '<leader>e', ':lua require("dap.ui.widgets").hover()<CR>', silent_opt)
 
 -- workaround for neovide
 -- keymap('n', '¡', '<M-1>', {})

@@ -1,9 +1,9 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = function(name)
-    vim.api.nvim_create_augroup(name, { clear = true })
+    return vim.api.nvim_create_augroup(name, { clear = true })
 end
 
--- ensure packer is installed
+-- Update plugins on change in the plugin definitions file
 autocmd({ 'BufWritePost' }, {
     desc = 'Auto update packer plugins once the plugins definition file is changed',
     pattern = 'plugins.lua',
@@ -34,8 +34,7 @@ autocmd({ 'ModeChanged' }, {
     desc = 'Stop snippets when you leave to normal mode',
     pattern = '*',
     callback = function()
-        if
-            ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
+        if ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
             and require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
             and not require('luasnip').session.jump_active
         then
@@ -52,7 +51,6 @@ autocmd({ 'CursorHold', 'CursorHoldI' }, {
     end,
 })
 
--- TODO: apply this to any file outside the cwd
 autocmd({ 'BufRead' }, {
     desc = "Prevent accidental writes to buffers that shouldn't be edited",
     pattern = '*.orig',
@@ -90,3 +88,50 @@ autocmd({ 'BufWipeout' }, {
         end)
     end,
 })
+
+-- autocmd({ 'BufReadPost' }, {
+--     desc = 'Make files readonly when outside of current working dir',
+--     pattern = '*',
+--     callback = function()
+--         if string.sub(vim.api.nvim_buf_get_name(0), 1, string.len(vim.fn.getcwd())) ~= vim.fn.getcwd() then
+--             vim.bo.readonly = true
+--             vim.bo.modifiable = false
+--         end
+--     end,
+-- })
+
+-- local spaces_highlight_group = augroup('SpacesHighlightGroup')
+-- autocmd({ 'VimEnter', 'WinNew' }, {
+--     desc = 'Highlight all tabs and trailing whitespaces',
+--     pattern = '*',
+--     group = spaces_highlight_group,
+--     callback = function()
+--         vim.fn.matchadd('ExtraWhitespace', '\\s\\+$\\|\\t')
+--     end,
+-- })
+
+-- autocmd({ 'FileType' }, {
+--     desc = 'Remove spaces highlights in selected filetypes',
+--     pattern = 'help,toggleterm',
+--     group = spaces_highlight_group,
+--     callback = function()
+--         for _, match in ipairs(vim.fn.getmatches()) do
+--             if match['group'] == 'ExtraWhitespace' then
+--                 vim.fn.matchdelete(match['id'])
+--             end
+--         end
+--     end,
+-- })
+
+-- autocmd({ 'BufWinEnter' }, {
+--     desc = 'Remove spaces highlights in selected filetypes',
+--     pattern = '*.txt',
+--     group = spaces_highlight_group,
+--     callback = function(event)
+--         for _, match in ipairs(vim.fn.getmatches()) do
+--             if match['group'] == 'ExtraWhitespace' then
+--                 vim.fn.matchdelete(match['id'])
+--             end
+--         end
+--     end,
+-- })

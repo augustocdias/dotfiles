@@ -138,7 +138,7 @@ vim.cmd('cnoreabbrev Qall qall')
 -- menuone: popup even when there's only one match
 -- noinsert: Do not insert text until a selection is made
 -- noselect: Do not select, force user to select one from the menu
-vim.o.completeopt = 'menuone,noinsert,noselect'
+vim.o.completeopt = 'menu,menuone,noinsert'
 
 -- No whitespace in vimdiff
 vim.o.diffopt = vim.o.diffopt .. ',iwhite'
@@ -148,23 +148,18 @@ vim.o.diffopt = vim.o.diffopt .. ',indent-heuristic'
 
 -- Avoid showing extra messages when using completion
 vim.o.shortmess = vim.o.shortmess .. 'c'
--- remove trailing whitespaces
-vim.cmd('command! FixWhitespace :%s/\\s\\+$//e')
 
 -- automatic reload file on buffer changed outside of vim
 vim.o.autoread = true
 
 -- Show those damn hidden characters
 -- Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
-vim.o.listchars = 'nbsp:¬,extends:»,precedes:«,trail:•'
+vim.o.listchars = 'tab: >,nbsp:¬,extends:»,precedes:«,trail:•'
 
 -- Show problematic characters.
 vim.o.list = true
 
 -- Nvim Tree settings
-vim.g.nvim_tree_git_hl = 1
-vim.g.nvim_tree_highlight_opened_files = 1
-vim.g.nvim_tree_group_empty = 1
 require('nvim-tree').setup({
     diagnostics = {
         enable = true,
@@ -173,12 +168,15 @@ require('nvim-tree').setup({
         enable = true,
     },
     filters = {
-        custom = { '.rbc$', '~$', '.pyc$', '.db$', '.sqlite$', '__pycache__', '.git', '.cache' },
+        custom = { '.rbc$', '.pyc$', '.db$', '.sqlite$', '__pycache__', '.git', '.cache' },
     },
     renderer = {
         indent_markers = {
             enable = true,
         },
+        highlight_git = true,
+        highlight_opened_files = '3',
+        group_empty = true,
     },
     actions = {
         open_file = {
@@ -214,8 +212,8 @@ vim.g.bufferline = {
     -- if set to 'numbers', will show buffer index in the tabline
     -- if set to 'both', will show buffer index and icons in the tabline
     icons = 'both',
-    icon_separator_active = '▎',
-    icon_separator_inactive = '▎',
+    icon_separator_active = ' ',
+    icon_separator_inactive = ' ',
     icon_close_tab = '',
     icon_close_tab_modified = '●',
     icon_pinned = '車',
@@ -233,21 +231,34 @@ vim.g.bufferline = {
     letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
 }
 
--- enable virtual text for debugging
-require('nvim-dap-virtual-text').setup({
-    all_frames = true,
-})
-
 -- surround
-require('surround').setup({
+require('nvim-surround').setup({
     brackets = { '(', '{', '[', '<' },
-    pairs = {
-        nestable = { { '(', ')' }, { '{', '}' }, { '[', ']' }, { '<', '>' } },
-        linear = { { '"', '"' }, { "'", "'" }, { 'r#"', '"#' } },
+    delimiters = {
+        pairs = {
+            ['('] = { '(', ')' },
+            [')'] = { '(', ')' },
+            ['{'] = { '{', '}' },
+            ['}'] = { '{', '}' },
+            ['<'] = { '<', '>' },
+            ['>'] = { '<', '>' },
+            ['['] = { '[', ']' },
+            [']'] = { '[', ']' },
+            ['r#"'] = { 'r#"', '"#' },
+        },
     },
-    mappings_style = 'sandwich',
-    surround_map_insert_mode = false,
-    prefix = ',',
+    keymaps = {
+        insert = false,
+        insert_line = false,
+        normal = ',a',
+        normal_cur = false,
+        normal_line = false,
+        normal_cur_line = false,
+        visual = ',',
+        visual_line = false,
+        delete = ',d',
+        change = ',r',
+    },
 })
 
 -- todo comments config
@@ -282,9 +293,57 @@ require('sidebar-nvim').setup({
     },
 })
 
+require('gatekeeper').setup({
+    exclude = { vim.fn.expand('~/.config') },
+})
+
 -- Telescope
 require('telescope').setup({
-    defaults = {},
+    defaults = {
+        -- Appearance
+        entry_prefix = ' ',
+        prompt_prefix = ' ',
+        selection_caret = ' ',
+        color_devicons = true,
+        path_display = { 'smart' },
+
+        -- Searching
+        set_env = { COLORTERM = 'truecolor' },
+        file_ignore_patterns = {
+            '.git/',
+            '%.csv',
+            '%.jpg',
+            '%.jpeg',
+            '%.png',
+            '%.svg',
+            '%.otf',
+            '%.ttf',
+            '%.lock',
+            '__pycache__',
+            '%.sqlite3',
+            '%.ipynb',
+            'vendor',
+            'node_modules',
+            'dotbot',
+        },
+
+        -- Telescope smart history
+        history = {
+            path = '~/.local/share/nvim/databases/telescope_history.sqlite3',
+            limit = 100,
+        },
+
+        -- Mappings
+        mappings = {
+            i = {
+                ['<ESC>'] = require('telescope.actions').close,
+                ['<C-j>'] = require('telescope.actions').move_selection_next,
+                ['<C-k>'] = require('telescope.actions').move_selection_previous,
+                ['<C-q>'] = require('telescope.actions').send_to_qflist,
+            },
+            n = { ['<ESC>'] = require('telescope.actions').close },
+        },
+    },
 })
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('lsp_handlers')
@@ -305,10 +364,16 @@ require('Comment').setup({
     ignore = '^$',
 })
 
+-- matchup settings
+vim.g.matchup_matchparen_offscreen = { method = 'popup' }
+vim.g.matchup_transmute_enabled = true
+
 -- Neovide settings
 vim.g.neovide_no_idle = true
 vim.g.neovide_input_use_logo = true
 vim.g.neovide_cursor_antialiasing = true
+vim.g.neovide_input_macos_alt_is_meta = true
+vim.g.neovide_transparency = 0.95
 
 -- Enhanced line movements. Default mappings A+hjkl
 require('gomove').setup({})
@@ -316,6 +381,15 @@ require('gomove').setup({})
 -- setup spectre
 require('spectre').setup()
 
--- enable colors for ulttest
-vim.g.ultest_use_pty = true
-vim.g.ultest_running_sign = '⦿'
+-- setup neotest
+require('neotest').setup({
+    adapters = {
+        require('neotest-rust'),
+    },
+    icons = {
+        running = '',
+    },
+})
+
+-- leap
+require('leap').set_default_keymaps()
