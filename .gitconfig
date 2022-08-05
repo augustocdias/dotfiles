@@ -1,21 +1,36 @@
 [user]
-	email = augusto.c.dias@wire.com
-	name = Augusto
-	signingkey = 4CBE3D4E4A19D53E
+    email = augusto.c.dias@wire.com
+    name = Augusto
+    signingkey = 4CBE3D4E4A19D53E
 [pull]
-	rebase = true
+    rebase = true
 [diff]
-	tool = nvimdiff
-	guitool = nvimdiff
+    tool = nvimdiff
+    guitool = nvimdiff
 [merge]
-	tool = nvimdiff
-	conflictstyle = diff3
+    tool = nvimdiff
+    conflictstyle = diff3
 [mergetool]
-	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    keepBackup = false
+    trustExitCode = false
+    prompt = true
 [difftool]
-	prompt = false
+    prompt = false
 [commit]
-	gpgsign = true
+    gpgsign = true
 [core]
-	editor = nvim
-	pager = bat
+    editor = nvim
+    pager = bat
+[mergetool "nvimdiff"]
+    layout = LOCAL,MERGED,REMOTE
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
