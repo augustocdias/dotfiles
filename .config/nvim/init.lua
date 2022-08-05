@@ -5,13 +5,8 @@ if fn.empty(fn.glob(install_path)) > 0 then
     vim.cmd('packadd packer.nvim')
 end
 
-require('autocommand')
+require('settings.general')
+require('settings.gui')
+require('settings.neovide')
 require('plugins')
-require('settings')
-require('statusline')
-require('lsp-config')
-require('cmpconf')
-require('term')
-require('theme')
-require('keymaps')
-require('dapconf')
+require('setup.autocommand').setup()
