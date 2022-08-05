@@ -1,7 +1,7 @@
 return {
     definitions = function(use)
         use({ 'SmiteshP/nvim-navic', config = require('setup.nvim-navic').setup }) -- adds breadcrumbs
-        -- use('folke/trouble.nvim') -- adds a bottom panel with lsp diagnostics, quickfixes, etc. NOTE: using neo-tree diagnostics
+        use({ 'folke/trouble.nvim', config = require('setup.trouble').setup }) -- adds a bottom panel with lsp diagnostics, quickfixes, etc.
         use({ 'GustavoKatel/sidebar.nvim', config = require('setup.sidebar-nvim').setup }) -- useful sidebar with todos, git status, etc.
         use({
             'nvim-neotest/neotest',
@@ -17,6 +17,7 @@ return {
                 require('octo').setup()
             end,
         }) -- github manager for issues and pull requests
+        use({ 'TimUntersberger/neogit', config = require('setup.neogit').setup })
 
         -- debug
         -- check https://github.com/Pocco81/DAPInstall.nvim

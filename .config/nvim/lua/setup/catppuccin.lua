@@ -8,6 +8,7 @@ return {
         local telescope_text = colors.text
         local telescope_prompt_title = colors.sky
         local telescope_preview_title = colors.teal
+        local lualine_bg = colors.mantle
         require('catppuccin').setup({
             dim_inactive = {
                 enabled = true,
@@ -81,14 +82,13 @@ return {
                 symbols_outline = true,
                 aerial = true,
             },
-            custom_highlights = {
-                WinBarSigActParm = { fg = colors.blue },
-                WinBarSignature = { fg = colors.flamingo },
-                -- dims the text so that the hits are more visible
-                LeapBackdrop = { fg = colors.flamingo },
-            },
             highlight_overrides = {
                 all = {
+                    WinBarSigActParm = { fg = colors.blue, bg = colors.mantle },
+                    WinBarSignature = { fg = colors.flamingo, bg = colors.mantle },
+                    -- dims the text so that the hits are more visible
+                    -- your configuration
+                    LeapBackdrop = { fg = colors.flamingo },
                     TelescopeBorder = { bg = telescope_results, fg = telescope_results },
                     TelescopePromptBorder = { bg = telescope_prompt, fg = telescope_prompt },
                     TelescopePromptCounter = { fg = telescope_text },
@@ -111,6 +111,34 @@ return {
                     TelescopeSelectionCaret = { fg = telescope_text },
                     TelescopeResultsNormal = { bg = telescope_results },
                     TelescopeResultsBorder = { bg = telescope_results, fg = telescope_results },
+                    NavicIconsFile = { fg = colors.blue, bg = lualine_bg },
+                    NavicIconsModule = { fg = colors.blue, bg = lualine_bg },
+                    NavicIconsNamespace = { fg = colors.blue, bg = lualine_bg },
+                    NavicIconsPackage = { fg = colors.blue, bg = lualine_bg },
+                    NavicIconsClass = { fg = colors.yellow, bg = lualine_bg },
+                    NavicIconsMethod = { fg = colors.blue, bg = lualine_bg },
+                    NavicIconsProperty = { fg = colors.green, bg = lualine_bg },
+                    NavicIconsField = { fg = colors.green, bg = lualine_bg },
+                    NavicIconsConstructor = { fg = colors.blue, bg = lualine_bg },
+                    NavicIconsEnum = { fg = colors.green, bg = lualine_bg },
+                    NavicIconsInterface = { fg = colors.yellow, bg = lualine_bg },
+                    NavicIconsFunction = { fg = colors.blue, bg = lualine_bg },
+                    NavicIconsVariable = { fg = colors.flamingo, bg = lualine_bg },
+                    NavicIconsConstant = { fg = colors.peach, bg = lualine_bg },
+                    NavicIconsString = { fg = colors.green, bg = lualine_bg },
+                    NavicIconsNumber = { fg = colors.peach, bg = lualine_bg },
+                    NavicIconsBoolean = { fg = colors.peach, bg = lualine_bg },
+                    NavicIconsArray = { fg = colors.peach, bg = lualine_bg },
+                    NavicIconsObject = { fg = colors.peach, bg = lualine_bg },
+                    NavicIconsKey = { fg = colors.pink, bg = lualine_bg },
+                    NavicIconsNull = { fg = colors.peach, bg = lualine_bg },
+                    NavicIconsEnumMember = { fg = colors.red, bg = lualine_bg },
+                    NavicIconsStruct = { fg = colors.blue, bg = lualine_bg },
+                    NavicIconsEvent = { fg = colors.blue, bg = lualine_bg },
+                    NavicIconsOperator = { fg = colors.sky, bg = lualine_bg },
+                    NavicIconsTypeParameter = { fg = colors.blue, bg = lualine_bg },
+                    NavicText = { fg = colors.teal, bg = lualine_bg },
+                    NavicSeparator = { fg = colors.text, bg = lualine_bg },
                 },
             },
         })

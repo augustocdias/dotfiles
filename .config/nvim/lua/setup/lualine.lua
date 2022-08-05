@@ -36,7 +36,7 @@ return {
                     },
                     {
                         winbar_sig,
-                        color = { bg = 'NONE' },
+                        color = { bg = '#E6E9EF' },
                     },
                 },
                 lualine_x = {

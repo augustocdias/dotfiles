@@ -100,7 +100,8 @@ return {
             desc = 'Stop snippets when you leave to normal mode',
             pattern = '*',
             callback = function()
-                if ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
+                if
+                    ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
                     and require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
                     and not require('luasnip').session.jump_active
                 then
@@ -120,6 +121,14 @@ return {
             pattern = '*',
             callback = function()
                 require('vim.highlight').on_yank({ higroup = 'IncSearch', timeout = 1000 })
+            end,
+        })
+
+        autocmd({ 'OptionSet' }, {
+            desc = ' Automatically switch theme to dark/light when background set',
+            pattern = 'background',
+            callback = function()
+                vim.cmd('Catppuccin ' .. (vim.v.option_new == 'light' and 'latte' or 'mocha'))
             end,
         })
     end,

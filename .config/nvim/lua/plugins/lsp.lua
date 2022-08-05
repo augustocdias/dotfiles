@@ -13,7 +13,12 @@ return {
             end,
         }) -- collection of LSP configurations for nvim
         use({
+            'stevearc/aerial.nvim',
+            config = require('setup.lsp.aerial').setup,
+        })
+        use({
             'jose-elias-alvarez/null-ls.nvim',
+            requires = 'ThePrimeagen/refactoring.nvim',
             config = function()
                 local lspconfig = require('setup.lsp')
                 require('setup.lsp.null-ls').setup(lspconfig.on_attach)

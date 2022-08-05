@@ -32,7 +32,7 @@ local keymap_table = {
     },
     {
         shortcut = '<M-t>',
-        cmd = ':Neotree source=diagnostics reveal=true position=bottom toggle=true action=focus<CR>',
+        cmd = ':TroubleToggle workspace_diagnostics<CR>',
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Show diagnostics pane',
@@ -564,7 +564,6 @@ return {
                     i = { '<cmd>lua require("telescope.builtin").lsp_implementations()<CR>', 'Implementations' },
                     l = { '<cmd>lua vim.lsp.codelens.run()<CR>', 'Code Lens' },
                     m = { '<cmd>lua vim.lsp.buf.rename()<CR>', 'Rename symbol' },
-                    n = { '<cmd>lua vim.lsp.buf.range_code_action()<CR>', 'Range Code Actions' },
                     o = {
                         '<cmd>lua require("telescope.builtin").lsp_workspace_diagnostics()<CR>',
                         'Workspace Diagnostics',
@@ -635,6 +634,14 @@ return {
                     h = { ':ToggleTerm<CR>', 'Horizontal' },
                     v = { ':ToggleTerm direction=vertical<CR>', 'Vertical' },
                     f = { ':ToggleTerm direction=float<CR>', 'Float' },
+                },
+                a = {
+                    name = 'Aerial',
+                    t = { ':AerialToggle<CR>', 'Toggle' },
+                    a = { ':AerialOpenAll<CR>', 'Open All' },
+                    c = { ':AerialCloseAll<CR>', 'Close All' },
+                    s = { ':AerialTreeSyncFolds<CR>', 'Sync code folding' },
+                    i = { ':AerialInfo<CR>', 'Info' },
                 },
             },
             opts = {

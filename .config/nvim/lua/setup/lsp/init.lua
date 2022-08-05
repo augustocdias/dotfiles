@@ -4,6 +4,7 @@ local on_attach = function(client, bufnr)
     if client.server_capabilities.documentSymbolProvider then
         require('nvim-navic').attach(client, bufnr)
     end
+    require('aerial').on_attach(client, bufnr)
 
     require('setup.autocommand').lsp_autocmds(client, bufnr)
     -- check if this is applicable (for rust for example it is not)

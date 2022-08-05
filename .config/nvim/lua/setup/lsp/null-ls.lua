@@ -1,5 +1,6 @@
 return {
     setup = function(on_attach)
+        require('refactoring').setup({})
         local null_ls = require('null-ls')
         null_ls.setup({
             sources = {
@@ -52,7 +53,9 @@ return {
                         end
                     end,
                 }),
-                null_ls.builtins.code_actions.refactoring,
+                null_ls.builtins.code_actions.refactoring.with({
+                    filetypes = { 'go', 'javascript', 'lua', 'python', 'typescript', 'ruby', 'java' },
+                }),
             },
             on_attach = on_attach,
         })

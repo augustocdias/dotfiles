@@ -25,6 +25,7 @@ return {
                     'vendor',
                     'node_modules',
                     'dotbot',
+                    'packer_compiled.lua',
                 },
 
                 -- Telescope smart history

@@ -11,7 +11,7 @@ return {
         use({ 'bennypowers/nvim-regexplainer', opt = true }) -- shows popup explaining regex under cursor
         use({
             'nvim-neo-tree/neo-tree.nvim',
-            requires = { 'MunifTanjim/nui.nvim', 'mrbjarksen/neo-tree-diagnostics.nvim' },
+            requires = { 'MunifTanjim/nui.nvim' },
             config = require('setup.neotree').setup,
         }) -- file browser
         use({ 'akinsho/toggleterm.nvim', config = require('setup.toggleterm').setup }) -- better terminal
