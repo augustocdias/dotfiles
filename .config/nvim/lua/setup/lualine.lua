@@ -1,5 +1,8 @@
 return {
     setup = function(signature, weather, winbar_sig)
+        local spotify_status = require('nvim-spotify').status
+        spotify_status:start()
+
         local lualine = require('lualine')
 
         local function search_result()
@@ -44,6 +47,9 @@ return {
                     'encoding',
                     'filetype',
                     {
+                        'overseer',
+                    },
+                    {
                         'diagnostics',
                         sources = { 'nvim_diagnostic' },
                         symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
@@ -56,6 +62,7 @@ return {
                 },
                 lualine_z = {
                     weather(),
+                    spotify_status.listen,
                 },
             },
             inactive_sections = {

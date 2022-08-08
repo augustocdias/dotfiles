@@ -25,4 +25,12 @@ function M:toggle(name)
     end
 end
 
+function M:close()
+    if self._opened ~= '' then
+        self._sidebars[self._opened].close()
+        self._opened = ''
+        require('bufferline.state').set_offset(0)
+    end
+end
+
 return M

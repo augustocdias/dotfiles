@@ -38,5 +38,14 @@ return {
         use({ 'folke/todo-comments.nvim', config = require('setup.todo-comments').setup }) -- todo comments helper
         use({ 'wyattjsmith1/weather.nvim', config = require('setup.weather').setup }) -- adds weather information to status line
         use({ 'zbirenbaum/neodim', event = 'LspAttach', config = require('setup.neodim').setup })
+        use({
+            'KadoBOT/nvim-spotify',
+            run = 'make',
+            config = function()
+                require('nvim-spotify').setup({
+                    update_interval = 5000,
+                })
+            end,
+        })
     end,
 }

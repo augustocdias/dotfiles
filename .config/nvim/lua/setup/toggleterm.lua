@@ -29,4 +29,7 @@ return {
         })
         require('setup.autocommand').term_autocmds()
     end,
+    run_float = function(cmd)
+        require('toggleterm').exec(cmd, 1, 10, vim.fn.getcwd(), 'float')
+    end,
 }

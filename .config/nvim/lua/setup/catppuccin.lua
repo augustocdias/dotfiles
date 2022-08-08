@@ -18,8 +18,8 @@ return {
             transparent_background = false,
             term_colors = true,
             compile = {
-                enabled = true,
-                path = vim.fn.stdpath('cache') .. '/catppuccin',
+                -- enabled = true,
+                -- path = vim.fn.stdpath('cache') .. '/catppuccin',
             },
             styles = {
                 comments = { 'italic' },
@@ -60,6 +60,7 @@ return {
                 leap = true,
                 telescope = true,
                 navic = true,
+                overseer = true,
                 neotree = {
                     enabled = true,
                     show_root = true,

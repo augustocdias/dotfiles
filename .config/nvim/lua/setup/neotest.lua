@@ -4,8 +4,14 @@ return {
             adapters = {
                 require('neotest-rust'),
             },
+            consumers = {
+                overseer = require('neotest.consumers.overseer'),
+            },
             icons = {
-                running = '',
+                running = '省',
+                failed = ' ',
+                skipped = ' ',
+                passed = ' ',
             },
         })
     end,

@@ -103,7 +103,7 @@ return {
             },
         }, {})
     end,
-    on_session_restore = function()
+    cwd_changed = function()
         vim.api.nvim_cmd({
             cmd = 'Neotree',
             args = {

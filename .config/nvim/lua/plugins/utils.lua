@@ -30,10 +30,7 @@ return {
         use({
             'rmagatti/session-lens',
             requires = 'rmagatti/auto-session',
-            config = function()
-                local neotree = require('setup.neotree')
-                require('setup.session').setup(neotree.on_session_restore)
-            end,
+            config = require('setup.session').setup,
         }) -- session management
     end,
 }

@@ -29,5 +29,5 @@ require('packer').startup({
         require('plugins.utils').definitions(use)
         require('plugins.dev-utils').definitions(use)
     end,
-    config = { max_jobs = 30 },
+    config = { max_jobs = 30, auto_reload_compiled = true, compile_on_sync = true },
 })

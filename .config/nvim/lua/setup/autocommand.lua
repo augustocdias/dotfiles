@@ -89,11 +89,19 @@ return {
             return vim.api.nvim_create_augroup(name, { clear = true })
         end
 
+        local packer_group = augroup('PackerUserConfig')
         autocmd({ 'BufWritePost' }, {
             desc = 'Auto update packer plugins once the plugins definition file is changed',
             pattern = 'plugins.lua,*nvim/lua/plugins/*.lua',
-            command = 'source <afile> | PackerSync',
-            group = augroup('PackerUserConfig'),
+            command = 'source <amatch> | PackerSync',
+            group = packer_group,
+        })
+        autocmd('User', {
+            group = packer_group,
+            pattern = 'PackerCompileDone',
+            callback = function() -- Autocompile colorscheme
+                require('catppuccin').compile()
+            end,
         })
 
         autocmd({ 'ModeChanged' }, {

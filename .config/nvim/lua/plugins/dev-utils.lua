@@ -29,5 +29,6 @@ return {
             },
             config = require('setup.dap').setup,
         })
+        use({ 'stevearc/overseer.nvim', config = require('setup.overseer').setup })
     end,
 }

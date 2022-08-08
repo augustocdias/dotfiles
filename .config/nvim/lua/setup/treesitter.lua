@@ -22,8 +22,22 @@ return {
             },
             textobjects = {
                 select = {
+                    enable = true,
+                    lookahead = true,
                     keymaps = {
-                        ['uc'] = '@comment.outer',
+                        ['au'] = '@comment.outer',
+                        ['iu'] = '@comment.inner',
+                        ['af'] = '@function.outer',
+                        ['if'] = '@function.inner',
+                        ['ac'] = '@class.outer',
+                        ['ic'] = '@class.inner',
+                        ['ab'] = '@block.outer',
+                        ['ib'] = '@block.inner',
+                    },
+                    selection_modes = {
+                        ['@parameter.outer'] = 'v', -- charwise
+                        ['@function.outer'] = 'V', -- linewise
+                        ['@class.outer'] = '<c-v>', -- blockwise
                     },
                 },
             },
