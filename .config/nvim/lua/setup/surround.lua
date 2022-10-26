@@ -1,7 +1,6 @@
 return {
     setup = function()
         require('nvim-surround').setup({
-            brackets = { '(', '{', '[', '<' },
             surrounds = {
                 ['('] = { add = { '(', ')' } },
                 [')'] = { add = { '(', ')' } },
@@ -11,7 +10,7 @@ return {
                 ['>'] = { add = { '<', '>' } },
                 ['['] = { add = { '[', ']' } },
                 [']'] = { add = { '[', ']' } },
-                ['r#"'] = { add = { 'r#"', '"#' } },
+                ['r'] = { add = { 'r#"', '"#' } },
             },
             keymaps = {
                 insert = false,

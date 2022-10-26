@@ -129,3 +129,6 @@ vim.o.listchars = 'tab: >,nbsp:¬,extends:»,precedes:«,trail:•'
 
 -- Show problematic characters.
 vim.o.list = true
+
+-- Stabilize the cursor position when creating/deleting horizontal splits
+vim.o.splitkeep = 'topline'

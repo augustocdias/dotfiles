@@ -212,7 +212,7 @@ return {
         npairs.setup()
 
         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-        cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
+        cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
         npairs.add_rule(Rule('r#"', '"#', 'rust'))
         npairs.add_rule(Rule('|', '|', 'rust'))
@@ -222,7 +222,10 @@ return {
         vim.g.copilot_assume_mapped = true
 
         require('copilot').setup({
-            ft_disable = { 'markdown' },
+            filetypes = {
+                markdown = false,
+            },
         })
+        require('copilot_cmp').setup()
     end,
 }

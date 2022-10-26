@@ -13,7 +13,7 @@ end
 local capabilities = function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
-    capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+    capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
     return capabilities
 end
 return {
@@ -39,6 +39,20 @@ return {
         lspconfig.yamlls.setup({
             on_attach = on_attach,
             capabilities = capabilities(),
+            settings = {
+                yaml = {
+                    schemaStore = {
+                        enable = true,
+                        url = 'https://www.schemastore.org/api/json/catalog.json',
+                    },
+                    schemas = {
+                        ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
+                    },
+                    format = {
+                        enable = true,
+                    },
+                },
+            },
         })
         -- json
         lspconfig.jsonls.setup({
@@ -69,6 +83,11 @@ return {
             on_attach = on_attach,
             capabilities = capabilities(),
             cmd = { 'sql-language-server', 'up', '--method', 'stdio' },
+        })
+        -- swift
+        lspconfig.sourcekit.setup({
+            on_attach = on_attach,
+            capabilities = capabilities(),
         })
         -- kotlin
         lspconfig.kotlin_language_server.setup({

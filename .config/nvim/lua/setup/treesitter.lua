@@ -70,5 +70,34 @@ return {
 ) @injection.content (#set! injection.language "markdown_inline"))
 ]]
         ) -- inject markdown in comments
+
+        require('treesitter-context').setup({
+            enable = true,
+            max_lines = 3,
+            mode = 'topline',
+            patterns = {
+                default = {
+                    'class',
+                    'function',
+                    'method',
+                    'for',
+                    'while',
+                    'if',
+                    'switch',
+                    'case',
+                },
+                rust = {
+                    'impl_item',
+                    'struct',
+                    'enum',
+                },
+                json = {
+                    'pair',
+                },
+                yaml = {
+                    'block_mapping_pair',
+                },
+            },
+        })
     end,
 }

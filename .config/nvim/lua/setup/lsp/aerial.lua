@@ -8,7 +8,6 @@ return {
                 default_direction = 'prefer_right',
                 placement = 'window',
             },
-            close_behavior = 'persist',
         })
     end,
 }

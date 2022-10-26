@@ -10,7 +10,8 @@ return {
                 require('setup.lualine').setup(
                     signature.status_line,
                     weather.status_line,
-                    require('setup.nvim-navic').winbar
+                    require('setup.nvim-navic').winbar,
+                    require('setup.substitute').status_line
                 )
             end,
         }) -- status line

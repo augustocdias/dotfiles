@@ -639,7 +639,7 @@ return {
                     name = 'Shell',
                     a = { ':ToggleTermOpenAll<CR>', 'Open All' },
                     c = { ':ToggleTermCloseAll<CR>', 'Open All' },
-                    h = { ':ToggleTerm<CR>', 'Horizontal' },
+                    h = { ':ToggleTerm direction=horizontal<CR>', 'Horizontal' },
                     v = { ':ToggleTerm direction=vertical<CR>', 'Vertical' },
                     f = { ':ToggleTerm direction=float<CR>', 'Float' },
                 },

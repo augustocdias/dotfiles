@@ -14,19 +14,20 @@ return {
             callback = function()
                 local opts = { noremap = true }
                 vim.api.nvim_buf_set_keymap(0, 't', '<Esc>', [[<C-\><C-n>]], opts)
-                vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
-                vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
-                vim.api.nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
-                vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
-                vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
-                vim.cmd(':startinsert')
+                if not vim.g.SessionLoad then
+                    vim.cmd(':startinsert')
+                end
             end,
         })
         autocmd({ 'BufEnter' }, {
             desc = 'Set terminal to insert mode',
             group = termgroup,
             pattern = 'term://*',
-            command = 'startinsert',
+            callback = function()
+                if not vim.g.SessionLoad then
+                    vim.cmd(':startinsert')
+                end
+            end,
         })
     end,
     lsp_autocmds = function(client, bufnr)
@@ -90,12 +91,25 @@ return {
         end
 
         local packer_group = augroup('PackerUserConfig')
-        autocmd({ 'BufWritePost' }, {
-            desc = 'Auto update packer plugins once the plugins definition file is changed',
-            pattern = 'plugins.lua,*nvim/lua/plugins/*.lua',
-            command = 'source <amatch> | PackerSync',
-            group = packer_group,
-        })
+        -- autocmd({ 'BufWritePost' }, {
+        --     desc = 'Auto update packer plugins once the plugins definition file is changed',
+        --     pattern = 'plugins.lua,*nvim/lua/plugins/*.lua',
+        --     -- command = 'source <amatch> | PackerSync',
+        --     callback = function(evt)
+        --         vim.cmd('luafile ' .. evt.match)
+        --         vim.cmd('luafile ' .. vim.fn.stdpath('config') .. '/lua/plugins.lua')
+        --         local packer = require('packer')
+        --         packer.reset()
+        --         packer.sync()
+        --     end,
+        --     group = packer_group,
+        -- })
+        -- autocmd({ 'BufWritePost' }, {
+        --     desc = 'Auto update packer plugins once the plugins definition file is changed',
+        --     pattern = '*nvim/lua/settings/*.lua,*nvim/lua/setup/*.lua',
+        --     command = 'source <amatch> | PackerCompile',
+        --     group = packer_group,
+        -- })
         autocmd('User', {
             group = packer_group,
             pattern = 'PackerCompileDone',

@@ -3,12 +3,12 @@ return {
         local mason_registry = require('mason-registry')
         local codelldb = mason_registry.get_package('codelldb')
         local extension_path = codelldb:get_install_path()
-        local codelldb_path = extension_path .. '/adapter/codelldb'
-        local liblldb_path = extension_path .. '/lldb/lib/liblldb.so'
+        local codelldb_path = extension_path .. '/extension/adapter/codelldb'
+        local liblldb_path = extension_path .. '/extension/lldb/lib/liblldb.dylib'
         require('rust-tools').setup({
             tools = {
-                autoSetHints = true,
                 inlay_hints = {
+                    auto = true,
                     only_current_line = false,
                     show_parameter_hints = true,
                     parameter_hints_prefix = '◂ ',
@@ -51,6 +51,8 @@ return {
                             autoreload = true,
                             runBuildScripts = true,
                             features = 'all',
+                            -- https://github.com/rust-lang/rust-analyzer/issues/13400
+                            target = 'aarch64-apple-darwin',
                         },
                         procMacro = { enable = true },
                         lens = {

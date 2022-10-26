@@ -8,6 +8,7 @@ return {
                 null_ls.builtins.formatting.clang_format,
                 null_ls.builtins.formatting.cmake_format,
                 null_ls.builtins.formatting.eslint_d,
+                null_ls.builtins.formatting.prettier,
                 null_ls.builtins.formatting.fish_indent,
                 null_ls.builtins.formatting.fixjson,
                 null_ls.builtins.formatting.gofmt,

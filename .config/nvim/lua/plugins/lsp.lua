@@ -36,7 +36,6 @@ return {
         }) -- java enhancements
         use({
             'simrat39/rust-tools.nvim',
-            branch = 'modularize_and_inlay_rewrite',
             ft = { 'rust' },
             config = function()
                 local lspconfig = require('setup.lsp')
