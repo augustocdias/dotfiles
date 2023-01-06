@@ -1,5 +1,3 @@
-vim.g.mapleader = ' '
-vim.o.timeoutlen = 500
 local no_remap_opt = { noremap = true }
 local silent_opt = { silent = true }
 local no_remap_silent_opt = { noremap = true, silent = true }
@@ -87,101 +85,10 @@ local keymap_table = {
     },
     {
         shortcut = '<C-x>',
-        cmd = ':BufferClose<CR>',
+        cmd = ':Bdelete<CR>',
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Close current buffer',
-    },
-    {
-        shortcut = '<leader><left>',
-        cmd = ':BufferPrevious<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Switch to buffer on the left',
-    },
-    {
-        shortcut = '<leader><right>',
-        cmd = ':BufferNext<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Switch to buffer on the right',
-    },
-    {
-        shortcut = '<M-1>',
-        cmd = ':BufferGoto 1<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Go to buffer 1',
-    },
-    {
-        shortcut = '<M-2>',
-        cmd = ':BufferGoto 2<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Go to buffer 2',
-    },
-    {
-        shortcut = '<M-3>',
-        cmd = ':BufferGoto 3<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Go to buffer 3',
-    },
-    {
-        shortcut = '<M-4>',
-        cmd = ':BufferGoto 4<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Go to buffer 4',
-    },
-    {
-        shortcut = '<M-5>',
-        cmd = ':BufferGoto 5<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Go to buffer 5',
-    },
-    {
-        shortcut = '<M-6>',
-        cmd = ':BufferGoto 6<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Go to buffer 6',
-    },
-    {
-        shortcut = '<M-7>',
-        cmd = ':BufferGoto 7<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Go to buffer 7',
-    },
-    {
-        shortcut = '<M-8>',
-        cmd = ':BufferGoto 8<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Go to buffer 8',
-    },
-    {
-        shortcut = '<M-9>',
-        cmd = ':BufferGoto 9<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Go to buffer 9',
-    },
-    {
-        shortcut = '<M-0>',
-        cmd = ':BufferLast<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Go to last buffer',
-    },
-    {
-        shortcut = '<M-i>',
-        cmd = ':BufferPick<CR>',
-        opts = no_remap_opt,
-        modes = { 'n' },
-        description = 'Pick buffer',
     },
     {
         shortcut = '<M><left>',

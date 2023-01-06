@@ -1,6 +1,8 @@
 return {
     setup = function()
-        require('lsp_signature').setup({})
+        require('lsp_signature').setup({
+            floating_window_above_cur_line = true,
+        })
     end,
     status_line = function()
         local sig = require('lsp_signature').status_line()
