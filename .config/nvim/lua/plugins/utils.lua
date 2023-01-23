@@ -12,6 +12,10 @@ return {
         dependencies = { 'MunifTanjim/nui.nvim' },
         config = require('setup.neotree').setup,
     }, -- file browser
+    {
+        'stevearc/oil.nvim',
+        config = require('setup.oil').setup,
+    }, -- file browser. eventually should replace neo-tree
     { 'akinsho/toggleterm.nvim', config = require('setup.toggleterm').setup }, -- better terminal
     {
         'nvim-telescope/telescope.nvim',

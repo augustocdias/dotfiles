@@ -12,7 +12,7 @@ return {
             initial_width = 30,
             update_interval = 1000,
             hide_statusline = true,
-            sections = { 'git', 'todos', 'symbols', 'diagnostics', 'containers' },
+            sections = { 'files', 'git', 'todos', 'symbols', 'diagnostics', 'containers' },
             todos = {
                 ignored_paths = { '~' },
                 initially_closed = false,

@@ -1,4 +1,3 @@
-local lspconfig = require('lspconfig')
 local M = {}
 
 M.on_attach = function(client, bufnr)
@@ -18,6 +17,7 @@ M.capabilities = function()
 end
 
 M.config_defaults = function()
+    local lspconfig = require('lspconfig')
     -- bash
     lspconfig.bashls.setup({
         on_attach = M.on_attach,
@@ -94,6 +94,7 @@ M.config_defaults = function()
     })
 end
 M.setup = function()
+    local lspconfig = require('lspconfig')
     require('mason').setup()
     require('mason-lspconfig').setup({
         ensure_installed = { 'jdtls' },

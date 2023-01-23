@@ -1,5 +1,7 @@
 return {
-    { 'SmiteshP/nvim-navic', config = require('setup.nvim-navic').setup }, -- adds breadcrumbs({ 'folke/trouble.nvim', config = require('setup.trouble').setup }) -- adds a bottom panel with lsp diagnostics, quickfixes, etc.({ 'GustavoKatel/sidebar.nvim', config = require('setup.sidebar-nvim').setup }) -- ful sidebar with todos, git status, etc.
+    { 'SmiteshP/nvim-navic', config = require('setup.nvim-navic').setup }, -- adds breadcrumbs
+    { 'folke/trouble.nvim', config = require('setup.trouble').setup }, -- adds a bottom panel with lsp diagnostics, quickfixes, etc.
+    { 'GustavoKatel/sidebar.nvim', config = require('setup.sidebar-nvim').setup }, -- ful sidebar with todos, git status, etc.
     {
         'nvim-neotest/neotest',
         dependencies = {

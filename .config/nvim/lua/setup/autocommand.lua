@@ -42,7 +42,8 @@ return {
             autocmd({ 'BufEnter', 'InsertLeave' }, {
                 desc = 'Auto show code lenses',
                 buffer = bufnr,
-                callback = vim.lsp.codelens.refresh,
+                -- callback = vim.lsp.codelens.refresh,
+                command = 'silent! lua vim.lsp.codelens.refresh()',
                 group = group,
             })
         end

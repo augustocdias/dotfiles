@@ -38,8 +38,7 @@ return {
         end,
     }, -- java enhancements
     {
-        -- 'simrat39/rust-tools.nvim',
-        'kdarkhan/rust-tools.nvim',
+        'simrat39/rust-tools.nvim',
         ft = { 'rust' },
         config = function()
             local lspconfig = require('setup.lsp')
