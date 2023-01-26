@@ -1,12 +1,21 @@
 [user]
-    email = augusto.c.dias@wire.com
-    name = Augusto
+    email = augusto.c.dias@gmail.com
+    name = Augusto César Dias
     signingkey = 4CBE3D4E4A19D53E
+[core]
+    editor = nvim --cmd 'let g:unception_block_while_host_edits=1'
+    pager = bat
+[commit]
+    gpgsign = true
 [pull]
     rebase = true
 [diff]
     tool = nvimdiff
     guitool = nvimdiff
+[difftool]
+    prompt = false
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [merge]
     tool = nvimdiff
     conflictstyle = diff3
@@ -14,23 +23,16 @@
     keepBackup = false
     trustExitCode = false
     prompt = true
-[difftool]
-    prompt = false
-[commit]
-    gpgsign = true
-[core]
-    editor = nvim
-    pager = bat
 [mergetool "nvimdiff"]
-    layout = LOCAL,MERGED,REMOTE
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c 'wincmd w' -c 'wincmd J'"
 [credential "https://github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+    helper = 
+    helper = !/opt/homebrew/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+    helper = 
+    helper = !/opt/homebrew/bin/gh auth git-credential
 [filter "lfs"]
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f

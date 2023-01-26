@@ -4,9 +4,27 @@ local no_remap_silent_opt = { noremap = true, silent = true }
 
 local sidebar = require('sidebar')
 local keymap_table = {
-    { shortcut = '+', cmd = '<C-a>', opts = no_remap_opt, modes = { 'n' }, description = 'Increment number' },
-    { shortcut = '-', cmd = '<C-x>', opts = no_remap_opt, modes = { 'n' }, description = 'Decrement number' },
-    { shortcut = '<C-a>', cmd = 'gg<S-v>G', opts = {}, modes = { 'n' }, description = 'Select all' },
+    {
+        shortcut = '+',
+        cmd = '<C-a>',
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Increment number',
+    },
+    {
+        shortcut = '-',
+        cmd = '<C-x>',
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Decrement number',
+    },
+    {
+        shortcut = '<C-a>',
+        cmd = 'gg<S-v>G',
+        opts = {},
+        modes = { 'n' },
+        description = 'Select all',
+    },
     {
         shortcut = '<M-p>',
         cmd = require('telescope.builtin').buffers,
@@ -20,6 +38,13 @@ local keymap_table = {
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Open file in workspace',
+    },
+    {
+        shortcut = '<M-r>',
+        cmd = ':e!<CR>',
+        opts = no_remap_silent_opt,
+        modes = { 'n' },
+        description = 'Refresh buffer',
     },
     {
         shortcut = '<M-w>',

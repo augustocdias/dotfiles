@@ -33,4 +33,5 @@ return {
         end,
     }, -- special search and replace buffer
     'famiu/bufdelete.nvim', -- delete buffer and keep window layout
+    'samjwill/nvim-unception', -- prevents an instance of neovim to be openend within neovim
 }

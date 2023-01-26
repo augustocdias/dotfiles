@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 require('settings.general')
 require('settings.gui')
 require('settings.neovide')
+require('settings.unception')
 require('lazy').setup('plugins', {
     checker = {
         enabled = true,
