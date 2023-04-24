@@ -35,11 +35,6 @@ return {
                         ['ab'] = '@block.outer',
                         ['ib'] = '@block.inner',
                     },
-                    selection_modes = {
-                        ['@parameter.outer'] = 'v', -- charwise
-                        ['@function.outer'] = 'V', -- linewise
-                        ['@class.outer'] = '<c-v>', -- blockwise
-                    },
                 },
                 move = {
                     enable = true,
@@ -72,7 +67,7 @@ return {
                 },
             },
         })
-        -- require('vim.treesitter.query').set_query(
+        -- require('vim.treesitter.query').set(
         --     'rust',
         --     'injections',
         --     [[
@@ -82,7 +77,7 @@ return {
         -- ) @injection.content (#set! injection.language "sql"))
         -- ]]
         -- ) -- inject sql in raw_string_literals
-        require('vim.treesitter.query').set_query(
+        require('vim.treesitter.query').set(
             'rust',
             'injections',
             [[

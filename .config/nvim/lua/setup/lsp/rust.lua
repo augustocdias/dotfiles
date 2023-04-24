@@ -54,7 +54,10 @@ return {
                             -- https://github.com/rust-lang/rust-analyzer/issues/13400
                             target = 'aarch64-apple-darwin',
                         },
-                        procMacro = { enable = true },
+                        procMacro = {
+                            enable = true,
+                            attributes = { enable = true },
+                        },
                         lens = {
                             enable = true,
                             run = { enable = true },

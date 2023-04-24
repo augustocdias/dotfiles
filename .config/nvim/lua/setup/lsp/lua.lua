@@ -7,7 +7,7 @@ return {
         for _, v in pairs(vim.api.nvim_get_runtime_file('', true)) do
             lua_runtime[v] = true
         end
-        lspconfig.sumneko_lua.setup({
+        lspconfig.lua_ls.setup({
             on_attach = on_attach,
             capabilities = capabilities,
             settings = {

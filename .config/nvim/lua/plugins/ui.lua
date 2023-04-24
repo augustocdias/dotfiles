@@ -10,8 +10,7 @@ return {
             require('setup.lualine').setup(
                 signature.status_line,
                 weather.status_line,
-                require('setup.nvim-navic').winbar,
-                require('setup.substitute').status_line
+                require('setup.nvim-navic').winbar
             )
         end,
     }, -- status line
@@ -39,7 +38,11 @@ return {
     { 'lukas-reineke/indent-blankline.nvim', config = require('setup.blankline').setup }, -- Adds a | to show indentation levels
     { 'folke/todo-comments.nvim', config = require('setup.todo-comments').setup }, -- todo comments helper
     { 'wyattjsmith1/weather.nvim', config = require('setup.weather').setup }, -- adds weather information to status line
-    { 'zbirenbaum/neodim', event = 'LspAttach', config = require('setup.neodim').setup },
+    {
+        'zbirenbaum/neodim',
+        event = 'LspAttach',
+        config = require('setup.neodim').setup,
+    },
     {
         'KadoBOT/nvim-spotify',
         build = 'make',

@@ -13,6 +13,7 @@ return {
             local conf = lspconfig.setup()
             lspconfig.config_defaults()
             require('setup.lsp.lua').setup(conf, lspconfig.capabilities(), lspconfig.on_attach)
+            require('setup.lsp.typescript').setup(conf, lspconfig.capabilities(), lspconfig.on_attach)
         end,
     }, -- collection of LSP configurations for nvim
     {

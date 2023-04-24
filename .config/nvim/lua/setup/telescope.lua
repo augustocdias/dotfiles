@@ -7,6 +7,13 @@ return {
                 prompt_prefix = ' ',
                 selection_caret = ' ',
                 color_devicons = true,
+                path_display = {
+                    shorten = {
+                        len = 1,
+                        exclude = { -1, -2 },
+                    },
+                    'truncate',
+                },
 
                 -- Searching
                 set_env = { COLORTERM = 'truecolor' },

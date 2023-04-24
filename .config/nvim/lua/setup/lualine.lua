@@ -1,6 +1,6 @@
 -- local luffy = { '􏾾', '􏾿', '􏿀', '􏿁', '􏿂', '􏿃' }
 return {
-    setup = function(signature, weather, winbar_sig, substitute)
+    setup = function(signature, weather, winbar_sig)
         local spotify_status = require('nvim-spotify').status
         spotify_status:start()
 
@@ -51,7 +51,6 @@ return {
                     signature,
                 },
                 lualine_x = {
-                    substitute(),
                     search_result,
                     'encoding',
                     'filetype',

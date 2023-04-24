@@ -1,11 +1,11 @@
 return {
     'rmagatti/auto-session',
     { 'dgrbrady/nvim-docker', enabled = false }, -- docker manager. TODO: enable and configure when needed
-    {
-        'krivahtoo/silicon.nvim',
-        build = './install.sh build',
-        config = require('setup.silicon').setup,
-    }, -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
+    -- {
+    --     'krivahtoo/silicon.nvim',
+    --     build = './install.sh build',
+    --     config = require('setup.silicon').setup,
+    -- }, -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
     'bennypowers/nvim-regexplainer', -- shows popup explaining regex under cursor
     {
         'nvim-neo-tree/neo-tree.nvim',

@@ -79,7 +79,7 @@ vim.o.undofile = true
 vim.o.wildmenu = true
 vim.o.wildmode = 'list:longest'
 vim.o.wildignore =
-'.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite'
+    '.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite'
 
 -- Use wide tabs
 vim.o.shiftwidth = 4
