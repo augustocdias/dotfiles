@@ -7,14 +7,14 @@ return {
             keymaps = {
                 insert = false,
                 insert_line = false,
-                normal = ',a',
+                normal = 'ma',
                 normal_cur = false,
                 normal_line = false,
                 normal_cur_line = false,
-                visual = ',',
+                visual = 'm',
                 visual_line = false,
-                delete = ',d',
-                change = ',r',
+                delete = 'md',
+                change = 'mr',
             },
             highlight = {
                 duration = 1000,

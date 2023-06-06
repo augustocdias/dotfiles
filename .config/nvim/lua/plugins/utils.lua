@@ -31,8 +31,8 @@ return {
     },
     -- session management and picker
     {
-        'rmagatti/session-lens',
-        dependencies = { 'rmagatti/auto-session', 'nvim-telescope/telescope.nvim' },
+        'rmagatti/auto-session',
+        dependencies = { 'nvim-telescope/telescope.nvim' },
         config = require('setup.session').setup,
     },
 }

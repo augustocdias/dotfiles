@@ -3,7 +3,82 @@ local silent_opt = { silent = true }
 local no_remap_silent_opt = { noremap = true, silent = true }
 
 local sidebar = require('sidebar')
+local ts_repeat_move = require('nvim-treesitter.textobjects.repeatable_move')
+local gitsigns = require('gitsigns')
+
 local keymap_table = {
+    {
+        shortcut = ';',
+        cmd = ts_repeat_move.repeat_last_move,
+        opts = no_remap_opt,
+        modes = { 'n', 'x', 'o' },
+        description = 'Repeat last move',
+    },
+    {
+        shortcut = ',',
+        cmd = ts_repeat_move.repeat_last_move_opposite,
+        opts = no_remap_opt,
+        modes = { 'n', 'x', 'o' },
+        description = 'Repeat last move opposite direction',
+    },
+    {
+        shortcut = 'f',
+        cmd = ts_repeat_move.builtin_f,
+        opts = no_remap_opt,
+        modes = { 'n', 'x', 'o' },
+        description = 'Go to char ocurrence to the right',
+    },
+    {
+        shortcut = 'F',
+        cmd = ts_repeat_move.builtin_F,
+        opts = no_remap_opt,
+        modes = { 'n', 'x', 'o' },
+        description = 'Go to char ocurrence to the left',
+    },
+    {
+        shortcut = 't',
+        cmd = ts_repeat_move.builtin_t,
+        opts = no_remap_opt,
+        modes = { 'n', 'x', 'o' },
+        description = 'Go to before char ocurrence to the right',
+    },
+    {
+        shortcut = 'T',
+        cmd = ts_repeat_move.builtin_T,
+        opts = no_remap_opt,
+        modes = { 'n', 'x', 'o' },
+        description = 'Go to after char ocurrence to the left',
+    },
+    {
+        shortcut = ']c',
+        cmd = function()
+            if vim.wo.diff then
+                return ']c'
+            end
+            vim.schedule(function()
+                gitsigns.next_hunk()
+            end)
+            return '<Ignore>'
+        end,
+        opts = { expr = true },
+        modes = { 'n' },
+        description = 'Next git hunk',
+    },
+    {
+        shortcut = '[c',
+        cmd = function()
+            if vim.wo.diff then
+                return '[c'
+            end
+            vim.schedule(function()
+                gitsigns.prev_hunk()
+            end)
+            return '<Ignore>'
+        end,
+        opts = { expr = true },
+        modes = { 'n' },
+        description = 'Previous git hunk',
+    },
     {
         shortcut = '+',
         cmd = '<C-a>',
@@ -48,7 +123,7 @@ local keymap_table = {
     },
     {
         shortcut = '<M-w>',
-        cmd = require('session-lens').search_session,
+        cmd = require('auto-session.session-lens').search_session,
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Open saved session',
@@ -296,7 +371,7 @@ local keymap_table = {
         modes = { 'n' },
         description = 'Signature help',
     },
-    -- calling twice make the cursor go into the float window. good for navigating big docs
+    -- call twice make the cursor go into the float window. good for navigating big docs
     {
         shortcut = 'K',
         cmd = vim.lsp.buf.hover,
@@ -427,6 +502,21 @@ return {
                     name = 'LSP',
                     a = { '<cmd>lua vim.lsp.buf.range_code_action()<CR>', 'Range Code Action' },
                 },
+                h = {
+                    name = 'Gitsigns',
+                    s = {
+                        function()
+                            require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+                        end,
+                        'Stage Hunk',
+                    },
+                    r = {
+                        function()
+                            require('gitsigns').reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+                        end,
+                        'Reset Hunk',
+                    },
+                },
             },
             opts = {
                 prefix = '<leader>',
@@ -489,6 +579,22 @@ return {
                     e = { ':DiffviewFocusFiles<CR>', 'Diff View Focus Files' },
                     h = { ':DiffviewFileHistory<CR>', 'Diff View File History' },
                     g = { '<cmd>lua require("setup.neotree").neogit("git")<CR>', 'Neo-tree git' },
+                },
+                h = {
+                    name = 'Gitsigns',
+                    s = { ':Gitsigns stage_hunk<CR>', 'Stage hunk' },
+                    S = { ':Gitsigns stage_buffer<CR>', 'Stage buffer' },
+                    u = { ':Gitsigns undo_stage_hunk<CR>', 'Undo stage hunk' },
+                    r = { ':Gitsigns reset_hunk<CR>', 'Reset hunk' },
+                    R = { ':Gitsigns reset_buffer<CR>', 'Reset buffer' },
+                    p = { ':Gitsigns preview_hunk<CR>', 'Preview hunk' },
+                    b = { ':Gitsigns toggle_current_line_blame<CR>', 'Toggle blame current line' },
+                    B = {
+                        '<cmd>lua require("gitsigns").blame_line({full=true, ignore_whitespace = true})<CR>',
+                        'Blame line',
+                    },
+                    d = { ':Gitsigns diffthis<CR>', 'Diff this' },
+                    t = { ':Gitsigns toggle_deleted<CR>', 'Toggle deleted hunks' },
                 },
                 l = {
                     name = 'LSP',

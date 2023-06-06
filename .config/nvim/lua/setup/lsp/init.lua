@@ -13,6 +13,14 @@ M.capabilities = function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+    -- workaround until neovim supports multiple client encodings
+    capabilities = vim.tbl_deep_extend('force', capabilities, {
+        offsetEncoding = { 'utf-16' },
+        general = {
+            positionEncodings = { 'utf-16' },
+        },
+    })
     return capabilities
 end
 
@@ -25,6 +33,11 @@ M.config_defaults = function()
     })
     -- C#
     lspconfig.omnisharp.setup({
+        on_attach = M.on_attach,
+        capabilities = M.capabilities(),
+    })
+    -- C/C++
+    lspconfig.clangd.setup({
         on_attach = M.on_attach,
         capabilities = M.capabilities(),
     })
@@ -106,6 +119,7 @@ M.setup = function()
             'eslint_d',
             'black',
             'clangd',
+            'clang-format',
             'ktlint',
             'markdownlint',
             'shfmt',
