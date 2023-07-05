@@ -8,9 +8,9 @@ return {
         require('rust-tools').setup({
             tools = {
                 inlay_hints = {
-                    auto = true,
+                    auto = false,
                     only_current_line = false,
-                    show_parameter_hints = true,
+                    show_parameter_hints = false,
                     parameter_hints_prefix = '◂ ',
                     other_hints_prefix = '▸ ',
                 },
@@ -23,7 +23,6 @@ return {
                 on_attach = on_attach,
                 capabilities = capabilities,
                 standalone = false,
-                -- cmd = rust_server:get_default_options().cmd,
                 settings = {
                     ['rust-analyzer'] = {
                         diagnostics = {
@@ -106,6 +105,10 @@ return {
             },
         })
         -- Cargo.toml
-        require('crates').setup({})
+        require('crates').setup({
+            null_ls = {
+                enabled = true,
+            },
+        })
     end,
 }

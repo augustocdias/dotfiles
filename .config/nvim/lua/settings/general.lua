@@ -1,3 +1,6 @@
+-- enables experimental lua loader
+vim.loader.enable()
+
 -- map leader to space
 vim.g.mapleader = ' '
 -- timeout for leader key
@@ -55,9 +58,6 @@ vim.o.showmode = false
 vim.o.hidden = true
 vim.o.wrap = false
 vim.o.joinspaces = false
-vim.o.printfont = ':h10'
-vim.o.printencoding = 'utf-8'
-vim.o.printoptions = 'paper:letter'
 -- current line will have a background
 vim.o.cursorline = true
 -- Always draw sign column. Prevent buffer moving when adding/deleting sign.

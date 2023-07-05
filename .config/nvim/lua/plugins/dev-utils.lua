@@ -5,7 +5,6 @@ return {
     {
         'nvim-neotest/neotest',
         dependencies = {
-            'antoinemadec/FixCursorHold.nvim',
             'rouge8/neotest-rust',
         },
         config = require('setup.neotest').setup,
@@ -16,7 +15,7 @@ return {
             require('octo').setup()
         end,
     }, -- github manager for issues and pull requests
-    { 'TimUntersberger/neogit', config = require('setup.neogit').setup },
+    { 'NeogitOrg/neogit', config = require('setup.neogit').setup },
     {
         'mfussenegger/nvim-dap', -- debug adapter for debugging
         dependencies = {

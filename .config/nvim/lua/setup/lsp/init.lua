@@ -8,6 +8,11 @@ M.on_attach = function(client, bufnr)
     require('setup.autocommand').lsp_autocmds(client, bufnr)
     -- check if this is applicable (for rust for example it is not)
     -- https://github.com/L3MON4D3/LuaSnip/wiki/Misc#improve-language-server-snippets
+
+    -- enable inlay hints if server supports it
+    if client.server_capabilities.inlayHintProvider then
+        vim.lsp.inlay_hint(bufnr, true)
+    end
 end
 M.capabilities = function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
