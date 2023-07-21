@@ -66,12 +66,18 @@ return {
         end
         if client.server_capabilities.document_formatting or client.server_capabilities.documentFormattingProvider then
             local group = augroup('LSPAutoFormat')
+            -- set the autoformat flag
+            vim.b.autoformat = vim.g.autoformat
 
             -- auto format file on save
             autocmd({ 'BufWritePre' }, {
                 desc = 'Auto format file before saving',
                 buffer = bufnr,
-                command = 'silent! undojoin | lua vim.lsp.buf.format({async = false})',
+                callback = function()
+                    if vim.b.autoformat then
+                        vim.lsp.buf.format({ async = false })
+                    end
+                end,
                 group = group,
             })
         end

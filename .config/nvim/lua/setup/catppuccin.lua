@@ -1,7 +1,9 @@
 return {
+    pallete = function(flavour)
+        return require('catppuccin.palettes').get_palette(flavour)
+    end,
     setup = function(flavour)
-        vim.g.catppuccin_flavour = flavour
-        local colors = require('catppuccin.palettes').get_palette()
+        local colors = require('catppuccin.palettes').get_palette(flavour)
         local ucolors = require('catppuccin.utils.colors')
         local telescope_prompt = ucolors.darken(colors.crust, 0.95, '#000000')
         local telescope_results = ucolors.darken(colors.mantle, 0.95, '#000000')
@@ -10,6 +12,7 @@ return {
         local telescope_preview_title = colors.teal
         local lualine_bg = colors.mantle
         require('catppuccin').setup({
+            flavour = flavour,
             dim_inactive = {
                 enabled = true,
                 shade = 'dark',
@@ -36,7 +39,25 @@ return {
                 operators = {},
             },
             integrations = {
-                treesitter = true,
+                aerial = true,
+                barbar = true,
+                cmp = true,
+                dap = {
+                    enabled = true,
+                    enable_ui = true,
+                },
+                dashboard = true,
+                fidget = true,
+                flash = true,
+                gitgutter = true,
+                gitsigns = true,
+                indent_blankline = {
+                    enabled = true,
+                    colored_indent_levels = false,
+                },
+                leap = true,
+                lsp_trouble = true,
+                markdown = true,
                 native_lsp = {
                     enabled = true,
                     virtual_text = {
@@ -52,42 +73,34 @@ return {
                         information = { 'underline' },
                     },
                 },
-                lsp_trouble = true,
-                cmp = true,
-                lsp_saga = true,
-                gitgutter = true,
-                gitsigns = true,
-                leap = true,
-                telescope = true,
-                navic = true,
-                overseer = true,
+                navic = {
+                    enabled = true,
+                    custom_bg = lualine_bg,
+                },
+                neogit = true,
+                neotest = true,
                 neotree = {
                     enabled = true,
                     show_root = true,
                     transparent_panel = false,
                 },
-                dap = {
-                    enabled = true,
-                    enable_ui = true,
-                },
-                which_key = true,
-                indent_blankline = {
-                    enabled = true,
-                    colored_indent_levels = false,
-                },
-                dashboard = true,
-                neogit = true,
-                barbar = true,
-                markdown = true,
+                noice = true,
                 notify = true,
+                octo = true,
+                overseer = true,
                 symbols_outline = true,
-                aerial = true,
+                telescope = true,
+                treesitter = true,
+                treesitter_context = true,
+                which_key = true,
             },
             highlight_overrides = {
                 all = {
-                    WinBar = { bg = colors.mantle },
-                    WinBarSigActParm = { fg = colors.blue, bg = colors.mantle },
-                    WinBarSignature = { fg = colors.flamingo, bg = colors.mantle },
+                    NoiceCmdlinePopup = { bg = ucolors.lighten(colors.flamingo, 0.1, '#FFFFFF') },
+                    NoiceMini = { bg = colors.mantle },
+                    WinBar = { bg = lualine_bg },
+                    WinBarSigActParm = { fg = colors.blue, bg = lualine_bg },
+                    WinBarSignature = { fg = colors.flamingo, bg = lualine_bg },
                     -- dims the text so that the hits are more visible
                     LeapBackdrop = { fg = colors.flamingo },
                     TelescopeBorder = { bg = telescope_results, fg = telescope_results },
@@ -112,34 +125,7 @@ return {
                     TelescopeSelectionCaret = { fg = telescope_text },
                     TelescopeResultsNormal = { bg = telescope_results },
                     TelescopeResultsBorder = { bg = telescope_results, fg = telescope_results },
-                    -- NavicIconsFile = { fg = colors.blue, bg = lualine_bg },
-                    -- NavicIconsModule = { fg = colors.blue, bg = lualine_bg },
-                    -- NavicIconsNamespace = { fg = colors.blue, bg = lualine_bg },
-                    -- NavicIconsPackage = { fg = colors.blue, bg = lualine_bg },
-                    -- NavicIconsClass = { fg = colors.yellow, bg = lualine_bg },
-                    -- NavicIconsMethod = { fg = colors.blue, bg = lualine_bg },
-                    -- NavicIconsProperty = { fg = colors.green, bg = lualine_bg },
-                    -- NavicIconsField = { fg = colors.green, bg = lualine_bg },
-                    -- NavicIconsConstructor = { fg = colors.blue, bg = lualine_bg },
-                    -- NavicIconsEnum = { fg = colors.green, bg = lualine_bg },
-                    -- NavicIconsInterface = { fg = colors.yellow, bg = lualine_bg },
-                    -- NavicIconsFunction = { fg = colors.blue, bg = lualine_bg },
-                    -- NavicIconsVariable = { fg = colors.flamingo, bg = lualine_bg },
-                    -- NavicIconsConstant = { fg = colors.peach, bg = lualine_bg },
-                    -- NavicIconsString = { fg = colors.green, bg = lualine_bg },
-                    -- NavicIconsNumber = { fg = colors.peach, bg = lualine_bg },
-                    -- NavicIconsBoolean = { fg = colors.peach, bg = lualine_bg },
-                    -- NavicIconsArray = { fg = colors.peach, bg = lualine_bg },
-                    -- NavicIconsObject = { fg = colors.peach, bg = lualine_bg },
-                    -- NavicIconsKey = { fg = colors.pink, bg = lualine_bg },
-                    -- NavicIconsNull = { fg = colors.peach, bg = lualine_bg },
-                    -- NavicIconsEnumMember = { fg = colors.red, bg = lualine_bg },
-                    -- NavicIconsStruct = { fg = colors.blue, bg = lualine_bg },
-                    -- NavicIconsEvent = { fg = colors.blue, bg = lualine_bg },
-                    -- NavicIconsOperator = { fg = colors.sky, bg = lualine_bg },
-                    -- NavicIconsTypeParameter = { fg = colors.blue, bg = lualine_bg },
-                    -- NavicText = { fg = colors.teal, bg = lualine_bg },
-                    -- NavicSeparator = { fg = colors.text, bg = lualine_bg },
+                    NavicIconsFile = { fg = colors.blue, bg = lualine_bg },
                 },
             },
         })

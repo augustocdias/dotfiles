@@ -1,6 +1,6 @@
 -- local luffy = { '􏾾', '􏾿', '􏿀', '􏿁', '􏿂', '􏿃' }
 return {
-    setup = function(signature, weather, winbar_sig)
+    setup = function(signature, weather, winbar_sig, command_status)
         local spotify_status = require('nvim-spotify').status
         spotify_status:start()
 
@@ -46,11 +46,12 @@ return {
                     {
                         'filename',
                         file_status = true, -- displays file status (readonly status, modified status)
-                        path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+                        path = 1,           -- 0 = just filename, 1 = relative path, 2 = absolute path
                     },
                     signature,
                 },
                 lualine_x = {
+                    command_status,
                     search_result,
                     'encoding',
                     'filetype',
@@ -80,7 +81,7 @@ return {
                     {
                         'filename',
                         file_status = true, -- displays file status (readonly status, modified status)
-                        path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+                        path = 1,           -- 0 = just filename, 1 = relative path, 2 = absolute path
                     },
                 },
                 lualine_x = { 'location' },

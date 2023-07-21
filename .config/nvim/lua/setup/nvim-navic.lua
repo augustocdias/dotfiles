@@ -29,34 +29,6 @@ return {
                 Operator = ' ',
                 TypeParameter = ' ',
             },
-            -- icons = {
-            --     File = ' ',
-            --     Module = ' ',
-            --     Namespace = ' ',
-            --     Package = ' ',
-            --     Class = ' ',
-            --     Method = ' ',
-            --     Property = ' ',
-            --     Field = ' ',
-            --     Constructor = ' ',
-            --     Enum = '練',
-            --     Interface = '練',
-            --     Function = ' ',
-            --     Variable = ' ',
-            --     Constant = ' ',
-            --     String = ' ',
-            --     Number = ' ',
-            --     Boolean = '◩ ',
-            --     Array = ' ',
-            --     Object = ' ',
-            --     Key = ' ',
-            --     Null = 'ﳠ ',
-            --     EnumMember = ' ',
-            --     Struct = ' ',
-            --     Event = ' ',
-            --     Operator = ' ',
-            --     TypeParameter = ' ',
-            -- },
             highlight = true,
         })
     end,
@@ -64,7 +36,8 @@ return {
         local eval_navic = function()
             local navic = require('nvim-navic')
             if navic.is_available() then
-                return navic.get_location()
+                local data = navic.get_data()
+                return navic.format_data(data)
             end
         end
         local icon = require('nvim-web-devicons').get_icon(vim.fn.expand('%:t'), nil, { default = true })

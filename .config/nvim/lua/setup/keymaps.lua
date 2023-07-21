@@ -3,51 +3,44 @@ local silent_opt = { silent = true }
 local no_remap_silent_opt = { noremap = true, silent = true }
 
 local sidebar = require('sidebar')
-local ts_repeat_move = require('nvim-treesitter.textobjects.repeatable_move')
 local gitsigns = require('gitsigns')
 
 local keymap_table = {
     {
-        shortcut = ';',
-        cmd = ts_repeat_move.repeat_last_move,
+        shortcut = 's',
+        cmd = function()
+            require('flash').jump()
+        end,
         opts = no_remap_opt,
         modes = { 'n', 'x', 'o' },
-        description = 'Repeat last move',
+        description = 'Flash',
     },
     {
-        shortcut = ',',
-        cmd = ts_repeat_move.repeat_last_move_opposite,
+        shortcut = 'S',
+        cmd = function()
+            require('flash').treesitter()
+        end,
         opts = no_remap_opt,
         modes = { 'n', 'x', 'o' },
-        description = 'Repeat last move opposite direction',
+        description = 'Flash Treesitter',
     },
     {
-        shortcut = 'f',
-        cmd = ts_repeat_move.builtin_f,
+        shortcut = 'r',
+        cmd = function()
+            require('flash').remote()
+        end,
         opts = no_remap_opt,
-        modes = { 'n', 'x', 'o' },
-        description = 'Go to char ocurrence to the right',
+        modes = { 'o' },
+        description = 'Flash Remote',
     },
     {
-        shortcut = 'F',
-        cmd = ts_repeat_move.builtin_F,
+        shortcut = 'R',
+        cmd = function()
+            require('flash').treesitter_search()
+        end,
         opts = no_remap_opt,
-        modes = { 'n', 'x', 'o' },
-        description = 'Go to char ocurrence to the left',
-    },
-    {
-        shortcut = 't',
-        cmd = ts_repeat_move.builtin_t,
-        opts = no_remap_opt,
-        modes = { 'n', 'x', 'o' },
-        description = 'Go to before char ocurrence to the right',
-    },
-    {
-        shortcut = 'T',
-        cmd = ts_repeat_move.builtin_T,
-        opts = no_remap_opt,
-        modes = { 'n', 'x', 'o' },
-        description = 'Go to after char ocurrence to the left',
+        modes = { 'x', 'o' },
+        description = 'Flash Treesitter Search',
     },
     {
         shortcut = ']c',
@@ -185,7 +178,7 @@ local keymap_table = {
     },
     {
         shortcut = '<C-x>',
-        cmd = ':Bdelete<CR>',
+        cmd = ':lua MiniBufremove.delete()<CR>',
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Close current buffer',
@@ -212,7 +205,7 @@ local keymap_table = {
         description = 'Pause (Spotify)',
     },
     {
-        shortcut = '<C-h>',
+        shortcut = '<C-g>',
         cmd = ':nohlsearch<CR>',
         opts = no_remap_opt,
         modes = { 'n', 'v' },
@@ -249,32 +242,60 @@ local keymap_table = {
         description = 'Move cursor right',
     },
     {
-        shortcut = '<left>',
+        shortcut = '<C-h>',
         cmd = '<C-w><left>',
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window to the left',
     },
     {
-        shortcut = '<right>',
+        shortcut = '<C-l>',
         cmd = '<C-w><right>',
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window to the right',
     },
     {
-        shortcut = '<up>',
+        shortcut = '<C-k>',
         cmd = '<C-w><up>',
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window up',
     },
     {
-        shortcut = '<down>',
+        shortcut = '<C-j>',
         cmd = '<C-w><down>',
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window down',
+    },
+    {
+        shortcut = '<right>',
+        cmd = '<CMD>vertical resize +2<CR>',
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Increase window width',
+    },
+    {
+        shortcut = '<left>',
+        cmd = '<CMD>vertical resize -2<CR>',
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Decrease window width',
+    },
+    {
+        shortcut = '<up>',
+        cmd = '<CMD>resize +2<CR>',
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Increase window height',
+    },
+    {
+        shortcut = '<down>',
+        cmd = '<CMD>resize -2<CR>',
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Decrease window height',
     },
     {
         shortcut = '<C-d>',
@@ -365,7 +386,7 @@ local keymap_table = {
         description = 'Signature help',
     },
     {
-        shortcut = '<C-k>',
+        shortcut = '<M-k>',
         cmd = vim.lsp.buf.signature_help,
         opts = silent_opt,
         modes = { 'n' },
@@ -600,8 +621,15 @@ return {
                     name = 'LSP',
                     a = { '<cmd>lua vim.lsp.buf.code_action()<CR>', 'Code Actions' },
                     b = { '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 'Show line diagnostics' },
+                    c = {
+                        function()
+                            vim.b.autoformat = not vim.b.autoformat
+                        end,
+                        'Toggle autoformat',
+                    },
                     d = { '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', 'Definitions' },
                     e = { '<cmd>lua require("telescope.builtin").treesitter()<CR>', 'Treesitter' },
+                    f = { '<cmd>lua vim.lsp.buf.format({ async = false })<CR>', 'Format' },
                     g = {
                         '<cmd>lua require("telescope.builtin").lsp_document_diagnostics()<CR>',
                         'Document Diagnostics',

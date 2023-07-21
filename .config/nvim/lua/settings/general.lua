@@ -123,8 +123,21 @@ vim.o.diffopt = vim.o.diffopt .. ',indent-heuristic'
 -- https://github.com/neovim/neovim/pull/14537
 vim.o.diffopt = vim.o.diffopt .. ',linematch:50'
 
--- Avoid showing extra messages when using completion
-vim.o.shortmess = vim.o.shortmess .. 'c'
+-- shortmess
+-- I -> don't show intro message
+-- O -> file-read message overwrites previous
+-- o -> file-read message
+-- c -> completion messages
+-- W -> don't show [w] or written when writing
+-- T -> truncate file messages at start
+-- t -> truncate file messages in middle
+-- F -> don't give file info when editing a file
+-- x -> do not show [+] or [-] when lines are added/deleted
+-- n -> no swap file
+-- l -> use internal grep
+-- C -> do not give |ins-completion-menu| messages
+-- i -> case insensitive search
+vim.o.shortmess = 'IOocWTtFxnflCi'
 
 -- automatic reload file on buffer changed outside of vim
 vim.o.autoread = true
@@ -138,3 +151,9 @@ vim.o.list = true
 
 -- Stabilize the cursor position when creating/deleting horizontal splits
 vim.o.splitkeep = 'topline'
+
+-- sync system clipboard
+-- vim.o.clipboard = 'unnamedplus'
+
+-- enable autoformat when saving. it is set for each buffer when lsp is attached
+vim.g.autoformat = true
