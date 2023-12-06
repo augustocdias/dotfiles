@@ -11,7 +11,7 @@ M.on_attach = function(client, bufnr)
 
     -- enable inlay hints if server supports it
     if client.server_capabilities.inlayHintProvider then
-        vim.lsp.inlay_hint(bufnr, true)
+        vim.lsp.inlay_hint.enable(bufnr, true)
     end
 end
 M.capabilities = function()
@@ -109,6 +109,14 @@ M.config_defaults = function()
     lspconfig.kotlin_language_server.setup({
         on_attach = M.on_attach,
         capabilities = M.capabilities(),
+        settings = {
+            hints = {
+                typeHints = true,
+                parameterHints = true,
+                chainedHints = true,
+            },
+        },
+        root_dir = lspconfig.util.root_pattern('settings.gradle', 'settings.gradle.kts', '*.kt'),
     })
 end
 M.setup = function()

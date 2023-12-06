@@ -31,12 +31,28 @@ return {
                     view = 'notify',
                     filter = { event = 'msg_showmode' },
                 },
-                -- supress any messages
+                -- supress annoying messages
                 {
                     filter = {
                         event = 'msg_show',
                         kind = '',
-                        find = '.*',
+                        find = '".*".*L,.*B',
+                    },
+                    opts = { skip = true },
+                },
+                {
+                    filter = {
+                        event = 'msg_show',
+                        kind = '',
+                        find = 'second.? ago',
+                    },
+                    opts = { skip = true },
+                },
+                {
+                    filter = {
+                        event = 'msg_show',
+                        kind = '',
+                        find = 'written',
                     },
                     opts = { skip = true },
                 },
