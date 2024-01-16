@@ -1,23 +1,14 @@
 return {
     setup = function(capabilities, on_attach)
-        local mason_registry = require('mason-registry')
-        local codelldb = mason_registry.get_package('codelldb')
-        local extension_path = codelldb:get_install_path()
-        local codelldb_path = extension_path .. '/extension/adapter/codelldb'
-        local liblldb_path = extension_path .. '/extension/lldb/lib/liblldb.dylib'
-        require('rust-tools').setup({
-            tools = {
-                inlay_hints = {
-                    auto = false,
-                    only_current_line = false,
-                    show_parameter_hints = false,
-                    parameter_hints_prefix = '◂ ',
-                    other_hints_prefix = '▸ ',
-                },
-                hover_actions = { auto_focus = true },
+        -- Cargo.toml
+        require('crates').setup({
+            null_ls = {
+                enabled = true,
             },
-            dap = {
-                adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
+        })
+        return {
+            tools = {
+                reload_workspace_from_cargo_toml = true,
             },
             server = {
                 on_attach = on_attach,
@@ -92,6 +83,7 @@ return {
                             closureReturnTypeHints = { enable = 'always' },
                             lifetimeElisionHints = { enable = 'skip_trivial' },
                             typeHints = { enable = true },
+                            implicitDrops = { enable = true },
                         },
                         checkOnSave = {
                             enable = true,
@@ -103,12 +95,6 @@ return {
                     },
                 },
             },
-        })
-        -- Cargo.toml
-        require('crates').setup({
-            null_ls = {
-                enabled = true,
-            },
-        })
+        }
     end,
 }

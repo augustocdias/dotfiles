@@ -15,6 +15,10 @@ return {
         local luasnip = require('luasnip')
         local luasnip_util = require('luasnip.util.util')
         local luasnip_types = require('luasnip.util.types')
+        local custom_snippets_folder = vim.fn.stdpath('config') .. '/snippets'
+        require('scissors').setup({
+            snippetDir = custom_snippets_folder,
+        })
         luasnip.config.setup({
             ext_ops = {
                 [luasnip_types.choiceNode] = {
@@ -233,6 +237,7 @@ return {
         })
 
         require('luasnip.loaders.from_vscode').load()
+        require('luasnip.loaders.from_vscode').lazy_load({ paths = custom_snippets_folder })
 
         -- auto pairs setup
         npairs.setup()
@@ -253,5 +258,13 @@ return {
             },
         })
         require('copilot_cmp').setup()
+
+        -- create commands to manage snippets
+        vim.api.nvim_create_user_command('SnippetAdd', function()
+            require('scissors').addNewSnippet()
+        end)
+        vim.api.nvim_create_user_command('SnippetEdit', function()
+            require('scissors').editSnippet()
+        end)
     end,
 }

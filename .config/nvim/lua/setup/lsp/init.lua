@@ -58,12 +58,10 @@ M.config_defaults = function()
         settings = {
             yaml = {
                 schemaStore = {
-                    enable = true,
+                    enable = false,
                     url = 'https://www.schemastore.org/api/json/catalog.json',
                 },
-                schemas = {
-                    ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
-                },
+                schemas = require('schemastore').yaml.schemas(),
                 format = {
                     enable = true,
                 },
@@ -83,7 +81,17 @@ M.config_defaults = function()
         },
         settings = {
             json = {
-                schemas = require('schemastore').json.schemas(),
+                schemas = require('schemastore').json.schemas({
+                    extra = {
+                        {
+                            description = 'Monkeys Schema',
+                            fileMatch = { 'monkeys/config.json', 'monkeys/example.json' },
+                            name = 'Infinite Monkeys',
+                            url = 'file://' .. vim.fn.getcwd() .. '/monkeys/schema.json',
+                        },
+                    },
+                }),
+                validate = { enable = true },
             },
         },
     })

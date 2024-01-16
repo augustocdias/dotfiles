@@ -17,7 +17,7 @@ return {
         end,
     }, -- collection of LSP configurations for nvim
     {
-        'stevearc/aerial.nvim',
+        'stevearc/aerial.nvim', -- check if https://github.com/hedyhli/outline.nvim can replace it
         config = require('setup.lsp.aerial').setup,
     }, -- show symbol tree in the current buffer
     {
@@ -39,11 +39,12 @@ return {
         end,
     }, -- java enhancements
     {
-        'simrat39/rust-tools.nvim',
+        'mrcjkb/rustaceanvim',
         ft = { 'rust' },
-        config = function()
+        config = function() -- check https://github.com/vxpm/ferris.nvim
             local lspconfig = require('setup.lsp')
-            require('setup.lsp.rust').setup(lspconfig.capabilities(), lspconfig.on_attach)
+            local settings = require('setup.lsp.rust').setup(lspconfig.capabilities(), lspconfig.on_attach)
+            vim.g.rustaceanvim = settings
         end,
     }, -- rust enhancements
 }

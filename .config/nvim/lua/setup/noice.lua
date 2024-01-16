@@ -26,6 +26,17 @@ return {
                     search_up = { icon = ' ' },
                 },
             },
+            commands = {
+                nots = {
+                    view = 'split',
+                    opts = { enter = true, format = 'details' },
+                    filter = {
+                        any = {
+                            { event = 'notify' },
+                        },
+                    },
+                },
+            },
             routes = {
                 {
                     view = 'notify',
@@ -35,7 +46,6 @@ return {
                 {
                     filter = {
                         event = 'msg_show',
-                        kind = '',
                         find = '".*".*L,.*B',
                     },
                     opts = { skip = true },
@@ -43,7 +53,6 @@ return {
                 {
                     filter = {
                         event = 'msg_show',
-                        kind = '',
                         find = 'second.? ago',
                     },
                     opts = { skip = true },
@@ -51,7 +60,13 @@ return {
                 {
                     filter = {
                         event = 'msg_show',
-                        kind = '',
+                        find = 'fewer lines',
+                    },
+                    opts = { skip = true },
+                },
+                {
+                    filter = {
+                        event = 'msg_show',
                         find = 'written',
                     },
                     opts = { skip = true },
