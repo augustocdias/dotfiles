@@ -32,7 +32,7 @@ return {
         config = function()
             require('mini.bufremove').setup()
         end,
-    },                                                                -- delete buffer and keep window layout
-    'samjwill/nvim-unception',                                        -- prevents an instance of neovim to be openend within neovim
-    { 'chrishrb/gx.nvim', cond = should_load_remote, config = true }, -- gx opens urls, github issues etc in the browser
+    },                                     -- delete buffer and keep window layout
+    'samjwill/nvim-unception',             -- prevents an instance of neovim to be openend within neovim
+    { 'chrishrb/gx.nvim', config = true }, -- gx opens urls, github issues etc in the browser
 }

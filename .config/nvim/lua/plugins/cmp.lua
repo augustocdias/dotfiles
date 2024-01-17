@@ -1,6 +1,5 @@
 return {
     'hrsh7th/nvim-cmp', -- auto completion
-    cond = should_load_remote,
     config = require('setup.cmp').setup,
     dependencies = {
         'hrsh7th/cmp-nvim-lsp',
