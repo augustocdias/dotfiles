@@ -1,0 +1,5 @@
+[font]
+normal = [{ family = "FiraCode Nerd Font", style = "Retina" }, { family = "codicon" }]
+italic = { family = "VictorMonoNerdFontComplete Nerd Font", style = "italic" }
+size = 12
+edging = "subpixelantialias"

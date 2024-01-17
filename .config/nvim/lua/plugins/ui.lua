@@ -1,5 +1,5 @@
 return {
-    { 'rcarriga/nvim-notify',    config = require('setup.notify').setup }, -- overides the default vim notify method for a floating window
+    { 'rcarriga/nvim-notify', config = require('setup.notify').setup }, -- overides the default vim notify method for a floating window
     -- { 'j-hui/fidget.nvim', config = require('setup.fidget').setup }, -- status progress for lsp servers
     {
         'nvim-lualine/lualine.nvim',
@@ -51,17 +51,23 @@ return {
         'lukas-reineke/indent-blankline.nvim',
         main = 'ibl',
         config = require('setup.blankline').setup,
-    },                                                                             -- Adds a | to show indentation levels
-    { 'folke/todo-comments.nvim',  config = require('setup.todo-comments').setup }, -- todo comments helper
-    { 'wyattjsmith1/weather.nvim', config = require('setup.weather').setup },      -- adds weather information to status line
+    }, -- Adds a | to show indentation levels
+    { 'folke/todo-comments.nvim', config = require('setup.todo-comments').setup }, -- todo comments helper
+    {
+        'wyattjsmith1/weather.nvim',
+        cond = should_load_remote,
+        config = require('setup.weather').setup,
+    }, -- adds weather information to status line
     {
         'zbirenbaum/neodim',
         event = 'LspAttach',
+        cond = should_load_remote,
         config = require('setup.neodim').setup,
     },
     {
         'KadoBOT/nvim-spotify',
         build = 'make',
+        cond = should_load_remote,
         config = function()
             require('nvim-spotify').setup({
                 update_interval = 5000,

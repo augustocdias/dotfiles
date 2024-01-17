@@ -11,6 +11,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+function should_load_remote()
+    return vim.env.SSH_TTY == nil
+end
+
 require('settings.general')
 require('settings.gui')
 require('settings.neovide')
