@@ -4,11 +4,9 @@ oh-my-fish/theme-agnoster
 oh-my-fish/plugin-brew
 oh-my-fish/plugin-cd
 PatrickF1/colored_man_pages.fish
-b4b4r07/enhancd
 oh-my-fish/plugin-foreign-env
 jethrokuan/fzf
 iamruinous/plugin-home-binpath
-derekstavis/fish-neovim
 oh-my-fish/plugin-node-binpath
 derekstavis/plugin-nvm
 oh-my-fish/plugin-osx
@@ -16,3 +14,4 @@ oh-my-fish/plugin-pyenv
 oh-my-fish/plugin-rustup
 oh-my-fish/plugin-wttr
 reitzig/sdkman-for-fish
+augustocdias/enhancd
