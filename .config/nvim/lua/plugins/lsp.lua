@@ -13,23 +13,22 @@ return {
             local conf = lspconfig.setup()
             lspconfig.config_defaults()
             require('setup.lsp.lua').setup(conf, lspconfig.capabilities(), lspconfig.on_attach)
-            require('setup.lsp.typescript').setup(conf, lspconfig.capabilities(), lspconfig.on_attach)
         end,
-    }, -- collection of LSP configurations for nvim
+    },                          -- collection of LSP configurations for nvim
     {
         'stevearc/aerial.nvim', -- check if https://github.com/hedyhli/outline.nvim can replace it
         cmd = 'LazyAerial',
         config = require('setup.lsp.aerial').setup,
     }, -- show symbol tree in the current buffer
     {
+        -- TODO: search for replacement as project was discontinued
         'jose-elias-alvarez/null-ls.nvim',
         dependencies = 'ThePrimeagen/refactoring.nvim', -- refactoring library used by null-ls
         config = function()
             local lspconfig = require('setup.lsp')
             require('setup.lsp.null-ls').setup(lspconfig.on_attach)
         end,
-    }, -- can be ful to integrate with non LSP sources like eslint
-    'jose-elias-alvarez/nvim-lsp-ts-utils', -- improve typescript
+    },                                                                                                              -- can be ful to integrate with non LSP sources like eslint
     { 'ray-x/lsp_signature.nvim', dependencies = 'nvim-lspconfig', config = require('setup.lsp_signature').setup }, -- show signature from methods as float windows
     {
         'mfussenegger/nvim-jdtls',
@@ -48,4 +47,12 @@ return {
             vim.g.rustaceanvim = settings
         end,
     }, -- rust enhancements
+    {
+        'pmizio/typescript-tools.nvim',
+        ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+        config = function()
+            local lspconfig = require('setup.lsp')
+            require('setup.lsp.typescript').setup(lspconfig.capabilities(), lspconfig.on_attach)
+        end, -- typescript enhancements
+    },
 }
