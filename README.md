@@ -16,10 +16,6 @@ To install from the bundle: `brew bundle install`
    load the `plist` on this repo.
 2. In the profiles, load the profile in this repo and set as default.
 
-## Alacritty
-
-Install [Alacrity](https://github.com/alacritty/alacritty)
-
 ## Fish and Fisher
 
 Install [Fisher](https://github.com/jorgebucaran/fisher)
@@ -39,8 +35,8 @@ Then:
 1. Install [codicon](https://github.com/microsoft/vscode-codicons/blob/main/dist/codicon.ttf) font
 2. Clone [.tmux](https://github.com/gpakosz/.tmux) into ~ directory.
 3. Install NeoVim.
-4. Install Packer
-5. Run `:PackerSync` and restart NeoVim
+4. Open NeoVim (lazy.nvim should auto install itself and the plugins)
+    1. Run `:checkhealth mason` for the list of dependencies from mason to install lsp servers and tools
 
 ## Dev
 
@@ -48,33 +44,32 @@ Install sdkman, rustup and run `nvm install node`
 
 ### Cargo
 
-* bindgen
+* bindgen-cli
+* cargo-bundle
+* cargo-deny
 * cargo-edit
 * cargo-expand
 * cargo-generate
 * cargo-license
-* cargo-nextest
 * cargo-make
+* cargo-nextest
 * cargo-tree
 * cargo-update
 * cargo-watch
 * diffr
 * flamegraph
-* hors
+* git-cliff
 * miri
+* rust-code-analysis-cli
 * rust-script
 * rusty-man (--locked)
 * silicon
-* sqlx-cli
 * stylua
 * wasm-pack
 * websocat
 
 ### Npm
 
-* alfred-kotlink
-* pyright
-* redoc-cli
 * typescript
 * typings
 * vsce
@@ -108,3 +103,4 @@ Install sdkman, rustup and run `nvm install node`
 1. If ssh doesn't work with the yubikey connected, run `gpg --card-status` and `ssh-add -L`. Both must work otherwise something is wrong. Check environment vars for the `SSH_AUTH_SOCK`.
 2. `ykman oath accounts code -s "SEARCH_QUERY"` returns the 2FA from the service queried in the yubikey.
 3. Create a file in the home with the name `.fish_variables` and call in it `set -xU VAR_NAME VAR_VAULE` to set secret values in fish env.
+4. Copy the file `DefaultKeyBinding.dict` to `~/Library/KeyBindings/`
