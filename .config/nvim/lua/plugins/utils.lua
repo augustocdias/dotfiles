@@ -6,7 +6,7 @@ return {
     --     build = './install.sh build',
     --     config = require('setup.silicon').setup,
     -- }, -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
-    'bennypowers/nvim-regexplainer', -- shows popup explaining regex under cursor
+    { 'bennypowers/nvim-regexplainer', cmd = 'LazyRegexplainer' }, -- shows popup explaining regex under cursor
     {
         'nvim-neo-tree/neo-tree.nvim',
         dependencies = { 'MunifTanjim/nui.nvim' },
@@ -14,6 +14,7 @@ return {
     }, -- file browser
     {
         'stevearc/oil.nvim',
+        cmd = 'LazyOil',
         config = require('setup.oil').setup,
     }, -- file browser. eventually should replace neo-tree
     { 'akinsho/toggleterm.nvim', config = require('setup.toggleterm').setup }, -- better terminal

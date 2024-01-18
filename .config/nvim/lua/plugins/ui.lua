@@ -43,6 +43,7 @@ return {
     { 'lewis6991/gitsigns.nvim', config = require('setup.gitsigns').setup }, -- show git indicators next to the line numbers (lines changed, added, etc.)
     {
         'sindrets/diffview.nvim',
+        cmd = 'LazyDiffView',
         config = function()
             require('diffview').setup()
         end,

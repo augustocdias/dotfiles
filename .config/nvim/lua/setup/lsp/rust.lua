@@ -18,8 +18,6 @@ return {
                     ['rust-analyzer'] = {
                         diagnostics = {
                             enable = true,
-                            -- https://github.com/rust-analyzer/rust-analyzer/issues/6835
-                            disabled = { 'unresolved-macro-call' },
                             enableExperimental = true,
                         },
                         completion = {

@@ -7,15 +7,17 @@ return {
         dependencies = {
             'rouge8/neotest-rust',
         },
+        cmd = 'LazyNeoTest',
         config = require('setup.neotest').setup,
     }, -- test helpers. runs and show signs of test runs
     {
         'pwntester/octo.nvim',
+        cmd = 'LazyOcto',
         config = function()
             require('octo').setup()
         end,
     }, -- github manager for issues and pull requests
-    { 'NeogitOrg/neogit', config = require('setup.neogit').setup },
+    { 'NeogitOrg/neogit', cmd = 'LazyNeogit', config = require('setup.neogit').setup },
     {
         'mfussenegger/nvim-dap', -- debug adapter for debugging
         dependencies = {
@@ -24,5 +26,5 @@ return {
         },
         config = require('setup.dap').setup,
     },
-    { 'stevearc/overseer.nvim', config = require('setup.overseer').setup },
+    { 'stevearc/overseer.nvim', cmd = 'LazyOverseer', config = require('setup.overseer').setup },
 }

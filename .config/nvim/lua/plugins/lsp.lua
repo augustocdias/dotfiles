@@ -15,11 +15,12 @@ return {
             require('setup.lsp.lua').setup(conf, lspconfig.capabilities(), lspconfig.on_attach)
             require('setup.lsp.typescript').setup(conf, lspconfig.capabilities(), lspconfig.on_attach)
         end,
-    },                          -- collection of LSP configurations for nvim
+    }, -- collection of LSP configurations for nvim
     {
         'stevearc/aerial.nvim', -- check if https://github.com/hedyhli/outline.nvim can replace it
+        cmd = 'LazyAerial',
         config = require('setup.lsp.aerial').setup,
-    },                          -- show symbol tree in the current buffer
+    }, -- show symbol tree in the current buffer
     {
         'jose-elias-alvarez/null-ls.nvim',
         dependencies = 'ThePrimeagen/refactoring.nvim', -- refactoring library used by null-ls
@@ -27,8 +28,8 @@ return {
             local lspconfig = require('setup.lsp')
             require('setup.lsp.null-ls').setup(lspconfig.on_attach)
         end,
-    },                                                                                                              -- can be ful to integrate with non LSP sources like eslint
-    'jose-elias-alvarez/nvim-lsp-ts-utils',                                                                         -- improve typescript
+    }, -- can be ful to integrate with non LSP sources like eslint
+    'jose-elias-alvarez/nvim-lsp-ts-utils', -- improve typescript
     { 'ray-x/lsp_signature.nvim', dependencies = 'nvim-lspconfig', config = require('setup.lsp_signature').setup }, -- show signature from methods as float windows
     {
         'mfussenegger/nvim-jdtls',
