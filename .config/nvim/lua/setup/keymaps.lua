@@ -163,18 +163,21 @@ local keymap_table = {
         modes = { 'n' },
         description = 'Center search navigation',
     },
-    { shortcut = '?', cmd = '?\\v', opts = no_remap_opt, modes = { 'n' }, description = 'Improve search' },
-    { shortcut = '/', cmd = '/\\v', opts = no_remap_opt, modes = { 'n' }, description = 'Improve search' },
-    { shortcut = '\\', cmd = '/@', opts = no_remap_opt, modes = { 'n' }, description = 'Improve search' },
+    { shortcut = '?',   cmd = '?\\v', opts = no_remap_opt, modes = { 'n' }, description = 'Improve search' },
+    { shortcut = '/',   cmd = '/\\v', opts = no_remap_opt, modes = { 'n' }, description = 'Improve search' },
+    { shortcut = '\\',  cmd = '/@',   opts = no_remap_opt, modes = { 'n' }, description = 'Improve search' },
     { shortcut = '%s/', cmd = '%sm/', opts = no_remap_opt, modes = { 'c' }, description = 'Improve search' },
     {
         shortcut = '<F2>',
         cmd = function()
-            sidebar:toggle('neotree')
+            require('oil').toggle_float()
         end,
+        -- cmd = function()
+        --     sidebar:toggle('neotree')
+        -- end,
         opts = no_remap_opt,
         modes = { 'n' },
-        description = 'Toggle Neo-tree',
+        description = 'Toggle File Manager',
     },
     {
         shortcut = '<C-x>',
@@ -340,6 +343,13 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Go to next diagnostic',
+    },
+    {
+        shortcut = 'gx',
+        cmd = '<CMD>Browse<CR>',
+        opts = silent_opt,
+        modes = { 'n', 'x' },
+        description = 'Open links in browser',
     },
     {
         shortcut = 'gD',

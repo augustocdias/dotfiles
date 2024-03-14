@@ -3,9 +3,9 @@ return {
         require('telescope').setup({
             defaults = {
                 -- Appearance
-                entry_prefix = ' ',
-                prompt_prefix = ' ',
-                selection_caret = ' ',
+                entry_prefix = '󰳠 ',
+                prompt_prefix = ' ',
+                selection_caret = '󰳟 ',
                 color_devicons = true,
                 path_display = {
                     shorten = {

@@ -7,8 +7,7 @@ return {
                 require('jdtls.setup').add_commands()
                 require('jdtls').setup_dap()
             end,
-            -- FIXME: if I need to work with java, fix this 💀
-            -- cmd = java_server:get_default_options().cmd,
+            cmd = java_server:get_default_options().cmd,
             root_dir = require('jdtls.setup').find_root({
                 'pom.xml',
                 'settings.gradle',

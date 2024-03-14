@@ -1,6 +1,6 @@
 return {
     'rmagatti/auto-session',
-    { 'dgrbrady/nvim-docker', enabled = false }, -- docker manager. TODO: enable and configure when needed
+    { 'dgrbrady/nvim-docker',          enabled = false }, -- docker manager. TODO: enable and configure when needed
     -- {
     --     'krivahtoo/silicon.nvim',
     --     build = './install.sh build',
@@ -9,14 +9,14 @@ return {
     { 'bennypowers/nvim-regexplainer', cmd = 'LazyRegexplainer' }, -- shows popup explaining regex under cursor
     {
         'nvim-neo-tree/neo-tree.nvim',
+        cmd = 'LazyTree',
         dependencies = { 'MunifTanjim/nui.nvim' },
         config = require('setup.neotree').setup,
     }, -- file browser
     {
         'stevearc/oil.nvim',
-        cmd = 'LazyOil',
         config = require('setup.oil').setup,
-    }, -- file browser. eventually should replace neo-tree
+    },                                                                         -- file browser. eventually should replace neo-tree
     { 'akinsho/toggleterm.nvim', config = require('setup.toggleterm').setup }, -- better terminal
     {
         'nvim-telescope/telescope.nvim',
