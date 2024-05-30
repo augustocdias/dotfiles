@@ -3,7 +3,6 @@ local silent_opt = { silent = true }
 local no_remap_silent_opt = { noremap = true, silent = true }
 
 local sidebar = require('sidebar')
-local gitsigns = require('gitsigns')
 
 local keymap_table = {
     {
@@ -14,6 +13,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n', 'x', 'o' },
         description = 'Flash',
+        enabled = true,
     },
     {
         shortcut = 'S',
@@ -23,6 +23,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n', 'x', 'o' },
         description = 'Flash Treesitter',
+        enabled = true,
     },
     {
         shortcut = 'r',
@@ -32,6 +33,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'o' },
         description = 'Flash Remote',
+        enabled = true,
     },
     {
         shortcut = 'R',
@@ -41,6 +43,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'x', 'o' },
         description = 'Flash Treesitter Search',
+        enabled = true,
     },
     {
         shortcut = ']c',
@@ -49,13 +52,14 @@ local keymap_table = {
                 return ']c'
             end
             vim.schedule(function()
-                gitsigns.next_hunk()
+                require('gitsigns').next_hunk()
             end)
             return '<Ignore>'
         end,
         opts = { expr = true },
         modes = { 'n' },
         description = 'Next git hunk',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '[c',
@@ -64,13 +68,14 @@ local keymap_table = {
                 return '[c'
             end
             vim.schedule(function()
-                gitsigns.prev_hunk()
+                require('gitsigns').prev_hunk()
             end)
             return '<Ignore>'
         end,
         opts = { expr = true },
         modes = { 'n' },
         description = 'Previous git hunk',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '+',
@@ -78,6 +83,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Increment number',
+        enabled = true,
     },
     {
         shortcut = '-',
@@ -85,6 +91,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Decrement number',
+        enabled = true,
     },
     {
         shortcut = '<C-a>',
@@ -92,20 +99,27 @@ local keymap_table = {
         opts = {},
         modes = { 'n' },
         description = 'Select all',
+        enabled = true,
     },
     {
         shortcut = '<M-p>',
-        cmd = require('telescope.builtin').buffers,
+        cmd = function()
+            require('telescope.builtin').buffers()
+        end,
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Open buffers',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<C-p>',
-        cmd = require('telescope.builtin').find_files,
+        cmd = function()
+            require('telescope.builtin').find_files()
+        end,
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Open file in workspace',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<M-r>',
@@ -113,20 +127,25 @@ local keymap_table = {
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Refresh buffer',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<M-w>',
-        cmd = require('auto-session.session-lens').search_session,
+        cmd = function()
+            require('auto-session.session-lens').search_session()
+        end,
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Open saved session',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<M-t>',
-        cmd = ':TroubleToggle workspace_diagnostics<CR>',
+        cmd = ':Trouble diagnostics toggle focus=true<CR>',
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Show diagnostics pane',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = 'n',
@@ -134,6 +153,7 @@ local keymap_table = {
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Center search navigation',
+        enabled = true,
     },
     {
         shortcut = 'N',
@@ -141,6 +161,7 @@ local keymap_table = {
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Center search navigation',
+        enabled = true,
     },
     {
         shortcut = '*',
@@ -148,6 +169,7 @@ local keymap_table = {
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Center search navigation',
+        enabled = true,
     },
     {
         shortcut = '#',
@@ -155,6 +177,7 @@ local keymap_table = {
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Center search navigation',
+        enabled = true,
     },
     {
         shortcut = 'g*',
@@ -162,11 +185,40 @@ local keymap_table = {
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Center search navigation',
+        enabled = true,
     },
-    { shortcut = '?',   cmd = '?\\v', opts = no_remap_opt, modes = { 'n' }, description = 'Improve search' },
-    { shortcut = '/',   cmd = '/\\v', opts = no_remap_opt, modes = { 'n' }, description = 'Improve search' },
-    { shortcut = '\\',  cmd = '/@',   opts = no_remap_opt, modes = { 'n' }, description = 'Improve search' },
-    { shortcut = '%s/', cmd = '%sm/', opts = no_remap_opt, modes = { 'c' }, description = 'Improve search' },
+    {
+        shortcut = '?',
+        cmd = '?\\v',
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Improve search',
+        enabled = true,
+    },
+    {
+        shortcut = '/',
+        cmd = '/\\v',
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Improve search',
+        enabled = true,
+    },
+    {
+        shortcut = '\\',
+        cmd = '/@',
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Improve search',
+        enabled = true,
+    },
+    {
+        shortcut = '%s/',
+        cmd = '%sm/',
+        opts = no_remap_opt,
+        modes = { 'c' },
+        description = 'Improve search',
+        enabled = true,
+    },
     {
         shortcut = '<F2>',
         cmd = function()
@@ -178,50 +230,77 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Toggle File Manager',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<C-x>',
         cmd = ':lua MiniBufremove.delete()<CR>',
-        opts = no_remap_opt,
+        opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Close current buffer',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<M><left>',
-        cmd = '<Plug>(SpotifyPrev)<CR>',
+        cmd = function()
+            require('setup.apple').music:previous_track()
+        end,
         opts = no_remap_opt,
         modes = { 'n' },
-        description = 'Previous Song (Spotify)',
+        description = 'Previous Song (Apple Music)',
+        enabled = true,
     },
     {
         shortcut = '<M><right>',
-        cmd = '<Plug>(SpotifySkip)<CR>',
+        cmd = function()
+            require('setup.apple').music:next_track()
+        end,
         opts = no_remap_opt,
         modes = { 'n' },
-        description = 'Next Song (Spotify)',
+        description = 'Next Song (Apple Music)',
+        enabled = true,
     },
     {
         shortcut = '<M-/>',
-        cmd = '<Plug>(SpotifyPause)<CR>',
+        cmd = function()
+            require('setup.apple').music:play_pause()
+        end,
         opts = no_remap_opt,
         modes = { 'n' },
-        description = 'Pause (Spotify)',
+        description = 'Play/Pause (Apple Music)',
+        enabled = true,
     },
     {
         shortcut = '<C-g>',
         cmd = ':nohlsearch<CR>',
-        opts = no_remap_opt,
+        opts = no_remap_silent_opt,
         modes = { 'n', 'v' },
         description = 'Clear search',
+        enabled = true,
     },
-    { shortcut = 'H', cmd = '^', opts = {}, modes = { 'n', 'v' }, description = 'Jump to start of the line' },
-    { shortcut = 'L', cmd = '$', opts = {}, modes = { 'n', 'v' }, description = 'Jump to end of the line' },
+    {
+        shortcut = 'H',
+        cmd = '^',
+        opts = {},
+        modes = { 'n', 'v' },
+        description = 'Jump to start of the line',
+        enabled = true,
+    },
+    {
+        shortcut = 'L',
+        cmd = '$',
+        opts = {},
+        modes = { 'n', 'v' },
+        description = 'Jump to end of the line',
+        enabled = true,
+    },
     {
         shortcut = '<C-h>',
         cmd = '<Left>',
         opts = no_remap_opt,
         modes = { 'i', 'c' },
         description = 'Move cursor left',
+        enabled = true,
     },
     {
         shortcut = '<C-j>',
@@ -229,6 +308,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'i', 'c' },
         description = 'Move cursor down',
+        enabled = true,
     },
     {
         shortcut = '<C-k>',
@@ -236,6 +316,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'i', 'c' },
         description = 'Move cursor up',
+        enabled = true,
     },
     {
         shortcut = '<C-l>',
@@ -243,6 +324,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'i', 'c' },
         description = 'Move cursor right',
+        enabled = true,
     },
     {
         shortcut = '<C-h>',
@@ -250,6 +332,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window to the left',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<C-l>',
@@ -257,6 +340,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window to the right',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<C-k>',
@@ -264,6 +348,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window up',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<C-j>',
@@ -271,6 +356,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window down',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<right>',
@@ -278,6 +364,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Increase window width',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<left>',
@@ -285,6 +372,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Decrease window width',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<up>',
@@ -292,6 +380,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Increase window height',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<down>',
@@ -299,6 +388,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Decrease window height',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<C-d>',
@@ -306,6 +396,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'i' },
         description = 'Delete char forward in insert mode',
+        enabled = true,
     },
     {
         shortcut = '<F1>',
@@ -315,6 +406,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Toggle sidebar',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<C-s>',
@@ -322,6 +414,7 @@ local keymap_table = {
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Savel all',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<C-s>',
@@ -329,6 +422,7 @@ local keymap_table = {
         opts = no_remap_silent_opt,
         modes = { 'i' },
         description = 'Savel all',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '[g',
@@ -336,6 +430,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Go to previous diagnostic',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = ']g',
@@ -343,6 +438,7 @@ local keymap_table = {
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Go to next diagnostic',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = 'gx',
@@ -350,6 +446,7 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n', 'x' },
         description = 'Open links in browser',
+        enabled = true,
     },
     {
         shortcut = 'gD',
@@ -357,6 +454,7 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n' },
         description = 'Go to declaration',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = 'gt',
@@ -364,6 +462,7 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n' },
         description = 'Go to type definition',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = 'gd',
@@ -371,6 +470,7 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n' },
         description = 'Go to definition',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = 'gi',
@@ -378,6 +478,7 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n' },
         description = 'Go to implementation',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = 'gr',
@@ -387,6 +488,7 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n' },
         description = 'Find references',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<M-k>',
@@ -394,6 +496,7 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'i' },
         description = 'Signature help',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<M-k>',
@@ -401,6 +504,7 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n' },
         description = 'Signature help',
+        enabled = not vim.g.vscode,
     },
     -- call twice make the cursor go into the float window. good for navigating big docs
     {
@@ -409,6 +513,7 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n' },
         description = 'Show hover popup',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<M-f>',
@@ -418,48 +523,67 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n' },
         description = 'Format code',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<F4>',
-        cmd = require('dap').repl.toggle,
+        cmd = function()
+            require('dap').repl.toggle()
+        end,
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Toggle repl',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<F5>',
-        cmd = require('dap').continue,
+        cmd = function()
+            require('dap').continue()
+        end,
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Continue',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<S-F5>',
-        cmd = require('dap').close,
+        cmd = function()
+            require('dap').close()
+        end,
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Stop',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<C-F5>',
-        cmd = require('dap').run_last,
+        cmd = function()
+            require('dap').run_last()
+        end,
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Run last',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<F6>',
-        cmd = require('dap').pause,
+        cmd = function()
+            require('dap').pause()
+        end,
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Pause',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<F9>',
-        cmd = require('dap').toggle_breakpoint,
+        cmd = function()
+            require('dap').toggle_breakpoint()
+        end,
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Toggle breakpoint',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<S-F9>',
@@ -469,6 +593,7 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Set breakpoint with condition',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<C-F9>',
@@ -478,41 +603,57 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Set logpoint',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<F10>',
-        cmd = require('dap').step_over,
+        cmd = function()
+            require('dap').step_over()
+        end,
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Step over',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<S-F10>',
-        cmd = require('dap').run_to_cursor,
+        cmd = function()
+            require('dap').run_to_cursor()
+        end,
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Run to cursor',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<F11>',
-        cmd = require('dap').step_into,
+        cmd = function()
+            require('dap').step_into()
+        end,
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Step into',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<S-F11>',
-        cmd = require('dap').step_out,
+        cmd = function()
+            require('dap').step_out()
+        end,
         opts = silent_opt,
         modes = { 'n' },
         description = 'DAP Step out',
+        enabled = not vim.g.vscode,
     },
     {
         shortcut = '<F7>',
-        cmd = require('dap.ui.widgets').hover,
+        cmd = function()
+            require('dap.ui.widgets').hover()
+        end,
         opts = silent_opt,
         modes = { 'x' },
         description = 'DAP Hover',
+        enabled = not vim.g.vscode,
     },
 }
 
@@ -751,8 +892,10 @@ return {
     },
     map_keys = function()
         for _, keymap in pairs(keymap_table) do
-            local opts = vim.tbl_extend('force', { desc = keymap.description }, keymap.opts)
-            vim.keymap.set(keymap.modes, keymap.shortcut, keymap.cmd, opts)
+            if keymap.enabled then
+                local opts = vim.tbl_extend('force', { desc = keymap.description }, keymap.opts)
+                vim.keymap.set(keymap.modes, keymap.shortcut, keymap.cmd, opts)
+            end
         end
     end,
 }

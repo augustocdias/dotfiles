@@ -1,6 +1,6 @@
 vim.o.termguicolors = true
 vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor'
-vim.o.guifont = 'FiraCode Nerd Font,codicon:h12:#e-subpixelantialias'
+-- vim.o.guifont = 'FiraCode Nerd Font,codicon:h12:#e-subpixelantialias'
 -- Remove toolbar
 -- lua api seems to not be able to access this option
 vim.cmd('set guioptions-=T')

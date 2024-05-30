@@ -9,6 +9,12 @@ return {
         return {
             tools = {
                 reload_workspace_from_cargo_toml = true,
+                hover_actions = {
+                    replace_builtin_hover = false,
+                },
+                float_win_config = {
+                    auto_focus = true,
+                },
             },
             server = {
                 on_attach = on_attach,

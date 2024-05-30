@@ -106,7 +106,6 @@ return {
             path = '[Path]',
             buffer = '[Buffer]',
             crates = '[Crates]',
-            copilot = '[Copilot]',
         }
 
         -- local has_words_before = function()
@@ -135,7 +134,6 @@ return {
                 { name = 'nvim_lua' },
                 { name = 'cmp_tabnine' },
                 { name = 'path' },
-                { name = 'copilot', group_index = 2 },
                 { name = 'buffer' },
                 { name = 'crates' },
             },
@@ -153,9 +151,6 @@ return {
                             menu = entry.completion_item.data.detail .. ' ' .. menu
                         end
                         vim_item.kind = ' TabNine'
-                    elseif entry.source.name == 'copilot' then
-                        vim_item.kind = 'ﯙ Copilot'
-                        vim_item.kind_hl_group = 'CmpItemKindCopilot'
                     end
                     vim_item.menu = menu
                     return vim_item
@@ -190,7 +185,12 @@ return {
                 ['<C-f>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-b>'] = cmp.mapping.scroll_docs(4),
                 ['<C-Space>'] = cmp.mapping.complete(),
-                ['<Esc>'] = cmp.mapping.close(),
+                ['<Esc>'] = cmp.mapping(function(fallback)
+                    if not require('cmp').close() then
+                        fallback()
+                    end
+                    vim.cmd('stopinsert')
+                end),
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
@@ -245,17 +245,6 @@ return {
 
         npairs.add_rule(Rule('r#"', '"#', 'rust'))
         npairs.add_rule(Rule('|', '|', 'rust'))
-
-        -- copilot
-        vim.g.copilot_no_tab_map = true
-        vim.g.copilot_assume_mapped = true
-
-        require('copilot').setup({
-            filetypes = {
-                markdown = false,
-            },
-        })
-        require('copilot_cmp').setup()
 
         -- create commands to manage snippets
         vim.api.nvim_create_user_command('SnippetAdd', function()

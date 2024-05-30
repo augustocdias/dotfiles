@@ -13,6 +13,9 @@ return {
                     end,
                 },
             },
+            handler_options = {
+                search_engine = 'duckduckgo',
+            },
         })
     end,
 }
