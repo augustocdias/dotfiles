@@ -689,6 +689,15 @@ return {
                         'Reset Hunk',
                     },
                 },
+                n = {
+                    name = 'Refactoring',
+                    e = { ':Refactor extract', 'Extract' },
+                    f = { ':Refactor extract_to_file ', 'Extract to file' },
+                    i = { ':Refactor inline_var', 'Inline Variable' },
+                    v = { ':Refactor extract_var ', 'Extract Variable' },
+                    r = { '<cmd>lua require("telescope").extensions.refactoring.refactors()<CR>', 'Refactors' },
+                    p = { '<cmd>lua require("refactoring").debug.print_var()<CR>', 'Print Variable' },
+                },
             },
             opts = {
                 prefix = '<leader>',
@@ -818,7 +827,7 @@ return {
                     r = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Previous Pickers' },
                 },
                 d = {
-                    name = 'Debug Adapter',
+                    name = 'Debug',
                     c = { '<cmd>lua require("telescope").extensions.dap.commands()<CR>', 'Commands' },
                     f = { '<cmd>lua require("telescope").extensions.dap.configurations()<CR>', 'Configurations' },
                     b = { '<cmd>lua require("telescope").extensions.dap.list_breakpoints()<CR>', 'Breakpoints' },
@@ -880,6 +889,17 @@ return {
                     b = { ':OverseerBuild<CR>', 'Open task builder' },
                     q = { ':OverseerQuickAction<CR>', 'Run action on a task' },
                     a = { ':OverseerTaskAction<CR>', 'Select a task to run an action on' },
+                },
+                n = {
+                    name = 'Refactoring',
+                    i = { ':Refactor inline_var', 'Inline Variable' },
+                    I = { ':Refactor inline_func', 'Inline Function' },
+                    b = { ':Refactor extract_block', 'Extract Block' },
+                    f = { ':Refactor extract_block_to_file', 'Extract Block to File' },
+                    r = { '<cmd>lua require("telescope").extensions.refactoring.refactors()<CR>', 'Refactors' },
+                    p = { '<cmd>lua require("refactoring").debug.printf()<CR>', 'Printf' },
+                    v = { '<cmd>lua require("refactoring").debug.print_var()<CR>', 'Print Variable' },
+                    c = { '<cmd>lua require("refactoring").debug.cleanup({})<CR>', 'Cleanup' },
                 },
             },
             opts = {

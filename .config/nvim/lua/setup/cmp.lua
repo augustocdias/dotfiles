@@ -185,12 +185,7 @@ return {
                 ['<C-f>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-b>'] = cmp.mapping.scroll_docs(4),
                 ['<C-Space>'] = cmp.mapping.complete(),
-                ['<Esc>'] = cmp.mapping(function(fallback)
-                    if not require('cmp').close() then
-                        fallback()
-                    end
-                    vim.cmd('stopinsert')
-                end),
+                ['<Esc>'] = cmp.mapping.close(),
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })

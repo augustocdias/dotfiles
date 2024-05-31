@@ -5,7 +5,10 @@ return {
         config = function()
             require('mason').setup()
         end,
-        dependencies = { 'williamboman/mason-lspconfig.nvim', 'WhoIsSethDaniel/mason-tool-installer.nvim' },
+        dependencies = {
+            'williamboman/mason-lspconfig.nvim',
+            'WhoIsSethDaniel/mason-tool-installer.nvim',
+        },
     },
     {
         'neovim/nvim-lspconfig',
@@ -24,21 +27,23 @@ return {
         config = require('setup.lsp.aerial').setup,
     }, -- show symbol tree in the current buffer
     {
-        -- TODO: search for replacement as project was discontinued
-        'jose-elias-alvarez/null-ls.nvim',
+        'nvimtools/none-ls.nvim',
         enabled = not vim.g.vscode,
-        dependencies = 'ThePrimeagen/refactoring.nvim', -- refactoring library used by null-ls
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-treesitter/nvim-treesitter',
+            'ThePrimeagen/refactoring.nvim', -- provide refactoring actions
+        },
         config = function()
             local lspconfig = require('setup.lsp')
             require('setup.lsp.null-ls').setup(lspconfig.on_attach)
         end,
-    }, -- can be ful to integrate with non LSP sources like eslint
-    {
-        'ray-x/lsp_signature.nvim',
-        enabled = not vim.g.vscode,
-        dependencies = 'nvim-lspconfig',
-        config = require('setup.lsp_signature').setup,
-    }, -- show signature from methods as float windows
+    }, -- can be useful to integrate with non LSP sources like eslint
+    -- { -- FIXME: this is breaking rust analyser
+    --     'ray-x/lsp_signature.nvim',
+    --     enabled = not vim.g.vscode,
+    --     dependencies = 'nvim-lspconfig',
+    -- }, -- show signature from methods as float windows
     {
         'mfussenegger/nvim-jdtls',
         enabled = not vim.g.vscode,

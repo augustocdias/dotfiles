@@ -2,8 +2,20 @@ return {
     setup = function(capabilities, on_attach)
         -- Cargo.toml
         require('crates').setup({
-            null_ls = {
+            lsp = {
                 enabled = true,
+                on_attach = on_attach,
+                actions = true,
+                completion = false, -- enabled directly into cmp (true will show duplicate)
+                hover = true,
+            },
+            completion = {
+                crates = {
+                    enabled = true,
+                },
+                cmp = {
+                    enabled = true,
+                },
             },
         })
         return {

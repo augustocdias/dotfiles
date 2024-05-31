@@ -1,5 +1,5 @@
 return {
-    { 'MunifTanjim/nui.nvim',   enabled = not vim.g.vscode }, -- base ui components for nvim
+    { 'MunifTanjim/nui.nvim', enabled = not vim.g.vscode }, -- base ui components for nvim
     { 'stevearc/dressing.nvim', enabled = not vim.g.vscode }, -- overrides the default vim input to provide better visuals
     {
         'rcarriga/nvim-notify',
@@ -12,11 +12,9 @@ return {
         event = 'UIEnter',
         enabled = not vim.g.vscode,
         config = function()
-            local signature = require('setup.lsp_signature')
             local weather = require('setup.weather')
             local cmd_color = require('setup.catppuccin').pallete('latte').teal
             require('setup.lualine').setup(
-                signature.status_line,
                 weather.status_line,
                 require('setup.nvim-navic').winbar,
                 require('setup.noice').command_status(cmd_color)
@@ -37,6 +35,7 @@ return {
     {
         'catppuccin/nvim',
         enabled = not vim.g.vscode,
+        priority = 99,
         config = function()
             require('setup.catppuccin').setup('latte')
         end,

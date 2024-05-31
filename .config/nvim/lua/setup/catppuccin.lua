@@ -99,8 +99,6 @@ return {
                     NoiceCmdlinePopup = { bg = ucolors.lighten(colors.flamingo, 0.1, '#FFFFFF') },
                     NoiceMini = { bg = colors.mantle },
                     WinBar = { bg = lualine_bg },
-                    WinBarSigActParm = { fg = colors.blue, bg = lualine_bg },
-                    WinBarSignature = { fg = colors.flamingo, bg = lualine_bg },
                     -- dims the text so that the hits are more visible
                     LeapBackdrop = { fg = colors.flamingo },
                     TelescopeBorder = { bg = telescope_results, fg = telescope_results },
