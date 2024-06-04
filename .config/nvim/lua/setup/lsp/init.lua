@@ -131,13 +131,12 @@ M.setup = function()
     local lspconfig = require('lspconfig')
     require('mason').setup()
     require('mason-lspconfig').setup({
-        ensure_installed = { 'jdtls' },
+        ensure_installed = { 'rust_analyzer', 'jdtls' },
         automatic_installation = true,
     })
     require('mason-tool-installer').setup({
         ensure_installed = {
             'codelldb',
-            'eslint_d',
             'black',
             'clangd',
             'clang-format',
@@ -147,7 +146,7 @@ M.setup = function()
             'stylua',
             'codespell',
             'vale',
-            'luacheck',
+            'selene',
             'pylint',
             'write-good',
             'yamllint',

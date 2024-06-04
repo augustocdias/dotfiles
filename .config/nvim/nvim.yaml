@@ -1,0 +1,24 @@
+---
+base: lua51
+globals:
+  vim:
+    any: true
+    property: read-only
+  vim.g:
+    property: new-fields
+  vim.b:
+    property: new-fields
+  vim.w:
+    property: new-fields
+  vim.t:
+    property: new-fields
+  vim.v:
+    property: new-fields
+  vim.o.*:
+    property: override-fields
+  vim.go.*:
+    property: override-fields
+  vim.wo.*:
+    property: override-fields
+  vim.bo.*:
+    property: override-fields

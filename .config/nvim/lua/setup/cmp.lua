@@ -106,6 +106,7 @@ return {
             path = '[Path]',
             buffer = '[Buffer]',
             crates = '[Crates]',
+            lazydev = '[NeoVim]',
         }
 
         -- local has_words_before = function()
@@ -136,6 +137,7 @@ return {
                 { name = 'path' },
                 { name = 'buffer' },
                 { name = 'crates' },
+                { name = 'lazydev',    group_index = 0 },
             },
             snippet = {
                 expand = function(args)
@@ -151,6 +153,8 @@ return {
                             menu = entry.completion_item.data.detail .. ' ' .. menu
                         end
                         vim_item.kind = ' TabNine'
+                    elseif entry.source.name == 'lazydev' then
+                        vim_item.kind = ' NeoVim'
                     end
                     vim_item.menu = menu
                     return vim_item

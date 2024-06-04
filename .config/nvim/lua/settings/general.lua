@@ -79,7 +79,7 @@ vim.o.undofile = true
 vim.o.wildmenu = true
 vim.o.wildmode = 'list:longest'
 vim.o.wildignore =
-    '.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite'
+'.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite'
 
 -- Use wide tabs
 vim.o.shiftwidth = 4
@@ -91,7 +91,7 @@ vim.o.expandtab = true
 vim.o.backspace = 'indent,eol,start'
 
 -- Wrapping options
-vim.o.formatoptions = 'tc' -- wrap text and comments using textwidth
+vim.o.formatoptions = 'tc'                       -- wrap text and comments using textwidth
 vim.o.formatoptions = vim.o.formatoptions .. 'r' -- continue comments when pressing ENTER in I mode
 vim.o.formatoptions = vim.o.formatoptions .. 'q' -- enable formatting of comments with gq
 vim.o.formatoptions = vim.o.formatoptions .. 'n' -- detect lists for formatting

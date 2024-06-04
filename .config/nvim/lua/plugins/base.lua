@@ -1,3 +1,4 @@
+-- selene: allow(mixed_table)
 return {
     -- common utilities
     {
@@ -7,14 +8,15 @@ return {
     {
         'farmergreg/vim-lastplace',
         enabled = not vim.g.vscode,
-    }, -- remembers cursor position with nice features in comparison to just an autocmd
+    },                       -- remembers cursor position with nice features in comparison to just an autocmd
     'nvim-lua/plenary.nvim', -- serveral lua utilities
     {
         'kyazdani42/nvim-web-devicons',
+        enabled = not vim.g.vscode,
         config = function()
             require('nvim-web-devicons').setup()
         end,
-    }, -- icon support for several plugins
+    },                  -- icon support for several plugins
     'tpope/vim-repeat', -- adds repeat functionality for other plugins
     {
         'augustocdias/gatekeeper.nvim',

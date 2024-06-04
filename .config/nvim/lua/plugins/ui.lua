@@ -1,12 +1,13 @@
+-- selene: allow(mixed_table)
 return {
     { 'MunifTanjim/nui.nvim', enabled = not vim.g.vscode }, -- base ui components for nvim
     { 'stevearc/dressing.nvim', enabled = not vim.g.vscode }, -- overrides the default vim input to provide better visuals
     {
         'rcarriga/nvim-notify',
+        event = 'VeryLazy',
         enabled = not vim.g.vscode,
         config = require('setup.notify').setup,
     }, -- overides the default vim notify method for a floating window
-    -- { 'j-hui/fidget.nvim', config = require('setup.fidget').setup }, -- status progress for lsp servers
     {
         'nvim-lualine/lualine.nvim',
         event = 'UIEnter',
@@ -23,6 +24,7 @@ return {
     }, -- status line
     {
         'folke/noice.nvim',
+        event = 'VeryLazy',
         enabled = not vim.g.vscode,
         dependencies = {
             'MunifTanjim/nui.nvim',
@@ -41,7 +43,6 @@ return {
         end,
     }, -- theme
     {
-        -- 'romgrk/barbar.nvim',
         'nanozuki/tabby.nvim',
         enabled = not vim.g.vscode,
         -- requires = { -- tabline
@@ -54,14 +55,6 @@ return {
         enabled = not vim.g.vscode,
         config = require('setup.gitsigns').setup,
     }, -- show git indicators next to the line numbers (lines changed, added, etc.)
-    {
-        'sindrets/diffview.nvim',
-        enabled = not vim.g.vscode,
-        cmd = 'LazyDiffView',
-        config = function()
-            require('diffview').setup()
-        end,
-    }, -- creates a tab focd on diff view and git history
     {
         'lukas-reineke/indent-blankline.nvim',
         main = 'ibl',

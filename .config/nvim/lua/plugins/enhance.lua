@@ -1,6 +1,8 @@
+-- selene: allow(mixed_table)
 return {
     {
         'folke/which-key.nvim',
+        event = 'VeryLazy',
         config = function()
             local keymaps = require('setup.keymaps')
             keymaps.map_keys()
@@ -11,15 +13,17 @@ return {
         'andymass/vim-matchup',
         enabled = not vim.g.vscode,
         config = require('setup.matchup').setup,
-    }, -- Enhances the % and matches for blocks
-    { 'numToStr/Comment.nvim', config = require('setup.comment').setup }, -- gcc to comment/uncomment line
+    },                                                                      -- Enhances the % and matches for blocks
+    { 'numToStr/Comment.nvim',  config = require('setup.comment').setup },  -- gcc to comment/uncomment line
     { 'kylechui/nvim-surround', config = require('setup.surround').setup }, -- add surround commands
     {
         'folke/flash.nvim',
+        event = 'VeryLazy',
         config = require('setup.flash').setup,
     }, -- hop to different parts of the buffer with s + character
     {
         'booperlv/nvim-gomove',
+        event = 'VeryLazy',
         config = function()
             require('gomove').setup()
         end,
@@ -27,7 +31,7 @@ return {
     {
         'nvim-pack/nvim-spectre',
         enabled = not vim.g.vscode,
-        cmd = 'LazySpectre',
+        cmd = 'Spectre',
         config = function()
             require('spectre').setup()
         end,
@@ -40,6 +44,13 @@ return {
             require('mini.bufremove').setup()
         end,
     }, -- delete buffer and keep window layout
-    { 'samjwill/nvim-unception', enabled = not vim.g.vscode }, -- prevents an instance of neovim to be openend within neovim
-    { 'chrishrb/gx.nvim', config = require('setup.gx').setup }, -- gx opens urls, github issues etc in the browser
+    {
+        'echasnovski/mini.ai',
+        version = false,
+        config = function()
+            require('mini.ai').setup()
+        end,
+    },                                                          -- improves a and i motions
+    { 'samjwill/nvim-unception', enabled = not vim.g.vscode },  -- prevents an instance of neovim to be openend within neovim
+    { 'chrishrb/gx.nvim',        config = require('setup.gx').setup }, -- gx opens urls, github issues etc in the browser
 }

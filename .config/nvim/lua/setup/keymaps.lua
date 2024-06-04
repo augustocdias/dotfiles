@@ -1,6 +1,7 @@
 local no_remap_opt = { noremap = true }
 local silent_opt = { silent = true }
 local no_remap_silent_opt = { noremap = true, silent = true }
+local no_remap_silent_expr_opt = { noremap = true, silent = true, expr = true }
 
 local sidebar = require('sidebar')
 
@@ -156,6 +157,28 @@ local keymap_table = {
         enabled = true,
     },
     {
+        shortcut = 'p',
+        cmd = '<Cmd>silent! normal! "_dP<CR>',
+        opts = no_remap_opt,
+        modes = { 'x' },
+        description = "Smarter Paste in Visual (won't yank deleted content)",
+        enabled = true,
+    },
+    {
+        shortcut = 'dd',
+        cmd = function()
+            if vim.api.nvim_get_current_line():match('^%s*$') then
+                return '"_dd'
+            else
+                return 'dd'
+            end
+        end,
+        opts = no_remap_silent_expr_opt,
+        modes = { 'n' },
+        description = "Smarter DD (empty lines won't be yanked)",
+        enabled = true,
+    },
+    {
         shortcut = 'N',
         cmd = 'Nzz',
         opts = no_remap_silent_opt,
@@ -224,9 +247,6 @@ local keymap_table = {
         cmd = function()
             require('oil').toggle_float()
         end,
-        -- cmd = function()
-        --     sidebar:toggle('neotree')
-        -- end,
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Toggle File Manager',
@@ -491,7 +511,7 @@ local keymap_table = {
         enabled = not vim.g.vscode,
     },
     {
-        shortcut = '<M-k>',
+        shortcut = '<M-s>',
         cmd = vim.lsp.buf.signature_help,
         opts = silent_opt,
         modes = { 'i' },
@@ -499,7 +519,7 @@ local keymap_table = {
         enabled = not vim.g.vscode,
     },
     {
-        shortcut = '<M-k>',
+        shortcut = '<M-s>',
         cmd = vim.lsp.buf.signature_help,
         opts = silent_opt,
         modes = { 'n' },
@@ -740,7 +760,7 @@ return {
                         '<cmd>lua require("telescope").extensions.live_grep_args.live_grep_args()<CR>',
                         'Live Grep Raw',
                     },
-                    s = { '<cmd>lua require("spectre").open()<CR>', 'Spectre' },
+                    s = { ':Spectre<CR>', 'Spectre' },
                     w = {
                         '<cmd>lua require("spectre").open_visual({select_word = true})<CR>',
                         'Spectre Current Word',
@@ -759,7 +779,6 @@ return {
                     r = { ':DiffviewRefresh<CR>', 'Diff View Refresh' },
                     e = { ':DiffviewFocusFiles<CR>', 'Diff View Focus Files' },
                     h = { ':DiffviewFileHistory<CR>', 'Diff View File History' },
-                    g = { '<cmd>lua require("setup.neotree").neogit("git")<CR>', 'Neo-tree git' },
                 },
                 h = {
                     name = 'Gitsigns',

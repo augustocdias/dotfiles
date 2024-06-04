@@ -1,6 +1,14 @@
+local always_true = function()
+    return true
+end
 return {
     setup = function()
         require('oil').setup({
+            columns = {
+                'icon',
+                'permissions',
+                'size',
+            },
             keymaps = {
                 ['?'] = 'actions.show_help',
                 ['g?'] = false,
@@ -18,6 +26,15 @@ return {
             },
             float = {
                 border = 'none',
+            },
+            view_options = {
+                is_always_hidden = function(name)
+                    return name == '.git'
+                end,
+            },
+            git = {
+                rm = always_true,
+                mv = always_true,
             },
         })
     end,

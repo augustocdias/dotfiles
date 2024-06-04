@@ -1,12 +1,14 @@
+-- selene: allow(mixed_table)
 return {
     {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
+        event = 'VeryLazy',
         config = require('setup.treesitter').setup,
         dependencies = {
-            'nvim-treesitter/nvim-treesitter-textobjects', -- adds treesitter based text objects
+            'nvim-treesitter/nvim-treesitter-textobjects',     -- adds treesitter based text objects
             { 'nvim-treesitter/playground', enabled = false }, -- TS PLayground for creating queries
-            'nvim-treesitter/nvim-treesitter-context', -- shows context of offscreen block in a float
+            'nvim-treesitter/nvim-treesitter-context',         -- shows context of offscreen block in a float
         },
-    }, -- enhancements in highlighting and virtual text
+    },                                                         -- enhancements in highlighting and virtual text
 }

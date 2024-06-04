@@ -11,6 +11,7 @@ return {
         local telescope_prompt_title = colors.sky
         local telescope_preview_title = colors.teal
         local lualine_bg = colors.mantle
+        local noice_bg = ucolors.lighten(colors.flamingo, 0.1, '#FFFFFF')
         require('catppuccin').setup({
             flavour = flavour,
             dim_inactive = {
@@ -58,6 +59,9 @@ return {
                 leap = true,
                 lsp_trouble = true,
                 markdown = true,
+                mini = {
+                    enabled = true,
+                },
                 native_lsp = {
                     enabled = true,
                     virtual_text = {
@@ -96,7 +100,7 @@ return {
             },
             highlight_overrides = {
                 all = {
-                    NoiceCmdlinePopup = { bg = ucolors.lighten(colors.flamingo, 0.1, '#FFFFFF') },
+                    NoiceCmdlinePopup = { bg = noice_bg },
                     NoiceMini = { bg = colors.mantle },
                     WinBar = { bg = lualine_bg },
                     -- dims the text so that the hits are more visible

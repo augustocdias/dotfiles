@@ -1,7 +1,9 @@
+-- selene: allow(mixed_table)
 return {
     {
         'williamboman/mason.nvim', -- lsp server installer
         enabled = not vim.g.vscode,
+        event = 'VeryLazy',
         config = function()
             require('mason').setup()
         end,
@@ -12,6 +14,7 @@ return {
     },
     {
         'neovim/nvim-lspconfig',
+        event = 'VeryLazy',
         enabled = not vim.g.vscode,
         config = function()
             local lspconfig = require('setup.lsp')
@@ -19,15 +22,23 @@ return {
             lspconfig.config_defaults()
             require('setup.lsp.lua').setup(conf, lspconfig.capabilities(), lspconfig.on_attach)
         end,
-    },                          -- collection of LSP configurations for nvim
+    }, -- collection of LSP configurations for nvim
     {
         'stevearc/aerial.nvim', -- check if https://github.com/hedyhli/outline.nvim can replace it
         enabled = not vim.g.vscode,
-        cmd = 'LazyAerial',
+        cmd = {
+            'Aerial',
+            'AerialToggle',
+            'AerialOpenAll',
+            'AerialCloseAll',
+            'AerialTreeSyncFolds',
+            'AerialInfo',
+        },
         config = require('setup.lsp.aerial').setup,
     }, -- show symbol tree in the current buffer
     {
         'nvimtools/none-ls.nvim',
+        event = 'VeryLazy',
         enabled = not vim.g.vscode,
         dependencies = {
             'nvim-lua/plenary.nvim',
@@ -41,6 +52,7 @@ return {
     }, -- can be useful to integrate with non LSP sources like eslint
     -- { -- FIXME: this is breaking rust analyser
     --     'ray-x/lsp_signature.nvim',
+    --    event = 'VeryLazy',
     --     enabled = not vim.g.vscode,
     --     dependencies = 'nvim-lspconfig',
     -- }, -- show signature from methods as float windows
@@ -72,4 +84,16 @@ return {
             require('setup.lsp.typescript').setup(lspconfig.capabilities(), lspconfig.on_attach)
         end, -- typescript enhancements
     },
+    {
+        'folke/lazydev.nvim',
+        ft = 'lua',
+        opts = {
+            library = {
+                'luvit-meta/library',
+            },
+        },
+        dependencies = {
+            { 'Bilal2453/luvit-meta', lazy = true },
+        },
+    }, -- utility to make neovim config better
 }
