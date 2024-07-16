@@ -3,6 +3,7 @@ vim.loader.enable()
 
 -- map leader to space
 vim.g.mapleader = ' '
+vim.g.maplocalleader = '='
 -- timeout for leader key
 vim.o.timeoutlen = 500
 -- default shell
@@ -58,6 +59,8 @@ vim.o.showmode = false
 vim.o.hidden = true
 vim.o.wrap = false
 vim.o.joinspaces = false
+vim.o.conceallevel = 3
+vim.o.concealcursor = 'n'
 -- current line will have a background
 vim.o.cursorline = true
 -- Always draw sign column. Prevent buffer moving when adding/deleting sign.
@@ -99,6 +102,7 @@ vim.o.formatoptions = vim.o.formatoptions .. 'b' -- auto-wrap in insert mode, an
 
 -- Proper search
 vim.o.incsearch = true
+vim.o.inccommand = 'split'
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.gdefault = true

@@ -4,9 +4,7 @@ return {
         'williamboman/mason.nvim', -- lsp server installer
         enabled = not vim.g.vscode,
         event = 'VeryLazy',
-        config = function()
-            require('mason').setup()
-        end,
+        config = true,
         dependencies = {
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -22,12 +20,11 @@ return {
             lspconfig.config_defaults()
             require('setup.lsp.lua').setup(conf, lspconfig.capabilities(), lspconfig.on_attach)
         end,
-    }, -- collection of LSP configurations for nvim
+    },                          -- collection of LSP configurations for nvim
     {
         'stevearc/aerial.nvim', -- check if https://github.com/hedyhli/outline.nvim can replace it
         enabled = not vim.g.vscode,
         cmd = {
-            'Aerial',
             'AerialToggle',
             'AerialOpenAll',
             'AerialCloseAll',

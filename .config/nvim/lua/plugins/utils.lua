@@ -1,22 +1,27 @@
 -- selene: allow(mixed_table)
 return {
     { 'rmagatti/auto-session', enabled = not vim.g.vscode },
-    { 'dgrbrady/nvim-docker', enabled = false }, -- docker manager. TODO: enable and configure when needed
-    -- {
-    --     'krivahtoo/silicon.nvim',
-    --     build = './install.sh build',
-    --     config = require('setup.silicon').setup,
-    -- }, -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
+    { 'dgrbrady/nvim-docker',  enabled = false }, -- docker manager. TODO: enable and configure when needed
+    {
+        'mistricky/codesnap.nvim',
+        enabled = not vim.g.vscode,
+        build = 'make',
+        event = 'VeryLazy',
+        config = function()
+            require('setup.codesnap').setup()
+        end,
+    }, -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
     {
         'bennypowers/nvim-regexplainer',
         enabled = not vim.g.vscode,
         cmd = { 'RegexplainerShowSplit', 'RegexplainerShowPopup', 'RegexplainerToggle', 'RegexplainerYank' },
     }, -- shows popup explaining regex under cursor
     {
-        'stevearc/oil.nvim',
+        'echasnovski/mini.files',
+        version = false,
         event = 'VeryLazy',
         enabled = not vim.g.vscode,
-        config = require('setup.oil').setup,
+        config = require('setup.mini.files').setup,
     }, -- file browser. eventually should replace neo-tree
     {
         'akinsho/toggleterm.nvim',

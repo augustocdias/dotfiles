@@ -20,6 +20,7 @@ return {
         })
         return {
             tools = {
+                test_executor = 'toggleterm',
                 reload_workspace_from_cargo_toml = true,
                 hover_actions = {
                     replace_builtin_hover = false,

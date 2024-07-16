@@ -15,6 +15,20 @@ return {
             local searchcount = vim.fn.searchcount({ maxcount = 9999 })
             return last_search .. '(' .. searchcount.current .. '/' .. searchcount.total .. ')'
         end
+        local mode_map = {
+            n = '(ᴗ_ ᴗ。)',
+            nt = '(ᴗ_ ᴗ。)',
+            i = '(•̀ - •́ )',
+            R = '( •̯́ ₃ •̯̀)',
+            v = '(⊙ _ ⊙ )',
+            V = '(⊙ _ ⊙ )',
+            no = 'Σ(°△°ꪱꪱꪱ)',
+            ['\22'] = '(⊙ _ ⊙ )',
+            t = '(⌐■_■)',
+            ['!'] = 'Σ(°△°ꪱꪱꪱ)',
+            c = 'Σ(°△°ꪱꪱꪱ)',
+            s = '( • ᴗ - ) ✧',
+        }
 
         lualine.setup({
             options = {
@@ -38,7 +52,14 @@ return {
                 globalstatus = true,
             },
             sections = {
-                lualine_a = { 'mode' },
+                lualine_a = {
+                    {
+                        'mode',
+                        fmt = function(text)
+                            return text .. ' ' .. (mode_map[vim.api.nvim_get_mode().mode] or '')
+                        end,
+                    },
+                },
                 lualine_b = { 'diff', 'branch' },
                 lualine_c = {
                     {
@@ -48,6 +69,13 @@ return {
                     },
                 },
                 lualine_x = {
+                    function()
+                        if vim.fn.reg_recording() ~= '' then
+                            return 'Recording @' .. vim.fn.reg_recording()
+                        else
+                            return ''
+                        end
+                    end,
                     command_status,
                     search_result,
                     'encoding',

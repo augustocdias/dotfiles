@@ -107,6 +107,7 @@ return {
             buffer = '[Buffer]',
             crates = '[Crates]',
             lazydev = '[NeoVim]',
+            neorg = '[Neorg]',
         }
 
         -- local has_words_before = function()
@@ -138,6 +139,7 @@ return {
                 { name = 'buffer' },
                 { name = 'crates' },
                 { name = 'lazydev',    group_index = 0 },
+                { name = 'neorg' },
             },
             snippet = {
                 expand = function(args)
@@ -155,6 +157,8 @@ return {
                         vim_item.kind = ' TabNine'
                     elseif entry.source.name == 'lazydev' then
                         vim_item.kind = ' NeoVim'
+                    elseif entry.source.name == 'neorg' then
+                        vim_item.kind = '󱓧 Neorg'
                     end
                     vim_item.menu = menu
                     return vim_item

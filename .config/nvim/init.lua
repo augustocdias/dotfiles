@@ -20,5 +20,8 @@ require('lazy').setup('plugins', {
         enabled = true,
         frequency = 7200,
     },
+    rocks = {
+        enabled = false,
+    },
 })
 require('setup.autocommand').setup()

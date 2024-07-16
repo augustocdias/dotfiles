@@ -67,6 +67,14 @@ return {
         config = require('setup.todo-comments').setup,
     }, -- todo comments helper
     {
+        'OXY2DEV/markview.nvim',
+        enabled = false, -- not vim.g.vscode,
+        dependencies = {
+            'nvim-tree/nvim-web-devicons', -- Used by the code bloxks
+        },
+        config = true,
+    }, -- markdown enhancements TODO: setup highlighting because it looks terrible with catppuccin
+    {
         'wyattjsmith1/weather.nvim',
         enabled = not vim.g.vscode,
         config = require('setup.weather').setup,

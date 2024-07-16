@@ -11,7 +11,8 @@ return {
         local telescope_prompt_title = colors.sky
         local telescope_preview_title = colors.teal
         local lualine_bg = colors.mantle
-        local noice_bg = ucolors.lighten(colors.flamingo, 0.1, '#FFFFFF')
+        local noice_mini_bg = ucolors.lighten(colors.flamingo, 0.1, '#FFFFFF')
+        local mini_modified_bg = ucolors.lighten(colors.flamingo, 0.3, '#FFFFFF')
         require('catppuccin').setup({
             flavour = flavour,
             dim_inactive = {
@@ -100,8 +101,21 @@ return {
             },
             highlight_overrides = {
                 all = {
-                    NoiceCmdlinePopup = { bg = noice_bg },
+                    NoiceCmdlinePopup = { bg = noice_mini_bg },
                     NoiceMini = { bg = colors.mantle },
+                    MiniFilesBorder = { bg = noice_mini_bg, fg = noice_mini_bg },
+                    MiniFilesBorderModified = { bg = mini_modified_bg, fg = mini_modified_bg },
+                    MiniFilesNormal = { bg = noice_mini_bg },
+                    MiniFilesModified = { bg = mini_modified_bg },
+                    MiniFilesCursorLine = { bg = ucolors.lighten(colors.mantle, 0.1, '#FFFFFF') },
+                    MiniFilesTitle = { fg = colors.base, bg = telescope_prompt_title },
+                    MiniFilesTitleFocused = { fg = colors.base, bg = telescope_prompt_title },
+                    NoiceConfirmBorder = { fg = telescope_prompt, bg = telescope_prompt },
+                    NoiceFormatConfirm = { fg = telescope_prompt, bg = telescope_prompt_title },
+                    NoiceFormatConfirmDefault = { fg = telescope_prompt, bg = telescope_prompt_title },
+                    NoiceConfirm = { bg = telescope_prompt },
+                    DapSign = { fg = colors.flamingo },
+                    DapLineStopped = { bg = noice_mini_bg },
                     WinBar = { bg = lualine_bg },
                     -- dims the text so that the hits are more visible
                     LeapBackdrop = { fg = colors.flamingo },

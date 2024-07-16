@@ -13,11 +13,9 @@ return {
     {
         'kyazdani42/nvim-web-devicons',
         enabled = not vim.g.vscode,
-        config = function()
-            require('nvim-web-devicons').setup()
-        end,
-    },                  -- icon support for several plugins
-    'tpope/vim-repeat', -- adds repeat functionality for other plugins
+        config = true,
+    },                                       -- icon support for several plugins
+    { 'tpope/vim-repeat', enabled = false }, -- adds repeat functionality for other plugins
     {
         'augustocdias/gatekeeper.nvim',
         config = require('setup.gatekeeper').setup,

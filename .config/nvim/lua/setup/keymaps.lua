@@ -7,6 +7,16 @@ local sidebar = require('sidebar')
 
 local keymap_table = {
     {
+        shortcut = '<M-n>',
+        cmd = function()
+            require('setup.neorg').open_workspace_notes()
+        end,
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Open Notes for Current Project',
+        enabled = true,
+    },
+    {
         shortcut = 's',
         cmd = function()
             require('flash').jump()
@@ -244,9 +254,7 @@ local keymap_table = {
     },
     {
         shortcut = '<F2>',
-        cmd = function()
-            require('oil').toggle_float()
-        end,
+        cmd = ':lua MiniFiles.open()<CR>',
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Toggle File Manager',
@@ -420,12 +428,10 @@ local keymap_table = {
     },
     {
         shortcut = '<F1>',
-        cmd = function()
-            sidebar:toggle('sidebar')
-        end,
+        cmd = ':Trouble todo toggle<CR>',
         opts = no_remap_opt,
         modes = { 'n' },
-        description = 'Toggle sidebar',
+        description = 'Toggle todo list',
         enabled = not vim.g.vscode,
     },
     {
