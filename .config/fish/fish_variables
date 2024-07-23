@@ -40,17 +40,13 @@ SETUVAR FZF_LEGACY_KEYBINDINGS:1
 SETUVAR FZF_PREVIEW_DIR_CMD:ls
 SETUVAR FZF_PREVIEW_FILE_CMD:head\x20\x2dn\x2010
 SETUVAR FZF_TMUX_HEIGHT:40\x25
-SETUVAR --export GITHUB_REGISTRY_TOKEN:01faf45aa2055c0a1626b2a8ed2ab53d0abe508a
-SETUVAR --export GITHUB_TOKEN:01faf45aa2055c0a1626b2a8ed2ab53d0abe508a
 SETUVAR --export GITHUB_USER:augustocdias
 SETUVAR --export GPG_TTY:/dev/ttys005
 SETUVAR --export LANG:en_US\x2eUTF\x2d8
 SETUVAR --export LC_ALL:en_US\x2eUTF\x2d8
 SETUVAR --export LC_TERMINAL:iTerm2
 SETUVAR --export LC_TYPE:UTF\x2d8
-SETUVAR --export OPENAI_API_KEY:sk\x2dqxPtwE3WXhNE9g0s03meT3BlbkFJlmaa9BiVI025z5yt2amI
 SETUVAR --export --path PATH:/Users/augusto/\x2ecargo/bin\x1e/Users/augusto/\x2epyenv/libexec/pyenv\x1e/Users/augusto/\x2epyenv/libexec\x1e/Users/augusto/\x2epyenv/shims\x1e/Users/augusto/\x2epyenv/bin\x1e/Users/augusto/\x2esdkman/candidates/maven/current/bin\x1e/Users/augusto/\x2esdkman/candidates/java/current/bin\x1e/Users/augusto/\x2esdkman/candidates/gradle/current/bin\x1e/Users/augusto/\x2ebin\x1e/Users/augusto/Library/Python/3\x2e9/bin\x1e/Users/augusto/Library/Python/2\x2e7/bin/\x1e/Library/Apple/usr/bin\x1e/usr/local/bin\x1e/usr/bin\x1e/bin\x1e/usr/local/sbin\x1e/usr/sbin\x1e/sbin\x1e/Users/augusto/\x2elocal/bin/
-SETUVAR --export REGISTRY_TOKEN:xAZCrytLXo96zQ1aoaPi
 SETUVAR --export --path RUST_SRC_PATH:/Users/augusto/\x2erustup/toolchains/stable\x2dx86_64\x2dapple\x2ddarwin/lib/rustlib/src/rust/library
 SETUVAR --export WEATHER_TOKEN:64d547425ed241a9ed9605cb80aebaac
 SETUVAR --export ZLUA_LUAEXE:/usr/local/bin/lua
