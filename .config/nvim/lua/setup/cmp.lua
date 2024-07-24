@@ -100,14 +100,15 @@ return {
         local source_mapping = {
             nvim_lsp = '[LSP]',
             luasnip = '[Snippet]',
-            treesitter = '[TS]',
             cmp_tabnine = '[TN]',
-            nvim_lua = '[Vim]',
+            nvim_lua = '[NeoVimL]',
             path = '[Path]',
             buffer = '[Buffer]',
             crates = '[Crates]',
-            lazydev = '[NeoVim]',
+            lazydev = '[NeoVimD]',
             neorg = '[Neorg]',
+            dap = '[DAP]',
+            nvim_lsp_signature_help = '[Signature]',
         }
 
         -- local has_words_before = function()
@@ -116,6 +117,10 @@ return {
         -- end
 
         cmp.setup({
+            enabled = function()
+                return vim.api.nvim_get_option_value('buftype', { buf = 0 }) ~= 'prompt'
+                    or require('cmp_dap').is_dap_buffer()
+            end,
             experimental = {
                 ghost_text = true,
             },
@@ -138,8 +143,9 @@ return {
                 { name = 'path' },
                 { name = 'buffer' },
                 { name = 'crates' },
-                { name = 'lazydev',    group_index = 0 },
+                { name = 'lazydev',                group_index = 0 },
                 { name = 'neorg' },
+                { name = 'nvim_lsp_signature_help' },
             },
             snippet = {
                 expand = function(args)
@@ -155,10 +161,12 @@ return {
                             menu = entry.completion_item.data.detail .. ' ' .. menu
                         end
                         vim_item.kind = ' TabNine'
-                    elseif entry.source.name == 'lazydev' then
-                        vim_item.kind = ' NeoVim'
-                    elseif entry.source.name == 'neorg' then
-                        vim_item.kind = '󱓧 Neorg'
+                    elseif entry.source.name == 'nvim_lsp_signature_help' then
+                        vim_item.kind = ' Signature'
+                        -- elseif entry.source.name == 'lazydev' then
+                        --     vim_item.kind = ' NeoVim'
+                        -- elseif entry.source.name == 'neorg' then
+                        --     vim_item.kind = '󱓧 Neorg'
                     end
                     vim_item.menu = menu
                     return vim_item
@@ -196,18 +204,21 @@ return {
                 ['<Esc>'] = cmp.mapping.close(),
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
-                        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+                        print('cmp visible')
+                        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
                     elseif luasnip.expand_or_locally_jumpable() then
+                        print('lua snip expand')
                         luasnip.expand_or_jump()
                         -- elseif has_words_before() then
                         --     cmp.complete()
                     else
+                        print('fallback')
                         fallback()
                     end
                 end, { 'i', 's' }),
                 ['<S-Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
-                        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+                        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
                     elseif luasnip.jumpable(-1) then
                         luasnip.jump(-1)
                     else
@@ -218,6 +229,12 @@ return {
                     behavior = cmp.ConfirmBehavior.Replace,
                     select = true,
                 }),
+            },
+        })
+
+        require('cmp').setup.filetype({ 'dap-repl', 'dapui_watches', 'dapui_hover' }, {
+            sources = {
+                { name = 'dap' },
             },
         })
 

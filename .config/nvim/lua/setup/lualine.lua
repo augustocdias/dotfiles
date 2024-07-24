@@ -1,5 +1,5 @@
 return {
-    setup = function(weather, winbar_sig, command_status)
+    setup = function(winbar_sig, command_status)
         local lualine = require('lualine')
         local apple = require('setup.apple')
         apple.music:listen()
@@ -65,7 +65,7 @@ return {
                     {
                         'filename',
                         file_status = true, -- displays file status (readonly status, modified status)
-                        path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+                        path = 1,           -- 0 = just filename, 1 = relative path, 2 = absolute path
                     },
                 },
                 lualine_x = {
@@ -95,7 +95,6 @@ return {
                     'progress',
                 },
                 lualine_z = {
-                    weather(),
                     function()
                         return apple.music:current_track()
                     end,
@@ -108,7 +107,7 @@ return {
                     {
                         'filename',
                         file_status = true, -- displays file status (readonly status, modified status)
-                        path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+                        path = 1,           -- 0 = just filename, 1 = relative path, 2 = absolute path
                     },
                 },
                 lualine_x = { 'location' },

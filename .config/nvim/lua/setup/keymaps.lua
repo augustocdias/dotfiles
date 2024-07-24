@@ -499,6 +499,14 @@ local keymap_table = {
         enabled = not vim.g.vscode,
     },
     {
+        shortcut = 'gwd',
+        cmd = ':vsplit | lua vim.lsp.buf.definition()',
+        opts = silent_opt,
+        modes = { 'n' },
+        description = 'Go to definition',
+        enabled = not vim.g.vscode,
+    },
+    {
         shortcut = 'gi',
         cmd = vim.lsp.buf.implementation,
         opts = silent_opt,

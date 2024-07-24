@@ -19,6 +19,8 @@ return {
         { 'Saecki/crates.nvim',  dependencies = { 'nvim-lua/plenary.nvim' } }, -- auto complete for Cargo.toml
         'onsails/lspkind-nvim',                                               -- show pictograms in the auto complete popup
         'hrsh7th/cmp-nvim-lsp-document-symbol',
-        'b0o/schemastore.nvim',                                               -- adds schemas for json lsp
+        'hrsh7th/cmp-nvim-lsp-signature-help',
+        'b0o/schemastore.nvim', -- adds schemas for json lsp
+        'rcarriga/cmp-dap',     -- auto completion for the REPL in DAP. to check if dap client supports it: :lua= require("dap").session().capabilities.supportsCompletionsRequest
     },
 }

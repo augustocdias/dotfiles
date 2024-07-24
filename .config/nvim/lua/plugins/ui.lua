@@ -1,6 +1,6 @@
 -- selene: allow(mixed_table)
 return {
-    { 'MunifTanjim/nui.nvim', enabled = not vim.g.vscode }, -- base ui components for nvim
+    { 'MunifTanjim/nui.nvim',   enabled = not vim.g.vscode }, -- base ui components for nvim
     { 'stevearc/dressing.nvim', enabled = not vim.g.vscode }, -- overrides the default vim input to provide better visuals
     {
         'rcarriga/nvim-notify',
@@ -13,10 +13,8 @@ return {
         event = 'UIEnter',
         enabled = not vim.g.vscode,
         config = function()
-            local weather = require('setup.weather')
             local cmd_color = require('setup.catppuccin').pallete('latte').teal
             require('setup.lualine').setup(
-                weather.status_line,
                 require('setup.nvim-navic').winbar,
                 require('setup.noice').command_status(cmd_color)
             )
@@ -67,18 +65,13 @@ return {
         config = require('setup.todo-comments').setup,
     }, -- todo comments helper
     {
-        'OXY2DEV/markview.nvim',
-        enabled = false, -- not vim.g.vscode,
+        'MeanderingProgrammer/markdown.nvim',
+        enabled = not vim.g.vscode,
         dependencies = {
             'nvim-tree/nvim-web-devicons', -- Used by the code bloxks
         },
         config = true,
-    }, -- markdown enhancements TODO: setup highlighting because it looks terrible with catppuccin
-    {
-        'wyattjsmith1/weather.nvim',
-        enabled = not vim.g.vscode,
-        config = require('setup.weather').setup,
-    }, -- adds weather information to status line
+    }, -- markdown enhancements
     {
         'zbirenbaum/neodim',
         enabled = not vim.g.vscode,

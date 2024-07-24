@@ -19,7 +19,7 @@ return {
                 }),
                 null_ls.builtins.diagnostics.actionlint,
                 null_ls.builtins.diagnostics.codespell.with({
-                    filetypes = { 'markdown', 'tex', 'asciidoc' },
+                    filetypes = { 'markdown', 'tex', 'asciidoc', 'norg' },
                 }),
                 null_ls.builtins.diagnostics.hadolint,
                 null_ls.builtins.diagnostics.ktlint,
