@@ -1,7 +1,6 @@
 -- selene: allow(mixed_table)
 return {
-    { 'rmagatti/auto-session', enabled = not vim.g.vscode },
-    { 'dgrbrady/nvim-docker',  enabled = false }, -- docker manager. TODO: enable and configure when needed
+    { 'dgrbrady/nvim-docker', enabled = false }, -- docker manager. TODO: enable and configure when needed
     {
         'mistricky/codesnap.nvim',
         enabled = not vim.g.vscode,
@@ -24,10 +23,10 @@ return {
         config = require('setup.mini.files').setup,
     }, -- file browser. eventually should replace neo-tree
     {
-        'akinsho/toggleterm.nvim',
+        'jaimecgomezz/here.term',
         event = 'VeryLazy',
         enabled = not vim.g.vscode,
-        config = require('setup.toggleterm').setup,
+        config = require('setup.terminal').setup,
     }, -- better terminal
     {
         'nvim-telescope/telescope.nvim',

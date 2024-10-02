@@ -33,6 +33,11 @@ return {
         config = require('setup.flash').setup,
     }, -- hop to different parts of the buffer with s + character
     {
+        'jake-stewart/multicursor.nvim',
+        event = 'VeryLazy',
+        config = true,
+    },
+    {
         'booperlv/nvim-gomove',
         event = 'VeryLazy',
         config = true,

@@ -2,10 +2,18 @@ return {
     setup = function()
         require('todo-comments').setup({
             signs = false,
+            keywords = {
+                TODO = { alt = { 'todo', 'unimplemented' } },
+            },
             highlight = {
-                comments_only = true,
+                comments_only = false,
+                pattern = {
+                    [[.*<(KEYWORDS)\s*:]],
+                    [[.*<(KEYWORDS)\s*!\(]],
+                },
             },
             search = {
+                pattern = [[\b(KEYWORDS)(:|!\()]],
                 command = 'rg',
                 args = {
                     '--max-depth=10',

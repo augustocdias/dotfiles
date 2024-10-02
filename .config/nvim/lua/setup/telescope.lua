@@ -29,6 +29,8 @@ return {
                     '__pycache__',
                     '%.sqlite3',
                     '%.ipynb',
+                    'target',
+                    'build',
                     'vendor',
                     'node_modules',
                     'dotbot',

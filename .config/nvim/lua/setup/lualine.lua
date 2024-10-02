@@ -47,7 +47,7 @@ return {
                 component_separators = { left = '', right = '' },
                 -- component_separators = { left = '', right = '' },
                 disabled_filetypes = {
-                    winbar = { 'neo-tree', 'packer', 'help', 'toggleterm' },
+                    winbar = { 'neo-tree', 'packer', 'help', 'terminal' },
                 },
                 globalstatus = true,
             },
@@ -55,9 +55,9 @@ return {
                 lualine_a = {
                     {
                         'mode',
-                        fmt = function(text)
-                            return text .. ' ' .. (mode_map[vim.api.nvim_get_mode().mode] or '')
-                        end,
+                        -- fmt = function(text)
+                        --     return text .. ' ' .. (mode_map[vim.api.nvim_get_mode().mode] or '')
+                        -- end,
                     },
                 },
                 lualine_b = { 'diff', 'branch' },

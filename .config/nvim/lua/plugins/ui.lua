@@ -1,7 +1,7 @@
 -- selene: allow(mixed_table)
 return {
-    { 'MunifTanjim/nui.nvim',   enabled = not vim.g.vscode }, -- base ui components for nvim
-    { 'stevearc/dressing.nvim', enabled = not vim.g.vscode }, -- overrides the default vim input to provide better visuals
+    { 'MunifTanjim/nui.nvim', enabled = not vim.g.vscode }, -- base ui components for nvim
+    { 'stevearc/dressing.nvim', config = require('setup.dressing').setup, enabled = not vim.g.vscode }, -- overrides the default vim input to provide better visuals
     {
         'rcarriga/nvim-notify',
         event = 'VeryLazy',
@@ -71,11 +71,30 @@ return {
             'nvim-tree/nvim-web-devicons', -- Used by the code bloxks
         },
         config = true,
-    }, -- markdown enhancements
+    }, -- markdown enhancements -- check marvkview
+    {
+        'OXY2DEV/helpview.nvim',
+        lazy = false,
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter',
+        },
+    }, -- help buffers enhancements
     {
         'zbirenbaum/neodim',
         enabled = not vim.g.vscode,
         event = 'LspAttach',
         config = require('setup.neodim').setup,
+    },
+    {
+        'carbon-steel/detour.nvim',
+        enabled = not vim.g.vscode,
+        cmd = { 'Detour', 'DetourCurrentWindow' },
+    },
+    {
+        'kevinhwang91/nvim-ufo',
+        enabled = not vim.g.vscode,
+        event = 'VeryLazy',
+        config = require('setup.ufo').setup,
+        dependencies = { 'kevinhwang91/promise-async', 'luukvbaal/statuscol.nvim' },
     },
 }

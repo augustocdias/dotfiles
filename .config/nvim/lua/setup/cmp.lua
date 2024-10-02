@@ -204,15 +204,12 @@ return {
                 ['<Esc>'] = cmp.mapping.close(),
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
-                        print('cmp visible')
                         cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
                     elseif luasnip.expand_or_locally_jumpable() then
-                        print('lua snip expand')
                         luasnip.expand_or_jump()
                         -- elseif has_words_before() then
                         --     cmp.complete()
                     else
-                        print('fallback')
                         fallback()
                     end
                 end, { 'i', 's' }),

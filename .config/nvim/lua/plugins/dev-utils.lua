@@ -15,7 +15,6 @@ return {
         'nvim-neotest/neotest',
         enabled = not vim.g.vscode,
         dependencies = {
-            'rouge8/neotest-rust',
             'nvim-neotest/nvim-nio',
             'nvim-lua/plenary.nvim',
         },
@@ -65,7 +64,7 @@ return {
         'stevearc/overseer.nvim',
         enabled = not vim.g.vscode,
         cmd = {
-            'Overseer',
+            'OverseerToggle',
             'OverseerRun',
             'OverseerRunCmd',
             'OverseerBuild',

@@ -1,35 +1,4 @@
 return {
-    term_autocmds = function()
-        local autocmd = vim.api.nvim_create_autocmd
-        local augroup = function(name)
-            return vim.api.nvim_create_augroup(name, { clear = true })
-        end
-
-        local termgroup = augroup('ToggleTerm')
-
-        autocmd({ 'TermOpen' }, {
-            desc = 'Set terminal keymaps',
-            pattern = 'term://*toggleterm#*',
-            group = termgroup,
-            callback = function()
-                local opts = { noremap = true }
-                vim.api.nvim_buf_set_keymap(0, 't', '<Esc>', [[<C-\><C-n>]], opts)
-                if not vim.g.SessionLoad then
-                    vim.cmd(':startinsert')
-                end
-            end,
-        })
-        autocmd({ 'BufEnter' }, {
-            desc = 'Set terminal to insert mode',
-            group = termgroup,
-            pattern = 'term://*',
-            callback = function()
-                if not vim.g.SessionLoad then
-                    vim.cmd(':startinsert')
-                end
-            end,
-        })
-    end,
     lsp_autocmds = function(client, bufnr)
         local autocmd = vim.api.nvim_create_autocmd
         local augroup = function(name)

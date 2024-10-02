@@ -26,6 +26,13 @@ M.capabilities = function()
             positionEncodings = { 'utf-16' },
         },
     })
+    -- Tell the server the capability of foldingRange,
+    -- Neovim hasn't added foldingRange to default capabilities, users must add it manually
+    -- https://github.com/neovim/neovim/pull/14306
+    capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+    }
     return capabilities
 end
 
@@ -100,8 +107,11 @@ M.config_defaults = function()
         on_attach = M.on_attach,
         capabilities = M.capabilities(),
     })
-    -- deno
-    -- ensure_server('denols'):setup({})
+    -- toml
+    lspconfig.taplo.setup({
+        on_attach = M.on_attach,
+        capabilities = M.capabilities(),
+    })
     -- sql
     lspconfig.sqlls.setup({
         on_attach = M.on_attach,
@@ -125,6 +135,11 @@ M.config_defaults = function()
             },
         },
         root_dir = lspconfig.util.root_pattern('settings.gradle', 'settings.gradle.kts', '*.kt'),
+    })
+    -- harper (grammar checker)
+    lspconfig.harper_ls.setup({
+        on_attach = M.on_attach,
+        capabilities = M.capabilities(),
     })
 end
 M.setup = function()
@@ -161,7 +176,7 @@ M.setup = function()
         signs = true,
     })
 
-    -- show icons in the sidebar
+    -- show icons in the column
     local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
 
     for type, icon in pairs(signs) do

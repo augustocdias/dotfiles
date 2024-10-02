@@ -20,7 +20,7 @@ return {
             lspconfig.config_defaults()
             require('setup.lsp.lua').setup(conf, lspconfig.capabilities(), lspconfig.on_attach)
         end,
-    },                          -- collection of LSP configurations for nvim
+    }, -- collection of LSP configurations for nvim
     {
         'stevearc/aerial.nvim', -- check if https://github.com/hedyhli/outline.nvim can replace it
         enabled = not vim.g.vscode,
@@ -65,11 +65,12 @@ return {
     {
         'mrcjkb/rustaceanvim',
         enabled = not vim.g.vscode,
-        ft = { 'rust' },
-        config = function() -- check https://github.com/vxpm/ferris.nvim
-            local lspconfig = require('setup.lsp')
-            local settings = require('setup.lsp.rust').setup(lspconfig.capabilities(), lspconfig.on_attach)
-            vim.g.rustaceanvim = settings
+        init = function()
+            vim.g.rustaceanvim = function()
+                local lspconfig = require('setup.lsp')
+                local settings = require('setup.lsp.rust').setup(lspconfig.capabilities(), lspconfig.on_attach)
+                return settings
+            end
         end,
     }, -- rust enhancements
     {

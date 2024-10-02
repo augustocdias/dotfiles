@@ -20,7 +20,6 @@ return {
         })
         return {
             tools = {
-                test_executor = 'toggleterm',
                 reload_workspace_from_cargo_toml = true,
                 hover_actions = {
                     replace_builtin_hover = false,
@@ -48,6 +47,7 @@ return {
                             group = { enable = true },
                             merge = { glob = false },
                             prefix = 'self',
+                            preferPrelude = true,
                             granularity = {
                                 enforce = true,
                                 group = 'crate',
@@ -58,8 +58,7 @@ return {
                             autoreload = true,
                             runBuildScripts = true,
                             features = 'all',
-                            -- https://github.com/rust-lang/rust-analyzer/issues/13400
-                            target = 'aarch64-apple-darwin',
+                            allTargets = true,
                         },
                         procMacro = {
                             enable = true,
@@ -97,13 +96,21 @@ return {
                                 enable = true,
                                 minLines = 0,
                             },
+                            closureCaptureHints = { enbale = true },
                             closureReturnTypeHints = { enable = 'always' },
-                            lifetimeElisionHints = { enable = 'skip_trivial' },
+                            lifetimeElisionHints = {
+                                enable = 'skip_trivial',
+                                useParameterNames = true,
+                            },
                             typeHints = { enable = true },
                             implicitDrops = { enable = true },
                         },
-                        checkOnSave = {
-                            enable = true,
+                        typing = {
+                            autoClosingAngleBrackets = { enable = true },
+                        },
+                        interpret = { tests = true },
+                        checkOnSave = true,
+                        check = {
                             -- https://github.com/rust-analyzer/rust-analyzer/issues/9768
                             command = 'clippy',
                             features = 'all',
