@@ -2,14 +2,10 @@ return {
     setup = function()
         require('trouble').setup({
             modes = {
-                test = {
-                    mode = 'diagnostics',
-                    preview = {
-                        type = 'split',
-                        relative = 'win',
-                        position = 'right',
-                        size = 0.3,
-                    },
+                diagnostics = {
+                    filter = function(item)
+                        return item.filename:find((vim.loop or vim.uv).cwd(), 1, true)
+                    end,
                 },
             },
         })

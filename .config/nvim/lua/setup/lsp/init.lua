@@ -88,16 +88,7 @@ M.config_defaults = function()
         },
         settings = {
             json = {
-                schemas = require('schemastore').json.schemas({
-                    extra = {
-                        {
-                            description = 'Monkeys Schema',
-                            fileMatch = { 'monkeys/config.json', 'monkeys/example.json' },
-                            name = 'Infinite Monkeys',
-                            url = 'file://' .. vim.fn.getcwd() .. '/monkeys/schema.json',
-                        },
-                    },
-                }),
+                schemas = require('schemastore').json.schemas(),
                 validate = { enable = true },
             },
         },

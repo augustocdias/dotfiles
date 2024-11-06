@@ -1,6 +1,6 @@
 -- selene: allow(mixed_table)
 return {
-    { 'MunifTanjim/nui.nvim', enabled = not vim.g.vscode }, -- base ui components for nvim
+    { 'MunifTanjim/nui.nvim',   enabled = not vim.g.vscode },                                           -- base ui components for nvim
     { 'stevearc/dressing.nvim', config = require('setup.dressing').setup, enabled = not vim.g.vscode }, -- overrides the default vim input to provide better visuals
     {
         'rcarriga/nvim-notify',
@@ -89,12 +89,12 @@ return {
         'carbon-steel/detour.nvim',
         enabled = not vim.g.vscode,
         cmd = { 'Detour', 'DetourCurrentWindow' },
-    },
+    }, -- opens popups with the current buffer to avoid missing the original spot
     {
         'kevinhwang91/nvim-ufo',
         enabled = not vim.g.vscode,
         event = 'VeryLazy',
         config = require('setup.ufo').setup,
         dependencies = { 'kevinhwang91/promise-async', 'luukvbaal/statuscol.nvim' },
-    },
+    }, -- handling folds based on LSP and treesitter
 }

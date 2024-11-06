@@ -16,6 +16,22 @@ local keymap_table = {
     --     enabled = true,
     -- },
     {
+        shortcut = 'k',
+        cmd = "v:count == 0 ? 'gk' : 'k'",
+        opts = no_remap_silent_expr_opt,
+        modes = { 'n' },
+        description = 'gk if no v:count',
+        enabled = true,
+    },
+    {
+        shortcut = 'j',
+        cmd = "v:count == 0 ? 'gj' : 'j'",
+        opts = no_remap_silent_expr_opt,
+        modes = { 'n' },
+        description = 'gj if no v:count',
+        enabled = true,
+    },
+    {
         shortcut = '<M-n>',
         cmd = function()
             require('setup.neorg').open_workspace_notes()
@@ -731,9 +747,7 @@ local keymap_table = {
         description = 'DAP Hover',
         enabled = not vim.g.vscode,
     },
-}
-
-local whick_key_table = {
+    -- which_key
     {
         shortcut = '<leader>a',
         cmd = 'rhs',
@@ -863,7 +877,7 @@ local whick_key_table = {
         enabled = true,
         modes = { 'n' },
     },
-    { shortcut = '<leader>g', cmd = 'rhs', description = 'Git',  opts = no_remap_opt, enabled = true, modes = { 'n' } },
+    { shortcut = '<leader>g', cmd = 'rhs', description = 'Git', opts = no_remap_opt, enabled = true, modes = { 'n' } },
     {
         shortcut = '<leader>gb',
         cmd = '<cmd>lua require("telescope.builtin").git_branches()<CR>',
@@ -1460,7 +1474,14 @@ local whick_key_table = {
         enabled = true,
         modes = { 'n' },
     },
-    { shortcut = '<leader>r', cmd = 'rhs', description = 'Rust', opts = no_remap_opt, enabled = true, modes = { 'n' } },
+    {
+        shortcut = '<leader>r',
+        cmd = 'rhs',
+        description = 'Rust',
+        opts = no_remap_opt,
+        enabled = true,
+        modes = { 'n' },
+    },
     {
         shortcut = '<leader>ra',
         cmd = ':RustLsp hover actions<CR>',
@@ -1582,6 +1603,34 @@ local whick_key_table = {
         modes = { 'n' },
     },
     {
+        shortcut = '<leader>s',
+        cmd = 'rhs',
+        description = 'Shell',
+        opts = no_remap_opt,
+        enabled = true,
+        modes = { 'n' },
+    },
+    {
+        shortcut = '<leader>sh',
+        cmd = function()
+            require('here-term').toggle_terminal()
+        end,
+        description = 'Toggle Terminal',
+        opts = no_remap_opt,
+        enabled = true,
+        modes = { 'n' },
+    },
+    {
+        shortcut = '<leader>ss',
+        cmd = function()
+            require('here-term').kill_terminal()
+        end,
+        description = 'Kill Terminal',
+        opts = no_remap_opt,
+        enabled = true,
+        modes = { 'n' },
+    },
+    {
         shortcut = '<leader>t',
         cmd = 'rhs',
         description = 'Telescope',
@@ -1631,14 +1680,20 @@ local whick_key_table = {
     },
     {
         shortcut = '<leader>ty',
-        cmd =
-        '<cmd>lua require("telescope.builtin").symbols({"emoji", "kaomoji", "gitmoji", "julia", "math", "nerd"})<CR>',
+        cmd = '<cmd>lua require("telescope.builtin").symbols({"emoji", "kaomoji", "gitmoji", "julia", "math", "nerd"})<CR>',
         description = 'List Symbols',
         opts = no_remap_opt,
         enabled = true,
         modes = { 'n' },
     },
-    { shortcut = '<leader>v', cmd = 'rhs', description = 'Vim',  opts = no_remap_opt, enabled = true, modes = { 'n' } },
+    {
+        shortcut = '<leader>v',
+        cmd = 'rhs',
+        description = 'Vim',
+        opts = no_remap_opt,
+        enabled = true,
+        modes = { 'n' },
+    },
     {
         shortcut = '<leader>va',
         cmd = '<cmd>lua require("telescope.builtin").autocommands()<CR>',
@@ -1773,7 +1828,7 @@ local whick_key_table = {
         remap = false,
         modes = { 'v' },
     },
-    { shortcut = '<leader>j', group = 'Java',     remap = false, modes = { 'v' } },
+    { shortcut = '<leader>j', group = 'Java', remap = false, modes = { 'v' } },
     {
         shortcut = '<leader>ja',
         cmd = '<cmd>lua require("jdtls").code_action(true)',
@@ -1802,7 +1857,7 @@ local whick_key_table = {
         remap = false,
         modes = { 'v' },
     },
-    { shortcut = '<leader>l', group = 'LSP',         remap = false, modes = { 'v' } },
+    { shortcut = '<leader>l', group = 'LSP', remap = false, modes = { 'v' } },
     {
         shortcut = '<leader>la',
         cmd = '<cmd>lua vim.lsp.buf.range_code_action()<CR>',
@@ -1856,250 +1911,6 @@ local whick_key_table = {
 }
 
 return {
-    keymap_table = keymap_table,
-    which_key = {
-        visual = {
-            maps = {
-                j = {
-                    name = 'Java',
-                    a = { '<cmd>lua require("jdtls").code_action(true)', 'Code Action' },
-                    e = { '<cmd>lua require("jdtls").extract_variable(true)', 'Extract Variable' },
-                    c = { '<cmd>lua require("jdtls").extract_constant(true)', 'Extract Constant' },
-                    m = { '<cmd>lua require("jdtls").extract_method(true)', 'Extract Method' },
-                },
-                ['c'] = { '"*y', 'Copy selection to system clipboard' },
-                l = {
-                    name = 'LSP',
-                    a = { '<cmd>lua vim.lsp.buf.range_code_action()<CR>', 'Range Code Action' },
-                },
-                h = {
-                    name = 'Gitsigns',
-                    s = {
-                        function()
-                            require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-                        end,
-                        'Stage Hunk',
-                    },
-                    r = {
-                        function()
-                            require('gitsigns').reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-                        end,
-                        'Reset Hunk',
-                    },
-                },
-                n = {
-                    name = 'Refactoring',
-                    e = { ':Refactor extract', 'Extract' },
-                    f = { ':Refactor extract_to_file ', 'Extract to file' },
-                    i = { ':Refactor inline_var', 'Inline Variable' },
-                    v = { ':Refactor extract_var ', 'Extract Variable' },
-                    r = { '<cmd>lua require("telescope").extensions.refactoring.refactors()<CR>', 'Refactors' },
-                    p = { '<cmd>lua require("refactoring").debug.print_var()<CR>', 'Print Variable' },
-                },
-            },
-            opts = {
-                prefix = '<leader>',
-                noremap = true,
-                silent = true,
-                mode = 'v',
-            },
-        },
-        normal = {
-            maps = {
-                f = {
-                    name = 'File',
-                    b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
-                    f = { '<cmd>lua require("telescope.builtin").find_files()<CR>', 'Files' },
-                    w = { '<cmd>lua require("telescope").extensions.file_browser.file_browser()<CR>', 'File Browser' },
-                    o = { '<cmd>lua require("telescope.builtin").oldfiles()<CR>', 'Prev Open Files' },
-                },
-                v = {
-                    name = 'Vim',
-                    q = { '<cmd>lua require("telescope.builtin").quickfix()<CR>', 'Quickfix List' },
-                    l = { '<cmd>lua require("telescope.builtin").loclist()<CR>', 'Location List' },
-                    j = { '<cmd>lua require("telescope.builtin").jumplist()<CR>', 'Jump List' },
-                    c = { '<cmd>lua require("telescope.builtin").commands()<CR>', 'Commands' },
-                    h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
-                    s = { '<cmd>lua require("telescope.builtin").search_history()<CR>', 'Search History' },
-                    m = { '<cmd>lua require("telescope.builtin").man_pages()<CR>', 'Man Pages' },
-                    k = { '<cmd>lua require("telescope.builtin").marks()<CR>', 'Marks' },
-                    o = { '<cmd>lua require("telescope.builtin").colorscheme()<CR>', 'Colorscheme' },
-                    r = { '<cmd>lua require("telescope.builtin").registers()<CR>', 'Registers' },
-                    a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
-                    p = { '<cmd>lua require("telescope.builtin").vim_options()<CR>', 'Vim Options' },
-                    e = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggestions' },
-                    y = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Normal Mode Keymaps' },
-                },
-                p = {
-                    name = 'Grep',
-                    g = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String' },
-                    l = { '<cmd>lua require("telescope.builtin").live_grep()<CR>', 'Live Grep' },
-                    r = {
-                        '<cmd>lua require("telescope").extensions.live_grep_args.live_grep_args()<CR>',
-                        'Live Grep Raw',
-                    },
-                    s = { ':Spectre<CR>', 'Spectre' },
-                    w = {
-                        '<cmd>lua require("spectre").open_visual({select_word = true})<CR>',
-                        'Spectre Current Word',
-                    },
-                },
-                g = {
-                    name = 'Git',
-                    f = { '<cmd>lua require("telescope.builtin").git_files()<CR>', 'Files' },
-                    s = { '<cmd>lua require("telescope.builtin").git_status()<CR>', 'Status' },
-                    c = { '<cmd>lua require("telescope.builtin").git_commits()<CR>', 'Commit Log' },
-                    l = { '<cmd>lua require("telescope.builtin").git_bcommits()<CR>', 'Commit Log Current Buffer' },
-                    b = { '<cmd>lua require("telescope.builtin").git_branches()<CR>', 'Branches' },
-                    t = { '<cmd>lua require("telescope.builtin").git_stash()<CR>', 'Stash' },
-                    d = { ':DiffviewOpen<CR>', 'Open Diff View' },
-                    x = { ':DiffviewClose<CR>', 'Close Diff View' },
-                    r = { ':DiffviewRefresh<CR>', 'Diff View Refresh' },
-                    e = { ':DiffviewFocusFiles<CR>', 'Diff View Focus Files' },
-                    h = { ':DiffviewFileHistory<CR>', 'Diff View File History' },
-                },
-                h = {
-                    name = 'Gitsigns',
-                    s = { ':Gitsigns stage_hunk<CR>', 'Stage hunk' },
-                    S = { ':Gitsigns stage_buffer<CR>', 'Stage buffer' },
-                    u = { ':Gitsigns undo_stage_hunk<CR>', 'Undo stage hunk' },
-                    r = { ':Gitsigns reset_hunk<CR>', 'Reset hunk' },
-                    R = { ':Gitsigns reset_buffer<CR>', 'Reset buffer' },
-                    p = { ':Gitsigns preview_hunk<CR>', 'Preview hunk' },
-                    b = { ':Gitsigns toggle_current_line_blame<CR>', 'Toggle blame current line' },
-                    B = {
-                        '<cmd>lua require("gitsigns").blame_line({full=true, ignore_whitespace = true})<CR>',
-                        'Blame line',
-                    },
-                    d = { ':Gitsigns diffthis<CR>', 'Diff this' },
-                    t = { ':Gitsigns toggle_deleted<CR>', 'Toggle deleted hunks' },
-                },
-                l = {
-                    name = 'LSP',
-                    a = { '<cmd>lua vim.lsp.buf.code_action()<CR>', 'Code Actions' },
-                    b = { '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 'Show line diagnostics' },
-                    c = {
-                        function()
-                            vim.b.autoformat = not vim.b.autoformat
-                        end,
-                        'Toggle autoformat',
-                    },
-                    d = { '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', 'Definitions' },
-                    e = { '<cmd>lua require("telescope.builtin").treesitter()<CR>', 'Treesitter' },
-                    f = { '<cmd>lua vim.lsp.buf.format({ async = false })<CR>', 'Format' },
-                    g = {
-                        '<cmd>lua require("telescope.builtin").lsp_document_diagnostics()<CR>',
-                        'Document Diagnostics',
-                    },
-                    i = { '<cmd>lua require("telescope.builtin").lsp_implementations()<CR>', 'Implementations' },
-                    l = { '<cmd>lua vim.lsp.codelens.run()<CR>', 'Code Lens' },
-                    m = { '<cmd>lua vim.lsp.buf.rename()<CR>', 'Rename symbol' },
-                    o = {
-                        '<cmd>lua require("telescope.builtin").diagnostics()<CR>',
-                        'Workspace Diagnostics',
-                    },
-                    q = { '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', 'Diagnostic set loclist' },
-                    r = { '<cmd>lua require("telescope.builtin").lsp_references()<CR>', 'References' },
-                    s = { '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', 'Document Symbols' },
-                    t = { '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>', 'Type Definitions' },
-                    v = {
-                        '<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>',
-                        'Dynamic Workspace Symbols',
-                    },
-                    w = {
-                        '<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<CR>',
-                        'Workspace Symbols',
-                    },
-                },
-                t = {
-                    name = 'Telescope',
-                    s = { '<cmd>lua require("telescope.builtin").planets()<CR>', 'Use Telescope...' },
-                    c = { '<cmd>lua require("telescope.builtin").builtin()<CR>', 'Builtin Pickers' },
-                    h = { '<cmd>lua require("telescope.builtin").reloader()<CR>', 'Reload Lua Modules' },
-                    y = {
-                        '<cmd>lua require("telescope.builtin").symbols({"emoji", "kaomoji", "gitmoji", "julia", "math", "nerd"})<CR>',
-                        'List Symbols',
-                    },
-                    m = { '<cmd>lua require("telescope.builtin").resume()<CR>', 'Resume Last Picker' },
-                    r = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Previous Pickers' },
-                },
-                d = {
-                    name = 'Debug',
-                    c = { '<cmd>lua require("telescope").extensions.dap.commands()<CR>', 'Commands' },
-                    f = { '<cmd>lua require("telescope").extensions.dap.configurations()<CR>', 'Configurations' },
-                    b = { '<cmd>lua require("telescope").extensions.dap.list_breakpoints()<CR>', 'Breakpoints' },
-                    v = { '<cmd>lua require("telescope").extensions.dap.variables()<CR>', 'Variables' },
-                    r = { '<cmd>lua require("telescope").extensions.dap.frames()<CR>', 'Frames' },
-                },
-                r = {
-                    name = 'Rust',
-                    x = { ':RustLsp openDocs<CR>', 'Open Rust Docs' },
-                    r = { ':RustLsp runnables<CR>', 'Runnables' },
-                    d = { ':RustLsp debuggables<CR>', 'Debuggables' },
-                    e = { ':RustLsp explainError<CR>', 'Explain Error' },
-                    g = { ':RustLsp renderDiagnostic<CR>', 'RenderaDiagnostic' },
-                    c = { ':RustLsp openCargo<CR>', 'Open Cargo.toml' },
-                    k = { ':RustLsp crateGraph<CR>', 'View Crate Graph' },
-                    m = { ':RustLsp expandMacro<CR>', 'Expand Macro' },
-                    p = { ':RustLsp parentModule<CR>', 'Parent Module' },
-                    j = { ':RustLsp joinLines<CR>', 'Join Lines' },
-                    a = { ':RustLsp hover actions<CR>', 'Hover Actions' },
-                    h = { ':RustLsp hover range<CR>', 'Range Hover Actions' },
-                    b = { ':RustLsp moveItem down<CR>', 'Move Item Down' },
-                    u = { ':RustLsp moveItem up<CR>', 'Move Item Up' },
-                    s = { ':RustLsp syntaxTree<CR>', 'View Syntax Tree' },
-                },
-                j = {
-                    name = 'Java',
-                    a = { '<cmd>lua require("jdtls").code_action()', 'Code Action' },
-                    r = { '<cmd>lua require("jdtls").code_action(false, "refactor")', 'Refactor' },
-                    o = { '<cmd>lua require("jdtls").organize_imports()', 'Organize Imports' },
-                    e = { '<cmd>lua require("jdtls").extract_variable()', 'Extract Variable' },
-                    c = { '<cmd>lua require("jdtls").extract_constant()', 'Extract Constant' },
-                    m = { '<cmd>lua require("jdtls").extract_method()', 'Extract Method' },
-                    t = { '<cmd>lua require("jdtls").test_class()', 'Test Class' },
-                    n = { '<cmd>lua require("jdtls").test_nearest_method()', 'Test Nearest Method' },
-                },
-                a = {
-                    name = 'Aerial',
-                    t = { ':AerialToggle<CR>', 'Toggle' },
-                    a = { ':AerialOpenAll<CR>', 'Open All' },
-                    c = { ':AerialCloseAll<CR>', 'Close All' },
-                    s = { ':AerialTreeSyncFolds<CR>', 'Sync code folding' },
-                    i = { ':AerialInfo<CR>', 'Info' },
-                },
-                o = {
-                    name = 'Overseer',
-                    t = { ':OverseerToggle<CR>', 'Toggle' },
-                    s = { ':OverseerSaveBundle<CR>', 'Save' },
-                    l = { ':OverseerLoadBundle<CR>', 'Load' },
-                    d = { ':OverseerDeleteBundle<CR>', 'Delete' },
-                    c = { ':OverseerRunCmd<CR>', 'Run shell command' },
-                    r = { ':OverseerRun<CR>', 'Run task' },
-                    b = { ':OverseerBuild<CR>', 'Open task builder' },
-                    q = { ':OverseerQuickAction<CR>', 'Run action on a task' },
-                    a = { ':OverseerTaskAction<CR>', 'Select a task to run an action on' },
-                },
-                n = {
-                    name = 'Refactoring',
-                    i = { ':Refactor inline_var', 'Inline Variable' },
-                    I = { ':Refactor inline_func', 'Inline Function' },
-                    b = { ':Refactor extract_block', 'Extract Block' },
-                    f = { ':Refactor extract_block_to_file', 'Extract Block to File' },
-                    r = { '<cmd>lua require("telescope").extensions.refactoring.refactors()<CR>', 'Refactors' },
-                    p = { '<cmd>lua require("refactoring").debug.printf()<CR>', 'Printf' },
-                    v = { '<cmd>lua require("refactoring").debug.print_var()<CR>', 'Print Variable' },
-                    c = { '<cmd>lua require("refactoring").debug.cleanup({})<CR>', 'Cleanup' },
-                },
-            },
-            opts = {
-                prefix = '<leader>',
-                noremap = true,
-                silent = true,
-                mode = 'n',
-            },
-        },
-    },
     map_keys = function()
         for _, keymap in pairs(keymap_table) do
             if keymap.enabled then

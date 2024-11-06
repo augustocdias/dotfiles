@@ -80,9 +80,9 @@ return {
                     search_result,
                     'encoding',
                     'filetype',
-                    -- {
-                    --     'overseer',
-                    -- },
+                    {
+                        'overseer',
+                    },
                     {
                         'diagnostics',
                         sources = { 'nvim_diagnostic' },

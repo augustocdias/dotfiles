@@ -6,7 +6,7 @@ return {
         config = function()
             local keymaps = require('setup.keymaps')
             keymaps.map_keys()
-            require('setup.which-key').setup(keymaps.which_key)
+            require('setup.which-key').setup()
         end,
     }, -- shows the keybindings in a floating window.
     {

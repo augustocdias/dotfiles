@@ -5,7 +5,7 @@ return {
                 char = '│',
             },
             exclude = {
-                filetypes = { 'packer', 'startup', 'noice' },
+                filetypes = { 'startup', 'noice' },
                 buftypes = { 'terminal' },
             },
             scope = {

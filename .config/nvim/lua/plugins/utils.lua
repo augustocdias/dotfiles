@@ -1,6 +1,5 @@
 -- selene: allow(mixed_table)
 return {
-    { 'dgrbrady/nvim-docker', enabled = false }, -- docker manager. TODO: enable and configure when needed
     {
         'mistricky/codesnap.nvim',
         enabled = not vim.g.vscode,

@@ -1,5 +1,5 @@
 return {
-    setup = function(wk_table)
+    setup = function()
         local which_key = require('which-key')
         which_key.setup({
             icons = {
@@ -8,7 +8,5 @@ return {
                 group = '󰊳 ', -- symbol
             },
         })
-        which_key.register(wk_table.visual.maps, wk_table.visual.opts)
-        which_key.register(wk_table.normal.maps, wk_table.normal.opts)
     end,
 }

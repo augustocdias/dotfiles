@@ -2,10 +2,8 @@ return {
     setup = function()
         require('here-term').setup({
             mappings = {
-                toggle = '<leader>sh',
-                kill = '<leader>ss',
+                enable = false,
             },
         })
-        -- require('setup.autocommand').term_autocmds()
     end,
 }
