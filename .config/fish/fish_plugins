@@ -13,5 +13,5 @@ oh-my-fish/plugin-osx
 oh-my-fish/plugin-pyenv
 oh-my-fish/plugin-rustup
 oh-my-fish/plugin-wttr
-reitzig/sdkman-for-fish
-augustocdias/enhancd
+reitzig/sdkman-for-fish@v2.1.0
+babarot/enhancd
