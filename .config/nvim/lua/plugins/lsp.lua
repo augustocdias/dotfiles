@@ -8,6 +8,7 @@ return {
         dependencies = {
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
+            { 'Zeioth/none-ls-autoload.nvim', config = true },
         },
     },
     {
@@ -54,13 +55,9 @@ return {
     --     dependencies = 'nvim-lspconfig',
     -- }, -- show signature from methods as float windows
     {
-        'mfussenegger/nvim-jdtls',
+        'nvim-java/nvim-java',
         enabled = not vim.g.vscode,
         ft = { 'java', 'gradle' },
-        config = function()
-            local lspconfig = require('setup.lsp')
-            require('setup.lsp.java').setup(lspconfig.capabilities(), lspconfig.on_attach)
-        end,
     }, -- java enhancements
     {
         'mrcjkb/rustaceanvim',

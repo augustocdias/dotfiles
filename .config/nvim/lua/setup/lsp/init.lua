@@ -114,6 +114,12 @@ M.config_defaults = function()
         on_attach = M.on_attach,
         capabilities = M.capabilities(),
     })
+    -- java
+    require('java').setup()
+    lspconfig.jdtls.setup({
+        on_attach = M.on_attach,
+        capabilities = M.capabilities(),
+    })
     -- kotlin
     lspconfig.kotlin_language_server.setup({
         on_attach = M.on_attach,
@@ -176,7 +182,7 @@ M.setup = function()
     end
     vim.fn.sign_define(
         'LightBulbSign',
-        { text = '💡', texthl = 'LspDiagnosticsDefaultInformation', numhl = 'LspDiagnosticsDefaultInformation' }
+        { text = '󰛨 ', texthl = 'LspDiagnosticsDefaultInformation', numhl = 'LspDiagnosticsDefaultInformation' }
     )
 
     vim.diagnostic.config({

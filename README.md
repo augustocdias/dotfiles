@@ -2,6 +2,8 @@
 
 My personal mac os settings and tools
 
+First of all install command line tools and rosetta.
+
 ## Brew
 
 Install [brew](https://brew.sh)
@@ -10,11 +12,12 @@ To generate the dump: `brew bundle dump`
 
 To install from the bundle: `brew bundle install`
 
-## iTerm2
+Execute the following:
 
-1. In Preferences->General->Preferences check to load config file and
-   load the `plist` on this repo.
-2. In the profiles, load the profile in this repo and set as default.
+```shell
+echo "pinentry-program $(which pinentry-mac)" >>  ~/.gnupg/gpg-agent.conf
+gpg-connect-agent reloadagent /bye
+```
 
 ## Fish and Fisher
 
@@ -22,15 +25,6 @@ Install [Fisher](https://github.com/jorgebucaran/fisher)
 Run `fisher update`
 
 ## Neovim & tmux
-
-First install pynvim:
-
-```shell
-python2 -m pip install --user --upgrade pynvim
-python3 -m pip install --user --upgrade pynvim
-```
-
-Then:
 
 1. Install [codicon](https://github.com/microsoft/vscode-codicons/blob/main/dist/codicon.ttf) font
 2. Clone [.tmux](https://github.com/gpakosz/.tmux) into ~ directory.
