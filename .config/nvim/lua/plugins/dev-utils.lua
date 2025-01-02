@@ -72,5 +72,11 @@ return {
             'OverseerTaskAction',
         },
         config = require('setup.overseer').setup,
-    }, -- A task runner inspired by VSCode
+    },                           -- A task runner inspired by VSCode
+    {
+        'windwp/nvim-autopairs', -- helps with auto closing blocks
+        enabled = not vim.g.vscode,
+        event = 'VeryLazy',
+        config = require('setup.autopairs').setup,
+    },
 }

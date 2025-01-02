@@ -100,7 +100,7 @@ return {
             desc = 'Highlight yanked text',
             pattern = '*',
             callback = function()
-                require('vim.highlight').on_yank({ higroup = 'IncSearch', timeout = 1000 })
+                vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 1000 })
             end,
         })
 

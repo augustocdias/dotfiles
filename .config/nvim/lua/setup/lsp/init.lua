@@ -17,7 +17,7 @@ end
 M.capabilities = function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
-    capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+    capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
     -- workaround until neovim supports multiple client encodings
     capabilities = vim.tbl_deep_extend('force', capabilities, {

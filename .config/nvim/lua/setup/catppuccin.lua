@@ -43,7 +43,7 @@ return {
             integrations = {
                 aerial = true,
                 barbar = true,
-                cmp = true,
+                blink_cmp = true,
                 dap = {
                     enabled = true,
                     enable_ui = true,

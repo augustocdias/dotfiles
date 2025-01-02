@@ -1,10 +1,5 @@
 return {
     setup = function()
-        local lspkind = require('lspkind')
-        local cmp = require('cmp')
-        local Rule = require('nvim-autopairs.rule')
-        local npairs = require('nvim-autopairs')
-
         local luasnip = require('luasnip')
         local luasnip_util = require('luasnip.util.util')
         local luasnip_types = require('luasnip.util.types')
@@ -92,176 +87,196 @@ return {
             end
         end)
 
-        local lspkind_opts = {
-            with_text = true,
-            preset = 'codicons', -- need to install font https://github.com/microsoft/vscode-codicons/blob/main/dist/codicon.ttf
-        }
-
-        local source_mapping = {
-            nvim_lsp = '[LSP]',
-            luasnip = '[Snippet]',
-            cmp_tabnine = '[TN]',
-            nvim_lua = '[NeoVimL]',
-            path = '[Path]',
-            buffer = '[Buffer]',
-            crates = '[Crates]',
-            lazydev = '[NeoVimD]',
-            neorg = '[Neorg]',
-            dap = '[DAP]',
-            nvim_lsp_signature_help = '[Signature]',
-        }
-
-        -- local has_words_before = function()
-        --     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        --     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-        -- end
-
-        cmp.setup({
+        require('blink.cmp').setup({
+            -- Disable for some filetypes
             enabled = function()
-                return vim.api.nvim_get_option_value('buftype', { buf = 0 }) ~= 'prompt'
-                    or require('cmp_dap').is_dap_buffer()
+                return vim.bo.buftype ~= 'prompt' and vim.b.completion ~= false
             end,
-            experimental = {
-                ghost_text = true,
-            },
-            completion = {
-                -- Set completeopt to have a better completion experience
-                -- :help completeopt
-                -- menuone: popup even when there's only one match
-                -- noinsert: Do not insert text until a selection is made
-                -- noselect: Do not select, force user to select one from the menu
-                completeopt = 'menu,menuone,noinsert,noselect',
-            },
-            view = {
-                entries = { name = 'custom', selection_order = 'near_cursor' },
+            signature = { enabled = true },
+            snippets = {
+                expand = function(snippet)
+                    require('luasnip').lsp_expand(snippet)
+                end,
+                active = function(filter)
+                    if filter and filter.direction then
+                        return require('luasnip').jumpable(filter.direction)
+                    end
+                    return require('luasnip').in_snippet()
+                end,
+                jump = function(direction)
+                    require('luasnip').jump(direction)
+                end,
             },
             sources = {
-                { name = 'nvim_lsp' },
-                { name = 'luasnip' },
-                { name = 'nvim_lua' },
-                { name = 'cmp_tabnine' },
-                { name = 'path' },
-                { name = 'buffer' },
-                { name = 'crates' },
-                { name = 'lazydev',                group_index = 0 },
-                { name = 'neorg' },
-                { name = 'nvim_lsp_signature_help' },
-            },
-            snippet = {
-                expand = function(args)
-                    luasnip.lsp_expand(args.body)
-                end,
-            },
-            formatting = {
-                format = function(entry, vim_item)
-                    vim_item.kind = lspkind.symbolic(vim_item.kind, lspkind_opts)
-                    local menu = source_mapping[entry.source.name]
-                    if entry.source.name == 'cmp_tabnine' then
-                        if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-                            menu = entry.completion_item.data.detail .. ' ' .. menu
-                        end
-                        vim_item.kind = ' TabNine'
-                    elseif entry.source.name == 'nvim_lsp_signature_help' then
-                        vim_item.kind = ' Signature'
-                        -- elseif entry.source.name == 'lazydev' then
-                        --     vim_item.kind = ' NeoVim'
-                        -- elseif entry.source.name == 'neorg' then
-                        --     vim_item.kind = '󱓧 Neorg'
-                    end
-                    vim_item.menu = menu
-                    return vim_item
-                end,
-            },
-            sorting = {
-                comparators = {
-                    cmp.config.compare.offset,
-                    cmp.config.compare.exact,
-                    cmp.config.compare.score,
-
-                    function(entry1, entry2)
-                        local _, entry1_under = entry1.completion_item.label:find('^_+')
-                        local _, entry2_under = entry2.completion_item.label:find('^_+')
-                        entry1_under = entry1_under or 0
-                        entry2_under = entry2_under or 0
-                        if entry1_under > entry2_under then
-                            return false
-                        elseif entry1_under < entry2_under then
-                            return true
-                        end
-                    end,
-                    cmp.config.compare.kind,
-                    cmp.config.compare.sort_text,
-                    cmp.config.compare.length,
-                    cmp.config.compare.order,
+                default = { 'lsp', 'luasnip', 'lazydev', 'path', 'buffer' },
+                providers = {
+                    lazydev = {
+                        name = 'LazyDev',
+                        module = 'lazydev.integrations.blink',
+                        score_offset = 100, -- show at a higher priority than lsp
+                    },
                 },
             },
-            mapping = {
-                ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-                ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-                ['<C-f>'] = cmp.mapping.scroll_docs(-4),
-                ['<C-b>'] = cmp.mapping.scroll_docs(4),
-                ['<C-Space>'] = cmp.mapping.complete(),
-                ['<Esc>'] = cmp.mapping.close(),
-                ['<Tab>'] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-                    elseif luasnip.expand_or_locally_jumpable() then
-                        luasnip.expand_or_jump()
-                        -- elseif has_words_before() then
-                        --     cmp.complete()
-                    else
-                        fallback()
-                    end
-                end, { 'i', 's' }),
-                ['<S-Tab>'] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-                    elseif luasnip.jumpable(-1) then
-                        luasnip.jump(-1)
-                    else
-                        fallback()
-                    end
-                end, { 'i', 's' }),
-                ['<CR>'] = cmp.mapping.confirm({
-                    behavior = cmp.ConfirmBehavior.Replace,
-                    select = true,
-                }),
+            completion = {
+                ghost_text = { enabled = true },
+                list = {
+                    selection = function(ctx)
+                        return ctx.mode == 'cmdline' and 'manual' or 'preselect'
+                    end,
+                },
+                documentation = {
+                    auto_show = true,
+                },
+                menu = {
+                    auto_show = function(ctx)
+                        return ctx.mode ~= 'cmdline' or not vim.tbl_contains({ '/', '?' }, vim.fn.getcmdtype())
+                    end,
+                    draw = {
+                        treesitter = { 'lsp' },
+                        columns = {
+                            { 'kind_icon',  gap = 1 },
+                            { 'label',      'label_description', gap = 3 },
+                            { 'item_idx',   gap = 1 },
+                            { 'source_name' },
+                        },
+                        components = {
+                            item_idx = {
+                                text = function(ctx)
+                                    return ctx.idx == 10 and '0' or ctx.idx >= 10 and ' ' or tostring(ctx.idx)
+                                end,
+                                highlight = 'BlinkCmpItemIdx',
+                            },
+                            source_name = {
+                                text = function(ctx)
+                                    return '[' .. ctx.source_name .. ']'
+                                end,
+                            },
+                        },
+                    },
+                },
             },
-        })
+            keymap = {
+                preset = 'none',
+                cmdline = { -- https://github.com/neovim/neovim/issues/21585
+                    ['<C-space>'] = { 'show' },
+                    ['<CR>'] = { 'accept', 'fallback' },
+                    ['<Tab>'] = { 'select_next', 'fallback' },
+                    ['<S-Tab>'] = { 'select_prev', 'fallback' },
+                    ['<Esc>'] = {
+                        'cancel',
+                        function()
+                            if vim.fn.getcmdtype() ~= '' then
+                                vim.api.nvim_feedkeys(
+                                    vim.api.nvim_replace_termcodes('<C-c>', true, true, true),
+                                    'n',
+                                    true
+                                )
+                                return
+                            end
+                        end,
+                    },
+                },
+                ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+                ['<Esc>'] = { 'cancel', 'fallback' },
+                ['<CR>'] = { 'accept', 'fallback' },
 
-        require('cmp').setup.filetype({ 'dap-repl', 'dapui_watches', 'dapui_hover' }, {
-            sources = {
-                { name = 'dap' },
-            },
-        })
+                ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+                ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
 
-        require('cmp').setup.cmdline('/', {
-            sources = {
-                { name = 'nvim_lsp_document_symbol' },
-                { name = 'buffer' },
+                ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+                ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+                ['<A-1>'] = {
+                    function(cmp)
+                        cmp.accept({ index = 1 })
+                    end,
+                },
+                ['<A-2>'] = {
+                    function(cmp)
+                        cmp.accept({ index = 2 })
+                    end,
+                },
+                ['<A-3>'] = {
+                    function(cmp)
+                        cmp.accept({ index = 3 })
+                    end,
+                },
+                ['<A-4>'] = {
+                    function(cmp)
+                        cmp.accept({ index = 4 })
+                    end,
+                },
+                ['<A-5>'] = {
+                    function(cmp)
+                        cmp.accept({ index = 5 })
+                    end,
+                },
+                ['<A-6>'] = {
+                    function(cmp)
+                        cmp.accept({ index = 6 })
+                    end,
+                },
+                ['<A-7>'] = {
+                    function(cmp)
+                        cmp.accept({ index = 7 })
+                    end,
+                },
+                ['<A-8>'] = {
+                    function(cmp)
+                        cmp.accept({ index = 8 })
+                    end,
+                },
+                ['<A-9>'] = {
+                    function(cmp)
+                        cmp.accept({ index = 9 })
+                    end,
+                },
+                ['<A-0>'] = {
+                    function(cmp)
+                        cmp.accept({ index = 10 })
+                    end,
+                },
             },
-            mapping = require('cmp').mapping.preset.cmdline(),
-        })
-
-        require('cmp').setup.cmdline(':', {
-            sources = {
-                { name = 'cmdline' },
-                { name = 'path' },
+            appearance = {
+                highlight_ns = vim.api.nvim_create_namespace('blink_cmp'),
+                -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+                -- Useful for when your theme doesn't support blink.cmp
+                -- Will be removed in a future release
+                use_nvim_cmp_as_default = false,
+                -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+                -- Adjusts spacing to ensure icons are aligned
+                nerd_font_variant = 'normal',
+                kind_icons = {
+                    Text = '',
+                    Method = '',
+                    Function = '',
+                    Constructor = '',
+                    Field = '',
+                    Variable = '',
+                    Class = '',
+                    Interface = '',
+                    Module = '',
+                    Property = '',
+                    Unit = '',
+                    Value = '',
+                    Enum = '',
+                    Keyword = '',
+                    Snippet = '',
+                    Color = '',
+                    File = '',
+                    Reference = '',
+                    Folder = '',
+                    EnumMember = '',
+                    Constant = '',
+                    Struct = '',
+                    Event = '',
+                    Operator = '',
+                    TypeParameter = '',
+                },
             },
-            mapping = require('cmp').mapping.preset.cmdline(),
         })
 
         require('luasnip.loaders.from_vscode').load()
         require('luasnip.loaders.from_vscode').lazy_load({ paths = custom_snippets_folder })
-
-        -- auto pairs setup
-        npairs.setup()
-
-        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-        cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-
-        npairs.add_rule(Rule('r#"', '"#', 'rust'))
-        npairs.add_rule(Rule('|', '|', 'rust'))
 
         -- create commands to manage snippets
         vim.api.nvim_create_user_command('SnippetAdd', function()

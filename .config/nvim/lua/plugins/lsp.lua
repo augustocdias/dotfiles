@@ -21,7 +21,7 @@ return {
             lspconfig.config_defaults()
             require('setup.lsp.lua').setup(conf, lspconfig.capabilities(), lspconfig.on_attach)
         end,
-    }, -- collection of LSP configurations for nvim
+    },                          -- collection of LSP configurations for nvim
     {
         'stevearc/aerial.nvim', -- check if https://github.com/hedyhli/outline.nvim can replace it
         enabled = not vim.g.vscode,
@@ -62,6 +62,9 @@ return {
     {
         'mrcjkb/rustaceanvim',
         enabled = not vim.g.vscode,
+        dependencies = {
+            { 'Saecki/crates.nvim', dependencies = { 'nvim-lua/plenary.nvim' } }, -- auto complete for Cargo.toml
+        },
         init = function()
             vim.g.rustaceanvim = function()
                 local lspconfig = require('setup.lsp')

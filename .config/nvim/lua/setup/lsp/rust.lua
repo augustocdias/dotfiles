@@ -6,14 +6,11 @@ return {
                 enabled = true,
                 on_attach = on_attach,
                 actions = true,
-                completion = false, -- enabled directly into cmp (true will show duplicate)
+                completion = true,
                 hover = true,
             },
             completion = {
                 crates = {
-                    enabled = true,
-                },
-                cmp = {
                     enabled = true,
                 },
             },
