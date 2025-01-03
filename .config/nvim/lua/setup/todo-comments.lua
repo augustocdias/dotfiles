@@ -1,7 +1,7 @@
 return {
     setup = function()
         require('todo-comments').setup({
-            signs = false,
+            signs = true,
             keywords = {
                 TODO = { alt = { 'todo', 'unimplemented' } },
             },

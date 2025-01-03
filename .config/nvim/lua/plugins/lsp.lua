@@ -48,12 +48,6 @@ return {
             require('setup.lsp.null-ls').setup(lspconfig.on_attach)
         end,
     }, -- can be useful to integrate with non LSP sources like eslint
-    -- { -- FIXME: this is breaking rust analyser
-    --     'ray-x/lsp_signature.nvim',
-    --    event = 'VeryLazy',
-    --     enabled = not vim.g.vscode,
-    --     dependencies = 'nvim-lspconfig',
-    -- }, -- show signature from methods as float windows
     {
         'nvim-java/nvim-java',
         enabled = not vim.g.vscode,

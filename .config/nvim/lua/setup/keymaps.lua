@@ -508,6 +508,14 @@ local keymap_table = {
         enabled = not vim.g.vscode,
     },
     {
+        shortcut = 'gb',
+        cmd = ':lua Snacks.gitbrowse()<CR>',
+        opts = silent_opt,
+        modes = { 'n' },
+        description = 'Open file in remeote repo',
+        enabled = true,
+    },
+    {
         shortcut = 'gx',
         cmd = '<CMD>Browse<CR>',
         opts = silent_opt,
