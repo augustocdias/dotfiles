@@ -295,10 +295,18 @@ local keymap_table = {
     },
     {
         shortcut = '<C-x>',
-        cmd = ':lua MiniBufremove.delete()<CR>',
+        cmd = ':lua Snacks.bufdelete()<CR>',
         opts = no_remap_silent_opt,
         modes = { 'n' },
         description = 'Close current buffer',
+        enabled = not vim.g.vscode,
+    },
+    {
+        shortcut = '<C-S-x>',
+        cmd = ':lua Snacks.bufdelete.all()<CR>',
+        opts = no_remap_silent_opt,
+        modes = { 'n' },
+        description = 'Close call buffers',
         enabled = not vim.g.vscode,
     },
     {
@@ -555,6 +563,26 @@ local keymap_table = {
         opts = silent_opt,
         modes = { 'n' },
         description = 'Find references',
+        enabled = not vim.g.vscode,
+    },
+    {
+        shortcut = 'grn',
+        cmd = function()
+            Snacks.words.jump(1, true)
+        end,
+        opts = silent_opt,
+        modes = { 'n' },
+        description = 'Go to next reference',
+        enabled = not vim.g.vscode,
+    },
+    {
+        shortcut = 'grp',
+        cmd = function()
+            Snacks.words.jump(-1, true)
+        end,
+        opts = silent_opt,
+        modes = { 'n' },
+        description = 'Go to previous reference',
         enabled = not vim.g.vscode,
     },
     {
@@ -877,7 +905,7 @@ local keymap_table = {
         enabled = true,
         modes = { 'n' },
     },
-    { shortcut = '<leader>g', cmd = 'rhs', description = 'Git', opts = no_remap_opt, enabled = true, modes = { 'n' } },
+    { shortcut = '<leader>g', cmd = 'rhs', description = 'Git',  opts = no_remap_opt, enabled = true, modes = { 'n' } },
     {
         shortcut = '<leader>gb',
         cmd = '<cmd>lua require("telescope.builtin").git_branches()<CR>',
@@ -1680,7 +1708,8 @@ local keymap_table = {
     },
     {
         shortcut = '<leader>ty',
-        cmd = '<cmd>lua require("telescope.builtin").symbols({"emoji", "kaomoji", "gitmoji", "julia", "math", "nerd"})<CR>',
+        cmd =
+        '<cmd>lua require("telescope.builtin").symbols({"emoji", "kaomoji", "gitmoji", "julia", "math", "nerd"})<CR>',
         description = 'List Symbols',
         opts = no_remap_opt,
         enabled = true,
@@ -1828,7 +1857,7 @@ local keymap_table = {
         remap = false,
         modes = { 'v' },
     },
-    { shortcut = '<leader>j', group = 'Java', remap = false, modes = { 'v' } },
+    { shortcut = '<leader>j', group = 'Java',     remap = false, modes = { 'v' } },
     {
         shortcut = '<leader>ja',
         cmd = '<cmd>lua require("jdtls").code_action(true)',
@@ -1857,7 +1886,7 @@ local keymap_table = {
         remap = false,
         modes = { 'v' },
     },
-    { shortcut = '<leader>l', group = 'LSP', remap = false, modes = { 'v' } },
+    { shortcut = '<leader>l', group = 'LSP',         remap = false, modes = { 'v' } },
     {
         shortcut = '<leader>la',
         cmd = '<cmd>lua vim.lsp.buf.range_code_action()<CR>',

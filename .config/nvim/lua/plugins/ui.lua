@@ -1,13 +1,7 @@
 -- selene: allow(mixed_table)
 return {
-    { 'MunifTanjim/nui.nvim',   enabled = not vim.g.vscode },                                           -- base ui components for nvim
+    { 'MunifTanjim/nui.nvim', enabled = not vim.g.vscode }, -- base ui components for nvim
     { 'stevearc/dressing.nvim', config = require('setup.dressing').setup, enabled = not vim.g.vscode }, -- overrides the default vim input to provide better visuals
-    {
-        'rcarriga/nvim-notify',
-        event = 'VeryLazy',
-        enabled = not vim.g.vscode,
-        config = require('setup.notify').setup,
-    }, -- overides the default vim notify method for a floating window
     {
         'nvim-lualine/lualine.nvim',
         event = 'UIEnter',
@@ -54,12 +48,6 @@ return {
         config = require('setup.gitsigns').setup,
     }, -- show git indicators next to the line numbers (lines changed, added, etc.)
     {
-        'lukas-reineke/indent-blankline.nvim',
-        main = 'ibl',
-        enabled = not vim.g.vscode,
-        config = require('setup.blankline').setup,
-    }, -- Adds a | to show indentation levels
-    {
         'folke/todo-comments.nvim',
         enabled = not vim.g.vscode,
         config = require('setup.todo-comments').setup,
@@ -79,12 +67,6 @@ return {
             'nvim-treesitter/nvim-treesitter',
         },
     }, -- help buffers enhancements
-    {
-        'zbirenbaum/neodim',
-        enabled = not vim.g.vscode,
-        event = 'LspAttach',
-        config = require('setup.neodim').setup,
-    },
     {
         'carbon-steel/detour.nvim',
         enabled = not vim.g.vscode,

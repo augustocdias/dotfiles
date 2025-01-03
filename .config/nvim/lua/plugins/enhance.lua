@@ -49,12 +49,6 @@ return {
         config = true,
     }, -- special search and replace buffer
     {
-        'echasnovski/mini.bufremove',
-        enabled = not vim.g.vscode,
-        version = false,
-        config = true,
-    }, -- delete buffer and keep window layout
-    {
         'echasnovski/mini.ai',
         version = false,
         config = true,
@@ -80,5 +74,11 @@ return {
             'MunifTanjim/nui.nvim',
             'pysan3/pathlib.nvim',
         },
+    },
+    {
+        'folke/snacks.nvim',
+        priority = 1000,
+        lazy = false,
+        config = require('setup.snacks').setup,
     },
 }

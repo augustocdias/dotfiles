@@ -115,6 +115,7 @@ return {
                     NoiceFormatConfirmDefault = { fg = telescope_prompt, bg = telescope_prompt_title },
                     NoiceConfirm = { bg = telescope_prompt },
                     InputDressing = { bg = noice_mini_bg },
+                    InputDressingBorder = { bg = noice_mini_bg, fg = noice_mini_bg },
                     DapSign = { fg = colors.flamingo },
                     DapLineStopped = { bg = noice_mini_bg },
                     WinBar = { bg = lualine_bg },

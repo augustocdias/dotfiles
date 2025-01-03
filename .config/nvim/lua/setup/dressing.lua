@@ -1,12 +1,11 @@
 return {
     setup = function()
         require('dressing').setup({
-            -- TODO: find a way to remove the border
             input = {
-                -- border = 'none',
-                -- win_options = {
-                --     winhighlight = 'InputDressing',
-                -- },
+                title_pos = 'center',
+                win_options = {
+                    winhighlight = 'NormalFloat:InputDressing,FloatBorder:InputDressingBorder',
+                },
             },
             select = {
                 builtin = {
