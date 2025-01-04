@@ -5,6 +5,7 @@ vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 vim.g.neovide_transparency = 0.95
 vim.g.neovide_theme = 'light'
 vim.g.neovide_floating_shadow = false
+vim.g.neovide_floating_corner_radius = 0.5
 if vim.g.neovide then
     vim.keymap.set('n', '<D-s>', ':w<CR>') -- Save
     vim.keymap.set('v', '<D-c>', '"*y') -- Copy

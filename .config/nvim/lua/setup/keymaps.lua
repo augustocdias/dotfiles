@@ -913,7 +913,7 @@ local keymap_table = {
         enabled = true,
         modes = { 'n' },
     },
-    { shortcut = '<leader>g', cmd = 'rhs', description = 'Git',  opts = no_remap_opt, enabled = true, modes = { 'n' } },
+    { shortcut = '<leader>g', cmd = 'rhs', description = 'Git', opts = no_remap_opt, enabled = true, modes = { 'n' } },
     {
         shortcut = '<leader>gb',
         cmd = '<cmd>lua require("telescope.builtin").git_branches()<CR>',
@@ -1716,8 +1716,7 @@ local keymap_table = {
     },
     {
         shortcut = '<leader>ty',
-        cmd =
-        '<cmd>lua require("telescope.builtin").symbols({"emoji", "kaomoji", "gitmoji", "julia", "math", "nerd"})<CR>',
+        cmd = '<cmd>lua require("telescope.builtin").symbols({"emoji", "kaomoji", "gitmoji", "julia", "math", "nerd"})<CR>',
         description = 'List Symbols',
         opts = no_remap_opt,
         enabled = true,
@@ -1865,7 +1864,7 @@ local keymap_table = {
         remap = false,
         modes = { 'v' },
     },
-    { shortcut = '<leader>j', group = 'Java',     remap = false, modes = { 'v' } },
+    { shortcut = '<leader>j', group = 'Java', remap = false, modes = { 'v' } },
     {
         shortcut = '<leader>ja',
         cmd = '<cmd>lua require("jdtls").code_action(true)',
@@ -1894,7 +1893,7 @@ local keymap_table = {
         remap = false,
         modes = { 'v' },
     },
-    { shortcut = '<leader>l', group = 'LSP',         remap = false, modes = { 'v' } },
+    { shortcut = '<leader>l', group = 'LSP', remap = false, modes = { 'v' } },
     {
         shortcut = '<leader>la',
         cmd = '<cmd>lua vim.lsp.buf.range_code_action()<CR>',

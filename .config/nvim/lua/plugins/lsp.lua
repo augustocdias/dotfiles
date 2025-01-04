@@ -45,7 +45,7 @@ return {
         },
         config = function()
             local lspconfig = require('setup.lsp')
-            require('setup.lsp.null-ls').setup(lspconfig.on_attach)
+            require('setup.lsp.none-ls').setup(lspconfig.on_attach)
         end,
     }, -- can be useful to integrate with non LSP sources like eslint
     {

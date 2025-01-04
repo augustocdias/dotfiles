@@ -1,5 +1,12 @@
 [font]
-normal = [{ family = "FiraCode Nerd Font", style = "Retina" }, { family = "codicon" }]
-italic = { family = "VictorMonoNerdFontComplete Nerd Font", style = "italic" }
+normal = [
+    { family = "MonaspiceNe Nerd Font", style = "Retina" },
+    { family = "codicon" },
+]
+italic = { family = "MonaspiceRn Nerd Font", style = "italic" }
 size = 12
 edging = "subpixelantialias"
+
+[font.features]
+"MonaspiceRn Nerd Font" = ["-liga"]
+"MonaspiceNe Nerd Font" = ["-liga"]
