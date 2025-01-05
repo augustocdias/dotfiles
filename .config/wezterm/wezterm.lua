@@ -21,7 +21,7 @@ return {
     font_size = 12.0,
     freetype_load_target = 'Light',
     freetype_render_target = 'HorizontalLcd',
-    color_scheme = 'Catppuccin Latte',
+    color_scheme = 'Catppuccin Mocha',
     window_padding = {
         left = '0cell',
         right = '0cell',

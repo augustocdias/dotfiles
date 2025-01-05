@@ -7,7 +7,7 @@ return {
         event = 'UIEnter',
         enabled = not vim.g.vscode,
         config = function()
-            local cmd_color = require('setup.catppuccin').pallete('latte').teal
+            local cmd_color = require('setup.catppuccin').noice_status_color('mocha')
             require('setup.lualine').setup(
                 require('setup.nvim-navic').winbar,
                 require('setup.noice').command_status(cmd_color)
@@ -31,7 +31,7 @@ return {
         enabled = not vim.g.vscode,
         priority = 99,
         config = function()
-            require('setup.catppuccin').setup('latte')
+            require('setup.catppuccin').setup('mocha')
         end,
     }, -- theme
     {

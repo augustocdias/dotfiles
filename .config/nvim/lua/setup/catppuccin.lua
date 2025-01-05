@@ -1,6 +1,6 @@
 return {
-    pallete = function(flavour)
-        return require('catppuccin.palettes').get_palette(flavour)
+    noice_status_color = function(flavour)
+        return require('catppuccin.palettes').get_palette(flavour).teal
     end,
     setup = function(flavour)
         local colors = require('catppuccin.palettes').get_palette(flavour)
@@ -11,8 +11,8 @@ return {
         local telescope_prompt_title = colors.sky
         local telescope_preview_title = colors.teal
         local lualine_bg = colors.mantle
-        local noice_mini_bg = ucolors.lighten(colors.flamingo, 0.1, '#FFFFFF')
-        local mini_modified_bg = ucolors.lighten(colors.flamingo, 0.3, '#FFFFFF')
+        local noice_mini_bg = ucolors.lighten(colors.flamingo, 0.1, '#000000')
+        local mini_modified_bg = ucolors.lighten(colors.flamingo, 0.3, '#000000')
         require('catppuccin').setup({
             flavour = flavour,
             dim_inactive = {
@@ -107,7 +107,7 @@ return {
                     MiniFilesBorderModified = { bg = mini_modified_bg, fg = mini_modified_bg },
                     MiniFilesNormal = { bg = noice_mini_bg },
                     MiniFilesModified = { bg = mini_modified_bg },
-                    MiniFilesCursorLine = { bg = ucolors.lighten(colors.mantle, 0.1, '#FFFFFF') },
+                    MiniFilesCursorLine = { bg = ucolors.lighten(colors.mantle, 0.1, '#000000') },
                     MiniFilesTitle = { fg = colors.base, bg = telescope_prompt_title },
                     MiniFilesTitleFocused = { fg = colors.base, bg = telescope_prompt_title },
                     NoiceConfirmBorder = { fg = telescope_prompt, bg = telescope_prompt },
