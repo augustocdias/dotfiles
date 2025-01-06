@@ -22,7 +22,6 @@ return {
         dependencies = {
             'nvim-treesitter/nvim-treesitter',
             'L3MON4D3/LuaSnip',
-            'hrsh7th/nvim-cmp',
         },
         event = 'InsertCharPre',
         config = require('setup.tabout').setup,
@@ -73,6 +72,7 @@ return {
             'nvim-lua/plenary.nvim',
             'MunifTanjim/nui.nvim',
             'pysan3/pathlib.nvim',
+            'benlubas/neorg-interim-ls',
         },
     },
     {

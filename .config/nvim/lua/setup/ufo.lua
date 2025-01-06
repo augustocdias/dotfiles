@@ -48,10 +48,10 @@ return {
             bt_ignore = { 'terminal', 'nofile' },
             relculright = true,
             segments = {
-                -- fold -> sign -> anywhing else -> line number + separator or gitsigns
+                -- fold -> sign -> anything else -> line number + separator or gitsigns
                 { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
                 {
-                    sign = { namespace = { 'diagnostic' }, maxwidth = 1, colwidth = 2, auto = false, foldclosed = true },
+                    sign = { namespace = { 'diagnostic' }, maxwidth = 1, colwidth = 1, auto = false, foldclosed = true },
                     click = 'v:lua.ScSa',
                 },
                 {
@@ -59,7 +59,7 @@ return {
                         name = { '.*' },
                         text = { '.*' },
                         maxwidth = 2,
-                        colwidth = 1,
+                        colwidth = 2,
                         auto = true,
                         foldclosed = true,
                     },

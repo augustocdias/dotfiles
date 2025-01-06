@@ -5,10 +5,9 @@ return {
                 ['core.defaults'] = {},
                 ['core.completion'] = {
                     config = {
-                        engine = 'nvim-cmp',
+                        engine = { module_name = 'external.lsp-completion' },
                     },
                 },
-                ['core.integrations.nvim-cmp'] = {},
                 ['core.concealer'] = {},
                 ['core.dirman'] = {
                     config = {
@@ -23,6 +22,26 @@ return {
                 ['core.text-objects'] = {},
                 ['core.integrations.treesitter'] = {},
                 ['core.neorgcmd.commands.return'] = {},
+                ['external.interim-ls'] = {
+                    config = {
+                        -- default config shown
+                        completion_provider = {
+                            -- Enable or disable the completion provider
+                            enable = true,
+
+                            -- Show file contents as documentation when you complete a file name
+                            documentation = true,
+
+                            -- Try to complete categories provided by Neorg Query. Requires `benlubas/neorg-query`
+                            categories = false,
+
+                            people = {
+                                enable = false,
+                                path = 'people',
+                            },
+                        },
+                    },
+                },
             },
         })
     end,

@@ -79,4 +79,9 @@ return {
         event = 'VeryLazy',
         config = require('setup.autopairs').setup,
     },
+    {
+        'kawre/leetcode.nvim',
+        lazy = 'leetcode.nvim' ~= vim.fn.argv(0, -1),
+        opts = { arg = 'leetcode.nvim' },
+    }, -- solve leetcode problems on neovim
 }
