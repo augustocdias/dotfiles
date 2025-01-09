@@ -87,13 +87,26 @@ return {
             end
         end)
 
+        local disabled_filetypes = { 'minifiles', 'DressingInput' }
+
         require('blink.cmp').setup({
             -- Disable for some filetypes
             enabled = function()
-                return vim.bo.buftype ~= 'prompt' and vim.b.completion ~= false
+                local success, node = pcall(vim.treesitter.get_node)
+                local is_comment = success
+                    and node
+                    and vim.tbl_contains(
+                        { 'comment', 'line_comment', 'block_comment', 'doc', 'doc_comment' },
+                        node:type()
+                    )
+                return vim.bo.buftype ~= 'prompt'
+                    and vim.b.completion ~= false
+                    and not is_comment
+                    and not vim.tbl_contains(disabled_filetypes, vim.bo.filetype)
             end,
             signature = { enabled = true },
             snippets = {
+                preset = 'luasnip',
                 expand = function(snippet)
                     require('luasnip').lsp_expand(snippet)
                 end,
@@ -108,7 +121,7 @@ return {
                 end,
             },
             sources = {
-                default = { 'lsp', 'luasnip', 'lazydev', 'path', 'buffer' },
+                default = { 'lsp', 'snippets', 'lazydev', 'path', 'buffer' },
                 providers = {
                     lazydev = {
                         name = 'LazyDev',
@@ -120,9 +133,12 @@ return {
             completion = {
                 ghost_text = { enabled = true },
                 list = {
-                    selection = function(ctx)
-                        return ctx.mode == 'cmdline' and 'manual' or 'preselect'
-                    end,
+                    selection = {
+                        preselect = function(ctx)
+                            return ctx.mode ~= 'cmdline'
+                        end,
+                        auto_insert = false,
+                    },
                 },
                 documentation = {
                     auto_show = true,
@@ -183,8 +199,10 @@ return {
                 ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
                 ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
 
-                ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
-                ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+                ['<C-Tab>'] = { 'snippet_forward', 'fallback' },
+                ['<C-S-Tab>'] = { 'snippet_backward', 'fallback' },
+                ['<Tab>'] = { 'select_next', 'fallback' },
+                ['<S-Tab>'] = { 'select_prev', 'fallback' },
                 ['<A-1>'] = {
                     function(cmp)
                         cmp.accept({ index = 1 })
@@ -271,6 +289,8 @@ return {
                     Event = '',
                     Operator = '',
                     TypeParameter = '',
+                    Boolean = ' ',
+                    Array = ' ',
                 },
             },
         })

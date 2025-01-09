@@ -12,7 +12,7 @@ return {
                 ['core.dirman'] = {
                     config = {
                         workspaces = {
-                            vim.fn.expand('~/Documents/notes'),
+                            vim.fn.expand('~/Library/Mobile Documents/com~apple~CloudDocs/Documents/notes'),
                         },
                     },
                 },
@@ -46,7 +46,7 @@ return {
         })
     end,
     open_workspace_notes = function()
-        local notes_location = vim.fn.expand('~/Documents/notes/projects/')
+        local notes_location = vim.fn.expand('~/Library/Mobile Documents/com~apple~CloudDocs/Documents/notes/projects/')
         local note_name = vim.fn.getcwd():match('([^\\/]*)$')
         vim.cmd('e ' .. notes_location .. note_name .. '.norg')
     end,

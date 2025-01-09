@@ -45,6 +45,7 @@ return {
     {
         'rmagatti/auto-session',
         enabled = not vim.g.vscode,
+        lazy = vim.g.leetcode_enabled,
         dependencies = { 'nvim-telescope/telescope.nvim' },
         config = require('setup.session').setup,
     },

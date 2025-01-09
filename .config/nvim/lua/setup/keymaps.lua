@@ -2,19 +2,202 @@ local no_remap_opt = { noremap = true }
 local silent_opt = { silent = true }
 local no_remap_silent_opt = { noremap = true, silent = true }
 local no_remap_silent_expr_opt = { noremap = true, silent = true, expr = true }
+local mc = require('multicursor-nvim')
 
 local keymap_table = {
     -- multicursors
-    -- {
-    --     shortcut = '',
-    --     cmd = function()
-    --         require('multicursor-nvim')
-    --     end,
-    --     opts = no_remap_opt,
-    --     modes = { 'n' },
-    --     description = '',
-    --     enabled = true,
-    -- },
+    {
+        shortcut = '<leader>m',
+        cmd = 'rhs',
+        description = 'Multicursors',
+        opts = no_remap_opt,
+        enabled = true,
+        modes = { 'n', 'v' },
+    },
+    {
+        shortcut = '<leader>mk',
+        cmd = function()
+            mc.lineAddCursor(-1)
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Add Cursor Up',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mj',
+        cmd = function()
+            mc.lineAddCursor(1)
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Add Cursor Down',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>ml',
+        cmd = function()
+            mc.lineSkipCursor(-1)
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Skip Cursor Up',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mh',
+        cmd = function()
+            mc.lineSkipCursor(1)
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Skip Cursor Down',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mn',
+        cmd = function()
+            mc.matchAddCursor(1)
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Add Cursor Matching Forward',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mN',
+        cmd = function()
+            mc.matchAddCursor(-1)
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Add Cursor Matching Backward',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mS',
+        cmd = function()
+            mc.matchSkipCursor(-1)
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Skip Cursor Matching Backward',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>ms',
+        cmd = function()
+            mc.matchSkipCursor(1)
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Skip Cursor Matching Forward',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>ma',
+        cmd = function()
+            mc.matchAllAddCursors()
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Add Cursor to All Matcches',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mw',
+        cmd = function()
+            mc.addCursor('w')
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Add Cursor to Words',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mc',
+        cmd = function()
+            if not mc.cursorsEnabled() then
+                mc.enableCursors()
+            elseif mc.hasCursors() then
+                mc.clearCursors()
+            end
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Clear all Cursors',
+        enabled = true,
+    },
+    {
+        shortcut = '<c-leftmouse>',
+        cmd = function()
+            mc.handleMouse()
+        end,
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Toggle Cursor',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mt',
+        cmd = function()
+            mc.toggleCursor()
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Toggle Cursor',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mx',
+        cmd = function()
+            mc.deleteCursor()
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Delete Main Cursor',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mr',
+        cmd = function()
+            mc.restoreCursors()
+        end,
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = 'Restore deleted Cursors',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mL',
+        cmd = function()
+            mc.nextCursor()
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Rotate Main Cursor Next',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mH',
+        cmd = function()
+            mc.prevCursor()
+        end,
+        opts = no_remap_opt,
+        modes = { 'n', 'v' },
+        description = 'Rotate Main Cursor Previous',
+        enabled = true,
+    },
+    {
+        shortcut = '<leader>mA',
+        cmd = function()
+            mc.alignCursors()
+        end,
+        opts = no_remap_opt,
+        modes = { 'n' },
+        description = "Align Cursors' Columns",
+        enabled = true,
+    },
     {
         shortcut = 'k',
         cmd = "v:count == 0 ? 'gk' : 'k'",

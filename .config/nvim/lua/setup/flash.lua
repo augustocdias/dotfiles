@@ -5,6 +5,11 @@ return {
                 -- search/jump in all windows
                 multi_window = false,
             },
+            char = {
+                -- hide after jump when not using jump labels
+                autohide = true,
+                jump_labels = false,
+            },
         })
     end,
 }
