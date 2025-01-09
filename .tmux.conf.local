@@ -409,7 +409,7 @@ set -g @resurrect-strategy-nvim 'session'
 # "$@"
 # # /!\ do not remove the previous line
 
-set -g default-terminal "alacritty"
+set -g default-terminal "wezterm"
 
 unbind C-b
 unbind C-a
