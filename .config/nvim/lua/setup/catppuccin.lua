@@ -10,7 +10,6 @@ return {
         local telescope_text = colors.text
         local telescope_prompt_title = colors.sky
         local telescope_preview_title = colors.teal
-        local lualine_bg = colors.mantle
         local noice_mini_bg = ucolors.lighten(colors.flamingo, 0.1, '#000000')
         local mini_modified_bg = ucolors.lighten(colors.flamingo, 0.3, '#000000')
         require('catppuccin').setup({
@@ -42,14 +41,14 @@ return {
             },
             integrations = {
                 aerial = true,
-                barbar = true,
                 blink_cmp = true,
-                dap = {
+                dap = true,
+                dap_ui = true,
+                diffview = true,
+                dropbar = {
                     enabled = true,
-                    enable_ui = true,
+                    color_mode = true,
                 },
-                dashboard = true,
-                fidget = true,
                 flash = true,
                 gitgutter = true,
                 gitsigns = true,
@@ -57,9 +56,9 @@ return {
                     enabled = true,
                     colored_indent_levels = false,
                 },
-                leap = true,
                 lsp_trouble = true,
                 markdown = true,
+                mason = true,
                 mini = {
                     enabled = true,
                 },
@@ -78,25 +77,18 @@ return {
                         information = { 'underline' },
                     },
                 },
-                navic = {
-                    enabled = true,
-                    custom_bg = lualine_bg,
-                },
                 neogit = true,
                 neotest = true,
-                neotree = {
-                    enabled = true,
-                    show_root = true,
-                    transparent_panel = false,
-                },
                 noice = true,
-                notify = true,
+                nvim_surround = true,
                 octo = true,
                 overseer = true,
-                symbols_outline = true,
+                semantic_tokens = true,
+                snacks = true,
                 telescope = true,
                 treesitter = true,
                 treesitter_context = true,
+                ufo = true,
                 which_key = true,
             },
             highlight_overrides = {
@@ -118,7 +110,6 @@ return {
                     InputDressingBorder = { bg = noice_mini_bg, fg = noice_mini_bg },
                     DapSign = { fg = colors.flamingo },
                     DapLineStopped = { bg = noice_mini_bg },
-                    WinBar = { bg = lualine_bg },
                     -- dims the text so that the hits are more visible
                     LeapBackdrop = { fg = colors.flamingo },
                     TelescopeBorder = { bg = telescope_results, fg = telescope_results },
@@ -143,7 +134,6 @@ return {
                     TelescopeSelectionCaret = { fg = telescope_text },
                     TelescopeResultsNormal = { bg = telescope_results },
                     TelescopeResultsBorder = { bg = telescope_results, fg = telescope_results },
-                    NavicIconsFile = { fg = colors.blue, bg = lualine_bg },
                 },
             },
         })

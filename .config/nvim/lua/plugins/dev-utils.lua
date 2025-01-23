@@ -1,11 +1,9 @@
 -- selene: allow(mixed_table)
 return {
     {
-        'SmiteshP/nvim-navic',
-        event = 'VeryLazy',
-        enabled = not vim.g.vscode,
-        config = require('setup.nvim-navic').setup,
-    }, -- adds breadcrumbs
+        'Bekaboo/dropbar.nvim',
+        config = true,
+    },
     {
         'folke/trouble.nvim',
         enabled = not vim.g.vscode,

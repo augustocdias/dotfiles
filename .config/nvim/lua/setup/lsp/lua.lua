@@ -12,6 +12,12 @@ return {
             capabilities = capabilities,
             settings = {
                 Lua = {
+                    format = {
+                        enabled = false,
+                        defaultConfig = {
+                            indent_style = 'space',
+                        },
+                    },
                     runtime = {
                         version = 'LuaJIT',
                     },

@@ -1,6 +1,6 @@
 -- selene: allow(mixed_table)
 return {
-    { 'MunifTanjim/nui.nvim', enabled = not vim.g.vscode }, -- base ui components for nvim
+    { 'MunifTanjim/nui.nvim',   enabled = not vim.g.vscode },                                           -- base ui components for nvim
     { 'stevearc/dressing.nvim', config = require('setup.dressing').setup, enabled = not vim.g.vscode }, -- overrides the default vim input to provide better visuals
     {
         'nvim-lualine/lualine.nvim',
@@ -8,10 +8,7 @@ return {
         enabled = not vim.g.vscode,
         config = function()
             local cmd_color = require('setup.catppuccin').noice_status_color('mocha')
-            require('setup.lualine').setup(
-                require('setup.nvim-navic').winbar,
-                require('setup.noice').command_status(cmd_color)
-            )
+            require('setup.lualine').setup(require('setup.noice').command_status(cmd_color))
         end,
     }, -- status line
     {

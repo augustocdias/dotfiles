@@ -1,5 +1,5 @@
 return {
-    setup = function(winbar_sig, command_status)
+    setup = function(command_status)
         local lualine = require('lualine')
         local apple = require('setup.apple')
         apple.music:listen()
@@ -15,20 +15,6 @@ return {
             local searchcount = vim.fn.searchcount({ maxcount = 9999 })
             return last_search .. '(' .. searchcount.current .. '/' .. searchcount.total .. ')'
         end
-        local mode_map = {
-            n = '(ᴗ_ ᴗ。)',
-            nt = '(ᴗ_ ᴗ。)',
-            i = '(•̀ - •́ )',
-            R = '( •̯́ ₃ •̯̀)',
-            v = '(⊙ _ ⊙ )',
-            V = '(⊙ _ ⊙ )',
-            no = 'Σ(°△°ꪱꪱꪱ)',
-            ['\22'] = '(⊙ _ ⊙ )',
-            t = '(⌐■_■)',
-            ['!'] = 'Σ(°△°ꪱꪱꪱ)',
-            c = 'Σ(°△°ꪱꪱꪱ)',
-            s = '( • ᴗ - ) ✧',
-        }
 
         lualine.setup({
             options = {
@@ -115,44 +101,8 @@ return {
                 lualine_z = {},
             },
             tabline = {},
-            winbar = {
-                lualine_a = {},
-                lualine_b = {},
-                lualine_c = {
-                    {
-                        winbar_sig,
-                        color = { bg = '#E6E9EF' },
-                    },
-                },
-                lualine_x = {},
-                lualine_y = {},
-                lualine_z = {
-                    {
-                        'filename',
-                        file_status = 1,
-                        path = 0,
-                    },
-                },
-            },
-            inactive_winbar = {
-                lualine_a = {},
-                lualine_b = {},
-                lualine_c = {
-                    {
-                        winbar_sig,
-                        color = { bg = '#E6E9EF' },
-                    },
-                },
-                lualine_x = {},
-                lualine_y = {},
-                lualine_z = {
-                    {
-                        'filename',
-                        file_status = 1,
-                        path = 1,
-                    },
-                },
-            },
+            winbar = {},
+            inactive_winbar = {},
             extensions = {},
         })
     end,
