@@ -5,6 +5,7 @@ return {
         enabled = not vim.g.vscode,
         event = 'VeryLazy',
         config = true,
+        -- opts = { log_level = vim.log.levels.DEBUG },
         dependencies = {
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -49,11 +50,6 @@ return {
         end,
     }, -- can be useful to integrate with non LSP sources like eslint
     {
-        'nvim-java/nvim-java',
-        enabled = not vim.g.vscode,
-        ft = { 'java', 'gradle' },
-    }, -- java enhancements
-    {
         'mrcjkb/rustaceanvim',
         enabled = not vim.g.vscode,
         dependencies = {
@@ -76,16 +72,4 @@ return {
             require('setup.lsp.typescript').setup(lspconfig.capabilities(), lspconfig.on_attach)
         end, -- typescript enhancements
     },
-    {
-        'folke/lazydev.nvim',
-        ft = 'lua',
-        opts = {
-            library = {
-                'luvit-meta/library',
-            },
-        },
-        dependencies = {
-            { 'Bilal2453/luvit-meta', lazy = true },
-        },
-    }, -- utility to make neovim config better
 }

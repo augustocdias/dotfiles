@@ -168,6 +168,3 @@ vim.o.splitkeep = 'topline'
 
 -- enable autoformat when saving. it is set for each buffer when lsp is attached
 vim.g.autoformat = true
-
--- is leetcode parameter informed?
-vim.g.leetcode_enabled = vim.fn.argv(0, -1) == 'leetcode'

@@ -8,7 +8,8 @@ return {
     dependencies = {
         'L3MON4D3/LuaSnip',
         'rafamadriz/friendly-snippets', -- snippets for many languages
-        'chrisgrieser/nvim-scissors', -- snippet editor
-        'b0o/schemastore.nvim', -- adds schemas for json lsp
+        'chrisgrieser/nvim-scissors',   -- snippet editor
+        'b0o/schemastore.nvim',         -- adds schemas for json lsp
+        'xzbdmw/colorful-menu.nvim',    -- adds highlights to the auto-complete options
     },
 }

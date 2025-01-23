@@ -1,5 +1,6 @@
 return {
     setup = function()
+        require('colorful-menu').setup()
         local luasnip = require('luasnip')
         local luasnip_util = require('luasnip.util.util')
         local luasnip_types = require('luasnip.util.types')
@@ -151,11 +152,19 @@ return {
                         treesitter = { 'lsp' },
                         columns = {
                             { 'kind_icon',  gap = 1 },
-                            { 'label',      'label_description', gap = 3 },
+                            { 'label',      gap = 3 },
                             { 'item_idx',   gap = 1 },
                             { 'source_name' },
                         },
                         components = {
+                            label = {
+                                text = function(ctx)
+                                    return require('colorful-menu').blink_components_text(ctx)
+                                end,
+                                highlight = function(ctx)
+                                    return require('colorful-menu').blink_components_highlight(ctx)
+                                end,
+                            },
                             item_idx = {
                                 text = function(ctx)
                                     return ctx.idx == 10 and '0' or ctx.idx >= 10 and ' ' or tostring(ctx.idx)
@@ -170,6 +179,10 @@ return {
                         },
                     },
                 },
+            },
+            fuzzy = {
+                use_typo_resistance = false,
+                sorts = { 'score', 'sort_text', 'kind', 'label' },
             },
             keymap = {
                 preset = 'none',
@@ -265,26 +278,26 @@ return {
                 nerd_font_variant = 'normal',
                 kind_icons = {
                     Text = '',
-                    Method = '',
-                    Function = '',
-                    Constructor = '',
-                    Field = '',
+                    Method = '󰊕',
+                    Function = '󰊕',
+                    Constructor = '',
+                    Field = '󰜢',
                     Variable = '',
                     Class = '',
                     Interface = '',
-                    Module = '',
+                    Module = '',
                     Property = '',
                     Unit = '',
                     Value = '',
                     Enum = '',
-                    Keyword = '',
-                    Snippet = '',
+                    Keyword = '󱕴',
+                    Snippet = '',
                     Color = '',
                     File = '',
-                    Reference = '',
+                    Reference = '',
                     Folder = '',
                     EnumMember = '',
-                    Constant = '',
+                    Constant = '󰏿',
                     Struct = '',
                     Event = '',
                     Operator = '',

@@ -23,7 +23,7 @@ return {
     }, -- test helpers. runs and show signs of test runs
     {
         'pwntester/octo.nvim',
-        enabled = not vim.g.vscode,
+        enabled = false,
         dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-tree/nvim-web-devicons',
@@ -48,13 +48,13 @@ return {
         enabled = not vim.g.vscode,
         cmd = 'Neogit',
         config = require('setup.neogit').setup,
-    }, -- git UI
+    },                           -- git UI
     {
         'mfussenegger/nvim-dap', -- debug adapter for debugging
         enabled = not vim.g.vscode,
         event = 'VeryLazy',
         dependencies = {
-            'rcarriga/nvim-dap-ui', -- ui for nvim-dap
+            'rcarriga/nvim-dap-ui',            -- ui for nvim-dap
             'theHamsta/nvim-dap-virtual-text', -- virtual text during debugging
             'nvim-neotest/nvim-nio',
         },
@@ -72,16 +72,11 @@ return {
             'OverseerTaskAction',
         },
         config = require('setup.overseer').setup,
-    }, -- A task runner inspired by VSCode
+    },                           -- A task runner inspired by VSCode
     {
         'windwp/nvim-autopairs', -- helps with auto closing blocks
         enabled = not vim.g.vscode,
         event = 'VeryLazy',
         config = require('setup.autopairs').setup,
     },
-    {
-        'kawre/leetcode.nvim',
-        lazy = not vim.g.leetcode_enabled,
-        config = require('setup.leetcode').setup,
-    }, -- solve leetcode problems on neovim
 }

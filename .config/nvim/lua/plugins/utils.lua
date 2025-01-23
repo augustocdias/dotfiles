@@ -11,7 +11,7 @@ return {
     }, -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
     {
         'bennypowers/nvim-regexplainer',
-        enabled = not vim.g.vscode,
+        enabled = false,
         cmd = { 'RegexplainerShowSplit', 'RegexplainerShowPopup', 'RegexplainerToggle', 'RegexplainerYank' },
     }, -- shows popup explaining regex under cursor
     {

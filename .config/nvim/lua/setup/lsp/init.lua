@@ -43,21 +43,6 @@ M.config_defaults = function()
         on_attach = M.on_attach,
         capabilities = M.capabilities(),
     })
-    -- C#
-    lspconfig.omnisharp.setup({
-        on_attach = M.on_attach,
-        capabilities = M.capabilities(),
-    })
-    -- C/C++
-    lspconfig.clangd.setup({
-        on_attach = M.on_attach,
-        capabilities = M.capabilities(),
-    })
-    -- python
-    lspconfig.pyright.setup({
-        on_attach = M.on_attach,
-        capabilities = M.capabilities(),
-    })
     -- yaml
     lspconfig.yamlls.setup({
         on_attach = M.on_attach,
@@ -109,30 +94,6 @@ M.config_defaults = function()
         capabilities = M.capabilities(),
         cmd = { 'sql-language-server', 'up', '--method', 'stdio' },
     })
-    -- swift
-    lspconfig.sourcekit.setup({
-        on_attach = M.on_attach,
-        capabilities = M.capabilities(),
-    })
-    -- java
-    require('java').setup()
-    lspconfig.jdtls.setup({
-        on_attach = M.on_attach,
-        capabilities = M.capabilities(),
-    })
-    -- kotlin
-    lspconfig.kotlin_language_server.setup({
-        on_attach = M.on_attach,
-        capabilities = M.capabilities(),
-        settings = {
-            hints = {
-                typeHints = true,
-                parameterHints = true,
-                chainedHints = true,
-            },
-        },
-        root_dir = lspconfig.util.root_pattern('settings.gradle', 'settings.gradle.kts', '*.kt'),
-    })
     -- harper (grammar checker)
     lspconfig.harper_ls.setup({
         on_attach = M.on_attach,
@@ -143,26 +104,21 @@ M.setup = function()
     local lspconfig = require('lspconfig')
     require('mason').setup()
     require('mason-lspconfig').setup({
-        ensure_installed = { 'rust_analyzer', 'jdtls' },
+        ensure_installed = { 'rust_analyzer' },
         automatic_installation = true,
     })
     require('mason-tool-installer').setup({
         ensure_installed = {
             'codelldb',
             'black',
-            'clangd',
-            'clang-format',
-            'ktlint',
             'markdownlint',
             'shfmt',
             'stylua',
             'codespell',
             'vale',
             'selene',
-            'pylint',
             'write-good',
             'yamllint',
-            'cmakelang',
         },
     })
     -- general LSP config

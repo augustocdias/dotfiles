@@ -5,13 +5,8 @@ return {
         none_ls.setup({
             sources = {
                 none_ls.builtins.formatting.black,
-                none_ls.builtins.formatting.clang_format,
-                none_ls.builtins.formatting.cmake_format,
                 none_ls.builtins.formatting.prettier,
                 none_ls.builtins.formatting.fish_indent,
-                none_ls.builtins.formatting.gofmt,
-                none_ls.builtins.formatting.goimports,
-                none_ls.builtins.formatting.ktlint,
                 none_ls.builtins.formatting.markdownlint,
                 none_ls.builtins.formatting.shfmt,
                 none_ls.builtins.formatting.stylua.with({
@@ -22,25 +17,9 @@ return {
                     filetypes = { 'markdown', 'tex', 'asciidoc', 'norg' },
                 }),
                 none_ls.builtins.diagnostics.hadolint,
-                none_ls.builtins.diagnostics.ktlint,
-                none_ls.builtins.diagnostics.ltrs.with({
-                    args = {
-                        'check',
-                        '-m',
-                        '-r',
-                        '--split-pattern',
-                        '\n',
-                        '--max-suggestions',
-                        '-1',
-                        '--text',
-                        '$TEXT',
-                    },
-                }),
                 none_ls.builtins.diagnostics.selene,
-                none_ls.builtins.diagnostics.cppcheck,
                 none_ls.builtins.diagnostics.write_good,
                 none_ls.builtins.diagnostics.markdownlint,
-                none_ls.builtins.diagnostics.pylint,
                 none_ls.builtins.diagnostics.yamllint,
                 none_ls.builtins.diagnostics.vale.with({
                     -- filetypes = {},
