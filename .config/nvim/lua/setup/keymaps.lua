@@ -782,6 +782,36 @@ local keymap_table = {
         enabled = not vim.g.vscode,
         opts = silent_opt,
     },
+    {
+        shortcut = '<leader>;',
+        cmd = function()
+            require('dropbar.api').pick()
+        end,
+        description = 'Pick symbols in winbar',
+        modes = { 'n' },
+        enabled = not vim.g.vscode,
+        opts = silent_opt,
+    },
+    {
+        shortcut = '[;',
+        cmd = function()
+            require('dropbar.api').goto_context_start()
+        end,
+        description = 'Go to start of current context',
+        modes = { 'n' },
+        enabled = not vim.g.vscode,
+        opts = silent_opt,
+    },
+    {
+        shortcut = '];',
+        cmd = function()
+            require('dropbar.api').select_next_context()
+        end,
+        description = 'Select next context',
+        modes = { 'n' },
+        enabled = not vim.g.vscode,
+        opts = silent_opt,
+    },
     -- which_key
     {
         shortcut = '<leader>a',
@@ -912,7 +942,7 @@ local keymap_table = {
         enabled = true,
         modes = { 'n' },
     },
-    { shortcut = '<leader>g', cmd = 'rhs', description = 'Git', opts = no_remap_opt, enabled = true, modes = { 'n' } },
+    { shortcut = '<leader>g', cmd = 'rhs', description = 'Git',  opts = no_remap_opt, enabled = true, modes = { 'n' } },
     {
         shortcut = '<leader>gb',
         cmd = '<cmd>lua require("telescope.builtin").git_branches()<CR>',
@@ -1643,7 +1673,8 @@ local keymap_table = {
     },
     {
         shortcut = '<leader>ty',
-        cmd = '<cmd>lua require("telescope.builtin").symbols({"emoji", "kaomoji", "gitmoji", "julia", "math", "nerd"})<CR>',
+        cmd =
+        '<cmd>lua require("telescope.builtin").symbols({"emoji", "kaomoji", "gitmoji", "julia", "math", "nerd"})<CR>',
         description = 'List Symbols',
         opts = no_remap_opt,
         enabled = true,
@@ -1792,7 +1823,7 @@ local keymap_table = {
         remap = false,
         modes = { 'v' },
     },
-    { shortcut = '<leader>l', group = 'LSP', remap = false, modes = { 'v' } },
+    { shortcut = '<leader>l', group = 'LSP',      remap = false, modes = { 'v' } },
     {
         shortcut = '<leader>la',
         cmd = '<cmd>lua vim.lsp.buf.range_code_action()<CR>',

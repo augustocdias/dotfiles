@@ -93,16 +93,8 @@ return {
         require('blink.cmp').setup({
             -- Disable for some filetypes
             enabled = function()
-                local success, node = pcall(vim.treesitter.get_node)
-                local is_comment = success
-                    and node
-                    and vim.tbl_contains(
-                        { 'comment', 'line_comment', 'block_comment', 'doc', 'doc_comment' },
-                        node:type()
-                    )
                 return vim.bo.buftype ~= 'prompt'
                     and vim.b.completion ~= false
-                    and not is_comment
                     and not vim.tbl_contains(disabled_filetypes, vim.bo.filetype)
             end,
             signature = { enabled = true },
@@ -122,7 +114,20 @@ return {
                 end,
             },
             sources = {
-                default = { 'lsp', 'snippets', 'path', 'buffer' },
+                default = function()
+                    local success, node = pcall(vim.treesitter.get_node)
+                    local is_comment = success
+                        and node
+                        and vim.tbl_contains(
+                            { 'comment', 'line_comment', 'block_comment', 'doc', 'doc_comment' },
+                            node:type()
+                        )
+                    if is_comment then
+                        return { 'lsp', 'buffer' }
+                    else
+                        return { 'lsp', 'snippets', 'path' }
+                    end
+                end,
             },
             completion = {
                 ghost_text = { enabled = true },
@@ -144,9 +149,9 @@ return {
                     draw = {
                         treesitter = { 'lsp' },
                         columns = {
-                            { 'kind_icon',  gap = 1 },
-                            { 'label',      gap = 3 },
-                            { 'item_idx',   gap = 1 },
+                            { 'kind_icon', gap = 1 },
+                            { 'label', gap = 3 },
+                            { 'item_idx', gap = 1 },
                             { 'source_name' },
                         },
                         components = {
@@ -174,7 +179,6 @@ return {
                 },
             },
             fuzzy = {
-                use_typo_resistance = false,
                 sorts = { 'score', 'sort_text', 'kind', 'label' },
             },
             keymap = {
