@@ -24,6 +24,7 @@ return {
                 'jsdoc',
                 'json',
                 'json5',
+                'kdl',
                 'kotlin',
                 'lua',
                 'luadoc',

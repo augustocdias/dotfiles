@@ -329,7 +329,7 @@ local keymap_table = {
         enabled = true,
     },
     {
-        shortcut = '<C-g>',
+        shortcut = '<M-g>',
         cmd = ':nohlsearch<CR>',
         opts = no_remap_silent_opt,
         modes = { 'n', 'v' },

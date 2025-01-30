@@ -37,12 +37,6 @@ return {
         config = true,
     }, -- makes better line moving
     {
-        'nvim-pack/nvim-spectre',
-        enabled = not vim.g.vscode,
-        cmd = 'Spectre',
-        config = true,
-    }, -- special search and replace buffer
-    {
         'echasnovski/mini.ai',
         version = false,
         config = true,

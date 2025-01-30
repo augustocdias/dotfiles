@@ -2,7 +2,7 @@
 return {
     {
         'mistricky/codesnap.nvim',
-        enabled = not vim.g.vscode,
+        enabled = false,
         build = 'make',
         event = 'VeryLazy',
         config = function()
@@ -24,7 +24,7 @@ return {
     {
         'jaimecgomezz/here.term',
         event = 'VeryLazy',
-        enabled = not vim.g.vscode,
+        enabled = false,
         config = require('setup.terminal').setup,
     }, -- better terminal
     {

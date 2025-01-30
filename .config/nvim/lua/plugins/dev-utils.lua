@@ -11,7 +11,7 @@ return {
     }, -- adds a bottom panel with lsp diagnostics, quickfixes, etc.
     {
         'nvim-neotest/neotest',
-        enabled = not vim.g.vscode,
+        enabled = false,
         dependencies = {
             'nvim-neotest/nvim-nio',
             'nvim-lua/plenary.nvim',
@@ -43,13 +43,13 @@ return {
     }, -- creates a tab focd on diff view and git history
     {
         'NeogitOrg/neogit',
-        enabled = not vim.g.vscode,
+        enabled = false,
         cmd = 'Neogit',
         config = require('setup.neogit').setup,
     },                           -- git UI
     {
         'mfussenegger/nvim-dap', -- debug adapter for debugging
-        enabled = not vim.g.vscode,
+        enabled = false,
         event = 'VeryLazy',
         dependencies = {
             'rcarriga/nvim-dap-ui',            -- ui for nvim-dap
