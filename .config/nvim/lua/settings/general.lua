@@ -3,7 +3,7 @@ vim.loader.enable()
 
 -- map leader to space
 vim.g.mapleader = ' '
-vim.g.maplocalleader = '='
+-- vim.g.maplocalleader = '='
 -- timeout for leader key
 vim.o.timeoutlen = 500
 -- default shell

@@ -49,4 +49,10 @@ return {
         dependencies = { 'nvim-telescope/telescope.nvim' },
         config = require('setup.session').setup,
     },
+    {
+        'swaits/zellij-nav.nvim',
+        lazy = true,
+        event = 'VeryLazy',
+        config = true,
+    },
 }

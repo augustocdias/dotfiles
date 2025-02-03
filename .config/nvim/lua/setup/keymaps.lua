@@ -386,7 +386,7 @@ local keymap_table = {
     },
     {
         shortcut = '<C-h>',
-        cmd = '<C-w><left>',
+        cmd = ':ZellijNavigateLeft<CR>',
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window to the left',
@@ -394,7 +394,7 @@ local keymap_table = {
     },
     {
         shortcut = '<C-l>',
-        cmd = '<C-w><right>',
+        cmd = ':ZellijNavigateRight<CR>',
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window to the right',
@@ -402,7 +402,7 @@ local keymap_table = {
     },
     {
         shortcut = '<C-k>',
-        cmd = '<C-w><up>',
+        cmd = ':ZellijNavigateUp<CR>',
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window up',
@@ -410,7 +410,7 @@ local keymap_table = {
     },
     {
         shortcut = '<C-j>',
-        cmd = '<C-w><down>',
+        cmd = ':ZellijNavigateDown<CR>',
         opts = no_remap_opt,
         modes = { 'n' },
         description = 'Focus on window down',
