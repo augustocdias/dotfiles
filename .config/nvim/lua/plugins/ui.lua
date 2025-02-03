@@ -1,7 +1,6 @@
 -- selene: allow(mixed_table)
 return {
-    { 'MunifTanjim/nui.nvim',   enabled = not vim.g.vscode },                                           -- base ui components for nvim
-    { 'stevearc/dressing.nvim', config = require('setup.dressing').setup, enabled = not vim.g.vscode }, -- overrides the default vim input to provide better visuals
+    { 'MunifTanjim/nui.nvim', enabled = not vim.g.vscode }, -- base ui components for nvim
     {
         'nvim-lualine/lualine.nvim',
         event = 'UIEnter',

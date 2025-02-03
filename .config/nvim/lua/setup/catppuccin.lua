@@ -5,11 +5,8 @@ return {
     setup = function(flavour)
         local colors = require('catppuccin.palettes').get_palette(flavour)
         local ucolors = require('catppuccin.utils.colors')
-        local telescope_prompt = ucolors.darken(colors.crust, 0.95, '#000000')
-        local telescope_results = ucolors.darken(colors.mantle, 0.95, '#000000')
-        local telescope_text = colors.text
-        local telescope_prompt_title = colors.sky
-        local telescope_preview_title = colors.teal
+        local float_prompt = ucolors.darken(colors.crust, 0.95, '#000000')
+        local float_prompt_title = colors.sky
         local noice_mini_bg = ucolors.lighten(colors.flamingo, 0.1, '#000000')
         local mini_modified_bg = ucolors.lighten(colors.flamingo, 0.3, '#000000')
         require('catppuccin').setup({
@@ -85,7 +82,6 @@ return {
                 overseer = true,
                 semantic_tokens = true,
                 snacks = true,
-                telescope = true,
                 treesitter = true,
                 treesitter_context = true,
                 ufo = true,
@@ -100,40 +96,18 @@ return {
                     MiniFilesNormal = { bg = noice_mini_bg },
                     MiniFilesModified = { bg = mini_modified_bg },
                     MiniFilesCursorLine = { bg = ucolors.lighten(colors.mantle, 0.1, '#000000') },
-                    MiniFilesTitle = { fg = colors.base, bg = telescope_prompt_title },
-                    MiniFilesTitleFocused = { fg = colors.base, bg = telescope_prompt_title },
-                    NoiceConfirmBorder = { fg = telescope_prompt, bg = telescope_prompt },
-                    NoiceFormatConfirm = { fg = telescope_prompt, bg = telescope_prompt_title },
-                    NoiceFormatConfirmDefault = { fg = telescope_prompt, bg = telescope_prompt_title },
-                    NoiceConfirm = { bg = telescope_prompt },
-                    InputDressing = { bg = noice_mini_bg },
-                    InputDressingBorder = { bg = noice_mini_bg, fg = noice_mini_bg },
+                    MiniFilesTitle = { fg = colors.base, bg = float_prompt_title },
+                    MiniFilesTitleFocused = { fg = colors.base, bg = float_prompt_title },
+                    NoiceConfirmBorder = { fg = float_prompt, bg = float_prompt },
+                    NoiceFormatConfirm = { fg = float_prompt, bg = float_prompt_title },
+                    NoiceFormatConfirmDefault = { fg = float_prompt, bg = float_prompt_title },
+                    NoiceConfirm = { bg = float_prompt },
+                    SnacksInputNormal = { bg = noice_mini_bg },
+                    SnacksInputBorder = { bg = noice_mini_bg, fg = noice_mini_bg },
                     DapSign = { fg = colors.flamingo },
                     DapLineStopped = { bg = noice_mini_bg },
                     -- dims the text so that the hits are more visible
                     LeapBackdrop = { fg = colors.flamingo },
-                    TelescopeBorder = { bg = telescope_results, fg = telescope_results },
-                    TelescopePromptBorder = { bg = telescope_prompt, fg = telescope_prompt },
-                    TelescopePromptCounter = { fg = telescope_text },
-                    TelescopePromptNormal = { fg = telescope_text, bg = telescope_prompt },
-                    TelescopePromptPrefix = { fg = telescope_prompt_title, bg = telescope_prompt },
-                    TelescopePromptTitle = { fg = telescope_prompt, bg = telescope_prompt_title },
-                    TelescopePreviewTitle = { fg = telescope_results, bg = telescope_preview_title },
-                    TelescopePreviewBorder = {
-                        bg = ucolors.darken(telescope_results, 0.95, '#000000'),
-                        fg = ucolors.darken(telescope_results, 0.95, '#000000'),
-                    },
-                    TelescopePreviewNormal = {
-                        bg = ucolors.darken(telescope_results, 0.95, '#000000'),
-                        fg = telescope_results,
-                    },
-                    TelescopeResultsTitle = { fg = telescope_results, bg = telescope_preview_title },
-                    TelescopeMatching = { fg = telescope_prompt_title },
-                    TelescopeNormal = { bg = telescope_results },
-                    TelescopeSelection = { bg = telescope_prompt },
-                    TelescopeSelectionCaret = { fg = telescope_text },
-                    TelescopeResultsNormal = { bg = telescope_results },
-                    TelescopeResultsBorder = { bg = telescope_results, fg = telescope_results },
                 },
             },
         })
