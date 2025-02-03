@@ -1,12 +1,14 @@
 [user]
     email = augusto.c.dias@gmail.com
     name = Augusto César Dias
-    signingkey = 4CBE3D4E4A19D53E
+    signingkey = 7D8396F74725A208D835CE3730E62A1E4F078650
 [core]
     editor = nvim --cmd 'let g:unception_block_while_host_edits=1'
     pager = bat
 [commit]
     gpgsign = true
+[tag]
+    gpgSign = true
 [pull]
     rebase = true
 [diff]
@@ -14,17 +16,17 @@
     guitool = nvimdiff
 [difftool]
     prompt = false
-[difftool "nvimdiff"]
-    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[difftool "diffview"]
+    cmd = nvim -n -c "DiffviewOpen" "$MERGE"
 [merge]
-    tool = nvimdiff
+    tool = diffview
     conflictstyle = diff3
 [mergetool]
     keepBackup = false
     trustExitCode = false
     prompt = true
-[mergetool "nvimdiff"]
-    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c 'wincmd w' -c 'wincmd J'"
+[mergetool "diffview"]
+    cmd = nvim -n -c "DiffviewOpen" "$MERGE"
 [credential "https://github.com"]
     helper = 
     helper = !/opt/homebrew/bin/gh auth git-credential
@@ -36,3 +38,9 @@
     required = true
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
+[alias]
+    br = branch
+    st = status
+    co = checkout
+[log]
+	showSignature = true

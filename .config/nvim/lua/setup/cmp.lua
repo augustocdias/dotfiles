@@ -209,8 +209,8 @@ return {
                 ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
                 ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
 
-                ['<C-Tab>'] = { 'snippet_forward', 'fallback' },
-                ['<C-S-Tab>'] = { 'snippet_backward', 'fallback' },
+                ['<M-Tab>'] = { 'snippet_forward', 'fallback' },
+                ['<M-S-Tab>'] = { 'snippet_backward', 'fallback' },
                 ['<Tab>'] = { 'select_next', 'fallback' },
                 ['<S-Tab>'] = { 'select_prev', 'fallback' },
                 ['<A-1>'] = {
