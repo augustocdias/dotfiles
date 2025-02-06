@@ -28,6 +28,6 @@ require('lazy').setup('plugins', {
         enabled = false,
     },
 })
-require('setup.autocommand').setup()
+require('utils.autocommands').setup()
 
 vim.cmd('colorscheme ' .. vim.g.theme)

@@ -60,7 +60,10 @@ return {
         {
             '<M-n>',
             function()
-                require('setup.neorg').open_workspace_notes()
+                local notes_location =
+                    vim.fn.expand('~/Library/Mobile Documents/com~apple~CloudDocs/Documents/notes/projects/')
+                local note_name = vim.fn.getcwd():match('([^\\/]*)$')
+                vim.cmd('e ' .. notes_location .. note_name .. '.norg')
             end,
             mode = { 'n' },
             description = 'Open Notes for Current Project',

@@ -221,7 +221,7 @@ return {
                 ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
                 ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
 
-                ['<M-Tab>'] = { 'snippet_forward', 'fallback' },
+                ['<M-Tab>'] = { 'snippet_forward', 'fallback' }, -- FIXME: find a better keymap for this
                 ['<M-S-Tab>'] = { 'snippet_backward', 'fallback' },
                 ['<Tab>'] = { 'select_next', 'fallback' },
                 ['<S-Tab>'] = { 'select_prev', 'fallback' },

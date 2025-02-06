@@ -1,6 +1,6 @@
 -- status line
 
-local command_status = require('utils.colorscheme').noice_status_color('mocha')
+local command_status = require('utils').command_status(require('utils').noice_status_color(vim.g.flavour))
 local apple = require('utils.apple')
 apple.music:listen()
 
