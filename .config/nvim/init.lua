@@ -11,10 +11,14 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.g.theme = 'catppuccin'
+vim.g.flavour = 'mocha'
+
 require('settings.general')
 require('settings.gui')
 require('settings.neovide')
 require('settings.unception')
+require('utils.keymaps').map_keys()
 require('lazy').setup('plugins', {
     checker = {
         enabled = true,
@@ -25,3 +29,5 @@ require('lazy').setup('plugins', {
     },
 })
 require('setup.autocommand').setup()
+
+vim.cmd('colorscheme ' .. vim.g.theme)

@@ -1,35 +1,17 @@
--- selene: allow(mixed_table)
 return {
+    -- common utilities
     {
-        'mistricky/codesnap.nvim',
-        enabled = false,
-        build = 'make',
-        event = 'VeryLazy',
-        config = function()
-            require('setup.codesnap').setup()
-        end,
-    }, -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
-    {
-        'bennypowers/nvim-regexplainer',
-        enabled = false,
-        cmd = { 'RegexplainerShowSplit', 'RegexplainerShowPopup', 'RegexplainerToggle', 'RegexplainerYank' },
-    }, -- shows popup explaining regex under cursor
-    {
-        'echasnovski/mini.files',
-        version = false,
-        event = 'VeryLazy',
+        'ciaranm/securemodelines',
         enabled = not vim.g.vscode,
-        config = require('setup.mini.files').setup,
-    }, -- file browser. eventually should replace neo-tree
+    }, -- https://vim.fandom.com/wiki/Modeline_magic
     {
-        'rmagatti/auto-session',
+        'farmergreg/vim-lastplace',
         enabled = not vim.g.vscode,
-        config = require('setup.session').setup,
-    }, -- session management
+    }, -- remembers cursor position with nice features in comparison to just an autocmd
     {
-        'swaits/zellij-nav.nvim',
-        lazy = true,
-        event = 'VeryLazy',
+        'kyazdani42/nvim-web-devicons',
+        enabled = not vim.g.vscode,
         config = true,
-    }, -- integrates focus on windows with zellij panes
+    }, -- icon support for several plugins
+    { 'samjwill/nvim-unception', enabled = not vim.g.vscode }, -- prevents an instance of neovim to be openend within neovim
 }
