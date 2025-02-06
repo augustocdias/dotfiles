@@ -1,3 +1,5 @@
+-- selene: allow(mixed_table)
+
 return {
     setup = function()
         require('snacks').setup({
@@ -20,6 +22,9 @@ return {
             picker = {
                 layout = {
                     preset = 'ivy',
+                    layout = {
+                        backdrop = 99,
+                    },
                 },
                 ui_select = true, -- replace `vim.ui.select` with the snacks picker
                 win = {

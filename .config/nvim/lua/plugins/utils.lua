@@ -22,12 +22,6 @@ return {
         config = require('setup.mini.files').setup,
     }, -- file browser. eventually should replace neo-tree
     {
-        'jaimecgomezz/here.term',
-        event = 'VeryLazy',
-        enabled = false,
-        config = require('setup.terminal').setup,
-    }, -- better terminal
-    {
         'rmagatti/auto-session',
         enabled = not vim.g.vscode,
         config = require('setup.session').setup,

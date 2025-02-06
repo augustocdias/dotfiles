@@ -1,7 +1,7 @@
 local wezterm = require('wezterm')
 return {
     font = wezterm.font_with_fallback({
-        { family = 'MonaspiceNe Nerd Font', harfbuzz_features = { 'zero', 'onum' }, weight = 450 },
+        { family = 'MonaspiceNe Nerd Font', harfbuzz_features = { 'zero', 'onum' }, weight = 500 },
         { family = 'codicon' },
     }),
     font_rules = {

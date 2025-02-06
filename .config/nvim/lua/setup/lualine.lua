@@ -1,3 +1,5 @@
+-- selene: allow(mixed_table)
+
 return {
     setup = function(command_status)
         local lualine = require('lualine')

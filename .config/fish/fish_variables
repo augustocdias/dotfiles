@@ -3,11 +3,12 @@
 SETUVAR --export ANDROID_NDK_HOME:/opt/homebrew/share/android\x2dcommandlinetools/ndk/22\x2e1\x2e7171670
 SETUVAR --export ANDROID_SDK_ROOT:/opt/homebrew/share/android\x2dcommandlinetools/platforms/android\x2d31
 SETUVAR --export AR:/opt/homebrew/opt/llvm/bin/llvm\x2dar
-SETUVAR --export BAT_THEME:Catppuccin\x20Latte
+SETUVAR --export BAT_THEME:Catppuccin\x20Mocha
 SETUVAR --export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER:x86_64\x2dunknown\x2dlinux\x2dgnu\x2dgcc
 SETUVAR --export CC:/opt/homebrew/opt/llvm/bin/clang
 SETUVAR --export CC_x86_64_unknown_linux_gnu:x86_64\x2dunknown\x2dlinux\x2dgnu\x2dgcc
 SETUVAR --export CRATES_TOKEN:fcY4VpkdXwvTpfzL1HeKHAaoAEclR3AX
+SETUVAR --export EDITOR:nvim
 SETUVAR --export ENHANCD_ARG_DOUBLE_DOT:\x2e\x2e
 SETUVAR --export ENHANCD_ARG_HOME:
 SETUVAR --export ENHANCD_ARG_HYPHEN:\x2d
@@ -35,7 +36,7 @@ SETUVAR --export ENHANCD_USE_FUZZY_MATCH:1
 SETUVAR --export FZF_ALT_C_COMMAND:fd\x20\x2d\x2dtype\x20d\x20
 SETUVAR --export FZF_CTRL_T_COMMAND:fd\x20
 SETUVAR --export FZF_DEFAULT_COMMAND:rg\x20\x2d\x2dfiles\x20\x2d\x2dno\x2dignore\x2dexclude\x20\x2d\x2dignore\x2dfile\x20\x7e/\x2econfig/nvim/\x2efzf\x2dignore
-SETUVAR --export FZF_DEFAULT_OPTS:\x2d\x2dlayout\x3dreverse\x20\x2d\x2dinline\x2dinfo\x20\x2d\x2dmulti\x20\x2d\x2dpreview\x3d\x22bat\x20\x2d\x2dstyle\x3dnumbers\x20\x2d\x2dcolor\x3dalways\x20\x7b\x7d\x202\x3e/dev/null\x20\x7c\x7c\x20echo\x20\x27Not\x20a\x20file\x27\x20\x7c\x20head\x20\x2d300\x22\x20\x2d\x2dpreview\x2dwindow\x3d\x22right\x3awrap\x22\x20\x2d\x2dbind\x3d\x27f3\x3aexecute\x28bat\x20\x2d\x2dpaging\x20always\x20\x2d\x2dpager\x20\x22less\x20\x2dR\x22\x20\x7b\x7d\x29\x2cf2\x3atoggle\x2dpreview\x2cctrl\x2dd\x3ahalf\x2dpage\x2ddown\x2cctrl\x2du\x3ahalf\x2dpage\x2dup\x2cctrl\x2da\x3aselect\x2dall\x2baccept\x2cctrl\x2dy\x3aexecute\x2dsilent\x28echo\x7b\x2b\x7d\x20\x7c\x20pbcopy\x29\x27\x20\x2d\x2dcolor\x3dbg\x2b\x3a\x23ccd0da\x2cbg\x3a\x23eff1f5\x2cspinner\x3a\x23dc8a78\x2chl\x3a\x23d20f39\x20\x2d\x2dcolor\x3dfg\x3a\x234c4f69\x2cheader\x3a\x23d20f39\x2cinfo\x3a\x238839ef\x2cpointer\x3a\x23dc8a78\x20\x2d\x2dcolor\x3dmarker\x3a\x237287fd\x2cfg\x2b\x3a\x234c4f69\x2cprompt\x3a\x238839ef\x2chl\x2b\x3a\x23d20f39\x20\x2d\x2dcolor\x3dselected\x2dbg\x3a\x23bcc0cc
+SETUVAR --export FZF_DEFAULT_OPTS:\x2d\x2dlayout\x3dreverse\x20\x2d\x2dinline\x2dinfo\x20\x2d\x2dmulti\x20\x2d\x2dpreview\x3d\x22bat\x20\x2d\x2dstyle\x3dnumbers\x20\x2d\x2dcolor\x3dalways\x20\x7b\x7d\x202\x3e/dev/null\x20\x7c\x7c\x20echo\x20\x27Not\x20a\x20file\x27\x20\x7c\x20head\x20\x2d300\x22\x20\x2d\x2dpreview\x2dwindow\x3d\x22right\x3awrap\x22\x20\x2d\x2dbind\x3d\x27f3\x3aexecute\x28bat\x20\x2d\x2dpaging\x20always\x20\x2d\x2dpager\x20\x22less\x20\x2dR\x22\x20\x7b\x7d\x29\x2cf2\x3atoggle\x2dpreview\x2cctrl\x2dd\x3ahalf\x2dpage\x2ddown\x2cctrl\x2du\x3ahalf\x2dpage\x2dup\x2cctrl\x2da\x3aselect\x2dall\x2baccept\x2cctrl\x2dy\x3aexecute\x2dsilent\x28echo\x7b\x2b\x7d\x20\x7c\x20pbcopy\x29\x27\x20\x2d\x2dcolor\x3dbg\x2b\x3a\x23313244\x2cbg\x3a\x231e1e2e\x2cspinner\x3a\x23f5e0dc\x2chl\x3a\x23f38ba8\x20\x2d\x2dcolor\x3dfg\x3a\x23cdd6f4\x2cheader\x3a\x23f38ba8\x2cinfo\x3a\x23cba6f7\x2cpointer\x3a\x23f5e0dc\x20\x2d\x2dcolor\x3dmarker\x3a\x23b4befe\x2cfg\x2b\x3a\x23cdd6f4\x2cprompt\x3a\x23cba6f7\x2chl\x2b\x3a\x23f38ba8\x20\x2d\x2dcolor\x3dselected\x2dbg\x3a\x2345475a
 SETUVAR FZF_DISABLE_KEYBINDINGS:0
 SETUVAR FZF_LEGACY_KEYBINDINGS:1
 SETUVAR FZF_PREVIEW_DIR_CMD:ls
@@ -108,4 +109,4 @@ SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/opt/homebrew/opt/llvm/bin\x1e/Users/augusto/Library/Python/3\x2e9/bin\x1e/Users/augusto/Library/Python/2\x2e7/bin/\x1e/usr/local/bin
+SETUVAR fish_user_paths:/Users/augusto/\x2elocal/bin\x1e/Users/augusto/\x2elocal/share/bob/nvim\x2dbin\x1e/opt/homebrew/opt/llvm/bin\x1e/Users/augusto/Library/Python/3\x2e9/bin\x1e/Users/augusto/Library/Python/2\x2e7/bin/\x1e/usr/local/bin

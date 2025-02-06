@@ -88,7 +88,7 @@ return {
             end
         end)
 
-        local disabled_filetypes = { 'minifiles', 'DressingInput' }
+        local disabled_filetypes = { 'minifiles' }
 
         require('blink.cmp').setup({
             -- Disable for some filetypes
@@ -149,9 +149,9 @@ return {
                     draw = {
                         treesitter = { 'lsp' },
                         columns = {
-                            { 'kind_icon', gap = 1 },
-                            { 'label', gap = 3 },
-                            { 'item_idx', gap = 1 },
+                            { 'kind_icon',  gap = 1 },
+                            { 'label',      gap = 3 },
+                            { 'item_idx',   gap = 1 },
                             { 'source_name' },
                         },
                         components = {

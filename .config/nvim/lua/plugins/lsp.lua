@@ -15,6 +15,7 @@ return {
     {
         'neovim/nvim-lspconfig',
         event = 'VeryLazy',
+        priority = 100,
         enabled = not vim.g.vscode,
         config = function()
             local lspconfig = require('setup.lsp')

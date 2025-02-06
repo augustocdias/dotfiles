@@ -1,0 +1,9 @@
+shell-integration = fish
+theme = catppuccin-mocha
+font-size = 12
+font-family = MonaspiceNe NFM
+font-family-italic = MonaspiceRn NFM Italic
+font-family-bold-italic = MonaspiceRn NFM Bold Italic
+font-thicken = true
+font-thicken-strength = 100
+

@@ -25,17 +25,21 @@ return {
     {
         'catppuccin/nvim',
         enabled = not vim.g.vscode,
-        priority = 99,
+        lazy = false,
+        priority = 1000,
         config = function()
             require('setup.catppuccin').setup('mocha')
         end,
     }, -- theme
     {
+        'folke/tokyonight.nvim',
+        lazy = false,
+        priority = 1000,
+        enabled = false, -- TODO: configure the color customizations like catppucin
+    },                   --theme
+    {
         'nanozuki/tabby.nvim',
         enabled = not vim.g.vscode,
-        -- requires = { -- tabline
-        --     'tiagovla/scope.nvim', -- creates scopes for splitting buffers per tabs
-        -- },
         config = require('setup.tabline').setup,
     },
     {
