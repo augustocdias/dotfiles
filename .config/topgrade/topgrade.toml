@@ -3,10 +3,10 @@
 assume_yes = true
 
 # Disable specific steps - same options as the command line flag
-disable = ["system", "tmux", "npm", "pnpm", "vim", "yarn", "containers"]
+disable = ["system", "tmux", "node", "pnpm", "vim", "yarn", "containers", "uv", "pyenv"]
 
 # Ignore failures for these steps
-ignore_failures = ["git"]
+ignore_failures = ["git_repos"]
 
 [git]
 # Additional git repositories to pull
