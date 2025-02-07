@@ -6,7 +6,3 @@ normal = [
 italic = { family = "MonaspiceRn Nerd Font", style = "italic" }
 size = 12
 edging = "subpixelantialias"
-
-[font.features]
-"MonaspiceRn Nerd Font" = ["-liga"]
-"MonaspiceNe Nerd Font" = ["-liga"]
