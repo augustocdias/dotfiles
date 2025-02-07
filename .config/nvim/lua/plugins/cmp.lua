@@ -7,9 +7,9 @@ return {
     dependencies = {
         'L3MON4D3/LuaSnip',
         'rafamadriz/friendly-snippets', -- snippets for many languages
-        'chrisgrieser/nvim-scissors',   -- snippet editor
-        'b0o/schemastore.nvim',         -- adds schemas for json lsp
-        'xzbdmw/colorful-menu.nvim',    -- adds highlights to the auto-complete options
+        'chrisgrieser/nvim-scissors', -- snippet editor
+        'b0o/schemastore.nvim', -- adds schemas for json lsp
+        'xzbdmw/colorful-menu.nvim', -- adds highlights to the auto-complete options
     },
     config = function()
         require('colorful-menu').setup()
@@ -154,6 +154,9 @@ return {
                 documentation = {
                     auto_show = true,
                 },
+                trigger = {
+                    show_in_snippet = false,
+                },
                 menu = {
                     auto_show = function(ctx)
                         return ctx.mode ~= 'cmdline' or not vim.tbl_contains({ '/', '?' }, vim.fn.getcmdtype())
@@ -161,9 +164,9 @@ return {
                     draw = {
                         treesitter = { 'lsp' },
                         columns = {
-                            { 'kind_icon',  gap = 1 },
-                            { 'label',      gap = 3 },
-                            { 'item_idx',   gap = 1 },
+                            { 'kind_icon', gap = 1 },
+                            { 'label', gap = 3 },
+                            { 'item_idx', gap = 1 },
                             { 'source_name' },
                         },
                         components = {
@@ -221,10 +224,8 @@ return {
                 ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
                 ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
 
-                ['<M-Tab>'] = { 'snippet_forward', 'fallback' }, -- FIXME: find a better keymap for this
-                ['<M-S-Tab>'] = { 'snippet_backward', 'fallback' },
-                ['<Tab>'] = { 'select_next', 'fallback' },
-                ['<S-Tab>'] = { 'select_prev', 'fallback' },
+                ['<Tab>'] = { 'snippet_forward', 'select_next', 'fallback' },
+                ['<S-Tab>'] = { 'snippet_backward', 'select_prev', 'fallback' },
                 ['<A-1>'] = {
                     function(cmp)
                         cmp.accept({ index = 1 })

@@ -1,6 +1,5 @@
 -- handling folds based on LSP and treesitter
 
--- FIXME: diagnostics and foldings are overlapping
 local handler = function(virtText, lnum, endLnum, width, truncate)
     local newVirtText = {}
     local totalLines = vim.api.nvim_buf_line_count(0)
@@ -56,16 +55,34 @@ return {
             relculright = true,
             segments = {
                 -- fold -> sign -> anything else -> line number + separator or gitsigns
-                { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
                 {
-                    sign = { namespace = { 'diagnostic' }, maxwidth = 1, colwidth = 1, auto = false, foldclosed = true },
+                    text = {
+                        function(args)
+                            return builtin.foldfunc(args) .. ' '
+                        end,
+                    },
+                    condition = {
+                        function(args)
+                            return not args.empty
+                        end,
+                    },
+                    click = 'v:lua.ScFa',
+                },
+                {
+                    sign = {
+                        namespace = { 'diagnostic' },
+                        maxwidth = 1,
+                        colwidth = 2,
+                        auto = false,
+                        foldclosed = true,
+                        fillchar = '',
+                    },
                     click = 'v:lua.ScSa',
                 },
                 {
                     sign = {
                         name = { '.*' },
                         text = { '.*' },
-                        maxwidth = 2,
                         colwidth = 2,
                         auto = true,
                         foldclosed = true,
