@@ -91,6 +91,7 @@ return {
             },
             highlight_overrides = {
                 all = {
+                    FloatBorder = { fg = 'NONE' },
                     NoiceCmdlinePopup = { bg = noice_mini_bg },
                     NoiceMini = { bg = colors.mantle },
                     MiniFilesBorder = { bg = noice_mini_bg, fg = noice_mini_bg },

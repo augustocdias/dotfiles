@@ -6,7 +6,7 @@ return {
     config = function()
         require('tokyonight').setup({
             style = vim.g.flavours.tokyonight,
-            transparent = true,
+            -- transparent = true,
             styles = {
                 comments = { italic = true },
                 conditionals = { italic = true },
@@ -20,6 +20,7 @@ return {
                 colors.c_mini_modified_bg = ucolors.lighten(colors.blue7, 0.3)
             end,
             on_highlights = function(hl, colors)
+                hl.FloatBorder = { bg = hl.FloatBorder.bg, fg = hl.FloatBorder.bg }
                 hl.NoiceCmdlinePopup = { bg = colors.c_noice_mini_bg }
                 hl.NoiceMini = { bg = colors.c_noice_mini_bg }
                 hl.MiniFilesBorder = { bg = colors.c_noice_mini_bg, fg = colors.c_noice_mini_bg }

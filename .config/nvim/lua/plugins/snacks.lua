@@ -1,6 +1,5 @@
 -- various utilities
 
--- FIXME: remove borders from vim.ui.select
 return {
     'folke/snacks.nvim',
     priority = 900,
@@ -26,7 +25,7 @@ return {
             layout = {
                 preset = 'ivy',
                 layout = {
-                    backdrop = 99,
+                    backdrop = 70,
                 },
             },
             ui_select = true, -- replace `vim.ui.select` with the snacks picker
