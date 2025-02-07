@@ -1,10 +1,10 @@
 return {
     'catppuccin/nvim',
-    enabled = not vim.g.vscode,
+    cond = not vim.g.vscode,
     lazy = false,
     priority = 1000,
-    config = function() 
-        local flavour = vim.g.flavour
+    config = function()
+        local flavour = vim.g.flavours.catppuccin
         local colors = require('catppuccin.palettes').get_palette(flavour)
         local ucolors = require('catppuccin.utils.colors')
         local float_prompt = ucolors.darken(colors.crust, 0.95, '#000000')
@@ -112,5 +112,6 @@ return {
                     LeapBackdrop = { fg = colors.flamingo },
                 },
             },
-        }) end,
+        })
+    end,
 }

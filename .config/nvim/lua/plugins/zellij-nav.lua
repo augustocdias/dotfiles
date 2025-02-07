@@ -4,6 +4,7 @@ return {
     lazy = true,
     event = 'VeryLazy',
     config = true,
+    cond = os.getenv('ZELLIJ') ~= nil,
     keys = {
         {
             '<C-h>',

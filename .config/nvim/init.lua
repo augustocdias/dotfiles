@@ -11,8 +11,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.theme = 'catppuccin'
-vim.g.flavour = 'mocha'
+vim.g.theme = 'tokyonight'
+vim.g.flavours = {
+    catppuccin = 'mocha',
+    tokyonight = 'moon',
+}
+vim.g.flavour = vim.g.flavours.tokyonight
 
 require('settings.general')
 require('settings.gui')
