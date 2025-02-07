@@ -17,7 +17,7 @@ return {
         })
 
         -- show icons in the column
-        local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
+        local signs = { Error = '', Warn = '', Hint = '', Info = '' }
 
         for type, icon in pairs(signs) do
             local hl = 'DiagnosticSign' .. type
@@ -25,7 +25,7 @@ return {
         end
         vim.fn.sign_define(
             'LightBulbSign',
-            { text = '󰛨 ', texthl = 'LspDiagnosticsDefaultInformation', numhl = 'LspDiagnosticsDefaultInformation' }
+            { text = '󰛩', texthl = 'LspDiagnosticsDefaultInformation', numhl = 'LspDiagnosticsDefaultInformation' }
         )
 
         vim.diagnostic.config({

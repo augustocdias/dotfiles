@@ -65,6 +65,7 @@ vim.o.concealcursor = 'n'
 vim.o.cursorline = true
 -- Always draw sign column. Prevent buffer moving when adding/deleting sign.
 vim.o.signcolumn = 'yes'
+vim.o.numberwidth = 1
 
 -- folding
 vim.o.foldcolumn = '1'

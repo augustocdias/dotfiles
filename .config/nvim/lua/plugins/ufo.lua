@@ -48,6 +48,9 @@ return {
                 },
             },
             fold_virt_text_handler = handler,
+            provider_selector = function()
+                return { 'treesitter', 'indent' }
+            end,
         })
         local builtin = require('statuscol.builtin')
         require('statuscol').setup({
@@ -55,11 +58,21 @@ return {
             relculright = true,
             segments = {
                 -- fold -> sign -> anything else -> line number + separator or gitsigns
-                { text = { builtin.foldfunc } },
+                {
+                    text = {
+                        function(args)
+                            return builtin.foldfunc(args) .. ' '
+                        end,
+                    },
+                    condition = {
+                        function(args)
+                            return not args.empty
+                        end,
+                    },
+                },
                 {
                     sign = {
                         namespace = { 'diagnostic' },
-                        maxwidth = 1,
                         colwidth = 2,
                         auto = false,
                         foldclosed = true,

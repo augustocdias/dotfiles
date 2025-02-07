@@ -7,7 +7,13 @@ return {
     opts = {
         signs = true,
         keywords = {
-            TODO = { alt = { 'todo', 'unimplemented' } },
+            TODO = { icon = '', alt = { 'todo', 'unimplemented' } },
+            FIX = { icon = '' },
+            HACK = { icon = '' },
+            WARN = { icon = '' },
+            PERF = { icon = '󰾆' },
+            NOTE = { icon = '' },
+            TEST = { icon = '⏲' },
         },
         highlight = {
             comments_only = false,
