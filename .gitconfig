@@ -4,7 +4,7 @@
     signingkey = 7D8396F74725A208D835CE3730E62A1E4F078650
 [core]
     editor = nvim --cmd 'let g:unception_block_while_host_edits=1'
-    pager = diff-so-fancy | bat --tabs=4 -RF
+    pager = diff-so-fancy | bat
 [commit]
     gpgsign = true
 [tag]

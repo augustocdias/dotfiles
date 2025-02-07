@@ -55,19 +55,7 @@ return {
             relculright = true,
             segments = {
                 -- fold -> sign -> anything else -> line number + separator or gitsigns
-                {
-                    text = {
-                        function(args)
-                            return builtin.foldfunc(args) .. ' '
-                        end,
-                    },
-                    condition = {
-                        function(args)
-                            return not args.empty
-                        end,
-                    },
-                    click = 'v:lua.ScFa',
-                },
+                { text = { builtin.foldfunc } },
                 {
                     sign = {
                         namespace = { 'diagnostic' },
@@ -77,19 +65,17 @@ return {
                         foldclosed = true,
                         fillchar = '',
                     },
-                    click = 'v:lua.ScSa',
                 },
                 {
                     sign = {
                         name = { '.*' },
                         text = { '.*' },
                         colwidth = 2,
-                        auto = true,
+                        auto = false,
                         foldclosed = true,
                     },
-                    click = 'v:lua.ScSa',
                 },
-                { text = { builtin.lnumfunc }, click = 'v:lua.ScLa' },
+                { text = { builtin.lnumfunc } },
                 {
                     sign = {
                         namespace = { 'gitsigns' },
@@ -99,7 +85,6 @@ return {
                         wrap = true,
                         foldclosed = true,
                     },
-                    click = 'v:lua.ScSa',
                 },
             },
         })
