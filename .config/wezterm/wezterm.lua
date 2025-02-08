@@ -1,7 +1,49 @@
+local theme = 'Tokyo Night Moon'
 local wezterm = require('wezterm')
-return {
+local tabline = wezterm.plugin.require('https://github.com/michaelbrusegard/tabline.wez')
+
+tabline.setup({
+    options = {
+        icons_enabled = true,
+        theme = theme,
+        tabs_enabled = true,
+        theme_overrides = {},
+        section_separators = {
+            left = '',
+            right = '',
+        },
+        component_separators = {
+            left = '',
+            right = '',
+        },
+        tab_separators = {
+            left = '',
+            right = '',
+        },
+    },
+    sections = {
+        tabline_a = {--[[  'mode'  ]]
+        },
+        tabline_b = {},
+        tabline_c = {},
+        tab_active = {
+            'index',
+            { 'parent', padding = 0 },
+            '/',
+            { 'cwd', padding = { left = 0, right = 1 } },
+            { 'zoomed', padding = 0 },
+        },
+        tab_inactive = { 'index', { 'process', padding = { left = 0, right = 1 } } },
+        tabline_x = { 'ram', 'cpu' },
+        tabline_y = { 'datetime' },
+        tabline_z = { 'domain' },
+    },
+    extensions = {},
+})
+
+local config = {
     font = wezterm.font_with_fallback({
-        { family = 'MonaspiceNe Nerd Font', harfbuzz_features = { 'zero', 'onum' }, weight = 500 },
+        { family = 'MonaspiceNe Nerd Font', harfbuzz_features = { 'zero', 'onum', 'liga' }, weight = 500 },
         { family = 'codicon' },
     }),
     font_rules = {
@@ -16,12 +58,10 @@ return {
         },
     },
     use_cap_height_to_scale_fallback_fonts = true,
-    use_fancy_tab_bar = true,
-    hide_tab_bar_if_only_one_tab = true,
     font_size = 12.0,
     freetype_load_target = 'Light',
     freetype_render_target = 'HorizontalLcd',
-    color_scheme = 'Catppuccin Mocha',
+    color_scheme = theme,
     window_padding = {
         left = '0cell',
         right = '0cell',
@@ -29,3 +69,6 @@ return {
         bottom = '0cell',
     },
 }
+tabline.apply_to_config(config)
+
+return config

@@ -74,7 +74,7 @@ return {
                     sign = {
                         namespace = { 'diagnostic' },
                         colwidth = 2,
-                        auto = false,
+                        auto = true,
                         foldclosed = true,
                         fillchar = '',
                     },
@@ -84,7 +84,7 @@ return {
                         name = { '.*' },
                         text = { '.*' },
                         colwidth = 2,
-                        auto = false,
+                        auto = true,
                         foldclosed = true,
                     },
                 },
