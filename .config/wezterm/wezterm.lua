@@ -2,6 +2,20 @@ local theme = 'Tokyo Night Moon'
 local wezterm = require('wezterm')
 local tabline = wezterm.plugin.require('https://github.com/michaelbrusegard/tabline.wez')
 
+local font_features = {
+    'calt',
+    'ss01',
+    'ss02',
+    'ss03',
+    'ss04',
+    'ss05',
+    'ss06',
+    'ss07',
+    'ss08',
+    'ss09',
+    'liga',
+}
+
 tabline.setup({
     options = {
         icons_enabled = true,
@@ -45,19 +59,7 @@ local config = {
     font = wezterm.font_with_fallback({
         {
             family = 'MonaspiceNe Nerd Font',
-            harfbuzz_features = {
-                'calt',
-                'ss01',
-                'ss02',
-                'ss03',
-                'ss04',
-                'ss05',
-                'ss06',
-                'ss07',
-                'ss08',
-                'ss09',
-                'liga',
-            },
+            harfbuzz_features = font_features,
             weight = 500,
         },
         { family = 'codicon' },
@@ -65,12 +67,21 @@ local config = {
     font_rules = {
         {
             italic = true,
-            font = wezterm.font('MonaspiceRn Nerd Font', { italic = true }),
+            font = wezterm.font({
+                family = 'MonaspiceRn Nerd Font',
+                italic = true,
+                harfbuzz_features = font_features,
+            }),
         },
         {
             italic = true,
             intensity = 'Bold',
-            font = wezterm.font('MonaspiceRn Nerd Font', { italic = true, bold = true }),
+            font = wezterm.font({
+                family = 'MonaspiceRn Nerd Font',
+                italic = true,
+                bold = true,
+                harfbuzz_features = font_features,
+            }),
         },
     },
     use_cap_height_to_scale_fallback_fonts = true,
