@@ -1,6 +1,16 @@
-local theme = 'Tokyo Night Moon'
 local wezterm = require('wezterm')
 local tabline = wezterm.plugin.require('https://github.com/michaelbrusegard/tabline.wez')
+
+local function weather()
+    local success, stdout = wezterm.run_child_process({ 'curl', '-m', '1', 'https://wttr.in/?format=3' })
+    if success then
+        return ' ' .. stdout
+    else
+        return ''
+    end
+end
+
+local theme = 'Tokyo Night Moon'
 
 local font_features = {
     'calt',
@@ -36,12 +46,13 @@ tabline.setup({
         },
     },
     sections = {
-        tabline_a = {--[[  'mode'  ]]
-        },
+        tabline_a = { 'mode' },
         tabline_b = {},
         tabline_c = {},
         tab_active = {
             'index',
+            { 'process', padding = { left = 0, right = 1 } },
+            '- ',
             { 'parent', padding = 0 },
             '/',
             { 'cwd', padding = { left = 0, right = 1 } },
@@ -50,7 +61,7 @@ tabline.setup({
         tab_inactive = { 'index', { 'process', padding = { left = 0, right = 1 } } },
         tabline_x = { 'ram', 'cpu' },
         tabline_y = { 'datetime' },
-        tabline_z = { 'domain' },
+        tabline_z = { 'domain', weather },
     },
     extensions = {},
 })
@@ -70,16 +81,6 @@ local config = {
             font = wezterm.font({
                 family = 'MonaspiceRn Nerd Font',
                 italic = true,
-                harfbuzz_features = font_features,
-            }),
-        },
-        {
-            italic = true,
-            intensity = 'Bold',
-            font = wezterm.font({
-                family = 'MonaspiceRn Nerd Font',
-                italic = true,
-                bold = true,
                 harfbuzz_features = font_features,
             }),
         },
