@@ -43,7 +43,23 @@ tabline.setup({
 
 local config = {
     font = wezterm.font_with_fallback({
-        { family = 'MonaspiceNe Nerd Font', harfbuzz_features = { 'zero', 'onum', 'liga' }, weight = 500 },
+        {
+            family = 'MonaspiceNe Nerd Font',
+            harfbuzz_features = {
+                'calt',
+                'ss01',
+                'ss02',
+                'ss03',
+                'ss04',
+                'ss05',
+                'ss06',
+                'ss07',
+                'ss08',
+                'ss09',
+                'liga',
+            },
+            weight = 500,
+        },
         { family = 'codicon' },
     }),
     font_rules = {
