@@ -13,7 +13,7 @@ return {
     config = function()
         require('mason').setup()
         require('mason-lspconfig').setup({
-            ensure_installed = { 'rust_analyzer' },
+            ensure_installed = { 'rust_analyzer', 'lua_ls', 'tsserver' },
             automatic_installation = true,
         })
         require('mason-tool-installer').setup({

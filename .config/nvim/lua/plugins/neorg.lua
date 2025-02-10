@@ -66,7 +66,7 @@ return {
                 vim.cmd('e ' .. notes_location .. note_name .. '.norg')
             end,
             mode = { 'n' },
-            description = 'Open Notes for Current Project',
+            desc = 'Open Notes for Current Project',
             noremap = true,
         },
     },
