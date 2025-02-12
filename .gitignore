@@ -1,2 +1,4 @@
 .config/nvim/plugin/packer_compiled.lua
 .DS_Store
+.config/pgcli/*
+!.config/pgcli/config

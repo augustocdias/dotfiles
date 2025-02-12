@@ -13,7 +13,18 @@ return {
     config = function()
         require('mason').setup()
         require('mason-lspconfig').setup({
-            ensure_installed = { 'rust_analyzer', 'lua_ls' },
+            ensure_installed = {
+                'rust_analyzer',
+                'lua_ls',
+                'yamlls',
+                'jsonls',
+                'sqlls',
+                'taplo',
+                'dockerls',
+                'docker_compose_language_service',
+                'bashls',
+                'ts_ls',
+            },
             automatic_installation = true,
         })
         require('mason-tool-installer').setup({
@@ -29,6 +40,7 @@ return {
                 'selene',
                 'write-good',
                 'yamllint',
+                'sqlfluff',
             },
         })
     end,

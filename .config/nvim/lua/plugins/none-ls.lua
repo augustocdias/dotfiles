@@ -20,6 +20,7 @@ return {
                 none_ls.builtins.formatting.fish_indent,
                 none_ls.builtins.formatting.markdownlint,
                 none_ls.builtins.formatting.shfmt,
+                none_ls.builtins.formatting.sqlfluff,
                 none_ls.builtins.formatting.stylua.with({
                     extra_args = { '--config-path', vim.fn.expand('~/.config/stylua.toml') },
                 }),

@@ -1,15 +1,6 @@
 local wezterm = require('wezterm')
 local tabline = wezterm.plugin.require('https://github.com/michaelbrusegard/tabline.wez')
 
-local function weather()
-    local success, stdout = wezterm.run_child_process({ 'curl', '-m', '1', 'https://wttr.in/?format=3' })
-    if success then
-        return ' ' .. stdout
-    else
-        return ''
-    end
-end
-
 local theme = 'Tokyo Night Moon'
 
 local font_features = {
@@ -61,7 +52,7 @@ tabline.setup({
         tab_inactive = { 'index', { 'process', padding = { left = 0, right = 1 } } },
         tabline_x = { 'ram', 'cpu' },
         tabline_y = { 'datetime' },
-        tabline_z = { 'domain', weather },
+        tabline_z = { 'domain' },
     },
     extensions = {},
 })

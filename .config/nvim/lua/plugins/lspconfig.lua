@@ -77,6 +77,10 @@ return {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
         })
+        lspconfig.docker_compose_language_service.setup({
+            on_attach = lsp_utils.on_attach,
+            capabilities = lsp_utils.capabilities(),
+        })
         -- toml
         lspconfig.taplo.setup({
             on_attach = lsp_utils.on_attach,
