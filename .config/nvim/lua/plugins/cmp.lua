@@ -5,101 +5,11 @@ return {
     enabled = not vim.g.vscode,
     event = 'VeryLazy',
     dependencies = {
-        'L3MON4D3/LuaSnip',
         'rafamadriz/friendly-snippets', -- snippets for many languages
-        'chrisgrieser/nvim-scissors', -- snippet editor
-        'b0o/schemastore.nvim', -- adds schemas for json lsp
         'xzbdmw/colorful-menu.nvim', -- adds highlights to the auto-complete options
     },
     config = function()
         require('colorful-menu').setup()
-        local luasnip = require('luasnip')
-        local luasnip_util = require('luasnip.util.util')
-        local luasnip_types = require('luasnip.util.types')
-        local custom_snippets_folder = vim.fn.stdpath('config') .. '/snippets'
-        require('scissors').setup({
-            snippetDir = custom_snippets_folder,
-        })
-        luasnip.config.setup({
-            ext_ops = {
-                [luasnip_types.choiceNode] = {
-                    active = {
-                        virt_text = { { '●', 'DevIconSml' } },
-                    },
-                },
-                [luasnip_types.insertNode] = {
-                    active = {
-                        virt_text = { { '●', 'DevIconC' } },
-                    },
-                },
-            },
-            parser_nested_assembler = function(_, snippet)
-                local select = function(snip, no_move)
-                    snip.parent:enter_node(snip.indx)
-                    -- upon deletion, extmarks of inner nodes should shift to end of
-                    -- placeholder-text.
-                    for _, node in ipairs(snip.nodes) do
-                        node:set_mark_rgrav(true, true)
-                    end
-
-                    -- SELECT all text inside the snippet.
-                    if not no_move then
-                        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', true)
-                        local pos_begin, pos_end = snip.mark:pos_begin_end()
-                        luasnip_util.normal_move_on(pos_begin)
-                        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('v', true, false, true), 'n', true)
-                        luasnip_util.normal_move_before(pos_end)
-                        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('o<C-G>', true, false, true), 'n', true)
-                    end
-                end
-                function snippet:jump_into(dir, no_move)
-                    if self.active then
-                        -- inside snippet, but not selected.
-                        if dir == 1 then
-                            self:input_leave()
-                            return self.next:jump_into(dir, no_move)
-                        else
-                            select(self, no_move)
-                            return self
-                        end
-                    else
-                        -- jumping in from outside snippet.
-                        self:input_enter()
-                        if dir == 1 then
-                            select(self, no_move)
-                            return self
-                        else
-                            return self.inner_last:jump_into(dir, no_move)
-                        end
-                    end
-                end
-
-                -- this is called only if the snippet is currently selected.
-                function snippet:jump_from(dir, no_move)
-                    if dir == 1 then
-                        return self.inner_first:jump_into(dir, no_move)
-                    else
-                        self:input_leave()
-                        return self.prev:jump_into(dir, no_move)
-                    end
-                end
-
-                return snippet
-            end,
-        })
-
-        -- set keymap for navigating through snippet choices
-        vim.keymap.set({ 'i', 's' }, '<a-l>', function()
-            if luasnip.choice_active() then
-                luasnip.change_choice(1)
-            end
-        end)
-        vim.keymap.set({ 'i', 's' }, '<a-h>', function()
-            if luasnip.choice_active() then
-                luasnip.change_choice(-1)
-            end
-        end)
-
         local disabled_filetypes = { 'minifiles' }
 
         require('blink.cmp').setup({
@@ -110,21 +20,6 @@ return {
                     and not vim.tbl_contains(disabled_filetypes, vim.bo.filetype)
             end,
             signature = { enabled = true },
-            snippets = {
-                preset = 'luasnip',
-                expand = function(snippet)
-                    require('luasnip').lsp_expand(snippet)
-                end,
-                active = function(filter)
-                    if filter and filter.direction then
-                        return require('luasnip').jumpable(filter.direction)
-                    end
-                    return require('luasnip').in_snippet()
-                end,
-                jump = function(direction)
-                    require('luasnip').jump(direction)
-                end,
-            },
             sources = {
                 default = function()
                     local success, node = pcall(vim.treesitter.get_node)
@@ -218,7 +113,7 @@ return {
                     },
                 },
                 ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-                ['<Esc>'] = { 'cancel', 'fallback' },
+                ['<Esc>'] = { 'hide', 'fallback' },
                 ['<CR>'] = { 'accept', 'fallback' },
 
                 ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
@@ -317,16 +212,5 @@ return {
                 },
             },
         })
-
-        require('luasnip.loaders.from_vscode').load()
-        require('luasnip.loaders.from_vscode').lazy_load({ paths = custom_snippets_folder })
-
-        -- create commands to manage snippets
-        vim.api.nvim_create_user_command('SnippetAdd', function()
-            require('scissors').addNewSnippet()
-        end, {})
-        vim.api.nvim_create_user_command('SnippetEdit', function()
-            require('scissors').editSnippet()
-        end, {})
     end,
 }

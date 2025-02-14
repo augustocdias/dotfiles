@@ -4,6 +4,9 @@ return {
     'neovim/nvim-lspconfig',
     priority = 100,
     enabled = not vim.g.vscode,
+    dependencies = {
+        'b0o/schemastore.nvim', -- adds schemas for json lsp
+    },
     config = function()
         local lsp_utils = require('utils.lsp')
         local lspconfig = require('lspconfig')
@@ -223,10 +226,9 @@ return {
         },
         {
             '<cmd>lua vim.lsp.buf.code_action()<CR>',
-            desc = 'Code Actions',
             '<leader>la',
+            desc = 'Code actions',
             noremap = true,
-
             mode = { 'n' },
         },
         {

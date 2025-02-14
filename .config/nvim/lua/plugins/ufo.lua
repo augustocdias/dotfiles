@@ -64,11 +64,6 @@ return {
                             return builtin.foldfunc(args) .. ' '
                         end,
                     },
-                    condition = {
-                        function(args)
-                            return not args.empty
-                        end,
-                    },
                 },
                 {
                     sign = {
@@ -76,7 +71,6 @@ return {
                         colwidth = 2,
                         auto = true,
                         foldclosed = true,
-                        fillchar = '',
                     },
                 },
                 {

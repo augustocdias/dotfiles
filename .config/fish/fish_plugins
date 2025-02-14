@@ -14,5 +14,4 @@ oh-my-fish/plugin-rustup
 oh-my-fish/plugin-wttr
 reitzig/sdkman-for-fish@v2.1.0
 babarot/enhancd
-lilyball/nix-env.fish
 jorgebucaran/nvm.fish
