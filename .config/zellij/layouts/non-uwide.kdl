@@ -2,9 +2,9 @@ layout {
     pane size=1 borderless=true {
         plugin location="tab-bar"
     }
-    pane split_direction="vertical" {
+    pane split_direction="horizontal" {
         pane
-        pane size="30%" split_direction="horizontal" {
+        pane size="30%" split_direction="vertical" {
             pane
             pane
         }

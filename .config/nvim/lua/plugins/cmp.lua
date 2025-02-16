@@ -6,7 +6,7 @@ return {
     event = 'VeryLazy',
     dependencies = {
         'rafamadriz/friendly-snippets', -- snippets for many languages
-        'xzbdmw/colorful-menu.nvim', -- adds highlights to the auto-complete options
+        'xzbdmw/colorful-menu.nvim',    -- adds highlights to the auto-complete options
     },
     config = function()
         require('colorful-menu').setup()
@@ -59,9 +59,9 @@ return {
                     draw = {
                         treesitter = { 'lsp' },
                         columns = {
-                            { 'kind_icon', gap = 1 },
-                            { 'label', gap = 3 },
-                            { 'item_idx', gap = 1 },
+                            { 'kind_icon',  gap = 1 },
+                            { 'label',      gap = 3 },
+                            { 'item_idx',   gap = 1 },
                             { 'source_name' },
                         },
                         components = {
@@ -89,11 +89,11 @@ return {
                 },
             },
             fuzzy = {
-                sorts = { 'score', 'sort_text', 'kind', 'label' },
+                sorts = { 'exact', 'score', 'sort_text', 'kind', 'label' },
             },
-            keymap = {
-                preset = 'none',
-                cmdline = { -- https://github.com/neovim/neovim/issues/21585
+
+            cmdline = {
+                keymap = { -- https://github.com/neovim/neovim/issues/21585
                     ['<C-space>'] = { 'show' },
                     ['<CR>'] = { 'accept', 'fallback' },
                     ['<Tab>'] = { 'select_next', 'fallback' },
@@ -112,6 +112,9 @@ return {
                         end,
                     },
                 },
+            },
+            keymap = {
+                preset = 'none',
                 ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
                 ['<Esc>'] = { 'hide', 'fallback' },
                 ['<CR>'] = { 'accept', 'fallback' },
