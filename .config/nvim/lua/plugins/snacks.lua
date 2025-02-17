@@ -12,14 +12,18 @@ return {
         notifier = { enabled = true, style = 'fancy' },
         rename = { enabled = true },
         words = { enabled = true },
+        scroll = { enabled = true },
+        input = { enabled = true },
         styles = {
             blame_line = { border = 'none' },
             notification = { border = 'none' },
             notification_history = { border = 'none' },
             input = { relative = 'cursor' },
         },
-        input = {
+        statuscolumn = {
             enabled = true,
+            left = { 'mark', 'sign', 'sign' }, -- priority of signs on the left (high to low)
+            right = { 'git' },                 -- priority of signs on the right (high to low)
         },
         picker = {
             layout = {
