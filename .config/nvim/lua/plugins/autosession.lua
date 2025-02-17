@@ -25,14 +25,4 @@ return {
             },
         },
     },
-    keys = {
-        {
-            '<M-w>',
-            '<cmd>SessionSearch<CR>',
-            mode = { 'n' },
-            desc = 'Open saved session',
-            noremap = true,
-            silent = true,
-        },
-    },
 }

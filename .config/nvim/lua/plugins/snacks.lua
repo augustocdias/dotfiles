@@ -22,8 +22,8 @@ return {
         },
         statuscolumn = {
             enabled = true,
-            left = { 'mark', 'sign', 'sign' }, -- priority of signs on the left (high to low)
-            right = { 'git' },                 -- priority of signs on the right (high to low)
+            left = { 'sign', 'mark' }, -- priority of signs on the left (high to low)
+            right = { 'git' },         -- priority of signs on the right (high to low)
         },
         picker = {
             layout = {

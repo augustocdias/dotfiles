@@ -2,6 +2,7 @@
 
 return {
     'chrishrb/gx.nvim',
+    event = 'VeryLazy',
     submodules = false,
     opts = {
         handlers = {

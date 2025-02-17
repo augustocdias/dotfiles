@@ -1,7 +1,8 @@
 -- makes better line moving
 
 return {
-    'booperlv/nvim-gomove',
+    'echasnovski/mini.move',
+    version = false,
     event = 'VeryLazy',
     config = true,
 }

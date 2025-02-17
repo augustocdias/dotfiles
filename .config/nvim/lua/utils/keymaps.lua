@@ -304,7 +304,7 @@ local keymap_table = {
         shortcut = '<C-h>',
         cmd = function()
             if os.getenv('ZELLIJ') then
-                require('zellij-nav').left()
+                require('zellij-nav').left_tab()
             else
                 vim.cmd.wincmd('h')
             end
@@ -318,7 +318,7 @@ local keymap_table = {
         cmd = function()
             print(os.getenv('ZELLIJ'))
             if os.getenv('ZELLIJ') then
-                require('zellij-nav').right()
+                require('zellij-nav').right_tab()
             else
                 vim.cmd.wincmd('l')
             end

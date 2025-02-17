@@ -2,6 +2,7 @@
 
 return {
     'augustocdias/gatekeeper.nvim',
+    event = 'VeryLazy',
     opts = {
         exclude = {
             vim.fn.expand('~/.config'),
