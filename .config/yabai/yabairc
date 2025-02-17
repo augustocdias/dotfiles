@@ -1,3 +1,9 @@
+# Scripting abilities for yabai: 
+# https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition
+
+# yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+# sudo yabai --load-sa
+
 # default layout (can be bsp, stack or float)
 yabai -m config layout bsp
 
@@ -37,3 +43,17 @@ yabai -m rule --add app="WhatsApp" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^QuickTime Player$" manage=off
 yabai -m rule --add app="^Safari$" title="Advanced" manage=off
+
+# window decorations
+yabai -m config window_opacity               off
+yabai -m config window_opacity_duration      0.0
+yabai -m config window_shadow                on
+yabai -m config window_border                off
+yabai -m config window_border_width          4
+yabai -m config active_window_border_color   0xff775759
+yabai -m config normal_window_border_color   0xff505050
+yabai -m config insert_window_border_color   0xffd75f5f
+yabai -m config active_window_opacity        1.0
+yabai -m config normal_window_opacity        0.90
+
+echo "yabai configuration loaded.."

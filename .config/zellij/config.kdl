@@ -137,6 +137,7 @@ keybinds clear-defaults=true {
             SwitchToMode "locked"
         }
         bind "Alt d" { Detach; }
+        bind "Alt m" { ToggleFocusFullscreen; SwitchToMode "locked"; }
         bind "Alt n" { SwitchToMode "pane"; }
         bind "Ctrl h" {
             MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
