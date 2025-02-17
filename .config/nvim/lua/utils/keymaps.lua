@@ -302,31 +302,56 @@ local keymap_table = {
     },
     {
         shortcut = '<C-h>',
-        cmd = '<C-w>h',
+        cmd = function()
+            if os.getenv('ZELLIJ') then
+                require('zellij-nav').left()
+            else
+                vim.cmd.wincmd('h')
+            end
+        end,
         mode = { 'n' },
         desc = 'Focus on window to the left',
-        opts = { noremap = true },
+        opts = { noremap = true, silent = true },
     },
     {
         shortcut = '<C-l>',
-        cmd = '<C-w>l',
+        cmd = function()
+            print(os.getenv('ZELLIJ'))
+            if os.getenv('ZELLIJ') then
+                require('zellij-nav').right()
+            else
+                vim.cmd.wincmd('l')
+            end
+        end,
         mode = { 'n' },
         desc = 'Focus on window to the right',
-        opts = { noremap = true },
+        opts = { noremap = true, silent = true },
     },
     {
         shortcut = '<C-k>',
-        cmd = '<C-w>k',
+        cmd = function()
+            if os.getenv('ZELLIJ') then
+                require('zellij-nav').up()
+            else
+                vim.cmd.wincmd('k')
+            end
+        end,
         mode = { 'n' },
         desc = 'Focus on window up',
-        opts = { noremap = true },
+        opts = { noremap = true, silent = true },
     },
     {
         shortcut = '<C-j>',
-        cmd = '<C-w>j',
+        cmd = function()
+            if os.getenv('ZELLIJ') then
+                require('zellij-nav').down()
+            else
+                vim.cmd.wincmd('j')
+            end
+        end,
         mode = { 'n' },
         desc = 'Focus on window down',
-        opts = { noremap = true },
+        opts = { noremap = true, silent = true },
     },
 }
 

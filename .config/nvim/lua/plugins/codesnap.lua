@@ -1,7 +1,6 @@
 -- Generates an image from selected text. Needs silicon installed (cargo install silicon)
 return {
     'mistricky/codesnap.nvim',
-    enabled = false,
     build = 'make',
     event = 'VeryLazy',
     opts = {

@@ -131,11 +131,10 @@ keybinds clear-defaults=true {
     shared_among "normal" "locked" {
         bind "Ctrl h" {
             MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-                name "move_focus_or_tab";
+                name "move_focus";
                 payload "left";
 
-                // Plugin Configuration
-                move_mod "ctrl"; // Optional, should be added on every command if you want to use it
+                move_mod "ctrl";
             };
         }
 
@@ -159,7 +158,7 @@ keybinds clear-defaults=true {
 
         bind "Ctrl l" {
             MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-                name "move_focus_or_tab";
+                name "move_focus";
                 payload "right";
 
                 move_mod "ctrl";

@@ -12,10 +12,10 @@ return {
     },
     keys = {
         {
-            '<leader>a',
+            '<leader>t',
             'rhs',
             mode = { 'n' },
-            desc = 'Aerial',
+            desc = 'Trouble',
             noremap = true,
         },
         {
