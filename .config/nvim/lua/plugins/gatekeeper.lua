@@ -5,9 +5,7 @@ return {
     opts = {
         exclude = {
             vim.fn.expand('~/.config'),
-            vim.fn.expand(
-                '~/Library/Mobile Documents/com~apple~CloudDocs/Documents/notes/projects/nvim.norg/Documents/notes/projects'
-            ),
+            vim.fn.expand('~/dev/dotfiles/'),
         },
         exclude_regex = { '.*/COMMIT_EDITMSG' },
     },

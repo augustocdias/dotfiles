@@ -225,11 +225,11 @@ return {
             silent = true,
         },
         {
-            '<cmd>lua vim.lsp.buf.code_action()<CR>',
             '<leader>la',
+            '<cmd>lua vim.lsp.buf.code_action()<CR>',
+            mode = { 'n' },
             desc = 'Code actions',
             noremap = true,
-            mode = { 'n' },
         },
         {
             '<leader>lb',
