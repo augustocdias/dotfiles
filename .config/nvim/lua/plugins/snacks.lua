@@ -367,13 +367,6 @@ return {
             desc = 'Normal Mode Keymaps',
             noremap = true,
         },
-        { -- TODO: implement for snacks and enable
-            '<leader>db',
-            '<cmd>lua require("telescope").extensions.dap.list_breakpoints()<CR>',
-            mode = { 'n' },
-            desc = 'Breakpoints',
-            noremap = true,
-        },
         {
             'gb',
             ':lua Snacks.gitbrowse()<CR>',

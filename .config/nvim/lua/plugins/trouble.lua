@@ -26,28 +26,15 @@ return {
             noremap = true,
             silent = true,
         },
-        {
-            '<leader>td',
-            ':Trouble diagnostics toggle focus=true<CR>',
+        { -- TEST: require('dap').list_breakpoints() adds them to a qflist
+            '<leader>tb',
+            function()
+                require('dap').list_breakpoints()
+                require('trouble').toggle({ mode = 'qflist', focus = true })
+            end,
             mode = { 'n' },
-            desc = 'Show diagnostics pane',
+            desc = 'Breakpoints',
             noremap = true,
-            silent = true,
-        },
-        {
-            '<leader>tl',
-            ':Trouble todo toggle focus=true<CR>',
-            mode = { 'n' },
-            desc = 'Toggle todo list',
-            noremap = true,
-        },
-        {
-            '<leader>td',
-            ':Trouble diagnostics toggle focus=true<CR>',
-            mode = { 'n' },
-            desc = 'Show diagnostics pane',
-            noremap = true,
-            silent = true,
         },
         {
             '<leader>tc',
@@ -55,6 +42,14 @@ return {
             mode = { 'n' },
             desc = 'LSP Declarations',
             noremap = true,
+        },
+        {
+            '<leader>td',
+            ':Trouble diagnostics toggle focus=true<CR>',
+            mode = { 'n' },
+            desc = 'Show diagnostics pane',
+            noremap = true,
+            silent = true,
         },
         {
             '<leader>tf',
@@ -71,17 +66,10 @@ return {
             noremap = true,
         },
         {
-            '<leader>tr',
-            ':Trouble lsp_references toggle focus=true<CR>',
+            '<leader>tl',
+            ':Trouble todo toggle focus=true<CR>',
             mode = { 'n' },
-            desc = 'LSP References',
-            noremap = true,
-        },
-        {
-            '<leader>tq',
-            ':Trouble qlist toggle focus=true<CR>',
-            mode = { 'n' },
-            desc = 'Quickfix List',
+            desc = 'Toggle todo list',
             noremap = true,
         },
         {
@@ -89,6 +77,20 @@ return {
             ':Trouble loclist toggle focus=true<CR>',
             mode = { 'n' },
             desc = 'Location List',
+            noremap = true,
+        },
+        {
+            '<leader>tq',
+            ':Trouble qflist toggle focus=true<CR>',
+            mode = { 'n' },
+            desc = 'Quickfix List',
+            noremap = true,
+        },
+        {
+            '<leader>tr',
+            ':Trouble lsp_references toggle focus=true<CR>',
+            mode = { 'n' },
+            desc = 'LSP References',
             noremap = true,
         },
         {

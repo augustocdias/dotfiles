@@ -353,6 +353,32 @@ local keymap_table = {
         desc = 'Focus on window down',
         opts = { noremap = true, silent = true },
     },
+    {
+        shortcut = '<C-m>',
+        cmd = function()
+            local bufnr = vim.api.nvim_get_current_buf()
+            local cur_line = vim.fn.line('.')
+            local all_marks_local = vim.fn.getmarklist(bufnr)
+            for _, mark in ipairs(all_marks_local) do
+                if mark.pos[2] == cur_line and string.match(mark.mark, "'[a-z]") then
+                    vim.notify('Deleting mark: ' .. string.sub(mark.mark, 2, 2))
+                    vim.api.nvim_buf_del_mark(bufnr, string.sub(mark.mark, 2, 2))
+                end
+            end
+            local bufname = vim.api.nvim_buf_get_name(bufnr)
+            local all_marks_global = vim.fn.getmarklist()
+            for _, mark in ipairs(all_marks_global) do
+                local expanded_file_name = vim.fn.fnamemodify(mark.file, ':p')
+                if bufname == expanded_file_name and mark.pos[2] == cur_line and string.match(mark.mark, "'[A-Z]") then
+                    vim.notify('Deleting mark: ' .. string.sub(mark.mark, 2, 2))
+                    vim.api.nvim_del_mark(string.sub(mark.mark, 2, 2))
+                end
+            end
+        end,
+        mode = { 'n' },
+        desc = 'Delete all marks under the current line',
+        opts = { noremap = true, silent = true },
+    },
 }
 
 return {

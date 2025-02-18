@@ -12,13 +12,6 @@ return {
     },
     keys = {
         {
-            '<leader>t',
-            'rhs',
-            mode = { 'n' },
-            desc = 'Trouble',
-            noremap = true,
-        },
-        {
             '<leader>g',
             'rhs',
             mode = { 'n' },
@@ -65,6 +58,20 @@ return {
             'rhs',
             mode = { 'n' },
             desc = 'Rust',
+            noremap = true,
+        },
+        {
+            '<leader>s',
+            'rhs',
+            mode = { 'n' },
+            desc = 'Surround',
+            noremap = true,
+        },
+        {
+            '<leader>t',
+            'rhs',
+            mode = { 'n' },
+            desc = 'Trouble',
             noremap = true,
         },
         {
