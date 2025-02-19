@@ -4,7 +4,6 @@ vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor
 -- Remove toolbar
 -- lua api seems to not be able to access this option
 vim.cmd('set guioptions-=T')
-vim.o.inccommand = 'nosplit'
 -- vim.go.t_Co = '256'
 vim.o.background = 'dark'
 vim.g.base16colorspace = 256

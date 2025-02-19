@@ -6,7 +6,6 @@ return {
     enabled = not vim.g.vscode,
     dependencies = {
         'b0o/schemastore.nvim', -- adds schemas for json lsp
-        { 'smjonas/inc-rename.nvim', config = true },
     },
     config = function()
         local lsp_utils = require('utils.lsp')
@@ -250,13 +249,10 @@ return {
         },
         {
             '<leader>lm',
-            function()
-                return ':IncRename ' .. vim.fn.expand('<cword>')
-            end,
+            '<cmd>lua vim.lsp.buf.rename()<CR>',
             mode = { 'n' },
             desc = 'Rename symbol',
             noremap = true,
-            expr = true,
         },
         {
             '<leader>lq',
