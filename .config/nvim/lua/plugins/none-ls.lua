@@ -7,6 +7,7 @@ return {
     dependencies = {
         'nvim-lua/plenary.nvim',
         'nvim-treesitter/nvim-treesitter',
+        'nvimtools/none-ls-extras.nvim',
         'ThePrimeagen/refactoring.nvim', -- provide refactoring actions
     },
     config = function()
@@ -44,6 +45,8 @@ return {
                         end
                     end,
                 }),
+                require('none-ls.diagnostics.eslint'),
+                require('none-ls.code_actions.eslint'),
                 none_ls.builtins.code_actions.gitsigns,
                 none_ls.builtins.code_actions.refactoring.with({
                     filetypes = { 'go', 'javascript', 'lua', 'python', 'typescript', 'ruby', 'java', 'php' },

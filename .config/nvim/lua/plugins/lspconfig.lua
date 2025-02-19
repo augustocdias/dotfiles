@@ -6,6 +6,7 @@ return {
     enabled = not vim.g.vscode,
     dependencies = {
         'b0o/schemastore.nvim', -- adds schemas for json lsp
+        { 'smjonas/inc-rename.nvim', config = true },
     },
     config = function()
         local lsp_utils = require('utils.lsp')
@@ -202,20 +203,6 @@ return {
             silent = true,
         },
         {
-            'K',
-            function()
-                local _, winid = pcall(function()
-                    require('ufo').peekFoldedLinesUnderCursor()
-                end)
-                if not winid then
-                    vim.lsp.buf.hover()
-                end
-            end,
-            mode = { 'n' },
-            desc = 'Show hover popup or folded preview',
-            silent = true,
-        },
-        {
             '<M-f>',
             function()
                 vim.lsp.buf.format({ async = false })
@@ -263,10 +250,13 @@ return {
         },
         {
             '<leader>lm',
-            '<cmd>lua vim.lsp.buf.rename()<CR>',
+            function()
+                return ':IncRename ' .. vim.fn.expand('<cword>')
+            end,
             mode = { 'n' },
             desc = 'Rename symbol',
             noremap = true,
+            expr = true,
         },
         {
             '<leader>lq',
