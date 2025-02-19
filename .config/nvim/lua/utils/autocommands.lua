@@ -67,9 +67,9 @@ return {
             return vim.api.nvim_create_augroup(name, { clear = true })
         end
 
-        local packer_group = augroup('LazyDone')
+        local pkg_mng = augroup('LazyDone')
         autocmd('User', {
-            group = packer_group,
+            group = pkg_mng,
             pattern = 'LazyUpdate',
             callback = function() -- Autocompile colorscheme
                 require('catppuccin').compile()
@@ -87,6 +87,23 @@ return {
             pattern = '*',
             callback = function()
                 vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 1000 })
+            end,
+        })
+
+        autocmd({ 'BufReadPost' }, {
+            group = augroup('LastPlace'),
+            callback = function()
+                local exclude = { 'gitcommit', 'commit', 'gitrebase' }
+                local buf = vim.api.nvim_get_current_buf()
+                if vim.tbl_contains(exclude, vim.bo[buf].filetype) then
+                    return
+                end
+                local mark = vim.api.nvim_buf_get_mark(buf, '"')
+                local lcount = vim.api.nvim_buf_line_count(buf)
+                if mark[1] > 0 and mark[1] <= lcount then
+                    pcall(vim.api.nvim_win_set_cursor, 0, mark)
+                    return
+                end
             end,
         })
     end,
