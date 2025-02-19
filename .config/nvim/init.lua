@@ -21,7 +21,6 @@ vim.g.flavour = vim.g.flavours.tokyonight
 require('settings.general')
 require('settings.gui')
 require('settings.neovide')
-require('settings.unception')
 require('utils.keymaps').map_keys()
 require('lazy').setup('plugins', {
     checker = {
