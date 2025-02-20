@@ -1,3 +1,4 @@
+-- always check :help tui-input before mapping
 local keymap_table = {
     {
         shortcut = 'k',
@@ -125,33 +126,6 @@ local keymap_table = {
         opts = { noremap = true },
     },
     {
-        shortcut = '<M><left>',
-        cmd = function()
-            require('utils.apple').music:previous_track()
-        end,
-        mode = { 'n' },
-        desc = 'Previous Song (Apple Music)',
-        opts = { noremap = true },
-    },
-    {
-        shortcut = '<M><right>',
-        cmd = function()
-            require('utils.apple').music:next_track()
-        end,
-        mode = { 'n' },
-        desc = 'Next Song (Apple Music)',
-        opts = { noremap = true },
-    },
-    {
-        shortcut = '<M-/>',
-        cmd = function()
-            require('utils.apple').music:play_pause()
-        end,
-        mode = { 'n' },
-        desc = 'Play/Pause (Apple Music)',
-        opts = { noremap = true },
-    },
-    {
         shortcut = '<M-g>',
         cmd = ':nohlsearch<CR>',
         mode = { 'n', 'v' },
@@ -256,43 +230,6 @@ local keymap_table = {
         desc = 'Go to next diagnostic',
         opts = { noremap = true },
     },
-    -- call twice make the cursor go into the float window. good for navigating big docs
-    {
-        shortcut = '<leader>ml',
-        cmd = function()
-            require('setup.apple').music:playlists()
-        end,
-        mode = { 'n' },
-        desc = 'Playlists',
-        opts = { noremap = true },
-    },
-    {
-        shortcut = '<leader>mp',
-        cmd = function()
-            require('setup.apple').music:play_pause()
-        end,
-        mode = { 'n' },
-        desc = 'Play/Pause',
-        opts = { noremap = true },
-    },
-    {
-        shortcut = '<leader>mn',
-        cmd = function()
-            require('setup.apple').music:next_track()
-        end,
-        mode = { 'n' },
-        desc = 'Next Track',
-        opts = { noremap = true },
-    },
-    {
-        shortcut = '<leader>mr',
-        cmd = function()
-            require('setup.apple').music:previous_track()
-        end,
-        mode = { 'n' },
-        desc = 'Previous Track',
-        opts = { noremap = true },
-    },
     {
         shortcut = '<leader>c',
         cmd = '"*y',
@@ -354,7 +291,7 @@ local keymap_table = {
         opts = { noremap = true, silent = true },
     },
     {
-        shortcut = '<C-m>',
+        shortcut = '<leader>m',
         cmd = function()
             local bufnr = vim.api.nvim_get_current_buf()
             local cur_line = vim.fn.line('.')

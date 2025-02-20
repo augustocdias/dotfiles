@@ -22,6 +22,7 @@ return {
             signature = { enabled = true },
             sources = {
                 default = function()
+                    -- this doesn't work quite well...
                     local success, node = pcall(vim.treesitter.get_node)
                     local is_comment = success
                         and node
@@ -30,7 +31,7 @@ return {
                             node:type()
                         )
                     if is_comment then
-                        return { 'lsp', 'buffer' }
+                        return { 'lsp', 'buffer', 'path' }
                     else
                         return { 'lsp', 'snippets', 'path' }
                     end

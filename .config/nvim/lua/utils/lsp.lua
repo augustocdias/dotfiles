@@ -2,8 +2,6 @@ local M = {}
 
 M.on_attach = function(client, bufnr)
     require('utils.autocommands').lsp_autocmds(client, bufnr)
-    -- check if this is applicable (for rust for example it is not)
-    -- https://github.com/L3MON4D3/LuaSnip/wiki/Misc#improve-language-server-snippets
 
     -- enable inlay hints if server supports it
     if client.server_capabilities.inlayHintProvider then
@@ -22,13 +20,6 @@ M.capabilities = function()
             positionEncodings = { 'utf-16' },
         },
     })
-    -- Tell the server the capability of foldingRange,
-    -- Neovim hasn't added foldingRange to default capabilities, users must add it manually
-    -- https://github.com/neovim/neovim/pull/14306
-    capabilities.textDocument.foldingRange = {
-        dynamicRegistration = false,
-        lineFoldingOnly = true,
-    }
     return capabilities
 end
 

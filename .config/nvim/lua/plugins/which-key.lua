@@ -33,13 +33,6 @@ return {
             noremap = true,
         },
         {
-            '<leader>m',
-            'rhs',
-            mode = { 'n' },
-            desc = 'Music',
-            noremap = true,
-        },
-        {
             '<leader>n',
             'rhs',
             mode = { 'n' },
