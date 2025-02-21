@@ -137,15 +137,15 @@ keybinds clear-defaults=true {
         bind "Alt d" { Detach; }
         bind "Alt m" { ToggleFocusFullscreen; SwitchToMode "locked"; }
         bind "Alt n" { SwitchToMode "pane"; }
+        bind "Alt +" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
         bind "Ctrl h" {
             MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
                 name "move_focus";
                 payload "left";
-
                 move_mod "ctrl";
-                resize_mod "alt";
             };
         }
 
@@ -153,9 +153,7 @@ keybinds clear-defaults=true {
             MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
                 name "move_focus";
                 payload "down";
-
                 move_mod "ctrl";
-                resize_mod "alt";
             };
         }
 
@@ -163,9 +161,7 @@ keybinds clear-defaults=true {
             MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
                 name "move_focus";
                 payload "up";
-
                 move_mod "ctrl";
-                resize_mod "alt";
             };
         }
 
@@ -173,27 +169,9 @@ keybinds clear-defaults=true {
             MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
                 name "move_focus";
                 payload "right";
-
                 move_mod "ctrl";
-                resize_mod "alt";
             };
         }
-
-        // bind "Alt left" { MoveFocusOrTab "left"; }
-        // bind "Alt down" { MoveFocus "down"; }
-        // bind "Alt up" { MoveFocus "up"; }
-        // bind "Alt right" { MoveFocusOrTab "right"; }
-        // bind "Alt +" { Resize "Increase"; }
-        // bind "Alt -" { Resize "Decrease"; }
-        // bind "Alt =" { Resize "Increase"; }
-        // bind "Alt f" { ToggleFloatingPanes; }
-        // bind "Alt h" { MoveFocusOrTab "left"; }
-        // bind "Alt i" { MoveTab "left"; }
-        // bind "Alt j" { MoveFocus "down"; }
-        // bind "Alt k" { MoveFocus "up"; }
-        // bind "Alt l" { MoveFocusOrTab "right"; }
-        // bind "Alt n" { NewPane; }
-        // bind "Alt o" { MoveTab "right"; }
     }
     shared_except "locked" "renametab" "renamepane" {
         bind "Ctrl g" { SwitchToMode "locked"; }
