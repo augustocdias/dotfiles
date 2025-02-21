@@ -137,6 +137,7 @@ keybinds clear-defaults=true {
         bind "Alt d" { Detach; }
         bind "Alt m" { ToggleFocusFullscreen; SwitchToMode "locked"; }
         bind "Alt n" { SwitchToMode "pane"; }
+        bind "Alt =" { Resize "Increase"; }
         bind "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { PreviousSwapLayout; }

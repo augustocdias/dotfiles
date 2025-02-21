@@ -253,7 +253,6 @@ local keymap_table = {
     {
         shortcut = '<C-l>',
         cmd = function()
-            print(os.getenv('ZELLIJ'))
             if os.getenv('ZELLIJ') then
                 require('zellij-nav').right_tab()
             else
