@@ -3,21 +3,19 @@ keybinds clear-defaults=true {
         bind "Ctrl g" { SwitchToMode "normal"; }
     }
     pane {
-        bind "left" { MoveFocus "left"; }
-        bind "down" { MoveFocus "down"; }
-        bind "up" { MoveFocus "up"; }
-        bind "right" { MoveFocus "right"; }
         bind "c" { SwitchToMode "renamepane"; PaneNameInput 0; }
-        bind "d" { NewPane "down"; SwitchToMode "locked"; }
+        bind "n" { NewPane; SwitchToMode "locked"; }
+        bind "down" { NewPane "down"; SwitchToMode "locked"; }
+        bind "right" { NewPane "right"; SwitchToMode "locked"; }
+        bind "left" { NewPane "left"; SwitchToMode "locked"; }
+        bind "up" { NewPane "up"; SwitchToMode "locked"; }
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "locked"; }
         bind "f" { ToggleFocusFullscreen; SwitchToMode "locked"; }
         bind "h" { MoveFocus "left"; }
         bind "j" { MoveFocus "down"; }
         bind "k" { MoveFocus "up"; }
         bind "l" { MoveFocus "right"; }
-        bind "n" { NewPane; SwitchToMode "locked"; }
         bind "p" { SwitchToMode "normal"; }
-        bind "r" { NewPane "right"; SwitchToMode "locked"; }
         bind "w" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "x" { CloseFocus; SwitchToMode "locked"; }
         bind "z" { TogglePaneFrames; SwitchToMode "locked"; }
@@ -139,12 +137,15 @@ keybinds clear-defaults=true {
         bind "Alt d" { Detach; }
         bind "Alt m" { ToggleFocusFullscreen; SwitchToMode "locked"; }
         bind "Alt n" { SwitchToMode "pane"; }
+        bind "Alt [" { PreviousSwapLayout; }
+        bind "Alt ]" { NextSwapLayout; }
         bind "Ctrl h" {
             MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
                 name "move_focus";
                 payload "left";
 
                 move_mod "ctrl";
+                resize_mod "alt";
             };
         }
 
@@ -154,6 +155,7 @@ keybinds clear-defaults=true {
                 payload "down";
 
                 move_mod "ctrl";
+                resize_mod "alt";
             };
         }
 
@@ -163,6 +165,7 @@ keybinds clear-defaults=true {
                 payload "up";
 
                 move_mod "ctrl";
+                resize_mod "alt";
             };
         }
 
@@ -172,6 +175,7 @@ keybinds clear-defaults=true {
                 payload "right";
 
                 move_mod "ctrl";
+                resize_mod "alt";
             };
         }
 
@@ -182,8 +186,6 @@ keybinds clear-defaults=true {
         // bind "Alt +" { Resize "Increase"; }
         // bind "Alt -" { Resize "Decrease"; }
         // bind "Alt =" { Resize "Increase"; }
-        // bind "Alt [" { PreviousSwapLayout; }
-        // bind "Alt ]" { NextSwapLayout; }
         // bind "Alt f" { ToggleFloatingPanes; }
         // bind "Alt h" { MoveFocusOrTab "left"; }
         // bind "Alt i" { MoveTab "left"; }

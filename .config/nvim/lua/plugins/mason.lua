@@ -40,6 +40,8 @@ return {
                 'write-good',
                 'yamllint',
                 'sqlfluff',
+                'hadolint',
+                'actionlint',
             },
         })
     end,

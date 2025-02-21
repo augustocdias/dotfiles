@@ -12,4 +12,21 @@ layout {
     pane size=1 borderless=true {
         plugin location="status-bar"
     }
+    // swap_tiled_layout name="non-wide" {
+    //     tab {
+    //         pane size=1 borderless=true {
+    //             plugin location="tab-bar"
+    //         }
+    //         pane split_direction="horizontal" {
+    //             pane
+    //             pane size="30%" split_direction="vertical" {
+    //                 pane
+    //                 pane
+    //             }
+    //         }
+    //         pane size=1 borderless=true {
+    //             plugin location="status-bar"
+    //         }
+    //     }
+    // }
 }

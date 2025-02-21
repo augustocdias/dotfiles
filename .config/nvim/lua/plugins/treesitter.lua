@@ -42,6 +42,7 @@ return {
                     'norg',
                     'python',
                     'query',
+                    'regex',
                     'rust',
                     'sql',
                     'swift',

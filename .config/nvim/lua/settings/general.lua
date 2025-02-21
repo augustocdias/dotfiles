@@ -169,3 +169,6 @@ vim.o.splitkeep = 'topline'
 
 -- enable autoformat when saving. it is set for each buffer when lsp is attached
 vim.g.autoformat = true
+
+-- disable legacy perl provider
+vim.g.loaded_perl_provider = false

@@ -2,7 +2,7 @@
 
 return {
     'folke/snacks.nvim',
-    priority = 900,
+    priority = 1000,
     lazy = false,
     opts = {
         bigfile = { enabled = true },
@@ -183,6 +183,13 @@ return {
             '<cmd>lua Snacks.picker.git_stash()<CR>',
             mode = { 'n' },
             desc = 'Stash',
+            noremap = true,
+        },
+        {
+            '<leader>go',
+            '<cmd>lua Snacks.gitbrowse()<CR>',
+            mode = { 'n' },
+            desc = 'Open file in remote repo',
             noremap = true,
         },
         {
@@ -368,29 +375,29 @@ return {
             noremap = true,
         },
         {
-            'gb',
-            ':lua Snacks.gitbrowse()<CR>',
-            silent = true,
-            mode = { 'n' },
-            desc = 'Open file in remeote repo',
-        },
-        {
             'grn',
             function()
                 Snacks.words.jump(1, true)
             end,
-            silent = true,
             mode = { 'n' },
             desc = 'Go to next reference',
+            silent = true,
         },
         {
             'grp',
             function()
                 Snacks.words.jump(-1, true)
             end,
-            silent = true,
             mode = { 'n' },
             desc = 'Go to previous reference',
+            silent = true,
+        },
+        {
+            '<leader>vn',
+            ':lua Snacks.notifier.show_history()<CR>',
+            mode = { 'n' },
+            desc = 'Notifications history',
+            silent = true,
         },
     },
 }

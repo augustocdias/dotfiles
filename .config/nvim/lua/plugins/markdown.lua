@@ -1,7 +1,7 @@
 -- markdown enhancements -- check marvkview
 
 return {
-    'MeanderingProgrammer/markdown.nvim',
+    'MeanderingProgrammer/render-markdown.nvim',
     enabled = not vim.g.vscode,
     event = 'VeryLazy',
     dependencies = {
