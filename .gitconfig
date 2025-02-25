@@ -4,7 +4,7 @@
     signingkey = 7D8396F74725A208D835CE3730E62A1E4F078650
 [core]
     editor = nvim --cmd 'let g:unception_block_while_host_edits=1'
-    pager = diff-so-fancy | bat
+    pager = delta
 [commit]
     gpgsign = true
 [tag]
@@ -19,7 +19,7 @@
     cmd = nvim -n -c "DiffviewOpen" "$MERGE"
 [merge]
     tool = diffview
-    conflictstyle = diff3
+    conflictstyle = zdiff3
 [mergetool]
     keepBackup = false
     trustExitCode = false
@@ -31,26 +31,15 @@
     required = true
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
+[log]
+    showSignature = true
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true  # use n and N to move between diff sections   whitespace = red reverse
+    true-color = always
 [alias]
     br = branch
     st = status
     co = checkout
-[log]
-    showSignature = true
-[interactive]
-    diffFilter = diff-so-fancy --patch
-[color]
-    ui = true
-[color "diff-highlight"]
-    oldNormal = red bold
-    oldHighlight = red bold 52
-    newNormal = green bold
-    newHighlight = green bold 22
-[color "diff"]
-    meta = 11
-    frag = magenta bold
-    func = 146 bold
-    commit = yellow bold
-    old = red bold
-    new = green bold
-    whitespace = red reverse
+    diff-sbs = -c delta.features=side-by-side diff

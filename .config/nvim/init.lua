@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.theme = 'tokyonight'
 vim.g.flavours = {
     catppuccin = 'mocha',
-    tokyonight = 'moon',
+    tokyonight = 'night',
 }
 vim.g.flavour = vim.g.flavours.tokyonight
 
