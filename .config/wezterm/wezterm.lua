@@ -1,6 +1,24 @@
 local wezterm = require('wezterm')
 local tabline = wezterm.plugin.require('https://github.com/michaelbrusegard/tabline.wez')
 
+function starts_with(str, start)
+    return string.sub(str, 1, string.len(start)) == start
+end
+
+local function get_current_track()
+    local success, track, err = wezterm.run_child_process({
+        'osascript',
+        wezterm.config_dir .. '/current_track.applescript',
+    })
+    wezterm.log_info(err)
+    wezterm.log_info(track)
+    if not success or starts_with(track, '58:63') then
+        return nil
+    else
+        return '  ' .. track:gsub('^%s*(.-)%s*$', '%1') .. ' '
+    end
+end
+
 local theme = 'Tokyo Night'
 
 local font_features = {
@@ -52,7 +70,7 @@ tabline.setup({
         tab_inactive = { 'index', { 'process', padding = { left = 0, right = 1 } } },
         tabline_x = { 'ram', 'cpu' },
         tabline_y = { 'datetime' },
-        tabline_z = { 'domain' },
+        tabline_z = { get_current_track, 'domain' },
     },
     extensions = {},
 })

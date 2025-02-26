@@ -123,6 +123,11 @@ return {
                                 features = 'all',
                                 allTargets = true,
                             },
+                            semanticHighlighting = {
+                                strings = {
+                                    enable = false,
+                                },
+                            },
                         },
                     },
                 },

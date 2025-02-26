@@ -6,8 +6,6 @@ return {
     enabled = not vim.g.vscode,
     config = function()
         local command_status = require('utils').command_status(require('utils').noice_status_color(vim.g.flavour))
-        local apple = require('utils.apple')
-        apple.music:listen()
 
         local function search_result()
             if vim.v.hlsearch == 0 then
@@ -44,24 +42,16 @@ return {
                     {
                         'filename',
                         file_status = true, -- displays file status (readonly status, modified status)
-                        path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+                        path = 1,           -- 0 = just filename, 1 = relative path, 2 = absolute path
                     },
                 },
                 lualine_x = {
-                    function()
-                        if vim.fn.reg_recording() ~= '' then
-                            return 'Recording @' .. vim.fn.reg_recording()
-                        else
-                            return ''
-                        end
-                    end,
                     command_status,
                     search_result,
                     'encoding',
                     'filetype',
-                    {
-                        'overseer',
-                    },
+                },
+                lualine_y = {
                     {
                         'diagnostics',
                         sources = { 'nvim_diagnostic' },
@@ -69,13 +59,15 @@ return {
                         always_visible = true,
                     },
                 },
-                lualine_y = {
+                lualine_z = {
                     'location',
                     'progress',
-                },
-                lualine_z = {
                     function()
-                        return apple.music:current_track()
+                        if vim.fn.reg_recording() ~= '' then
+                            return 'Recording @' .. vim.fn.reg_recording()
+                        else
+                            return ''
+                        end
                     end,
                 },
             },
@@ -86,7 +78,7 @@ return {
                     {
                         'filename',
                         file_status = true, -- displays file status (readonly status, modified status)
-                        path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+                        path = 1,           -- 0 = just filename, 1 = relative path, 2 = absolute path
                     },
                 },
                 lualine_x = { 'location' },

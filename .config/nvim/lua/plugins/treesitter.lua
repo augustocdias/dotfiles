@@ -112,25 +112,6 @@ return {
                     },
                 },
             })
-            -- require('vim.treesitter.query').set(
-            --     'rust',
-            --     'injections',
-            --     [[
-            -- ((
-            --   (raw_string_literal) @constant
-            --   (#match? @constant "(SELECT|select|INSERT|insert|UPDATE|update|DELETE|delete).*")
-            -- ) @injection.content (#set! injection.language "sql"))
-            -- ]]
-            -- ) -- inject sql in raw_string_literals
-            require('vim.treesitter.query').set(
-                'rust',
-                'injections',
-                [[
-((
-  (line_comment) @constant
-) @injection.content (#set! injection.language "markdown_inline"))
-]]
-            ) -- inject markdown in comments
 
             require('treesitter-context').setup({
                 enable = true,
