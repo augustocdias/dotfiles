@@ -92,8 +92,12 @@ return {
             fuzzy = {
                 sorts = { 'exact', 'score', 'sort_text', 'kind', 'label' },
             },
-
             cmdline = {
+                completion = {
+                    menu = {
+                        auto_show = true,
+                    },
+                },
                 keymap = { -- https://github.com/neovim/neovim/issues/21585
                     ['<C-space>'] = { 'show' },
                     ['<CR>'] = { 'accept', 'fallback' },

@@ -112,20 +112,6 @@ local keymap_table = {
         opts = { noremap = true },
     },
     {
-        shortcut = '\\',
-        cmd = '/@',
-        mode = { 'n' },
-        desc = 'Improve search',
-        opts = { noremap = true },
-    },
-    {
-        shortcut = '%s/',
-        cmd = '%sm/',
-        mode = { 'c' },
-        desc = 'Improve search',
-        opts = { noremap = true },
-    },
-    {
         shortcut = '<M-g>',
         cmd = ':nohlsearch<CR>',
         mode = { 'n', 'v' },
