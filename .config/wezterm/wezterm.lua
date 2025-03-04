@@ -6,12 +6,10 @@ function starts_with(str, start)
 end
 
 local function get_current_track()
-    local success, track, err = wezterm.run_child_process({
+    local success, track = wezterm.run_child_process({
         'osascript',
         wezterm.config_dir .. '/current_track.applescript',
     })
-    wezterm.log_info(err)
-    wezterm.log_info(track)
     if not success or starts_with(track, '58:63') then
         return nil
     else

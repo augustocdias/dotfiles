@@ -17,30 +17,18 @@ return {
     },
     keys = {
         {
-            ']c',
+            ']g',
             function()
-                if vim.wo.diff then
-                    return ']c'
-                end
-                vim.schedule(function()
-                    require('gitsigns').next_hunk()
-                end)
-                return '<Ignore>'
+                require('gitsigns').nav_hunk('next')
             end,
             expr = true,
             mode = { 'n' },
             desc = 'Next git hunk',
         },
         {
-            '[c',
+            '[g',
             function()
-                if vim.wo.diff then
-                    return '[c'
-                end
-                vim.schedule(function()
-                    require('gitsigns').prev_hunk()
-                end)
-                return '<Ignore>'
+                require('gitsigns').nav_hunk('prev')
             end,
             expr = true,
             mode = { 'n' },

@@ -36,14 +36,18 @@ return {
                         return { 'lsp', 'snippets', 'path' }
                     end
                 end,
+                per_filetype = {
+                    sql = { 'snippets', 'dadbod', 'buffer' },
+                },
+                providers = {
+                    dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
+                },
             },
             completion = {
                 ghost_text = { enabled = true },
                 list = {
                     selection = {
-                        preselect = function(ctx)
-                            return ctx.mode ~= 'cmdline'
-                        end,
+                        preselect = true,
                         auto_insert = false,
                     },
                 },
@@ -94,6 +98,12 @@ return {
             },
             cmdline = {
                 completion = {
+                    list = {
+                        selection = {
+                            preselect = false,
+                            auto_insert = false,
+                        },
+                    },
                     menu = {
                         auto_show = true,
                     },

@@ -203,20 +203,6 @@ local keymap_table = {
         opts = { noremap = true, silent = true },
     },
     {
-        shortcut = '[g',
-        cmd = vim.diagnostic.goto_prev,
-        mode = { 'n' },
-        desc = 'Go to previous diagnostic',
-        opts = { noremap = true },
-    },
-    {
-        shortcut = ']g',
-        cmd = vim.diagnostic.goto_next,
-        mode = { 'n' },
-        desc = 'Go to next diagnostic',
-        opts = { noremap = true },
-    },
-    {
         shortcut = '<leader>c',
         cmd = '"*y',
         mode = { 'v' },

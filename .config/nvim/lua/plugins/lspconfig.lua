@@ -89,12 +89,6 @@ return {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
         })
-        -- sql
-        lspconfig.sqlls.setup({
-            on_attach = lsp_utils.on_attach,
-            capabilities = lsp_utils.capabilities(),
-            cmd = { 'sql-language-server', 'up', '--method', 'stdio' },
-        })
         -- harper (grammar checker)
         lspconfig.harper_ls.setup({
             on_attach = lsp_utils.on_attach,
