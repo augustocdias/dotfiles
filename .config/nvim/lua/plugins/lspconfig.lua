@@ -95,6 +95,12 @@ return {
             capabilities = lsp_utils.capabilities(),
         })
 
+        -- godot
+        lspconfig.gdscript.setup({
+            on_attach = lsp_utils.on_attach,
+            capabilities = lsp_utils.capabilities(),
+        })
+
         -- lua
         local lua_runtime = {
             [vim.fn.expand('$VIMRUNTIME/lua')] = true,
