@@ -2,7 +2,6 @@ return {
     'folke/tokyonight.nvim',
     lazy = false,
     priority = 1000,
-    cond = not vim.g.vscode,
     config = function()
         require('tokyonight').setup({
             style = vim.g.flavours.tokyonight,

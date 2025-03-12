@@ -2,7 +2,6 @@
 
 return {
     'pmizio/typescript-tools.nvim',
-    enabled = not vim.g.vscode,
     ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
     config = function()
         local lsp_utils = require('utils.lsp')

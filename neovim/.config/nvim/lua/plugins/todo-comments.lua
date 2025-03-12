@@ -2,7 +2,6 @@
 
 return {
     'folke/todo-comments.nvim',
-    enabled = not vim.g.vscode,
     event = 'VeryLazy',
     opts = {
         signs = true,

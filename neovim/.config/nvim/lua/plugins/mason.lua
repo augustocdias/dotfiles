@@ -2,7 +2,6 @@
 
 return {
     'williamboman/mason.nvim', -- lsp server installer
-    enabled = not vim.g.vscode,
     -- opts = { log_level = vim.log.levels.DEBUG },
     dependencies = {
         'williamboman/mason-lspconfig.nvim',

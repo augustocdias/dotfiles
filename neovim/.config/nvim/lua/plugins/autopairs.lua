@@ -1,7 +1,6 @@
 -- helps with auto closing blocks
 return {
     'windwp/nvim-autopairs',
-    enabled = not vim.g.vscode,
     event = 'VeryLazy',
     config = function()
         local npairs = require('nvim-autopairs')

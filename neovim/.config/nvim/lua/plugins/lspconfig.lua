@@ -3,7 +3,6 @@
 return {
     'neovim/nvim-lspconfig',
     priority = 100,
-    enabled = not vim.g.vscode,
     dependencies = {
         'b0o/schemastore.nvim', -- adds schemas for json lsp
     },

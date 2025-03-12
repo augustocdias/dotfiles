@@ -2,7 +2,6 @@
 
 return {
     'mrcjkb/rustaceanvim',
-    enabled = not vim.g.vscode,
     dependencies = {
         'Saecki/crates.nvim',    -- auto complete for Cargo.toml
         'nvim-lua/plenary.nvim', -- its a dependency from crates.nvim

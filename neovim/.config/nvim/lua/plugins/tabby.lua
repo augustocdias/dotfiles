@@ -1,7 +1,6 @@
 -- shows nice tab ui
 return {
     'nanozuki/tabby.nvim',
-    enabled = not vim.g.vscode,
     event = 'VeryLazy',
     config = function()
         require('tabby.tabline').use_preset('tab_only', {

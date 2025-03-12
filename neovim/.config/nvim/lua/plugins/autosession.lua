@@ -2,7 +2,6 @@
 vim.o.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,resize,winpos,terminal,globals,localoptions'
 return {
     'rmagatti/auto-session',
-    enabled = not vim.g.vscode,
     lazy = false,
     opts = {
         auto_create = false,

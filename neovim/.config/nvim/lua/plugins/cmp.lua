@@ -2,7 +2,6 @@
 return {
     'saghen/blink.cmp', -- auto completion
     version = '*',
-    enabled = not vim.g.vscode,
     event = 'VeryLazy',
     dependencies = {
         'rafamadriz/friendly-snippets', -- snippets for many languages

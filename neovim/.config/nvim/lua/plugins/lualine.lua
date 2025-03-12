@@ -3,7 +3,6 @@
 return {
     'nvim-lualine/lualine.nvim',
     event = 'UIEnter',
-    enabled = not vim.g.vscode,
     config = function()
         local command_status = require('utils').command_status(require('utils').noice_status_color(vim.g.flavour))
 
