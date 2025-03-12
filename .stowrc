@@ -1,0 +1,5 @@
+--target=~/
+--ignore=.stowrc
+--ignore=DS_Store
+--ignore=others
+--ignore=install_deps.sh
