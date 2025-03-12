@@ -6,7 +6,7 @@ sudo /usr/sbin/softwareupdate --install-rosetta --agree-to-license
 
 # Brew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew bundle install
+brew bundle install --file .others/Brewfile
 
 # Neovim
 brew rm nvim --ignore-dependencies
@@ -32,7 +32,7 @@ fish -c "zellij setup --generate-completion fish > $__fish_config_dir/completion
 fish -c "bob complete fish > $__fish_config_dir/completions/bob.fish"
 
 # Make Home and End keys work as expected in MacOS
-cp ./others/DefaultKeyBinding.dict ~/Library/KeyBindings/
+cp ./.others/DefaultKeyBinding.dict ~/Library/KeyBindings/
 
 # Create dir for enhancd to cache
 mkdir ~/.enhancd

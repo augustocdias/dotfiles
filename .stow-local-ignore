@@ -1,0 +1,23 @@
+# Defaults from stow
+RCS
+.+,v
+CVS
+\.\#.+
+\.cvsignore
+\.svn
+_darcs
+\.hg
+\.git
+\.gitignore
+\.gitmodules
+.+~
+\#.*\#
+^/README.*
+^/LICENSE.*
+^/COPYING
+
+# Personal ignore
+\.stowrc
+\.DS_Store
+^/\.others
+^/install_deps.sh

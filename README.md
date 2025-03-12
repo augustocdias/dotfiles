@@ -2,7 +2,7 @@
 
 My personal mac os settings and tools
 
-First of all install command line tools and rosetta.
+First of all install command line tools and rosetta (the install script should be doing all of it).
 
 ## Brew Tips
 
