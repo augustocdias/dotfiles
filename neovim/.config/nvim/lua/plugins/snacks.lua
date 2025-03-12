@@ -26,6 +26,12 @@ return {
             right = { 'git' },         -- priority of signs on the right (high to low)
         },
         picker = {
+            sources = {
+                files = {
+                    hidden = true,
+                    exclude = { '.others/alfred' },
+                },
+            },
             layout = {
                 preset = 'ivy',
                 layout = {
