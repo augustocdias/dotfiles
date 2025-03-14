@@ -10,14 +10,14 @@ return {
         keymaps = {
             insert = false,
             insert_line = false,
-            normal = '<leader>sa',
+            normal = '_a',
             normal_cur = false,
             normal_line = false,
             normal_cur_line = false,
-            visual = '<leader>s',
+            visual = '_',
             visual_line = false,
-            delete = '<leader>sd',
-            change = '<leader>sr',
+            delete = '_d',
+            change = '_r',
         },
         highlight = {
             duration = 1000,

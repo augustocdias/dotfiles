@@ -133,7 +133,6 @@ return {
                         -- stop the annoying message from luassert
                         checkThirdParty = false,
                     },
-                    -- Do not send telemetry data containing a randomized but unique identifier
                     telemetry = {
                         enable = false,
                     },

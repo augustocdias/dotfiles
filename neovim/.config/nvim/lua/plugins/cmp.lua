@@ -8,7 +8,7 @@ return {
         'xzbdmw/colorful-menu.nvim',    -- adds highlights to the auto-complete options
     },
     config = function()
-        require('colorful-menu').setup()
+        require('colorful-menu').setup({})
         local disabled_filetypes = { 'minifiles' }
 
         require('blink.cmp').setup({
@@ -37,9 +37,15 @@ return {
                 end,
                 per_filetype = {
                     sql = { 'snippets', 'dadbod', 'buffer' },
+                    lua = { 'lazydev', 'lsp', 'snippets' },
                 },
                 providers = {
                     dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
+                    lazydev = {
+                        name = 'LazyDev',
+                        module = 'lazydev.integrations.blink',
+                        score_offset = 100,
+                    },
                 },
             },
             completion = {

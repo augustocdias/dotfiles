@@ -2,6 +2,7 @@
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Activity Monitor$" manage=off
 yabai -m rule --add app="^Maps$" manage=off
+yabai -m rule --add app="^Music$" manage=off
 yabai -m rule --add app="^Notes$" manage=off
 yabai -m rule --add app="^Messages$" manage=off
 yabai -m rule --add app="WhatsApp" manage=off
@@ -54,5 +55,8 @@ yabai -m config normal_window_border_color   0xff505050
 yabai -m config insert_window_border_color   0xffd75f5f
 yabai -m config active_window_opacity        1.0
 yabai -m config normal_window_opacity        0.90
+
+# non resizable windows will always float
+# yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || yabai -m window $YABAI_WINDOW_ID --toggle float'
 
 echo "yabai configuration loaded.."

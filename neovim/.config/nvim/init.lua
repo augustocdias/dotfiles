@@ -9,6 +9,12 @@ if not vim.loop.fs_stat(lazypath) then
         lazypath,
     })
 end
+
+local pipepath = vim.fn.stdpath('cache') .. '/server.pipe'
+if vim.g.godot and not vim.loop.fs_stat(pipepath) then
+    vim.fn.serverstart(pipepath)
+end
+
 vim.opt.rtp:prepend(lazypath)
 
 vim.g.theme = 'tokyonight'
