@@ -1,5 +1,4 @@
 jorgebucaran/fisher
-oh-my-fish/plugin-brew
 PatrickF1/colored_man_pages.fish
 oh-my-fish/plugin-foreign-env
 jethrokuan/fzf
@@ -10,7 +9,7 @@ oh-my-fish/plugin-rustup
 oh-my-fish/plugin-wttr
 reitzig/sdkman-for-fish@v2.1.0
 jorgebucaran/nvm.fish
-ilancosman/tide
 nickeb96/puffer-fish
 babarot/enhancd
 augustocdias/dotenv.fish
+xzvb12/tide

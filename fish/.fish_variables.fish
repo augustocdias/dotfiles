@@ -9,3 +9,5 @@ set -gx DOCKER_HOST "unix://$COLIMA_HOME/default/docker.sock"
 
 fish_add_path -g $HOME/.local/share/bob/nvim-bin/
 fish_add_path -g $HOME/.cargo/bin/
+fish_add_path /opt/homebrew/bin
+fish_add_path /opt/homebrew/sbin
