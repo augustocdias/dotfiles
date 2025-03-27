@@ -18,13 +18,7 @@ return {
             signs = true,
         })
 
-        -- show icons in the column
-        local signs = { Error = '', Warn = '', Hint = '', Info = '' }
-
-        for type, icon in pairs(signs) do
-            local hl = 'DiagnosticSign' .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-        end
+        -- TODO: check if this works
         vim.fn.sign_define(
             'LightBulbSign',
             { text = '󰛩', texthl = 'LspDiagnosticsDefaultInformation', numhl = 'LspDiagnosticsDefaultInformation' }
@@ -32,6 +26,20 @@ return {
 
         vim.diagnostic.config({
             severity_sort = true,
+            signs = {
+                text = {
+                    [vim.diagnostic.severity.ERROR] = '',
+                    [vim.diagnostic.severity.WARN] = '',
+                    [vim.diagnostic.severity.INFO] = '',
+                    [vim.diagnostic.severity.HINT] = '',
+                },
+                numhl = {
+                    [vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
+                    [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+                    [vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
+                    [vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
+                },
+            },
         })
 
         -- bash

@@ -3,18 +3,18 @@ keybinds clear-defaults=true {
         bind "Ctrl g" { SwitchToMode "normal"; }
     }
     pane {
-        bind "c" { SwitchToMode "renamepane"; PaneNameInput 0; }
-        bind "n" { NewPane; SwitchToMode "locked"; }
-        bind "down" { NewPane "down"; SwitchToMode "locked"; }
-        bind "right" { NewPane "right"; SwitchToMode "locked"; }
         bind "left" { NewPane "left"; SwitchToMode "locked"; }
+        bind "down" { NewPane "down"; SwitchToMode "locked"; }
         bind "up" { NewPane "up"; SwitchToMode "locked"; }
+        bind "right" { NewPane "right"; SwitchToMode "locked"; }
+        bind "c" { SwitchToMode "renamepane"; PaneNameInput 0; }
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "locked"; }
         bind "f" { ToggleFocusFullscreen; SwitchToMode "locked"; }
         bind "h" { MoveFocus "left"; }
         bind "j" { MoveFocus "down"; }
         bind "k" { MoveFocus "up"; }
         bind "l" { MoveFocus "right"; }
+        bind "n" { NewPane; SwitchToMode "locked"; }
         bind "p" { SwitchToMode "normal"; }
         bind "w" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "x" { CloseFocus; SwitchToMode "locked"; }
@@ -127,51 +127,52 @@ keybinds clear-defaults=true {
         }
     }
     shared_among "normal" "locked" {
+        bind "Alt +" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
+        bind "Alt =" { Resize "Increase"; }
+        bind "Alt [" { PreviousSwapLayout; }
+        bind "Alt ]" { NextSwapLayout; }
+        bind "Alt d" { Detach; }
+        bind "Ctrl h" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus"
+                payload "left"
+                floating false
+                move_mod "ctrl"
+            }
+        }
+        bind "Ctrl j" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus"
+                payload "down"
+                floating false
+                move_mod "ctrl"
+            }
+        }
+        bind "Ctrl k" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus"
+                payload "up"
+                floating false
+                move_mod "ctrl"
+            }
+        }
+        bind "Ctrl l" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus"
+                payload "right"
+                floating false
+                move_mod "ctrl"
+            }
+        }
+        bind "Alt m" { ToggleFocusFullscreen; SwitchToMode "locked"; }
+        bind "Alt n" { SwitchToMode "pane"; }
         bind "Alt w" {
             LaunchOrFocusPlugin "session-manager" {
                 floating true
                 move_to_focused_tab true
             }
             SwitchToMode "locked"
-        }
-        bind "Alt d" { Detach; }
-        bind "Alt m" { ToggleFocusFullscreen; SwitchToMode "locked"; }
-        bind "Alt n" { SwitchToMode "pane"; }
-        bind "Alt =" { Resize "Increase"; }
-        bind "Alt +" { Resize "Increase"; }
-        bind "Alt -" { Resize "Decrease"; }
-        bind "Alt [" { PreviousSwapLayout; }
-        bind "Alt ]" { NextSwapLayout; }
-        bind "Ctrl h" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-                name "move_focus";
-                payload "left";
-                move_mod "ctrl";
-            };
-        }
-
-        bind "Ctrl j" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-                name "move_focus";
-                payload "down";
-                move_mod "ctrl";
-            };
-        }
-
-        bind "Ctrl k" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-                name "move_focus";
-                payload "up";
-                move_mod "ctrl";
-            };
-        }
-
-        bind "Ctrl l" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-                name "move_focus";
-                payload "right";
-                move_mod "ctrl";
-            };
         }
     }
     shared_except "locked" "renametab" "renamepane" {
@@ -238,6 +239,7 @@ keybinds clear-defaults=true {
 // Plugin aliases - can be used to change the implementation of Zellij
 // changing these requires a restart to take effect
 plugins {
+    about location="zellij:about"
     compact-bar location="zellij:compact-bar"
     configuration location="zellij:configuration"
     filepicker location="zellij:strider" {
@@ -269,7 +271,7 @@ load_plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-theme "catppuccin-mocha"
+theme "tokyo-night-dark"
  
 // Choose the base input mode of zellij.
 // Default: normal
@@ -315,7 +317,7 @@ default_mode "locked"
 //   - false
 // 
 pane_frames false
-
+ 
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
 // or should each user have their own cursor (false)
@@ -436,9 +438,23 @@ pane_frames false
 // 
 // support_kitty_keyboard_protocol false
 
-
 autolock location="https://github.com/fresh2dev/zellij-autolock/releases/latest/download/zellij-autolock.wasm" {
    triggers "nvim|vim|v|nv"  // Lock when any open these programs open. They are expected to unlock themselves when closed (e.g., using zellij.vim plugin).
    watch_triggers "fzf|zoxide|atuin|atac"  // Lock when any of these open and monitor until closed.
    watch_interval "1.0"  // When monitoring, check every X seconds.
 }
+ 
+// Whether to stack panes when resizing beyond a certain size
+// Default: true
+// 
+// stacked_resize false
+ 
+// Whether to show tips on startup
+// Default: true
+// 
+show_startup_tips false
+ 
+// Whether to show release notes on first version run
+// Default: true
+// 
+// show_release_notes false

@@ -6,8 +6,10 @@ set -gx FZF_PREVIEW_DIR_CMD eza
 set -gx GITHUB_USER augustocdias
 set -gx COLIMA_HOME "$HOME/.colima"
 set -gx DOCKER_HOST "unix://$COLIMA_HOME/default/docker.sock"
+set -gx GOPATH "$HOME/.go"
 
 fish_add_path -g $HOME/.local/share/bob/nvim-bin/
 fish_add_path -g $HOME/.cargo/bin/
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
+fish_add_path $GOPATH/bin
