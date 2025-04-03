@@ -67,6 +67,7 @@ brew "ruby", link: true
 brew "rust"
 brew "sevenzip"
 brew "speedtest-cli"
+brew "starship"
 brew "stow"
 brew "telnet"
 brew "tesseract-lang"
