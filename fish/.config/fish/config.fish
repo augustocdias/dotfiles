@@ -13,10 +13,21 @@ fzf --fish | source
 # zoxide
 zoxide init fish | source
 
-if type -q tide
-    tide configure --auto --style=Rainbow --prompt_colors='True color' --show_time='24-hour format' --rainbow_prompt_separators=Slanted --powerline_prompt_heads=Slanted --powerline_prompt_tails=Slanted --powerline_prompt_style='Two lines, character and frame' --prompt_connection=Solid --powerline_right_prompt_frame=No --prompt_connection_andor_frame_color=Darkest --prompt_spacing=Sparse --icons='Many icons' --transient=Yes
-end
-
 fish_vi_key_bindings
 
 alias afk='open -a /System/Library/CoreServices/ScreenSaverEngine.app'
+
+# uv
+fish_add_path "/Users/augusto/.local/bin"
+
+function starship_transient_prompt_func
+    echo \n "  "
+end
+
+function starship_transient_rprompt_func
+    starship module cmd_duration
+    starship module time
+end
+
+starship init fish | source
+enable_transience
