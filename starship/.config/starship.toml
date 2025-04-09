@@ -6,10 +6,7 @@ $directory\
 [](fg:#769ff0 bg:#394260)\
 $git_branch\
 $git_status[](fg:#394260)\
-\n$character"""
-
-right_format = """
-$all\
+$fill \
 [](fg:#212736)\
 $nodejs\
 $rust\
@@ -18,8 +15,8 @@ $php\
 $lua\
 [](bg:#212736 fg:#a3aed2)\
 [ $time ](bg:#a3aed2 fg:#090c0c)\
-[▓▒░](#a3aed2)\
-"""
+[▓▒░](#a3aed2)
+$character"""
 
 command_timeout = 10000
 
@@ -69,3 +66,9 @@ disabled = false
 time_format = "%R"                                      # Hour:Minute Format
 style = "fg:#090c0c bg:#a3aed2"
 format = '[[  $time ](fg:#090c0c bg:#a3aed2)]($style)'
+
+[package]
+disabled = true
+
+[fill]
+style = "#4f4f4f"
