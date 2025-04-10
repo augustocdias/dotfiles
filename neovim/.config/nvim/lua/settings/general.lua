@@ -135,6 +135,9 @@ vim.o.diffopt = vim.o.diffopt .. ',indent-heuristic'
 -- https://github.com/neovim/neovim/pull/14537
 vim.o.diffopt = vim.o.diffopt .. ',linematch:50'
 
+-- don't create swap files because it is very annoying
+vim.o.swapfile = false
+
 -- shortmess
 -- I -> don't show intro message
 -- O -> file-read message overwrites previous

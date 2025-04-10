@@ -4,8 +4,7 @@ return {
     version = '*',
     event = 'VeryLazy',
     dependencies = {
-        'rafamadriz/friendly-snippets', -- snippets for many languages
-        'xzbdmw/colorful-menu.nvim',    -- adds highlights to the auto-complete options
+        'xzbdmw/colorful-menu.nvim', -- adds highlights to the auto-complete options
     },
     config = function()
         require('colorful-menu').setup({})
