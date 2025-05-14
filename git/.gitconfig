@@ -4,7 +4,7 @@
     signingkey = 7D8396F74725A208D835CE3730E62A1E4F078650
 [core]
     editor = nvim --cmd 'let g:unception_block_while_host_edits=1'
-    pager = delta
+    pager = delta -s
 [commit]
     gpgsign = true
 [tag]
@@ -36,7 +36,7 @@
 [log]
     showSignature = true
 [interactive]
-    diffFilter = delta --color-only
+    diffFilter = delta -s
 [delta]
     navigate = true  # use n and N to move between diff sections
     true-color = always

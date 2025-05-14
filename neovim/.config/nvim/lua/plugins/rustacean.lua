@@ -122,6 +122,9 @@ return {
                                 features = 'all',
                                 allTargets = true,
                             },
+                            rustfmt = {
+                                extraArgs = { '+nightly' },
+                            },
                             semanticHighlighting = {
                                 strings = {
                                     enable = false,
