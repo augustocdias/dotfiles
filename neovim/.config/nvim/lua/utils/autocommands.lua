@@ -105,5 +105,54 @@ return {
                 end
             end,
         })
+
+        local fold_group = augroup('Folds')
+        local IGNORE_FILETYPES = {
+            ['lazy_backdrop'] = true,
+            ['snacks_layout_box'] = true,
+            ['snacks_picker_input'] = true,
+            ['snacks_picker_list'] = true,
+            ['snacks_picker_preview'] = true,
+            ['snacks_win_backdrop'] = true,
+            ['vim-messages'] = true,
+            checkhealth = true,
+            fugitive = true,
+            git = true,
+            gitcommit = true,
+            help = true,
+            lazy = true,
+            lspinfo = true,
+            mason = true,
+            minifiles = true,
+            mininotify = true,
+            terminal = true,
+            vim = true,
+        }
+
+        -- Save view when leaving a buffer
+        autocmd('BufWinLeave', {
+            group = fold_group,
+            callback = function(ev)
+                local ft = vim.bo[ev.buf].filetype
+                if ft == '' or IGNORE_FILETYPES[ft] then
+                    return
+                end
+
+                vim.cmd.mkview({ mods = { emsg_silent = true } })
+            end,
+        })
+
+        -- Load view when entering a buffer
+        autocmd('BufWinEnter', {
+            group = fold_group,
+            callback = function(ev)
+                local ft = vim.bo[ev.buf].filetype
+                if ft == '' or IGNORE_FILETYPES[ft] then
+                    return
+                end
+
+                vim.cmd.loadview({ mods = { emsg_silent = true } })
+            end,
+        })
     end,
 }

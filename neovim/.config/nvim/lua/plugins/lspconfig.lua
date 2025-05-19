@@ -9,7 +9,6 @@ return {
     },
     config = function()
         local lsp_utils = require('utils.lsp')
-        local lspconfig = require('lspconfig')
 
         -- general LSP config
         vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -44,12 +43,14 @@ return {
         })
 
         -- bash
-        lspconfig.bashls.setup({
+        vim.lsp.enable('bashls')
+        vim.lsp.config('bashls', {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
         })
         -- yaml
-        lspconfig.yamlls.setup({
+        vim.lsp.enable('yamlls')
+        vim.lsp.config('yamlls', {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
             settings = {
@@ -66,7 +67,8 @@ return {
             },
         })
         -- json
-        lspconfig.jsonls.setup({
+        vim.lsp.enable('jsonls')
+        vim.lsp.config('jsonls', {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
             commands = {
@@ -84,27 +86,32 @@ return {
             },
         })
         -- docker
-        lspconfig.dockerls.setup({
+        vim.lsp.enable('dockerls')
+        vim.lsp.config('dockerls', {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
         })
-        lspconfig.docker_compose_language_service.setup({
+        vim.lsp.enable('docker_compose_language_service')
+        vim.lsp.config('docker_compose_language_service', {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
         })
         -- toml
-        lspconfig.taplo.setup({
+        vim.lsp.enable('taplo')
+        vim.lsp.config('taplo', {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
         })
         -- harper (grammar checker)
-        lspconfig.harper_ls.setup({
+        vim.lsp.enable('harper_ls')
+        vim.lsp.config('harper_ls', {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
         })
 
         -- godot
-        lspconfig.gdscript.setup({
+        vim.lsp.enable('gdscript')
+        vim.lsp.config('gdscript', {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
         })
@@ -117,7 +124,8 @@ return {
         for _, v in pairs(vim.api.nvim_get_runtime_file('', true)) do
             lua_runtime[v] = true
         end
-        lspconfig.lua_ls.setup({
+        vim.lsp.enable('lua_ls')
+        vim.lsp.config('lua_ls', {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
             settings = {

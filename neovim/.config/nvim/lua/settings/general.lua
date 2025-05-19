@@ -69,10 +69,14 @@ vim.o.signcolumn = 'yes'
 vim.o.numberwidth = 1
 
 -- folding
-vim.o.foldcolumn = '1'
-vim.o.foldlevel = 99
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
+vim.o.foldenable = true -- Enable folding.
+vim.o.foldcolumn = '1' -- Show folding signs.
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()' -- Use treesitter for folding.
+vim.o.foldlevel = 999 -- Close all folds.
+vim.o.foldlevelstart = 99 -- Start with all folds closed.
+vim.o.foldmethod = 'expr' -- Use expr to determine fold level.
+vim.o.foldopen = 'insert,mark,search,tag' -- Which commands open folds if the cursor moves into a closed fold.
+vim.o.foldtext = 'v:lua.custom_fold_text()' -- What to display on fold
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 -- Settings needed for .lvimrc
