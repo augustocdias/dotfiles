@@ -85,6 +85,12 @@ return {
                 },
             },
         })
+        -- eslint
+        vim.lsp.enable('eslint')
+        vim.lsp.config('eslint', {
+            on_attach = lsp_utils.on_attach,
+            capabilities = lsp_utils.capabilities(),
+        })
         -- docker
         vim.lsp.enable('dockerls')
         vim.lsp.config('dockerls', {

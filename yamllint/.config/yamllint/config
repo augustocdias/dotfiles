@@ -1,0 +1,15 @@
+---
+extends: default
+
+rules:
+  line-length: disable
+  anchors:
+    forbid-undeclared-aliases: true
+    forbid-duplicated-anchors: true
+    forbid-unused-anchors: true
+
+  key-duplicates:
+    forbid-duplicated-merge-keys: true
+
+  truthy:
+    check-keys: false
