@@ -70,4 +70,7 @@
     grep = grep -Ii
     la = "!git config -l | grep alias | cut -c 7-" # list aliases
     tidy = remote prune origin
+    t = stash
+    tp = stash pop
+    tl = stash list
 
