@@ -3,10 +3,10 @@
 return {
     'mrcjkb/rustaceanvim',
     dependencies = {
-        'Saecki/crates.nvim',    -- auto complete for Cargo.toml
+        'Saecki/crates.nvim', -- auto complete for Cargo.toml
         'nvim-lua/plenary.nvim', -- its a dependency from crates.nvim
     },
-    lazy = false,                -- the plugin is already lazy
+    lazy = false, -- the plugin is already lazy
     init = function()
         vim.g.rustaceanvim = function()
             local lsp_utils = require('utils.lsp')
@@ -240,6 +240,41 @@ return {
             ':RustLsp moveItem up<CR>',
             mode = { 'n' },
             desc = 'Move Item Up',
+            noremap = true,
+        },
+        {
+            '<leader>rt',
+            'rhs',
+            mode = { 'n' },
+            desc = 'Target',
+            noremap = true,
+        },
+        {
+            '<leader>rtd',
+            ':RustAnalyzer target<CR>',
+            mode = { 'n' },
+            desc = 'Host Default',
+            noremap = true,
+        },
+        {
+            '<leader>rtl',
+            ':RustAnalyzer target x86_64-unknown-linux-gnu<CR>',
+            mode = { 'n' },
+            desc = 'Linux x86_64',
+            noremap = true,
+        },
+        {
+            '<leader>rtm',
+            ':RustAnalyzer target aarch64-apple-darwin<CR>',
+            mode = { 'n' },
+            desc = 'Mac Arm',
+            noremap = true,
+        },
+        {
+            '<leader>rtw',
+            ':RustAnalyzer target x86_64-pc-windows-gnu<CR>',
+            mode = { 'n' },
+            desc = 'Windows x86_64',
             noremap = true,
         },
     },

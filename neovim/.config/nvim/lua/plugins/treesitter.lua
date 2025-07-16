@@ -2,11 +2,12 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
-        event = 'VeryLazy',
+        lazy = false,
+        -- branch = 'main', check dependencies support for main https://github.com/nvim-treesitter/nvim-treesitter-textobjects/issues/769
         dependencies = {
-            'nvim-treesitter/nvim-treesitter-textobjects',     -- adds treesitter based text objects
+            'nvim-treesitter/nvim-treesitter-textobjects', -- adds treesitter based text objects
             { 'nvim-treesitter/playground', enabled = false }, -- TS PLayground for creating queries
-            'nvim-treesitter/nvim-treesitter-context',         -- shows context of offscreen block in a float
+            'nvim-treesitter/nvim-treesitter-context', -- shows context of offscreen block in a float
         },
         config = function()
             require('nvim-treesitter.configs').setup({

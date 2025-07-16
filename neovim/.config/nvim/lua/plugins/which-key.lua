@@ -12,6 +12,13 @@ return {
     },
     keys = {
         {
+            '<leader>a',
+            'rhs',
+            mode = { 'n' },
+            desc = 'Avante',
+            noremap = true,
+        },
+        {
             '<leader>g',
             'rhs',
             mode = { 'n' },

@@ -12,13 +12,13 @@ return {
         act_as_tab = true,
         ignore_beginning = false,
         tabouts = {
-            { open = '#', close = ']' },
             { open = "'", close = "'" },
             { open = '"', close = '"' },
             { open = '`', close = '`' },
             { open = '(', close = ')' },
             { open = '[', close = ']' },
             { open = '{', close = '}' },
+            { open = '<', close = '>' },
         },
     },
 }
