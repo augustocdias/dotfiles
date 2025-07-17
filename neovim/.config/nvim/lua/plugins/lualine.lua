@@ -4,7 +4,9 @@ return {
     'nvim-lualine/lualine.nvim',
     event = 'UIEnter',
     config = function()
-        local command_status = require('utils').command_status(require('utils').noice_status_color(vim.g.flavour))
+        local utils = require('utils')
+        local command_status = utils.command_status(require('utils').noice_status_color(vim.g.flavour))
+        local host_rust_target = utils.get_host_target()
 
         local function search_result()
             if vim.v.hlsearch == 0 then
@@ -41,7 +43,7 @@ return {
                     {
                         'filename',
                         file_status = true, -- displays file status (readonly status, modified status)
-                        path = 1,           -- 0 = just filename, 1 = relative path, 2 = absolute path
+                        path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
                     },
                 },
                 lualine_x = {
@@ -49,6 +51,17 @@ return {
                     search_result,
                     'encoding',
                     'filetype',
+                    function()
+                        local rust_analyzer = vim.lsp.get_clients({ name = 'rust-analyzer' })[1]
+                        if rust_analyzer then
+                            local target = utils.find_table_value(
+                                rust_analyzer,
+                                { 'settings', 'rust-analyzer', 'cargo', 'target' }
+                            ) or host_rust_target
+                            return utils.describe_host(target)
+                        end
+                        return ''
+                    end,
                 },
                 lualine_y = {
                     {
@@ -77,7 +90,7 @@ return {
                     {
                         'filename',
                         file_status = true, -- displays file status (readonly status, modified status)
-                        path = 1,           -- 0 = just filename, 1 = relative path, 2 = absolute path
+                        path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
                     },
                 },
                 lualine_x = { 'location' },

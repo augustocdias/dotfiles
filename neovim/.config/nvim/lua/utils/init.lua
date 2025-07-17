@@ -18,4 +18,44 @@ return {
             color = { fg = color },
         }
     end,
+
+    find_table_value = function(tbl, keys)
+        local current = tbl
+        for _, key in ipairs(keys) do
+            if type(current) == 'table' and current[key] ~= nil then
+                current = current[key]
+            else
+                return nil
+            end
+        end
+        return current
+    end,
+
+    -- Given a Rust target triple, return a descriptive host name
+    describe_host = function(target)
+        local mappings = {
+            ['x86_64-apple-darwin'] = 'Mac (Intel)',
+            ['aarch64-apple-darwin'] = 'Mac (Apple Silicon)',
+            ['x86_64-unknown-linux-gnu'] = 'Linux (x86_64)',
+            ['aarch64-unknown-linux-gnu'] = 'Linux (ARM64)',
+            ['x86_64-pc-windows-msvc'] = 'Windows (x86_64)',
+            ['i686-pc-windows-msvc'] = 'Windows (32-bit)',
+            ['x86_64-pc-windows-gnu'] = 'Windows (x86_64)',
+            ['i686-pc-windows-gnu'] = 'Windows (32-bit)',
+        }
+
+        return mappings[target] or ('Unknown Host (' .. target .. ')')
+    end,
+
+    -- Returns rust's host target triple
+    get_host_target = function()
+        local cmd = "cargo -vV | grep 'host' | cut -d' ' -f2"
+        local host = vim.fn.system(cmd):gsub('%s+', '') -- remove trailing newline/whitespace
+
+        if vim.v.shell_error ~= 0 or host == '' then
+            return nil, 'Failed to get cargo host'
+        end
+
+        return host
+    end,
 }
