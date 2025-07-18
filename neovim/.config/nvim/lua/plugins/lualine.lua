@@ -54,10 +54,8 @@ return {
                     function()
                         local rust_analyzer = vim.lsp.get_clients({ name = 'rust-analyzer' })[1]
                         if rust_analyzer then
-                            local target = utils.find_table_value(
-                                rust_analyzer,
-                                { 'settings', 'rust-analyzer', 'cargo', 'target' }
-                            ) or host_rust_target
+                            local target = vim.tbl_get(rust_analyzer, 'settings', 'rust-analyzer', 'cargo', 'target')
+                                or host_rust_target
                             return utils.describe_host(target)
                         end
                         return ''

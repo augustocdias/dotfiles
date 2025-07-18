@@ -19,18 +19,6 @@ return {
         }
     end,
 
-    find_table_value = function(tbl, keys)
-        local current = tbl
-        for _, key in ipairs(keys) do
-            if type(current) == 'table' and current[key] ~= nil then
-                current = current[key]
-            else
-                return nil
-            end
-        end
-        return current
-    end,
-
     -- Given a Rust target triple, return a descriptive host name
     describe_host = function(target)
         local mappings = {
