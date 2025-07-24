@@ -7,6 +7,7 @@ set -gx GITHUB_USER augustocdias
 set -gx COLIMA_HOME "$HOME/.colima"
 set -gx DOCKER_HOST "unix://$COLIMA_HOME/default/docker.sock"
 set -gx GOPATH "$HOME/.go"
+set -gx SEARXNG_API_URL https://searx.oloke.xyz/
 
 fish_add_path -g $HOME/.local/share/bob/nvim-bin/
 fish_add_path -g $HOME/.local/bin
