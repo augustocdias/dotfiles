@@ -4,3 +4,4 @@ pgcli/.config/pgcli/*
 fish/.config/fish/*
 !fish/.config/fish/fish_plugins
 !fish/.config/fish/config.fish
+!fish/.config/fish/abbreviations.fish

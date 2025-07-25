@@ -3,6 +3,8 @@ ulimit -n unlimited
 test -e {$HOME}/.fish_variables.fish; and source {$HOME}/.fish_variables.fish
 test -e {$HOME}/.fish_secret_variables.fish; and source {$HOME}/.fish_secret_variables.fish
 
+source {$HOME}/.config/fish/abbreviations.fish
+
 set -xg SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 
 # warmup so ssh will work at first try
