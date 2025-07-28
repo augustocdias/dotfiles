@@ -135,6 +135,7 @@ return {
             end
         end)
         require('avante').setup({
+            mode = 'legacy',
             provider = 'gemini',
             providers = {
                 gemini = {
@@ -161,8 +162,19 @@ return {
                     api_key = '',
                     model = 'nomic-embed-text',
                     extra = {
-                        embed_batch_size = 10,
+                        embed_batch_size = 5,
                     },
+                },
+            },
+            diff = {
+                autojump = false,
+            },
+            windows = {
+                ask = {
+                    border = 'none',
+                },
+                edit = {
+                    border = 'none',
                 },
             },
         })
