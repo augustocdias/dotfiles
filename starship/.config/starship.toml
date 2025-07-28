@@ -5,6 +5,7 @@ format = """
 $directory\
 [](fg:#769ff0 bg:#394260)\
 $git_branch\
+$git_state\
 $git_status[](fg:#394260)\
 $fill \
 [](fg:#212736)\
