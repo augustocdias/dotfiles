@@ -146,6 +146,12 @@ return {
                     model = 'llama3',
                 },
             },
+            system_prompt = [[You have full access to the current workspace and should feel free to read, analyze, and explore any files or directories within the current project to better understand the context and provide more accurate assistance.
+When helping with tasks:
+- Always explore the current workspace to understand the project structure and context
+- Read relevant files to understand the codebase before making suggestions
+- Use the available tools (git, jira, github CLI, web search) when appropriate
+- Provide comprehensive, context-aware responses based on the actual project content]],
             selector = {
                 provider = 'snacks',
             },
@@ -154,7 +160,7 @@ return {
             },
             auto_suggestions_provider = nil,
             web_search_engine = {
-                provider = 'searxng',
+                provider = 'google',
             },
             rag_service = {
                 enabled = true,
@@ -175,6 +181,10 @@ return {
                         embed_batch_size = 5,
                     },
                 },
+            },
+            custom_tools = {
+                require('utils.avante.jira'),
+                require('utils.avante.gh'),
             },
             diff = {
                 autojump = false,
