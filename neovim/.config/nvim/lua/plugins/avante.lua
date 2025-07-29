@@ -136,11 +136,21 @@ return {
         end)
         require('avante').setup({
             mode = 'legacy',
-            provider = 'gemini',
+            provider = 'claude',
             providers = {
                 gemini = {
                     model = 'gemini-2.5-pro',
                 },
+                ollama = {
+                    endpoint = 'http://localhost:11434',
+                    model = 'llama3',
+                },
+            },
+            selector = {
+                provider = 'snacks',
+            },
+            input = {
+                provider = 'snacks',
             },
             auto_suggestions_provider = nil,
             web_search_engine = {

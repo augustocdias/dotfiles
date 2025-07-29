@@ -23,6 +23,7 @@ return {
                 enabled = true,
                 path = vim.fn.stdpath('cache') .. '/catppuccin',
             },
+            auto_integrations = true,
             styles = {
                 comments = { 'italic' },
                 conditionals = { 'italic' },
@@ -39,6 +40,7 @@ return {
             },
             integrations = {
                 aerial = true,
+                avante = true,
                 blink_cmp = true,
                 dap = true,
                 dap_ui = true,
@@ -81,6 +83,7 @@ return {
                 nvim_surround = true,
                 octo = true,
                 overseer = true,
+                render_markdown = true,
                 semantic_tokens = true,
                 snacks = true,
                 treesitter = true,

@@ -32,17 +32,6 @@ return {
                 none_ls.builtins.diagnostics.write_good,
                 none_ls.builtins.diagnostics.markdownlint,
                 none_ls.builtins.diagnostics.yamllint,
-                none_ls.builtins.diagnostics.vale.with({
-                    -- filetypes = {},
-                    diagnostics_postprocess = function(diagnostic)
-                        -- reduce the severity
-                        if diagnostic.severity == vim.diagnostic.severity['ERROR'] then
-                            diagnostic.severity = vim.diagnostic.severity['WARN']
-                        elseif diagnostic.severity == vim.diagnostic.severity['WARN'] then
-                            diagnostic.severity = vim.diagnostic.severity['INFO']
-                        end
-                    end,
-                }),
                 none_ls.builtins.code_actions.gitsigns,
                 none_ls.builtins.code_actions.refactoring.with({
                     filetypes = { 'go', 'javascript', 'lua', 'python', 'typescript', 'ruby', 'java', 'php' },
