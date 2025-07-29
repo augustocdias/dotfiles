@@ -51,6 +51,8 @@ M.returns = {
 
 function M.func(input, opts)
     local on_log = opts.on_log
+    local on_complete = opts.on_complete
+    local output = ''
 
     -- Check if gh CLI is available
     vim.fn.system('which gh')
@@ -81,14 +83,22 @@ function M.func(input, opts)
     local original_cwd = vim.fn.getcwd()
     vim.fn.chdir(abs_path)
 
-    local output = vim.fn.system(cmd)
-    local exit_code = vim.v.shell_error
+    Helpers.confirm('Are you sure you want to run ' .. cmd .. '?', function(ok)
+        if not ok then
+            on_complete(false, 'User canceled')
+            return
+        end
 
-    vim.fn.chdir(original_cwd)
+        output = vim.fn.system(cmd)
+        local exit_code = vim.v.shell_error
 
-    if exit_code ~= 0 then
-        return '', 'Command failed with exit code ' .. exit_code .. ': ' .. output
-    end
+        vim.fn.chdir(original_cwd)
+
+        if exit_code ~= 0 then
+            return '', 'Command failed with exit code ' .. exit_code .. ': ' .. output
+        end
+        on_complete(true, nil)
+    end)
 
     return output, nil
 end

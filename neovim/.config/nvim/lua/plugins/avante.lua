@@ -97,6 +97,14 @@ local function download_ollama_models()
     end)
 end
 
+local disabled_tools = {
+    'delete_path',
+    'create_dir',
+    'move_path',
+    'copy_path',
+    'create_file',
+}
+
 return {
     'yetone/avante.nvim',
     build = function()
@@ -140,6 +148,7 @@ return {
             providers = {
                 gemini = {
                     model = 'gemini-2.5-pro',
+                    disabled_tools = disabled_tools,
                 },
                 ollama = {
                     endpoint = 'http://localhost:11434',
@@ -152,6 +161,11 @@ When helping with tasks:
 - Read relevant files to understand the codebase before making suggestions
 - Use the available tools (git, jira, github CLI, web search) when appropriate
 - Provide comprehensive, context-aware responses based on the actual project content]],
+            behaviour = {
+                auto_approve_tool_permissions = {
+                    'git_diff',
+                },
+            },
             selector = {
                 provider = 'snacks',
             },
@@ -185,6 +199,17 @@ When helping with tasks:
             custom_tools = {
                 require('utils.avante.jira'),
                 require('utils.avante.gh'),
+            },
+            disabled_tools = {
+                'write_global_file',
+                'create_dir',
+                'delete_path',
+                'move_path',
+                'copy_path',
+                'create_file',
+                'write_to_file',
+                'str_replace',
+                'replace_in_file',
             },
             diff = {
                 autojump = false,

@@ -1,4 +1,5 @@
 local Base = require('avante.llm_tools.base')
+local Helpers = require('avante.llm_tools.helpers')
 
 local M = setmetatable({}, Base)
 
@@ -213,6 +214,7 @@ local function format_transitions_output(transitions)
 end
 
 function M.func(input, opts)
+    local on_complete = opts.on_complete
     local on_log = opts.on_log
 
     -- Get Jira configuration
@@ -285,21 +287,31 @@ function M.func(input, opts)
         end
 
         local body_json = vim.json.encode(transition_body)
-        local response, err =
-            make_jira_request(config, 'POST', '/issue/' .. input.issue_key .. '/transitions', body_json)
+        Helpers.confirm(
+            'Are you sure you want to transition issue ' .. input.issue_key .. ' to ' .. input.transition_id .. '?',
+            function(ok)
+                if not ok then
+                    on_complete(false, 'User canceled')
+                    return
+                end
+                local response, err =
+                    make_jira_request(config, 'POST', '/issue/' .. input.issue_key .. '/transitions', body_json)
 
-        if err then
-            error_msg = 'Failed to transition issue: ' .. err
-        else
-            if response and response.errorMessages then
-                error_msg = 'Jira API error: ' .. table.concat(response.errorMessages, ', ')
-            else
-                output = 'Successfully transitioned issue '
-                    .. input.issue_key
-                    .. ' using transition ID '
-                    .. input.transition_id
+                if err then
+                    error_msg = 'Failed to transition issue: ' .. err
+                else
+                    if response and response.errorMessages then
+                        error_msg = 'Jira API error: ' .. table.concat(response.errorMessages, ', ')
+                    else
+                        output = 'Successfully transitioned issue '
+                            .. input.issue_key
+                            .. ' using transition ID '
+                            .. input.transition_id
+                    end
+                end
+                on_complete(true, nil)
             end
-        end
+        )
     elseif input.action == 'add_comment' then
         if not input.issue_key then
             return '', 'issue_key is required for add_comment action'
@@ -314,20 +326,35 @@ function M.func(input, opts)
         }
 
         local body_json = vim.json.encode(comment_body)
-        local response, err = make_jira_request(config, 'POST', '/issue/' .. input.issue_key .. '/comment', body_json)
-
-        if err then
-            error_msg = 'Failed to add comment: ' .. err
-        else
-            if response.errorMessages then
-                error_msg = 'Jira API error: ' .. table.concat(response.errorMessages, ', ')
-            else
-                output = 'Successfully added comment to issue ' .. input.issue_key
-                if response.id then
-                    output = output .. ' (Comment ID: ' .. response.id .. ')'
+        Helpers.confirm(
+            'Are you sure you want to add the following comment to the issue '
+                .. input.issue_key
+                .. '? '
+                .. input.comment_text,
+            function(ok)
+                if not ok then
+                    on_complete(false, 'User canceled')
+                    return
                 end
+                local response, err =
+                    make_jira_request(config, 'POST', '/issue/' .. input.issue_key .. '/comment', body_json)
+
+                if err then
+                    error_msg = 'Failed to add comment: ' .. err
+                else
+                    if response and response.errorMessages then
+                        error_msg = 'Jira API error: ' .. table.concat(response.errorMessages, ', ')
+                    else
+                        output = 'Successfully added comment to issue ' .. input.issue_key
+                        if response and response.id then
+                            output = output .. ' (Comment ID: ' .. response.id .. ')'
+                        end
+                    end
+                end
+
+                on_complete(true, nil)
             end
-        end
+        )
     elseif input.action == 'get_comments' then
         if not input.issue_key then
             return '', 'issue_key is required for get_comments action'
