@@ -224,6 +224,25 @@ When helping with tasks:
             },
         })
     end,
+    keys = {
+        {
+            '<leader>al',
+            function()
+                Snacks.picker.pick('files', {
+                    confirm = function(picker)
+                        for _, item in ipairs(picker:selected()) do
+                            require('avante.api').add_selected_file(item['_path'])
+                        end
+                        picker:close()
+                    end,
+                })
+            end,
+            mode = { 'n' },
+            desc = 'List files and add selected to Avante',
+            noremap = true,
+            silent = true,
+        },
+    },
     dependencies = {
         'nvim-lua/plenary.nvim',
         'MunifTanjim/nui.nvim',
