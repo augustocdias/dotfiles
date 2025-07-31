@@ -3,21 +3,16 @@ local Base = require('avante.llm_tools.base')
 
 local M = setmetatable({}, Base)
 
-M.name = 'gh'
+M.name = 'git_status'
 
-M.description = "Interact with GitHub's gh CLI tool for repository operations"
+M.description = 'Execute git status'
 
 M.param = {
     type = 'table',
     fields = {
         {
-            name = 'command',
-            description = 'The gh command to execute (e.g., "pr create", "issue list", "repo view")',
-            type = 'string',
-        },
-        {
             name = 'args',
-            description = 'Additional arguments for the gh command',
+            description = 'Git status options (such as -s, -b, etc) and arguments (such as the pathspec)',
             type = 'string',
             optional = true,
         },
@@ -48,7 +43,7 @@ function M.func(input, opts)
     local output = ''
 
     -- Build the command
-    local cmd = 'gh ' .. input.command
+    local cmd = 'git status '
     if input.args then
         cmd = cmd .. ' ' .. input.args
     end
@@ -57,20 +52,13 @@ function M.func(input, opts)
         on_log('Running command: ' .. cmd)
     end
 
-    Helpers.confirm('Are you sure you want to run ' .. cmd .. '?', function(ok, reason)
-        if not ok then
-            on_complete(false, 'User declined, reason: ' .. (reason or 'unknown'))
-            return
+    vim.system(cmd, function(result)
+        local exit_code = result.code
+
+        if exit_code ~= 0 then
+            on_complete(false, 'Command failed with exit code ' .. exit_code .. ': ' .. output)
         end
-
-        vim.system(cmd, function(result)
-            local exit_code = result.code
-
-            if exit_code ~= 0 then
-                on_complete(false, 'Command failed with exit code ' .. exit_code .. ': ' .. output)
-            end
-            on_complete(result.stdout or true, nil)
-        end)
+        on_complete(result.stdout or true, nil)
     end)
 end
 

@@ -96,44 +96,61 @@ end
 
 -- Helper function to make HTTP requests to Jira API
 local function make_jira_request(config, method, endpoint, body)
-    local url = config.url .. '/rest/api/latest' .. endpoint
+    local curl = require('plenary.curl')
+    local url = config.url .. '/rest/api/3' .. endpoint
 
-    -- Build curl command
-    local cmd = string.format('curl -s -X %s "%s"', method, url)
+    -- Prepare headers
+    local headers = {
+        ['Content-Type'] = 'application/json',
+    }
 
+    local auth = nil
     -- Add authentication header
     if config.token:match(':') then
-        -- If token contains colon, it's likely email:token format
-        cmd = cmd .. ' --user "' .. config.token .. '"'
+        -- If token contains colon, it's likely email:token format (Basic auth)
+        auth = config.token
     else
         -- Assume it's already a bearer token or API token
-        cmd = cmd .. ' -H "Authorization: Bearer ' .. config.token .. '"'
+        headers['Authorization'] = 'Bearer ' .. config.token
     end
 
-    -- Add content type
-    cmd = cmd .. ' -H "Content-Type: application/json"'
+    -- Prepare request options
+    local opts = {
+        url = url,
+        method = method:lower(),
+        headers = headers,
+        timeout = 3000, -- 3 seconds timeout
+        auth = auth,
+    }
 
     -- Add body for POST/PUT requests
     if body then
-        local escaped_body = body:gsub('"', '\\"')
-        cmd = cmd .. ' -d "' .. escaped_body .. '"'
+        opts.body = body
     end
 
     -- Execute the request
-    local response = vim.fn.system(cmd)
-    local exit_code = vim.v.shell_error
+    local response = curl.request(opts)
 
-    if exit_code ~= 0 then
-        return nil, 'HTTP request failed: ' .. response
+    if not response then
+        return nil, 'HTTP request failed: No response received'
+    end
+
+    if response.status >= 400 then
+        return nil,
+            'HTTP request failed with status ' .. response.status .. ': ' .. (response.body or 'No error message')
     end
 
     -- Try to parse JSON response
-    local success, parsed = pcall(vim.json.decode, response, json_decode_opts)
-    if success then
-        return parsed, nil
+    if response.body and response.body ~= '' then
+        local success, parsed = pcall(vim.json.decode, response.body, json_decode_opts)
+        if success then
+            return parsed, nil
+        else
+            -- Return raw response if JSON parsing fails
+            return response.body, nil
+        end
     else
-        -- Return raw response if JSON parsing fails
-        return response, nil
+        return '', nil -- Empty response is valid for some operations
     end
 end
 
@@ -228,45 +245,46 @@ function M.func(input, opts)
         on_log('Action: ' .. input.action)
     end
 
-    local output = ''
-    local error_msg = nil
-
     if input.action == 'get_issue' then
         if not input.issue_key then
-            return '', 'issue_key is required for get_issue action'
+            on_complete(false, 'issue_key is required for get_issue action')
+            return
         end
 
         local response, err = make_jira_request(config, 'GET', '/issue/' .. input.issue_key, nil)
         if err then
-            error_msg = 'Failed to get issue: ' .. err
+            on_complete(false, 'Failed to get issue: ' .. err)
         else
             if response.errorMessages then
-                error_msg = 'Jira API error: ' .. table.concat(response.errorMessages, ', ')
+                on_complete(false, 'Jira API error: ' .. table.concat(response.errorMessages, ', '))
             else
-                output = format_issue_output(response)
+                on_complete(format_issue_output(response), nil)
             end
         end
     elseif input.action == 'get_transitions' then
         if not input.issue_key then
-            return '', 'issue_key is required for get_transitions action'
+            on_complete(false, 'issue_key is required for get_transitions action')
+            return
         end
 
         local response, err = make_jira_request(config, 'GET', '/issue/' .. input.issue_key .. '/transitions', nil)
         if err then
-            error_msg = 'Failed to get transitions: ' .. err
+            on_complete(false, 'Failed to get transitions: ' .. err)
         else
             if response.errorMessages then
-                error_msg = 'Jira API error: ' .. table.concat(response.errorMessages, ', ')
+                on_complete(false, 'Jira API error: ' .. table.concat(response.errorMessages, ', '))
             else
-                output = format_transitions_output(response)
+                on_complete(format_transitions_output(response), nil)
             end
         end
     elseif input.action == 'transition' then
         if not input.issue_key then
-            return '', 'issue_key is required for transition action'
+            on_complete(false, 'issue_key is required for transition action')
+            return
         end
         if not input.transition_id then
-            return '', 'transition_id is required for transition action'
+            on_complete(false, 'transition_id is required for transition action')
+            return
         end
 
         -- Build transition request body
@@ -282,42 +300,66 @@ function M.func(input, opts)
             if success then
                 transition_body.fields = fields
             else
-                return '', 'Invalid JSON in fields parameter: ' .. input.fields
+                on_complete(false, 'Invalid JSON in fields parameter: ' .. input.fields)
+                return
+            end
+        end
+
+        -- Get transitions to find the target status name
+        local transitions_response, transitions_err =
+            make_jira_request(config, 'GET', '/issue/' .. input.issue_key .. '/transitions', nil)
+
+        local target_status_name = input.transition_id -- fallback to ID if we can't find name
+        if not transitions_err and transitions_response and transitions_response.transitions then
+            for _, transition in ipairs(transitions_response.transitions) do
+                if transition.id == input.transition_id then
+                    target_status_name = transition.to and transition.to.name or transition.name
+                    break
+                end
             end
         end
 
         local body_json = vim.json.encode(transition_body)
         Helpers.confirm(
-            'Are you sure you want to transition issue ' .. input.issue_key .. ' to ' .. input.transition_id .. '?',
-            function(ok)
+            'Are you sure you want to transition issue ' .. input.issue_key .. ' to "' .. target_status_name .. '"?',
+            function(ok, reason)
                 if not ok then
-                    on_complete(false, 'User canceled')
+                    on_complete(false, 'User declined, reason: ' .. (reason or 'unknown'))
                     return
                 end
                 local response, err =
                     make_jira_request(config, 'POST', '/issue/' .. input.issue_key .. '/transitions', body_json)
 
                 if err then
-                    error_msg = 'Failed to transition issue: ' .. err
+                    on_complete(false, 'Failed to transition issue: ' .. err)
                 else
                     if response and response.errorMessages then
-                        error_msg = 'Jira API error: ' .. table.concat(response.errorMessages, ', ')
+                        on_complete(false, 'Jira API error: ' .. table.concat(response.errorMessages, ', '))
                     else
-                        output = 'Successfully transitioned issue '
-                            .. input.issue_key
-                            .. ' using transition ID '
-                            .. input.transition_id
+                        on_complete(
+
+                            'Successfully transitioned issue '
+                                .. input.issue_key
+                                .. ' to "'
+                                .. target_status_name
+                                .. '"',
+                            nil
+                        )
                     end
                 end
-                on_complete(true, nil)
-            end
+            end,
+            nil,
+            opts.session_ctx,
+            'jira'
         )
     elseif input.action == 'add_comment' then
         if not input.issue_key then
-            return '', 'issue_key is required for add_comment action'
+            on_complete(false, 'issue_key is required for add_comment action')
+            return
         end
         if not input.comment_text then
-            return '', 'comment_text is required for add_comment action'
+            on_complete(false, 'comment_text is required for add_comment action')
+            return
         end
 
         -- Build comment request body
@@ -331,41 +373,45 @@ function M.func(input, opts)
                 .. input.issue_key
                 .. '? '
                 .. input.comment_text,
-            function(ok)
+            function(ok, reason)
                 if not ok then
-                    on_complete(false, 'User canceled')
+                    on_complete(false, 'User declined, reason: ' .. (reason or 'unknown'))
                     return
                 end
                 local response, err =
                     make_jira_request(config, 'POST', '/issue/' .. input.issue_key .. '/comment', body_json)
 
                 if err then
-                    error_msg = 'Failed to add comment: ' .. err
+                    on_complete(false, 'Failed to add comment: ' .. err)
                 else
                     if response and response.errorMessages then
-                        error_msg = 'Jira API error: ' .. table.concat(response.errorMessages, ', ')
+                        on_complete(false, 'Jira API error: ' .. table.concat(response.errorMessages, ', '))
                     else
                         output = 'Successfully added comment to issue ' .. input.issue_key
                         if response and response.id then
                             output = output .. ' (Comment ID: ' .. response.id .. ')'
                         end
+                        on_complete(output, nil)
                     end
                 end
-
-                on_complete(true, nil)
-            end
+            end,
+            nil,
+            opts.session_ctx,
+            'jira'
         )
+        return
     elseif input.action == 'get_comments' then
         if not input.issue_key then
-            return '', 'issue_key is required for get_comments action'
+            on_complete(false, 'issue_key is required for get_comments action')
+            return
         end
 
         local response, err = make_jira_request(config, 'GET', '/issue/' .. input.issue_key .. '/comment', nil)
         if err then
-            error_msg = 'Failed to get comments: ' .. err
+            on_complete(false, 'Failed to get comments: ' .. err)
         else
             if response.errorMessages then
-                error_msg = 'Jira API error: ' .. table.concat(response.errorMessages, ', ')
+                on_complete(false, 'Jira API error: ' .. table.concat(response.errorMessages, ', '))
             else
                 local comments_output = {}
                 table.insert(comments_output, 'Comments for issue ' .. input.issue_key .. ':')
@@ -397,22 +443,23 @@ function M.func(input, opts)
                     )
                 end
 
-                output = table.concat(comments_output, '\n')
+                on_complete(table.concat(comments_output, '\n'), nil)
             end
         end
     elseif input.action == 'search' then
         if not input.jql_query then
-            return '', 'jql_query is required for search action'
+            on_complete(false, 'jql_query is required for search action')
+            return
         end
 
         local search_endpoint = '/search?jql=' .. vim.uri_encode(input.jql_query) .. '&maxResults=50'
         local response, err = make_jira_request(config, 'GET', search_endpoint, nil)
 
         if err then
-            error_msg = 'Failed to search issues: ' .. err
+            on_complete(false, 'Failed to search issues: ' .. err)
         else
             if response.errorMessages then
-                error_msg = 'Jira API error: ' .. table.concat(response.errorMessages, ', ')
+                on_complete(false, 'Jira API error: ' .. table.concat(response.errorMessages, ', '))
             else
                 local search_output = {}
                 table.insert(search_output, string.format('Search results (%d issues found):', response.total or 0))
@@ -429,14 +476,15 @@ function M.func(input, opts)
                     )
                 end
 
-                output = table.concat(search_output, '\n')
+                on_complete(table.concat(search_output, '\n'), nil)
             end
         end
     else
-        error_msg = 'Invalid action. Use: get_issue, get_transitions, transition, add_comment, get_comments, or search'
+        on_complete(
+            false,
+            'Invalid action. Use: get_issue, get_transitions, transition, add_comment, get_comments, or search'
+        )
     end
-
-    return output, error_msg
 end
 
 return M
