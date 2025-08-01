@@ -243,6 +243,7 @@ return {
                 require('utils.avante.jira'),
                 require('utils.avante.gh'),
                 require('utils.avante.git_status'),
+                require('utils.avante.datadog'),
             },
             disabled_tools = {
                 'write_global_file',
