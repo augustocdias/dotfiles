@@ -123,44 +123,10 @@ return {
         })
 
         -- lua
-        local lua_runtime = {
-            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-        }
-        for _, v in pairs(vim.api.nvim_get_runtime_file('', true)) do
-            lua_runtime[v] = true
-        end
-        vim.lsp.enable('lua_ls')
-        vim.lsp.config('lua_ls', {
+        vim.lsp.enable('emmylua_ls')
+        vim.lsp.config('emmylua_ls', {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
-            settings = {
-                Lua = {
-                    format = {
-                        enabled = false,
-                        defaultConfig = {
-                            indent_style = 'space',
-                        },
-                    },
-                    runtime = {
-                        version = 'LuaJIT',
-                    },
-                    diagnostics = {
-                        -- Get the language server to recognize the `vim` global
-                        globals = { 'vim', 'Snacks' },
-                        disable = { 'inject-field' },
-                    },
-                    workspace = {
-                        -- Make the server aware of Neovim runtime files
-                        library = lua_runtime,
-                        -- stop the annoying message from luassert
-                        checkThirdParty = false,
-                    },
-                    telemetry = {
-                        enable = false,
-                    },
-                },
-            },
         })
     end,
     keys = {

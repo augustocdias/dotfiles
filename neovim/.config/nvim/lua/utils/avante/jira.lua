@@ -73,7 +73,7 @@ M.returns = {
 }
 
 -- Helper function to get Jira configuration
-local function get_jira_config(input)
+local function get_jira_config()
     local jira_url = os.getenv('JIRA_URL')
     local auth_token = os.getenv('JIRA_TOKEN')
 
@@ -235,7 +235,7 @@ function M.func(input, opts)
     local on_log = opts.on_log
 
     -- Get Jira configuration
-    local config, config_error = get_jira_config(input)
+    local config, config_error = get_jira_config()
     if config_error then
         return '', config_error
     end
@@ -387,7 +387,7 @@ function M.func(input, opts)
                     if response and response.errorMessages then
                         on_complete(false, 'Jira API error: ' .. table.concat(response.errorMessages, ', '))
                     else
-                        output = 'Successfully added comment to issue ' .. input.issue_key
+                        local output = 'Successfully added comment to issue ' .. input.issue_key
                         if response and response.id then
                             output = output .. ' (Comment ID: ' .. response.id .. ')'
                         end

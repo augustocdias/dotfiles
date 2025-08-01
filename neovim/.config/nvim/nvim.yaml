@@ -4,6 +4,8 @@ globals:
   vim:
     any: true
     property: read-only
+  Snacks:
+    any: true
   vim.g:
     property: new-fields
   vim.b:

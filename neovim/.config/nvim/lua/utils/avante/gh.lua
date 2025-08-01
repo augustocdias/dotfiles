@@ -48,29 +48,30 @@ function M.func(input, opts)
     local output = ''
 
     -- Build the command
-    local cmd = 'gh ' .. input.command
+    local cmd_string = 'gh ' .. input.command
+    local cmd = { 'sh', '-c', 'gh' }
     if input.args then
-        cmd = cmd .. ' ' .. input.args
+        cmd_string = cmd_string .. ' ' .. input.args
+        vim.list_extend(cmd, vim.split(input.args, '%s+'))
     end
 
     if on_log then
-        on_log('Running command: ' .. cmd)
+        on_log('Running command: ' .. cmd_string)
     end
 
-    Helpers.confirm('Are you sure you want to run ' .. cmd .. '?', function(ok, reason)
+    Helpers.confirm('Are you sure you want to run ' .. cmd_string .. '?', function(ok, reason)
         if not ok then
             on_complete(false, 'User declined, reason: ' .. (reason or 'unknown'))
             return
         end
 
-        vim.system(cmd, function(result)
-            local exit_code = result.code
+        local result = vim.system(cmd):wait()
+        local exit_code = result.code
 
-            if exit_code ~= 0 then
-                on_complete(false, 'Command failed with exit code ' .. exit_code .. ': ' .. output)
-            end
-            on_complete(result.stdout or true, nil)
-        end)
+        if exit_code ~= 0 then
+            on_complete(false, 'Command failed with exit code ' .. exit_code .. ': ' .. output)
+        end
+        on_complete(result.stdout or true, nil)
     end)
 end
 

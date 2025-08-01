@@ -34,18 +34,6 @@ return {
                         return { 'lsp', 'snippets', 'path' }
                     end
                 end,
-                per_filetype = {
-                    sql = { 'snippets', 'dadbod', 'buffer' },
-                    lua = { 'lazydev', 'lsp', 'snippets' },
-                },
-                providers = {
-                    dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
-                    lazydev = {
-                        name = 'LazyDev',
-                        module = 'lazydev.integrations.blink',
-                        score_offset = 100,
-                    },
-                },
             },
             completion = {
                 ghost_text = { enabled = true },
@@ -68,9 +56,9 @@ return {
                     draw = {
                         treesitter = { 'lsp' },
                         columns = {
-                            { 'kind_icon',  gap = 1 },
-                            { 'label',      gap = 3 },
-                            { 'item_idx',   gap = 1 },
+                            { 'kind_icon', gap = 1 },
+                            { 'label', gap = 3 },
+                            { 'item_idx', gap = 1 },
                             { 'source_name' },
                         },
                         components = {

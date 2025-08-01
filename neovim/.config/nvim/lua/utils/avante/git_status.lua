@@ -43,13 +43,14 @@ function M.func(input, opts)
     local output = ''
 
     -- Build the command
-    local cmd = 'git status '
+    local cmd = { 'sh', '-c', 'git', 'status' }
     if input.args then
-        cmd = cmd .. ' ' .. input.args
+        vim.list_extend(cmd, vim.split(input.args, '%s+'))
     end
 
+    local cmd_string = table.concat(cmd, ' ')
     if on_log then
-        on_log('Running command: ' .. cmd)
+        on_log('Running command: ' .. cmd_string)
     end
 
     vim.system(cmd, function(result)
