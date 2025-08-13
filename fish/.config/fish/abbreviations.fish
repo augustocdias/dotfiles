@@ -12,3 +12,7 @@ abbr --add gsb git status -sb
 abbr --add p pnpm
 abbr --add pi pnpm install
 abbr --add pd pnpm dev
+
+# llm
+abbr --add lc llm commit
+abbr --add lcy llm commit --yes

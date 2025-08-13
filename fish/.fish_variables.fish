@@ -4,8 +4,6 @@ set -gx FZF_DEFAULT_COMMAND "rg --files --no-ignore-exclude"
 set -gx FZF_DEFAULT_OPTS "--layout=reverse --inline-info --multi --preview=\"bat --style=numbers --color=always {} 2>/dev/null || echo 'Not a file' | head -300\" --preview-window=\"right:wrap\" --bind='f3:execute(bat --paging always --pager \"less -R\" {}),f2:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo{+} | pbcopy)' --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 --color=selected-bg:#45475a"
 set -gx FZF_PREVIEW_DIR_CMD eza
 set -gx GITHUB_USER augustocdias
-set -gx COLIMA_HOME "$HOME/.colima"
-set -gx DOCKER_HOST "unix://$COLIMA_HOME/default/docker.sock"
 set -gx GOPATH "$HOME/.go"
 set -gx SEARXNG_API_URL https://searx.oloke.xyz/
 
