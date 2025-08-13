@@ -1,9 +1,14 @@
+local logger = require('utils.logger').new('avante_ollama')
+local context7_tool = require('utils.avante.mcp.context7')
+local notion_tool = require('utils.avante.mcp.notion')
 local models = { 'llama3', 'nomic-embed-text' }
 
 local system_prompt = [[
-You are a code-focused LLM integrated in a local editor, acting as a minimalist, non-agentic pair programming partner for a senior software architect. **Operate strictly in read-only advisory mode** – never create or modify files, directories, or apply changes; only suggest and explain. Prioritize concise, example-driven guidance and be honest about your capabilities and limitations. Use the tools available (e.g. `git_status`, `git_diff`, `jira`, `rag_search`, etc.) if available to inform your advice, but do not execute any changes.
+You are a code-focused LLM integrated in a local editor, acting as a minimalist, non-agentic pair programming partner for a senior software architect. **Operate strictly in read-only advisory mode** – never create or modify files, directories, or apply changes; only suggest and explain. Prioritize concise, example-driven guidance and be honest about your capabilities and limitations. Use the tools available (e.g. `git_status`, `git_diff`, `jira`, `rag_search`, `mcp`, etc.) if available to inform your advice, but do not execute any changes.
 
 When reviewing code, focus on performance optimizations, security improvements, and maintainability. Point out any potential **race conditions**, **memory leaks**, or **security vulnerabilities** (especially in non-Rust code). Politely challenge assumptions or incorrect approaches – if the user is wrong, correct them with clear reasoning and guidance.
+
+When the user requests code examples, setup or configuration steps, or library/API documentation always use context7 mcp tool.
 
 ### PR Guidelines
 - Use the provided PR template (do not remove or skip any sections) if available.
@@ -42,15 +47,6 @@ When reviewing code, focus on performance optimizations, security improvements, 
 -- Be direct, honest, and teach through examples. Prefer precision over verbosity. When uncertain, say so — and suggest how to verify.
 -- ]]
 
-local function log(msg)
-    local logfile = vim.fn.stdpath('cache') .. '/avante_ollama.log'
-    local f = io.open(logfile, 'a')
-    if f then
-        f:write(os.date('[%Y-%m-%d %H:%M:%S] ') .. msg .. '\n')
-        f:close()
-    end
-end
-
 local function is_ollama_running(cb)
     local sock = vim.uv.new_tcp()
     sock:connect('127.0.0.1', 11434, function(err)
@@ -62,7 +58,7 @@ end
 local function start_serve()
     vim.schedule(function()
         vim.notify("Starting 'ollama serve' in background...", vim.log.levels.INFO, { title = 'avante.nvim' })
-        log("Starting 'ollama serve' in background...")
+        logger.info("Starting 'ollama serve' in background...")
         local serve = vim.system({
             'sh',
             '-c',
@@ -72,12 +68,12 @@ local function start_serve()
             text = true,
             on_stdout = function(_, data)
                 if data then
-                    log('[ollama] ' .. table.concat(data, '\n'))
+                    logger.info('[ollama] ' .. table.concat(data, '\n'))
                 end
             end,
             on_stderr = function(_, data)
                 if data then
-                    log('[ollama error] ' .. table.concat(data, '\n'))
+                    logger.info('[ollama error] ' .. table.concat(data, '\n'))
                 end
             end,
         })
@@ -101,7 +97,7 @@ local function download_ollama_models()
         if not running then
             start_serve()
         else
-            log("'ollama serve' already running.")
+            logger.info("'ollama serve' already running.")
         end
 
         -- 4. Pull models if missing
@@ -116,23 +112,23 @@ local function download_ollama_models()
                             { title = 'avante.nvim' }
                         )
                     end)
-                    log('Pulling model: ' .. model)
+                    logger.info('Pulling model: ' .. model)
                     vim.fn.jobstart({ 'ollama', 'pull', model }, {
                         stdout_buffered = true,
                         stderr_buffered = true,
                         on_stdout = vim.schedule_wrap(function(_, data)
                             if data then
-                                log('[ollama] ' .. table.concat(data, '\n'))
+                                logger.info('[ollama] ' .. table.concat(data, '\n'))
                             end
                         end),
                         on_stderr = vim.schedule_wrap(function(_, data)
                             if data then
-                                log('[ollama error] ' .. table.concat(data, '\n'))
+                                logger.info('[ollama error] ' .. table.concat(data, '\n'))
                             end
                         end),
                     })
                 else
-                    log('Model already present: ' .. model)
+                    logger.info('Model already present: ' .. model)
                 end
             end)
         end
@@ -181,7 +177,7 @@ return {
             if not running then
                 start_serve()
             else
-                log("'ollama serve' already running.")
+                logger.info("'ollama serve' already running.")
             end
         end)
         require('avante').setup({
@@ -244,6 +240,10 @@ return {
                 require('utils.avante.gh'),
                 require('utils.avante.git_status'),
                 require('utils.avante.datadog'),
+                context7_tool.get_library_docs_tool(),
+                context7_tool.resolve_library_tool(),
+                notion_tool.fetch_tool(),
+                notion_tool.search_tool(),
             },
             disabled_tools = {
                 'write_global_file',

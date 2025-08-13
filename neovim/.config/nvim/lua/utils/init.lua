@@ -22,14 +22,14 @@ return {
     -- Given a Rust target triple, return a descriptive host name
     describe_host = function(target)
         local mappings = {
-            ['x86_64-apple-darwin'] = 'Mac (Intel)',
-            ['aarch64-apple-darwin'] = 'Mac (Apple Silicon)',
-            ['x86_64-unknown-linux-gnu'] = 'Linux (x86_64)',
-            ['aarch64-unknown-linux-gnu'] = 'Linux (ARM64)',
-            ['x86_64-pc-windows-msvc'] = 'Windows (x86_64)',
-            ['i686-pc-windows-msvc'] = 'Windows (32-bit)',
-            ['x86_64-pc-windows-gnu'] = 'Windows (x86_64)',
-            ['i686-pc-windows-gnu'] = 'Windows (32-bit)',
+            ['x86_64-apple-darwin'] = ' Mac (Intel)',
+            ['aarch64-apple-darwin'] = ' Mac (Apple Silicon)',
+            ['x86_64-unknown-linux-gnu'] = ' Linux (x86_64)',
+            ['aarch64-unknown-linux-gnu'] = ' Linux (ARM64)',
+            ['x86_64-pc-windows-msvc'] = '  Windows (x86_64)',
+            ['i686-pc-windows-msvc'] = '󰨡  Windows (32-bit)',
+            ['x86_64-pc-windows-gnu'] = '  Windows (x86_64)',
+            ['i686-pc-windows-gnu'] = '󰨡  Windows (32-bit)',
         }
 
         return mappings[target] or ('Unknown Host (' .. target .. ')')

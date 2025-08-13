@@ -70,8 +70,6 @@ return {
                     },
                 },
                 lualine_z = {
-                    'location',
-                    'progress',
                     function()
                         if vim.fn.reg_recording() ~= '' then
                             return 'Recording @' .. vim.fn.reg_recording()
@@ -79,6 +77,8 @@ return {
                             return ''
                         end
                     end,
+                    'location',
+                    'progress',
                 },
             },
             inactive_sections = {

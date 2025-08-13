@@ -24,6 +24,8 @@ vim.g.flavours = {
 }
 vim.g.flavour = vim.g.flavours.tokyonight
 
+require('utils.logger').setup()
+
 require('utils.custom_fold')
 require('settings.general')
 require('settings.gui')

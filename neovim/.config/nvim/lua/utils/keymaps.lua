@@ -212,11 +212,7 @@ local keymap_table = {
     {
         shortcut = '<C-h>',
         cmd = function()
-            if os.getenv('ZELLIJ') then
-                require('zellij-nav').left_tab()
-            else
-                vim.cmd.wincmd('h')
-            end
+            vim.cmd.wincmd('h')
         end,
         mode = { 'n' },
         desc = 'Focus on window to the left',
@@ -225,11 +221,7 @@ local keymap_table = {
     {
         shortcut = '<C-l>',
         cmd = function()
-            if os.getenv('ZELLIJ') then
-                require('zellij-nav').right_tab()
-            else
-                vim.cmd.wincmd('l')
-            end
+            vim.cmd.wincmd('l')
         end,
         mode = { 'n' },
         desc = 'Focus on window to the right',
@@ -238,11 +230,7 @@ local keymap_table = {
     {
         shortcut = '<C-k>',
         cmd = function()
-            if os.getenv('ZELLIJ') then
-                require('zellij-nav').up()
-            else
-                vim.cmd.wincmd('k')
-            end
+            vim.cmd.wincmd('k')
         end,
         mode = { 'n' },
         desc = 'Focus on window up',
@@ -251,11 +239,7 @@ local keymap_table = {
     {
         shortcut = '<C-j>',
         cmd = function()
-            if os.getenv('ZELLIJ') then
-                require('zellij-nav').down()
-            else
-                vim.cmd.wincmd('j')
-            end
+            vim.cmd.wincmd('j')
         end,
         mode = { 'n' },
         desc = 'Focus on window down',
