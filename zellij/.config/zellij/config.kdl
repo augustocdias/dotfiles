@@ -7,6 +7,7 @@ keybinds clear-defaults=true {
         bind "down" { NewPane "down"; SwitchToMode "locked"; }
         bind "up" { NewPane "up"; SwitchToMode "locked"; }
         bind "right" { NewPane "right"; SwitchToMode "locked"; }
+        bind "s" { NewPane "stacked"; SwitchToMode "locked"; }
         bind "c" { SwitchToMode "renamepane"; PaneNameInput 0; }
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "locked"; }
         bind "f" { ToggleFocusFullscreen; SwitchToMode "locked"; }
@@ -134,35 +135,35 @@ keybinds clear-defaults=true {
         bind "Alt ]" { NextSwapLayout; }
         bind "Alt d" { Detach; }
         bind "Ctrl h" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-                name "move_focus"
-                payload "left"
-                floating false
-                move_mod "ctrl"
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.3.0/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "left";
+                move_mod "ctrl";
+                use_arrow_keys "false";
             }
         }
         bind "Ctrl j" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-                name "move_focus"
-                payload "down"
-                floating false
-                move_mod "ctrl"
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.3.0/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "down";
+                move_mod "ctrl";
+                use_arrow_keys "false";
             }
         }
         bind "Ctrl k" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-                name "move_focus"
-                payload "up"
-                floating false
-                move_mod "ctrl"
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.3.0/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "up";
+                move_mod "ctrl";
+                use_arrow_keys "false";
             }
         }
         bind "Ctrl l" {
-            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-                name "move_focus"
-                payload "right"
-                floating false
-                move_mod "ctrl"
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.3.0/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "right";
+                move_mod "ctrl";
+                use_arrow_keys "false";
             }
         }
         bind "Alt m" { ToggleFocusFullscreen; SwitchToMode "locked"; }

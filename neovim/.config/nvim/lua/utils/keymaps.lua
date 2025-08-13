@@ -1,3 +1,22 @@
+local nvim_direction_to_zellij = {
+    ['j'] = 'down',
+    ['k'] = 'up',
+    ['h'] = 'left',
+    ['l'] = 'right',
+}
+
+local zellij_move = function(direction)
+    local cur_winnr = vim.fn.winnr()
+    vim.cmd.wincmd(direction)
+    local new_winnr = vim.fn.winnr()
+
+    if cur_winnr == new_winnr then
+        vim.fn.system('zellij action move-focus ' .. nvim_direction_to_zellij[direction])
+        if vim.v.shell_error ~= 0 then
+            error('zellij executable not found in path')
+        end
+    end
+end
 -- always check :help tui-input before mapping
 local keymap_table = {
     {
@@ -212,7 +231,7 @@ local keymap_table = {
     {
         shortcut = '<C-h>',
         cmd = function()
-            vim.cmd.wincmd('h')
+            zellij_move('h')
         end,
         mode = { 'n' },
         desc = 'Focus on window to the left',
@@ -221,7 +240,7 @@ local keymap_table = {
     {
         shortcut = '<C-l>',
         cmd = function()
-            vim.cmd.wincmd('l')
+            zellij_move('l')
         end,
         mode = { 'n' },
         desc = 'Focus on window to the right',
@@ -230,7 +249,7 @@ local keymap_table = {
     {
         shortcut = '<C-k>',
         cmd = function()
-            vim.cmd.wincmd('k')
+            zellij_move('k')
         end,
         mode = { 'n' },
         desc = 'Focus on window up',
@@ -239,7 +258,7 @@ local keymap_table = {
     {
         shortcut = '<C-j>',
         cmd = function()
-            vim.cmd.wincmd('j')
+            zellij_move('j')
         end,
         mode = { 'n' },
         desc = 'Focus on window down',
