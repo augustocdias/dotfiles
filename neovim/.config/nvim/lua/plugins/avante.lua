@@ -1,7 +1,8 @@
-local logger = require('utils.logger').new('avante_ollama')
 local context7_tool = require('utils.avante.mcp.context7')
 local notion_tool = require('utils.avante.mcp.notion')
+local memory_tool = require('utils.avante.mcp.memory')
 local models = { 'llama3', 'nomic-embed-text' }
+local logger = require('utils.logger').new('avante_ollama')
 
 local system_prompt = [[
 You are a code-focused LLM integrated in a local editor, acting as a minimalist, non-agentic pair programming partner for a senior software architect. **Operate strictly in read-only advisory mode** – never create or modify files, directories, or apply changes; only suggest and explain. Prioritize concise, example-driven guidance and be honest about your capabilities and limitations. Use the tools available (e.g. `git_status`, `git_diff`, `jira`, `rag_search`, `mcp`, etc.) if available to inform your advice, but do not execute any changes.
@@ -16,6 +17,12 @@ When the user requests code examples, setup or configuration steps, or library/A
 - Format PR titles as “feat|fix|refactor: <short description> <JIRA-ID>” (≤ 50 characters).
 - Keep the PR description brief, including a hyperlink to the Jira ticket (use the `JIRA_URL` env variable for the URL).
 - Do not alter or remove any checklist items in the PR template.
+
+### Memory
+- Consider beginning your chat by saying only "Remembering..." and retrieve all relevant information from your knowledge graph
+- Always refer to your knowledge graph as your "memory"
+- If any new information was gathered during the interaction, update your memory
+- Use the memory MCP to retrieve information required and store any new insights, knowledge, useful procedures in the memory MCP. Especially focus on the feedback you receive, so you can learn my preferences and apply these to all your future work. The learnings are more valuable than the actual task execution as you will be able to use them in the future.
 ]]
 
 --[[You're a minimalist and concise AI pair programming partner for a senior software architect. You have full read-only access to the current workspace and may explore it to understand the project before giving suggestions.
@@ -188,6 +195,9 @@ return {
                     extra_request_body = {
                         max_tokens = 64000,
                     },
+                    extra_headers = {
+                        ['anthropic-beta'] = 'context-1m-2025-08-07',
+                    },
                 },
                 gemini = {
                     model = 'gemini-2.5-pro',
@@ -244,6 +254,15 @@ return {
                 context7_tool.resolve_library_tool(),
                 notion_tool.fetch_tool(),
                 notion_tool.search_tool(),
+                memory_tool.add_observations_tool(),
+                memory_tool.create_entities_tool(),
+                memory_tool.create_relations_tool(),
+                memory_tool.delete_entities_tool(),
+                memory_tool.delete_observations_tool(),
+                memory_tool.delete_relations_tool(),
+                memory_tool.open_nodes_tool(),
+                memory_tool.read_graph_tool(),
+                memory_tool.search_nodes_tool(),
             },
             disabled_tools = {
                 'write_global_file',

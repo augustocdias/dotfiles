@@ -192,7 +192,7 @@ function MCPClient:call_tool(name, arguments, callback)
 
     self:_make_request('tools/call', {
         name = name,
-        arguments = arguments or {},
+        arguments = arguments,
     }, callback)
 end
 
