@@ -123,7 +123,7 @@ function M.git_tool()
             local requires_confirmation = not is_read_only_command(params.command, params.args)
 
             if on_log then
-                on_log('Running command: ' .. cmd_string)
+                on_log(' Running command: ' .. cmd_string)
             end
 
             local function run_git_command()

@@ -9,7 +9,7 @@ local function execute_gh_command(cmd_parts, description, requires_confirmation,
     local cmd_string = 'gh ' .. table.concat(cmd_parts, ' ')
 
     if on_log then
-        on_log('Running command:  ' .. cmd_string)
+        on_log(' Running command: ' .. cmd_string)
     end
 
     local function run_command()
@@ -370,7 +370,12 @@ function M.pr_tool()
                     table.insert(cmd_parts, '--' .. params.merge_method)
                 end
             else
-                on_complete(false, 'Invalid action: ' .. params.action .. '. Valid actions: create, list, view, merge, close, reopen, ready, draft')
+                on_complete(
+                    false,
+                    'Invalid action: '
+                        .. params.action
+                        .. '. Valid actions: create, list, view, merge, close, reopen, ready, draft'
+                )
                 return
             end
 
@@ -842,7 +847,10 @@ function M.repo_tool()
                     table.insert(cmd_parts, params.clone_dir)
                 end
             else
-                on_complete(false, 'Invalid action: ' .. params.action .. '. Valid actions: view, list, create, clone, fork')
+                on_complete(
+                    false,
+                    'Invalid action: ' .. params.action .. '. Valid actions: view, list, create, clone, fork'
+                )
                 return
             end
 
