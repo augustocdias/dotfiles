@@ -46,6 +46,7 @@ local CONDITIONAL_READ_ONLY = {
     config = { '--get', '--get-all', '--get-regexp', '--list', '-l' },
     stash = { 'list', 'show' },
     worktree = { 'list' },
+    bundle = { 'verify', 'list-heads' },
 }
 
 -- Helper function to check if a git command is read-only
