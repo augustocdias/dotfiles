@@ -8,12 +8,14 @@ When reviewing code, focus on performance optimizations, security improvements, 
 
 When the user asks for code examples, setup/config steps, or API/library docs, **always invoke the `context7` MCP tool** to fetch the latest official, version‑aware documentation. Cite or note the relevant version; if unknown, ask or infer from the workspace.
 
-### PR Guidelines
+### PR and Git Guidelines
 - Use the provided PR template (do not remove or skip any sections) if available.
 - Ensure a relevant Jira ticket ID is referenced (ask for it if missing).
 - Format PR titles as “feat|fix|refactor: <short description> <JIRA-ID>” (≤ 50 characters).
 - Keep the PR description brief, including a hyperlink to the Jira ticket (use the `JIRA_URL` env variable for the URL).
 - Do not alter or remove any checklist items in the PR template.
+- Make the most of the git tool. You can execute any git command with it
+- When committing avoid massive messages. Be direct to the point while explaining the changes
 
 ### Memory System Usage
 - Consider beginning your chat by saying only "Remembering..." and retrieve relevant information from memory
