@@ -46,4 +46,12 @@ return {
 
         return host
     end,
+
+    -- wrap schedule to avoid error E5560
+    wrap_schedule = function(func, ...)
+        local args = { ... }
+        vim.schedule(function()
+            func(unpack(args))
+        end)
+    end,
 }

@@ -1,7 +1,3 @@
-local context7_tool = require('utils.avante.mcp.context7')
-local octocode_tool = require('utils.avante.mcp.octocode')
-local notion_tool = require('utils.avante.mcp.notion')
-local memory_tool = require('utils.avante.mcp.memory')
 local models = { 'llama3', 'nomic-embed-text' }
 local logger = require('utils.logger').new('avante_ollama')
 
@@ -216,6 +212,11 @@ return {
                 logger.info("'ollama serve' already running.")
             end
         end)
+        local gh_tool = require('utils.avante.gh')
+        local context7_tool = require('utils.avante.mcp.context7')
+        local octocode_tool = require('utils.avante.mcp.octocode')
+        local notion_tool = require('utils.avante.mcp.notion')
+        local memory_tool = require('utils.avante.mcp.memory')
         require('avante').setup({
             mode = 'legacy',
             provider = 'claude',
@@ -255,7 +256,7 @@ return {
                 provider = 'google',
             },
             rag_service = {
-                enabled = true,
+                enabled = false,
                 host_mount = os.getenv('HOME') .. '/dev',
                 llm = {
                     provider = 'ollama',
@@ -276,9 +277,15 @@ return {
             },
             custom_tools = {
                 require('utils.avante.jira'),
-                require('utils.avante.gh'),
-                require('utils.avante.git_status'),
                 require('utils.avante.datadog'),
+                require('utils.avante.git').git_tool(),
+                gh_tool.issue_tool(),
+                gh_tool.pr_tool(),
+                gh_tool.run_tool(),
+                gh_tool.search_tool(),
+                gh_tool.status_tool(),
+                gh_tool.workflow_tool(),
+                gh_tool.repo_tool(),
                 context7_tool.get_library_docs_tool(),
                 context7_tool.resolve_library_tool(),
                 notion_tool.fetch_tool(),
@@ -318,11 +325,9 @@ return {
                 },
                 ask = {
                     border = 'none',
-                    start_insert = false,
                 },
                 edit = {
                     border = 'none',
-                    start_insert = false,
                 },
                 input = {
                     height = 15,

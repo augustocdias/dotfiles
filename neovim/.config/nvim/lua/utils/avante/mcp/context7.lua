@@ -1,12 +1,8 @@
+local wrap_schedule = require('utils').wrap_schedule
 local mcp_client = require('utils.avante.mcp.client')
+local Base = require('avante.llm_tools.base')
 
-local M = {}
-
-local wrap_schedule = function(func, args)
-    vim.schedule(function()
-        func(args)
-    end)
-end
+local M = setmetatable({}, Base)
 
 -- Global Context7 client instance
 local context7_client = nil
@@ -98,17 +94,13 @@ function M.get_library_docs_tool()
             local max_tokens = params.max_tokens or 10000
 
             if not library_id then
-                wrap_schedule(on_complete, {
-                    error = 'library_id parameter is required',
-                })
+                wrap_schedule(on_complete, false, 'library_id parameter is required')
                 return
             end
 
             -- Ensure client is ready
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Context7 MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Context7 MCP client')
                 return
             end
 
@@ -133,10 +125,7 @@ function M.get_library_docs_tool()
 
                 context7_client:call_tool('get-library-docs', doc_args, function(docs_result, docs_error)
                     if docs_error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to fetch documentation: ' .. (docs_error.message or 'unknown error'),
-                            library_id = library_id,
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to fetch documentation: ' .. (docs_error.message or 'unknown error'))
                         return
                     end
 
@@ -155,19 +144,13 @@ function M.get_library_docs_tool()
                     end
 
                     if documentation == '' then
-                        wrap_schedule(on_complete, {
-                            error = 'No documentation content found for ' .. library_id,
-                            library_id = library_id,
-                        })
+                        wrap_schedule(on_complete, false, 'No documentation content found for ' .. library_id)
                         return
                     end
 
                     on_log('✅ Documentation fetched successfully (' .. #documentation .. ' characters)')
 
-                    wrap_schedule(on_complete, {
-                        documentation = documentation,
-                        library_id = library_id,
-                    })
+                    wrap_schedule(on_complete, documentation)
                 end)
             end
 
@@ -211,16 +194,12 @@ function M.resolve_library_tool()
             local library_name = params.library_name
 
             if not library_name then
-                wrap_schedule(on_complete, {
-                    error = 'library_name parameter is required',
-                })
+                wrap_schedule(on_complete, false, 'library_name parameter is required')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Context7 MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Context7 MCP client')
                 return
             end
 
@@ -236,9 +215,7 @@ function M.resolve_library_tool()
                     libraryName = library_name,
                 }, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to resolve library: ' .. (error.message or 'unknown error'),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to resolve library: ' .. (error.message or 'unknown error'))
                         return
                     end
 
@@ -256,17 +233,13 @@ function M.resolve_library_tool()
                     end
 
                     if matches == '' then
-                        wrap_schedule(on_complete, {
-                            error = "No matches found for '" .. library_name .. "'",
-                        })
+                        wrap_schedule(on_complete, false, "No matches found for '" .. library_name .. "'")
                         return
                     end
 
                     on_log('✅ Found matches for: ' .. library_name)
 
-                    wrap_schedule(on_complete, {
-                        matches = matches,
-                    })
+                    wrap_schedule(on_complete, matches)
                 end)
             end
 

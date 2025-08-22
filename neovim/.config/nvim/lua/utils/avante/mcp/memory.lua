@@ -1,12 +1,8 @@
+local wrap_schedule = require('utils').wrap_schedule
 local mcp_client = require('utils.avante.mcp.client')
+local Base = require('avante.llm_tools.base')
 
-local M = {}
-
-local wrap_schedule = function(func, args)
-    vim.schedule(function()
-        func(args)
-    end)
-end
+local M = setmetatable({}, Base)
 
 -- Global Memory client instance
 local memory_client = nil
@@ -109,16 +105,12 @@ function M.create_entities_tool()
             local entities = params.entities
 
             if not entities or type(entities) ~= 'table' then
-                wrap_schedule(on_complete, {
-                    error = 'entities parameter is required and must be a table',
-                })
+                wrap_schedule(on_complete, false, 'entities parameter is required and must be a table')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Memory MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Memory MCP client')
                 return
             end
 
@@ -134,9 +126,7 @@ function M.create_entities_tool()
                     entities = entities,
                 }, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to create entities: ' .. (error.message or 'unknown error'),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to create entities: ' .. (error.message or 'unknown error'))
                         return
                     end
 
@@ -155,9 +145,7 @@ function M.create_entities_tool()
 
                     on_log('✅ Entities created successfully')
 
-                    wrap_schedule(on_complete, {
-                        created_entities = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -226,16 +214,12 @@ function M.create_relations_tool()
             local relations = params.relations
 
             if not relations or type(relations) ~= 'table' then
-                wrap_schedule(on_complete, {
-                    error = 'relations parameter is required and must be a table',
-                })
+                wrap_schedule(on_complete, false, 'relations parameter is required and must be a table')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Memory MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Memory MCP client')
                 return
             end
 
@@ -251,9 +235,7 @@ function M.create_relations_tool()
                     relations = relations,
                 }, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to create relations: ' .. (error.message or 'unknown error'),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to create relations: ' .. (error.message or 'unknown error'))
                         return
                     end
 
@@ -272,9 +254,7 @@ function M.create_relations_tool()
 
                     on_log('✅ Relations created successfully')
 
-                    wrap_schedule(on_complete, {
-                        created_relations = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -342,16 +322,12 @@ function M.add_observations_tool()
             local observations = params.observations
 
             if not observations or type(observations) ~= 'table' then
-                wrap_schedule(on_complete, {
-                    error = 'observations parameter is required and must be a table',
-                })
+                wrap_schedule(on_complete, false, 'observations parameter is required and must be a table')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Memory MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Memory MCP client')
                 return
             end
 
@@ -367,9 +343,7 @@ function M.add_observations_tool()
                     observations = observations,
                 }, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to add observations: ' .. (error.message or 'unknown error'),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to add observations: ' .. (error.message or 'unknown error'))
                         return
                     end
 
@@ -388,9 +362,7 @@ function M.add_observations_tool()
 
                     on_log('✅ Observations added successfully')
 
-                    wrap_schedule(on_complete, {
-                        added_observations = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -434,16 +406,12 @@ function M.search_nodes_tool()
             local query = params.query
 
             if not query then
-                wrap_schedule(on_complete, {
-                    error = 'query parameter is required',
-                })
+                wrap_schedule(on_complete, false, 'query parameter is required')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Memory MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Memory MCP client')
                 return
             end
 
@@ -459,9 +427,7 @@ function M.search_nodes_tool()
                     query = query,
                 }, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to search nodes: ' .. (error.message or 'unknown error'),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to search nodes: ' .. (error.message or 'unknown error'))
                         return
                     end
 
@@ -480,9 +446,7 @@ function M.search_nodes_tool()
 
                     on_log('✅ Search completed')
 
-                    wrap_schedule(on_complete, {
-                        search_results = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -525,9 +489,7 @@ function M.read_graph_tool()
             local on_complete = opts.on_complete
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Memory MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Memory MCP client')
                 return
             end
 
@@ -541,9 +503,7 @@ function M.read_graph_tool()
 
                 memory_client:call_tool('read_graph', nil, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to read graph: ' .. (error.message or 'unknown error'),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to read graph: ' .. (error.message or 'unknown error'))
                         return
                     end
 
@@ -562,9 +522,7 @@ function M.read_graph_tool()
 
                     on_log('✅ Graph read successfully')
 
-                    wrap_schedule(on_complete, {
-                        graph_data = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -613,16 +571,12 @@ function M.open_nodes_tool()
             local names = params.names
 
             if not names or type(names) ~= 'table' then
-                wrap_schedule(on_complete, {
-                    error = 'names parameter is required and must be a table',
-                })
+                wrap_schedule(on_complete, false, 'names parameter is required and must be a table')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Memory MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Memory MCP client')
                 return
             end
 
@@ -638,9 +592,7 @@ function M.open_nodes_tool()
                     names = names,
                 }, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to open nodes: ' .. (error.message or 'unknown error'),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to open nodes: ' .. (error.message or 'unknown error'))
                         return
                     end
 
@@ -659,9 +611,7 @@ function M.open_nodes_tool()
 
                     on_log('✅ Nodes opened successfully')
 
-                    wrap_schedule(on_complete, {
-                        nodes_data = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -710,16 +660,12 @@ function M.delete_entities_tool()
             local entity_names = params.entity_names
 
             if not entity_names or type(entity_names) ~= 'table' then
-                wrap_schedule(on_complete, {
-                    error = 'entity_names parameter is required and must be a table',
-                })
+                wrap_schedule(on_complete, false, 'entity_names parameter is required and must be a table')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Memory MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Memory MCP client')
                 return
             end
 
@@ -735,9 +681,7 @@ function M.delete_entities_tool()
                     entityNames = entity_names,
                 }, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to delete entities: ' .. (error.message or 'unknown error'),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to delete entities: ' .. (error.message or 'unknown error'))
                         return
                     end
 
@@ -756,9 +700,7 @@ function M.delete_entities_tool()
 
                     on_log('✅ Entities deleted successfully')
 
-                    wrap_schedule(on_complete, {
-                        deletion_result = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -826,16 +768,12 @@ function M.delete_observations_tool()
             local deletions = params.deletions
 
             if not deletions or type(deletions) ~= 'table' then
-                wrap_schedule(on_complete, {
-                    error = 'deletions parameter is required and must be a table',
-                })
+                wrap_schedule(on_complete, false, 'deletions parameter is required and must be a table')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Memory MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Memory MCP client')
                 return
             end
 
@@ -851,9 +789,7 @@ function M.delete_observations_tool()
                     deletions = deletions,
                 }, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to delete observations: ' .. (error.message or 'unknown error'),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to delete observations: ' .. (error.message or 'unknown error'))
                         return
                     end
 
@@ -872,9 +808,7 @@ function M.delete_observations_tool()
 
                     on_log('✅ Observations deleted successfully')
 
-                    wrap_schedule(on_complete, {
-                        deletion_result = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -943,16 +877,12 @@ function M.delete_relations_tool()
             local relations = params.relations
 
             if not relations or type(relations) ~= 'table' then
-                wrap_schedule(on_complete, {
-                    error = 'relations parameter is required and must be a table',
-                })
+                wrap_schedule(on_complete, false, 'relations parameter is required and must be a table')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Memory MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Memory MCP client')
                 return
             end
 
@@ -968,9 +898,7 @@ function M.delete_relations_tool()
                     relations = relations,
                 }, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to delete relations: ' .. (error.message or 'unknown error'),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to delete relations: ' .. (error.message or 'unknown error'))
                         return
                     end
 
@@ -989,9 +917,7 @@ function M.delete_relations_tool()
 
                     on_log('✅ Relations deleted successfully')
 
-                    wrap_schedule(on_complete, {
-                        deletion_result = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 

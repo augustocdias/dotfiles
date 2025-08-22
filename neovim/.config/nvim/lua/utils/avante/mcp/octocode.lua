@@ -1,6 +1,7 @@
 local mcp_client = require('utils.avante.mcp.client')
+local Base = require('avante.llm_tools.base')
 
-local M = {}
+local M = setmetatable({}, Base)
 
 local wrap_schedule = function(func, args)
     vim.schedule(function()
@@ -116,16 +117,12 @@ function M.semantic_search_tool()
             local query = params.query
 
             if not query then
-                wrap_schedule(on_complete, {
-                    error = 'query parameter is required',
-                })
+                wrap_schedule(on_complete, false, 'query parameter is required')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Octocode MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Octocode MCP client')
                 return
             end
 
@@ -155,9 +152,7 @@ function M.semantic_search_tool()
 
                 octocode_client:call_tool('semantic_search', search_params, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to search codebase: ' .. (error.message or vim.inspect(error)),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to search codebase: ' .. (error.message or vim.inspect(error)))
                         return
                     end
 
@@ -176,9 +171,7 @@ function M.semantic_search_tool()
 
                     on_log('✅ Search completed')
 
-                    wrap_schedule(on_complete, {
-                        search_results = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -264,16 +257,12 @@ function M.graphrag_tool()
             local operation = params.operation
 
             if not operation then
-                wrap_schedule(on_complete, {
-                    error = 'operation parameter is required',
-                })
+                wrap_schedule(on_complete, false, 'operation parameter is required')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Octocode MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Octocode MCP client')
                 return
             end
 
@@ -310,9 +299,7 @@ function M.graphrag_tool()
 
                 octocode_client:call_tool('graphrag', graphrag_params, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to perform GraphRAG operation: ' .. (error.message or vim.inspect(error)),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to perform GraphRAG operation: ' .. (error.message or vim.inspect(error)))
                         return
                     end
 
@@ -331,9 +318,7 @@ function M.graphrag_tool()
 
                     on_log('✅ GraphRAG operation completed')
 
-                    wrap_schedule(on_complete, {
-                        graphrag_results = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -416,16 +401,12 @@ function M.memorize_tool()
             local on_complete = opts.on_complete
 
             if not params.title or not params.content then
-                wrap_schedule(on_complete, {
-                    error = 'title and content parameters are required',
-                })
+                wrap_schedule(on_complete, false, 'title and content parameters are required')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Octocode MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Octocode MCP client')
                 return
             end
 
@@ -456,9 +437,7 @@ function M.memorize_tool()
 
                 octocode_client:call_tool('memorize', memory_params, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to store memory: ' .. (error.message or vim.inspect(error)),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to store memory: ' .. (error.message or vim.inspect(error)))
                         return
                     end
 
@@ -477,9 +456,7 @@ function M.memorize_tool()
 
                     on_log('✅ Memory stored successfully')
 
-                    wrap_schedule(on_complete, {
-                        memory_stored = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -561,16 +538,12 @@ function M.remember_tool()
             local on_complete = opts.on_complete
 
             if not params.query then
-                wrap_schedule(on_complete, {
-                    error = 'query parameter is required',
-                })
+                wrap_schedule(on_complete, false, 'query parameter is required')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Octocode MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Octocode MCP client')
                 return
             end
 
@@ -601,9 +574,7 @@ function M.remember_tool()
 
                 octocode_client:call_tool('remember', remember_params, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to retrieve memories: ' .. (error.message or vim.inspect(error)),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to retrieve memories: ' .. (error.message or vim.inspect(error)))
                         return
                     end
 
@@ -622,9 +593,7 @@ function M.remember_tool()
 
                     on_log('✅ Memories retrieved')
 
-                    wrap_schedule(on_complete, {
-                        memories = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
@@ -701,23 +670,17 @@ function M.forget_tool()
             local on_complete = opts.on_complete
 
             if not params.confirm then
-                wrap_schedule(on_complete, {
-                    error = 'confirm parameter must be true to proceed with deletion',
-                })
+                wrap_schedule(on_complete, false, 'confirm parameter must be true to proceed with deletion')
                 return
             end
 
             if not params.memory_id and not params.query then
-                wrap_schedule(on_complete, {
-                    error = 'Either memory_id or query parameter is required',
-                })
+                wrap_schedule(on_complete, false, 'Either memory_id or query parameter is required')
                 return
             end
 
             if not ensure_client() then
-                wrap_schedule(on_complete, {
-                    error = 'Failed to initialize Octocode MCP client',
-                })
+                wrap_schedule(on_complete, false, 'Failed to initialize Octocode MCP client')
                 return
             end
 
@@ -747,9 +710,7 @@ function M.forget_tool()
 
                 octocode_client:call_tool('forget', forget_params, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, {
-                            error = 'Failed to forget memories: ' .. (error.message or vim.inspect(error)),
-                        })
+                        wrap_schedule(on_complete, false, 'Failed to forget memories: ' .. (error.message or vim.inspect(error)))
                         return
                     end
 
@@ -768,9 +729,7 @@ function M.forget_tool()
 
                     on_log('✅ Memories forgotten')
 
-                    wrap_schedule(on_complete, {
-                        forget_result = response,
-                    })
+                    wrap_schedule(on_complete, response)
                 end)
             end
 
