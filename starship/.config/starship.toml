@@ -5,8 +5,8 @@ format = """
 $directory\
 [](fg:#769ff0 bg:#394260)\
 $git_branch\
-$git_state\
-$git_status[](fg:#394260)\
+$git_status\
+$git_state[ ](fg:#769ff0 bg:#394260)[](fg:#394260)\
 $fill \
 [](fg:#212736)\
 $nodejs\
@@ -47,6 +47,10 @@ format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
 [git_status]
 style = "bg:#394260"
 format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
+
+[git_state]
+style = "bg:#394260"
+format = "[$state( $progress_current/$progress_total)](fg:#769ff0 bg:#394260)"
 
 [nodejs]
 symbol = "󰎙"

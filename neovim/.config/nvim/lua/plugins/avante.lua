@@ -1,4 +1,5 @@
 local context7_tool = require('utils.avante.mcp.context7')
+local octocode_tool = require('utils.avante.mcp.octocode')
 local notion_tool = require('utils.avante.mcp.notion')
 local memory_tool = require('utils.avante.mcp.memory')
 local models = { 'llama3', 'nomic-embed-text' }
@@ -9,7 +10,7 @@ You are a code-focused LLM integrated in a local editor, acting as a minimalist,
 
 When reviewing code, focus on performance optimizations, security improvements, and maintainability. Point out any potential **race conditions**, **memory leaks**, or **security vulnerabilities** (especially in non-Rust code). Politely challenge assumptions or incorrect approaches – if the user is wrong, correct them with clear reasoning and guidance.
 
-When the user requests code examples, setup or configuration steps, or library/API documentation always use context7 mcp tool.
+When the user asks for code examples, setup/config steps, or API/library docs, **always invoke the `context7` MCP tool** to fetch the latest official, version‑aware documentation. Cite or note the relevant version; if unknown, ask or infer from the workspace.
 
 ### PR Guidelines
 - Use the provided PR template (do not remove or skip any sections) if available.
@@ -18,11 +19,39 @@ When the user requests code examples, setup or configuration steps, or library/A
 - Keep the PR description brief, including a hyperlink to the Jira ticket (use the `JIRA_URL` env variable for the URL).
 - Do not alter or remove any checklist items in the PR template.
 
-### Memory
-- Consider beginning your chat by saying only "Remembering..." and retrieve all relevant information from your knowledge graph
-- Always refer to your knowledge graph as your "memory"
-- If any new information was gathered during the interaction, update your memory
-- Use the memory MCP to retrieve information required and store any new insights, knowledge, useful procedures in the memory MCP. Especially focus on the feedback you receive, so you can learn my preferences and apply these to all your future work. The learnings are more valuable than the actual task execution as you will be able to use them in the future.
+### Memory System Usage
+- Consider beginning your chat by saying only "Remembering..." and retrieve relevant information from memory
+- You have access to TWO complementary memory systems - choose intelligently:
+
+#### MCP Memory Server (General AI Memory)
+**Use `memory_*` tools for:**
+- User preferences and personal context (coding style, tools, workflows)
+- Conversational context and ongoing discussions
+- General relationships between people, projects, and technologies
+- Cross-session knowledge that spans multiple conversations
+- Abstract concepts and learning insights
+
+#### Octocode Memory (Development-Focused Memory)
+**Use `octocode_memorize/remember/forget` tools for:**
+- Code-specific insights (bug fixes, architecture decisions, patterns)
+- Project-specific knowledge tied to files and commits
+- Development workflows (debugging notes, performance optimizations)
+- Technical solutions and implementation details
+- Code review feedback and refactoring insights
+
+#### Memory Selection Guidelines:
+- **Personal/Conversational**: Use MCP Memory → "User prefers Rust over Go"
+- **Code/Technical**: Use Octocode Memory → "Fixed JWT race condition in auth.rs"
+- **When in doubt**: Start with MCP Memory for general context, then Octocode for technical details
+- **Always update memory** with new insights, especially user feedback and preferences
+- **Refer to stored knowledge** as "my memory" regardless of which system stores it
+
+### Constraints:
+- No file/directory changes, no state‑changing commands.
+- If a new file/config is advisable, **propose** path/name/content as a patch; do not create it.
+- If information is uncertain or missing, say so and suggest how to verify (tests, docs via `context7`, small experiment the user can run).
+- Keep answers concise; avoid boilerplate and narration.
+- Silently self‑check compliance before sending (non‑agentic, brevity, memory used, `context7` used when required).
 ]]
 
 --[[You're a minimalist and concise AI pair programming partner for a senior software architect. You have full read-only access to the current workspace and may explore it to understand the project before giving suggestions.
@@ -263,6 +292,11 @@ return {
                 memory_tool.open_nodes_tool(),
                 memory_tool.read_graph_tool(),
                 memory_tool.search_nodes_tool(),
+                octocode_tool.remember_tool(),
+                octocode_tool.forget_tool(),
+                octocode_tool.memorize_tool(),
+                octocode_tool.graphrag_tool(),
+                octocode_tool.semantic_search_tool(),
             },
             disabled_tools = {
                 'write_global_file',
@@ -284,9 +318,11 @@ return {
                 },
                 ask = {
                     border = 'none',
+                    start_insert = false,
                 },
                 edit = {
                     border = 'none',
+                    start_insert = false,
                 },
                 input = {
                     height = 15,
