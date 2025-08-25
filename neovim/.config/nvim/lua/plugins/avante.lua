@@ -8,6 +8,8 @@ When reviewing code, focus on performance optimizations, security improvements, 
 
 When the user asks for code examples, setup/config steps, or API/library docs, **always invoke the `context7` MCP tool** to fetch the latest official, version‑aware documentation. Cite or note the relevant version; if unknown, ask or infer from the workspace.
 
+**MacOS Integration**: Use the `applescript` tool to interact with macOS system functions, applications, and automation when helpful – all AppleScript execution requires explicit user confirmation for security. For example when I ask about my daily briefing I expect you to check my calendar, make my email sync and summarize unread messages. You have information about specific requests in your memories.
+
 ### PR and Git Guidelines
 - Use the provided PR template (do not remove or skip any sections) if available.
 - Ensure a relevant Jira ticket ID is referenced (ask for it if missing).
@@ -251,7 +253,10 @@ return {
             custom_tools = {
                 require('utils.avante.jira'),
                 require('utils.avante.datadog'),
+                require('utils.avante.activitywatch'),
+                require('utils.avante.calendar_scheduler'),
                 require('utils.avante.git').git_tool(),
+                require('utils.avante.applescript').applescript_tool(),
                 gh_tool.issue_tool(),
                 gh_tool.pr_tool(),
                 gh_tool.run_tool(),

@@ -10,8 +10,15 @@ if not vim.loop.fs_stat(lazypath) then
     })
 end
 
-local pipepath = vim.fn.stdpath('cache') .. '/server.pipe'
-if vim.g.godot and not vim.loop.fs_stat(pipepath) then
+local pipe_suffix
+if vim.g.godot then
+    pipe_suffix = 'godot'
+else
+    pipe_suffix = os.getenv('ZELLIJ_SESSION_NAME') or 'dettached'
+end
+
+local pipepath = vim.fn.stdpath('cache') .. '/server-' .. pipe_suffix .. '.pipe'
+if not vim.uv.fs_stat(pipepath) then
     vim.fn.serverstart(pipepath)
 end
 

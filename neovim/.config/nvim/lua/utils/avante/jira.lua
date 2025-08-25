@@ -48,14 +48,6 @@ M.param = {
             optional = true,
         },
     },
-    usage = {
-        action = 'Action to perform: get_issue/get_transitions/transition/add_comment/get_comments/search',
-        issue_key = 'Jira issue key (optional for search)',
-        transition_id = 'Transition ID (for transition action)',
-        comment_text = 'Comment text (for add_comment action)',
-        jql_query = 'JQL query (for search action)',
-        fields = 'Additional fields as JSON string (optional)',
-    },
 }
 
 M.returns = {

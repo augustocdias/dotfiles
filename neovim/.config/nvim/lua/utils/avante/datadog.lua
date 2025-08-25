@@ -72,18 +72,6 @@ M.param = {
             optional = true,
         },
     },
-    usage = {
-        action = 'Action to perform: search_logs/query_metrics/search_events/get_monitors/get_dashboard/get_service_summary',
-        query = 'Search query or metric name',
-        from_time = 'Start time (ISO format or relative like "1h", "24h")',
-        to_time = 'End time (ISO format or "now")',
-        limit = 'Max results (default: 50)',
-        service = 'Service name filter',
-        environment = 'Environment filter',
-        dashboard_id = 'Dashboard ID (for get_dashboard)',
-        monitor_id = 'Monitor ID (for specific monitor)',
-        status = 'Monitor status filter',
-    },
 }
 
 M.returns = {

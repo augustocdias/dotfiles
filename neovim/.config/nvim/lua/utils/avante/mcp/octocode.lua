@@ -1,13 +1,8 @@
+local wrap_schedule = require('utils').wrap_schedule
 local mcp_client = require('utils.avante.mcp.client')
 local Base = require('avante.llm_tools.base')
 
 local M = setmetatable({}, Base)
-
-local wrap_schedule = function(func, args)
-    vim.schedule(function()
-        func(args)
-    end)
-end
 
 -- Global Octocode client instance
 local octocode_client = nil
@@ -152,7 +147,11 @@ function M.semantic_search_tool()
 
                 octocode_client:call_tool('semantic_search', search_params, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, false, 'Failed to search codebase: ' .. (error.message or vim.inspect(error)))
+                        wrap_schedule(
+                            on_complete,
+                            false,
+                            'Failed to search codebase: ' .. (error.message or vim.inspect(error))
+                        )
                         return
                     end
 
@@ -299,7 +298,11 @@ function M.graphrag_tool()
 
                 octocode_client:call_tool('graphrag', graphrag_params, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, false, 'Failed to perform GraphRAG operation: ' .. (error.message or vim.inspect(error)))
+                        wrap_schedule(
+                            on_complete,
+                            false,
+                            'Failed to perform GraphRAG operation: ' .. (error.message or vim.inspect(error))
+                        )
                         return
                     end
 
@@ -437,7 +440,11 @@ function M.memorize_tool()
 
                 octocode_client:call_tool('memorize', memory_params, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, false, 'Failed to store memory: ' .. (error.message or vim.inspect(error)))
+                        wrap_schedule(
+                            on_complete,
+                            false,
+                            'Failed to store memory: ' .. (error.message or vim.inspect(error))
+                        )
                         return
                     end
 
@@ -574,7 +581,11 @@ function M.remember_tool()
 
                 octocode_client:call_tool('remember', remember_params, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, false, 'Failed to retrieve memories: ' .. (error.message or vim.inspect(error)))
+                        wrap_schedule(
+                            on_complete,
+                            false,
+                            'Failed to retrieve memories: ' .. (error.message or vim.inspect(error))
+                        )
                         return
                     end
 
@@ -710,7 +721,11 @@ function M.forget_tool()
 
                 octocode_client:call_tool('forget', forget_params, function(result, error)
                     if error then
-                        wrap_schedule(on_complete, false, 'Failed to forget memories: ' .. (error.message or vim.inspect(error)))
+                        wrap_schedule(
+                            on_complete,
+                            false,
+                            'Failed to forget memories: ' .. (error.message or vim.inspect(error))
+                        )
                         return
                     end
 
