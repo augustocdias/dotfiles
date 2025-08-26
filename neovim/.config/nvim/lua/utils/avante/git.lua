@@ -78,7 +78,7 @@ function M.git_tool()
             fields = {
                 {
                     name = 'command',
-                    description = 'Git command to execute (e.g., status, log, add, commit, push)',
+                    description = 'Git command to execute (e.g., status, log, add, commit, push). Try to limit commit msgs to 80 characters',
                     type = 'string',
                     required = true,
                 },
