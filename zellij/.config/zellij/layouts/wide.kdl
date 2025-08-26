@@ -1,13 +1,17 @@
 layout {
-    tab name="neovim" focus=true {
-        base {
-            pane command="nvim"
+    wide
+    swap_tiled_layout name="wide" {
+        tab {
+            wide
         }
     }
-    tab name="terminal" {
-        wide
+    swap_tiled_layout name="non-wide" {
+        tab {
+            non-wide
+        }
     }
 
+    // Pane Templates
     pane_template name="base"{
         pane size=1 borderless=true {
             plugin location="tab-bar"
@@ -18,12 +22,24 @@ layout {
         }
 
     }
-
     pane_template name="wide" {
         base {
             pane split_direction="vertical" {
                 pane name="main"
                 pane name="tooling" size="30%" split_direction="horizontal" {
+                    pane
+                    children
+                    pane
+                }
+            }
+        }
+    }
+
+    pane_template name="non-wide" {
+        base{
+            pane split_direction="horizontal" {
+                pane name="main"
+                pane name="tooling" size="30%" split_direction="vertical" {
                     pane
                     children
                     pane

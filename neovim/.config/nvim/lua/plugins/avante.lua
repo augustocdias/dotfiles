@@ -8,6 +8,8 @@ When reviewing code, focus on performance optimizations, security improvements, 
 
 When the user asks for code examples, setup/config steps, or API/library docs, **always invoke the `context7` MCP tool** to fetch the latest official, version‑aware documentation. Cite or note the relevant version; if unknown, ask or infer from the workspace.
 
+When interacting with git, always use the git tool and for gh the gh_* related tools.
+
 **MacOS Integration**: Use the `applescript` tool to interact with macOS system functions, applications, and automation when helpful – all AppleScript execution requires explicit user confirmation for security. For example when I ask about my daily briefing I expect you to check my calendar, make my email sync and summarize unread messages. You have information about specific requests in your memories.
 
 ### PR and Git Guidelines
@@ -284,15 +286,20 @@ return {
                 octocode_tool.semantic_search_tool(),
             },
             disabled_tools = {
-                'write_global_file',
-                'create_dir',
-                'delete_path',
-                'move_path',
                 'copy_path',
+                'create',
+                'create_dir',
                 'create_file',
-                'write_to_file',
-                'str_replace',
+                'delete_path',
+                'edit_file',
+                'git_diff',
+                'git_commit',
+                'insert',
+                'move_path',
                 'replace_in_file',
+                'str_replace',
+                'write_global_file',
+                'write_to_file',
             },
             diff = {
                 autojump = false,

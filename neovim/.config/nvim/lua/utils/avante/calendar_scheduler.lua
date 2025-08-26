@@ -93,7 +93,7 @@ local function call_hammerspoon(lua_code, on_complete)
 end
 
 -- Function to get today's calendar events (Phase 1 - no URL extraction)
-local function get_today_events(calendar_name, on_complete)
+local function get_today_events(calendar_name, on_log, on_complete)
     local safe_calendar = calendar_name or 'Work'
 
     -- Get today's events using AppleScript
@@ -211,7 +211,10 @@ end join
             end
         end
 
-        output = output .. string.format('📊 Total: %d events found', total_events)
+        local count_events = string.format('📊 Total: %d events found', total_events)
+        on_log(count_events)
+
+        output = output .. count_events
 
         -- Return both human-readable and structured data
         local response = {
@@ -220,7 +223,7 @@ end join
             total = total_events,
         }
 
-        wrap_schedule(on_complete, vim.json.encode(response))
+        on_complete(vim.json.encode(response))
     end)
 end
 
@@ -270,7 +273,7 @@ function M.func(input, opts)
     end
 
     if action == 'get_today_events' then
-        get_today_events(input.calendar, function(result, error)
+        get_today_events(input.calendar, on_log, function(result, error)
             if error then
                 wrap_schedule(on_complete, false, error)
             else
