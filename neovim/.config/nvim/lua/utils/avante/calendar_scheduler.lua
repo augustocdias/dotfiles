@@ -5,21 +5,16 @@ local M = setmetatable({}, Base)
 
 M.name = 'calendar_scheduler'
 
-M.description = 'Fetch calendar appointments and manage meeting URL scheduling via Hammerspoon'
+M.description =
+    'Fetch calendar appointments and manage meeting URL scheduling via Hammerspoon. Never filter out possible duplicates'
 
 M.param = {
     type = 'table',
     fields = {
         {
             name = 'action',
-            description = 'Action to perform: "get_today_events", "schedule_meetings", "list_scheduled", "cancel_meeting", "cancel_all"',
+            description = 'Action to perform: "schedule_meetings", "list_scheduled", "cancel_meeting", "cancel_all". Use the `google_calendar` tool to retrieve events',
             type = 'string',
-        },
-        {
-            name = 'calendar',
-            description = 'Calendar name to fetch events from (default: "Work")',
-            type = 'string',
-            optional = true,
         },
         {
             name = 'meetings',
@@ -92,141 +87,6 @@ local function call_hammerspoon(lua_code, on_complete)
     end)
 end
 
--- Function to get today's calendar events (Phase 1 - no URL extraction)
-local function get_today_events(calendar_name, on_log, on_complete)
-    local safe_calendar = calendar_name or 'Work'
-
-    -- Get today's events using AppleScript
-    local script = string.format(
-        [[
-set calendarFilter to "%s"
-
-tell application "Calendar"
-	set today to (current date)
-	set tomorrow to today + days
-	set time of tomorrow to 0
-
-	set eventList to {}
-
-	set calendarList to every calendar
-	set calendarList to (calendars whose name is calendarFilter)
-
-	repeat with cal in calendarList
-		try
-			set todaysEvents to (events of cal whose start date ≥ today and start date < tomorrow)
-
-			repeat with e in todaysEvents
-				-- Batch fetch all properties in one AppleEvent:
-				set {startTime, endTime, eventTitle, eventLocation, eventDescription} ¬
-					to {start date, end date, summary, location, description} of e
-
-				if eventLocation is missing value then set eventLocation to "None"
-				if eventDescription is missing value then set eventDescription to "Empty"
-
-				set end of eventList to (eventTitle & "|" & (startTime as string) & "|" & (endTime as string) & "|" & eventLocation & "|" & eventDescription)
-			end repeat
-		end try
-	end repeat
-end tell
-
-return my join(eventList, "||")
-
-on join(lst, delim)
-	set oldTIDs to AppleScript's text item delimiters
-	set AppleScript's text item delimiters to delim
-	set t to lst as string
-	set AppleScript's text item delimiters to oldTIDs
-	return t
-end join
-    ]],
-        safe_calendar
-    )
-
-    vim.system({ 'osascript', '-e', script }, { text = true }, function(result)
-        if result.code ~= 0 then
-            on_complete(false, 'Failed to fetch calendar events: ' .. (result.stderr or 'Unknown error'))
-            return
-        end
-
-        local events_data = result.stdout:gsub('\n', '')
-        if events_data == '' then
-            on_complete('📅 No calendar events found for today in "' .. safe_calendar .. '" calendar.')
-            return
-        end
-
-        -- Parse events and return structured data
-        local events = vim.split(events_data, '||')
-        local total_events = 0
-        local output = "📅 Today's Calendar Events (" .. safe_calendar .. '):\n\n'
-        local events_json = {}
-
-        for _, event_str in ipairs(events) do
-            if event_str ~= '' then
-                local parts = vim.split(event_str, '|')
-                if #parts >= 5 then
-                    local title = parts[1]
-                    local start_time_str = parts[2]
-                    local end_time_str = parts[3]
-                    local location = parts[4]
-                    local description = parts[5]
-
-                    total_events = total_events + 1
-
-                    -- Extract time for display
-                    local hour, min = start_time_str:match('(%d+):(%d+)')
-                    if hour and min then
-                        local today = os.date('*t')
-                        local iso_datetime = string.format(
-                            '%04d-%02d-%02dT%02d:%02d:00',
-                            today.year,
-                            today.month,
-                            today.day,
-                            tonumber(hour),
-                            tonumber(min)
-                        )
-
-                        output = output .. string.format('• %s (%s:%s)\n', title, hour, min)
-
-                        if location ~= '' then
-                            output = output .. string.format('  📍 %s\n', location)
-                        end
-
-                        if description ~= '' then
-                            output = output .. string.format('  📝 %s\n', description)
-                        end
-
-                        output = output .. '\n'
-
-                        -- Store event data for potential scheduling
-                        table.insert(events_json, {
-                            title = title,
-                            datetime = iso_datetime,
-                            location = location,
-                            description = description,
-                            start_time_str = start_time_str,
-                            end_time_str = end_time_str,
-                        })
-                    end
-                end
-            end
-        end
-
-        local count_events = string.format('📊 Total: %d events found', total_events)
-        on_log(count_events)
-
-        output = output .. count_events
-
-        -- Return both human-readable and structured data
-        local response = {
-            summary = output,
-            events = events_json,
-            total = total_events,
-        }
-
-        on_complete(vim.json.encode(response))
-    end)
-end
-
 -- Function to schedule meetings (Phase 2 - with provided URLs)
 local function schedule_meetings(meetings, on_complete)
     if not meetings or #meetings == 0 then
@@ -272,15 +132,7 @@ function M.func(input, opts)
         return
     end
 
-    if action == 'get_today_events' then
-        get_today_events(input.calendar, on_log, function(result, error)
-            if error then
-                wrap_schedule(on_complete, false, error)
-            else
-                wrap_schedule(on_complete, result)
-            end
-        end)
-    elseif action == 'schedule_meetings' then
+    if action == 'schedule_meetings' then
         schedule_meetings(input.meetings, function(result, error)
             if error then
                 wrap_schedule(on_complete, false, error)

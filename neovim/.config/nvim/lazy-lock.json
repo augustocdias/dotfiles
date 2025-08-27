@@ -1,7 +1,7 @@
 {
   "Comment.nvim": { "branch": "master", "commit": "e30b7f2008e52442154b66f7c519bfd2f1e32acb" },
-  "auto-session": { "branch": "main", "commit": "647c02e55eaab65e6bac97305791d3bce232f7de" },
-  "avante.nvim": { "branch": "main", "commit": "11e457e56bd82858055066fb5c56167e80989e3d" },
+  "auto-session": { "branch": "main", "commit": "3b5d8947cf16ac582ef00443ede4cdd3dfa23af9" },
+  "avante.nvim": { "branch": "main", "commit": "9fe429eb62e51381b1b440b4c08256fc999e2419" },
   "aw-watcher.nvim": { "branch": "master", "commit": "c9cdc2285d384f4e2717bd3734435dfc63ff6f48" },
   "blink.cmp": { "branch": "main", "commit": "bae4bae0eedd1fa55f34b685862e94a222d5c6f8" },
   "codesnap.nvim": { "branch": "main", "commit": "be6d6b9a3b5e6999edbda76b16dace03d9bfcd3d" },

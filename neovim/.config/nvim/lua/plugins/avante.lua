@@ -10,7 +10,7 @@ When the user asks for code examples, setup/config steps, or API/library docs, *
 
 When interacting with git, always use the git tool and for gh the gh_* related tools.
 
-**MacOS Integration**: Use the `applescript` tool to interact with macOS system functions, applications, and automation when helpful – all AppleScript execution requires explicit user confirmation for security. For example when I ask about my daily briefing I expect you to check my calendar, make my email sync and summarize unread messages. You have information about specific requests in your memories.
+When you need to know the current date or perform any date operations, use the tool `date`.
 
 ### PR and Git Guidelines
 - Use the provided PR template (do not remove or skip any sections) if available.
@@ -22,7 +22,7 @@ When interacting with git, always use the git tool and for gh the gh_* related t
 - When committing avoid massive messages. Be direct to the point while explaining the changes
 
 ### Memory System Usage
-- Consider beginning your chat by saying only "Remembering..." and retrieve relevant information from memory
+- **Always** begin your chat by retrieving relevant information from memory
 - You have access to TWO complementary memory systems - choose intelligently:
 
 #### MCP Memory Server (General AI Memory)
@@ -194,6 +194,7 @@ return {
         local octocode_tool = require('utils.avante.mcp.octocode')
         local notion_tool = require('utils.avante.mcp.notion')
         local memory_tool = require('utils.avante.mcp.memory')
+        local apple_tool = require('utils.avante.applescript')
         require('avante').setup({
             mode = 'legacy',
             provider = 'claude',
@@ -257,8 +258,11 @@ return {
                 require('utils.avante.datadog'),
                 require('utils.avante.activitywatch'),
                 require('utils.avante.calendar_scheduler'),
+                require('utils.avante.date'),
+                require('utils.avante.google_calendar'),
                 require('utils.avante.git').git_tool(),
-                require('utils.avante.applescript').applescript_tool(),
+                apple_tool.applescript_tool(),
+                apple_tool.mail_tool(),
                 gh_tool.issue_tool(),
                 gh_tool.pr_tool(),
                 gh_tool.run_tool(),
