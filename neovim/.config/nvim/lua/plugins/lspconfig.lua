@@ -42,6 +42,8 @@ return {
             },
         })
 
+        vim.lsp.on_type_formatting.enable()
+
         -- bash
         vim.lsp.enable('bashls')
         vim.lsp.config('bashls', {

@@ -268,11 +268,66 @@ load_plugins {
 //   - false (Default)
 // 
 // simplified_ui true
- 
+
 // Choose the theme that is specified in the themes section.
 // Default: default
-// 
-theme "tokyo-night-dark"
+//
+theme "catppuccin-latte"
+
+themes {
+    tokyonight_day {
+        fg "#3760bf"
+        bg "#c4c8da"
+        black "#e1e2e7"
+        red "#f52a65"
+        green "#587539"
+        yellow "#8c6c3e"
+        blue "#2e7de9"
+        magenta "#9854f1"
+        cyan "#007197"
+        white "#6172b0"
+        orange "#b15c00"
+    }
+    tokyonight_night {
+        fg "#c0caf5"
+        bg "#292e42"
+        black "#1a1b26"
+        red "#f7768e"
+        green "#9ece6a"
+        yellow "#e0af68"
+        blue "#7aa2f7"
+        magenta "#bb9af7"
+        cyan "#7dcfff"
+        white "#a9b1d6"
+        orange "#ff9e64"
+    }
+    catppuccin-latte {
+        bg "#acb0be"
+        fg "#4c4f69"
+        red "#d20f39"
+        green "#40a02b"
+        blue "#1e66f5"
+        yellow "#df8e1d"
+        magenta "#ea76cb"
+        orange "#fe640b"
+        cyan "#04a5e5"
+        black "#e6e9ef"
+        white "#4c4f69"
+    }
+    catppuccin-mocha {
+        bg "#585b70"
+        fg "#cdd6f4"
+        red "#f38ba8"
+        green "#a6e3a1"
+        blue "#89b4fa"
+        yellow "#f9e2af"
+        magenta "#f5c2e7"
+        orange "#fab387"
+        cyan "#89dceb"
+        black "#181825"
+        white "#cdd6f4"
+    }
+}
  
 // Choose the base input mode of zellij.
 // Default: normal

@@ -36,7 +36,6 @@ return {
                 'shfmt',
                 'stylua',
                 'codespell',
-                'vale',
                 'selene',
                 'write-good',
                 'yamllint',

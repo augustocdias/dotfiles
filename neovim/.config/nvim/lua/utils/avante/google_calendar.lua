@@ -61,9 +61,7 @@ local function run_gcalcli(cmd_args, on_log, callback)
     -- Split the command arguments properly
     table.insert(cmd_args, 1, 'gcalcli') -- prepend at index 1
 
-    if on_log then
-        on_log('📆 Executing: gcalcli ' .. table.concat(cmd_args, ' '))
-    end
+    on_log('📆 Executing: gcalcli ' .. table.concat(cmd_args, ' '))
 
     vim.system(cmd_args, { text = true }, function(result)
         if result.code ~= 0 then
@@ -110,9 +108,7 @@ function M.func(input, opts)
     local on_complete = opts.on_complete
     local on_log = opts.on_log
 
-    if on_log then
-        on_log('Action: ' .. input.action)
-    end
+    on_log('📆 Action: ' .. input.action)
 
     local cmd_args = {}
 

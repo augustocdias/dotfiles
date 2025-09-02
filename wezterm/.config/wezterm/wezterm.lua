@@ -17,7 +17,7 @@ local function get_current_track()
     end
 end
 
-local theme = 'Tokyo Night'
+local theme = 'Tokyo Night Day'
 
 local font_features = {
     'calt',
@@ -60,9 +60,9 @@ tabline.setup({
             'index',
             { 'process', padding = { left = 0, right = 1 } },
             '- ',
-            { 'parent', padding = 0 },
+            { 'parent',  padding = 0 },
             '/',
-            { 'cwd', padding = { left = 0, right = 1 } },
+            { 'cwd',    padding = { left = 0, right = 1 } },
             { 'zoomed', padding = 0 },
         },
         tab_inactive = { 'index', { 'process', padding = { left = 0, right = 1 } } },

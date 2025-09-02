@@ -11,10 +11,11 @@ local zellij_move = function(direction)
     local new_winnr = vim.fn.winnr()
 
     if cur_winnr == new_winnr then
-        vim.fn.system('zellij action move-focus ' .. nvim_direction_to_zellij[direction])
-        if vim.v.shell_error ~= 0 then
-            error('zellij executable not found in path')
-        end
+        vim.system({ 'zellij', 'action', 'move-focus', nvim_direction_to_zellij[direction] }, function(result)
+            if result.code ~= 0 then
+                error(result.stderr)
+            end
+        end)
     end
 end
 -- always check :help tui-input before mapping

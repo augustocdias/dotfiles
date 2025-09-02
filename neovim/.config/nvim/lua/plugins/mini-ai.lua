@@ -1,7 +1,7 @@
 -- improves a and i motions
 
 return {
-    'echasnovski/mini.ai',
+    'nvim-mini/mini.ai',
     event = 'VeryLazy',
     version = false,
     config = true,

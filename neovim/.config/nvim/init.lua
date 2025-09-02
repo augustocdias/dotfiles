@@ -24,12 +24,14 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.theme = 'tokyonight'
+vim.g.theme = 'catppuccin'
 vim.g.flavours = {
-    catppuccin = 'mocha',
-    tokyonight = 'night',
+    -- catppuccin = 'mocha', -- dark
+    catppuccin = 'latte', -- light
+    tokyonight = 'day', -- light
+    -- tokyonight = 'night', -- dark
 }
-vim.g.flavour = vim.g.flavours.tokyonight
+vim.g.flavour = vim.g.flavours[vim.g.theme]
 
 require('utils.logger').setup()
 

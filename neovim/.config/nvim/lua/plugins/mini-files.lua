@@ -1,6 +1,6 @@
 -- file browser. eventually should replace neo-tree
 return {
-    'echasnovski/mini.files',
+    'nvim-mini/mini.files',
     version = false,
     event = 'VeryLazy',
     config = true,

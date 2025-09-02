@@ -140,10 +140,10 @@ function listScheduledUrls()
     local count = 0
     local message = 'Scheduled Meetings:\n'
 
-    for scheduleId, schedule in pairs(scheduledUrls) do
+    for _, schedule in pairs(scheduledUrls) do
         count = count + 1
         local timeStr = os.date('%H:%M', schedule.targetTime)
-        message = message .. string.format('%d. %s at %s\n', count, schedule.title, timeStr)
+        message = message .. string.format('%d. %s at %s: %s\n', count, schedule.title, timeStr, schedule.url)
     end
 
     if count == 0 then

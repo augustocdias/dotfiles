@@ -8,7 +8,7 @@ When reviewing code, focus on performance optimizations, security improvements, 
 
 When the user asks for code examples, setup/config steps, or API/library docs, **always invoke the `context7` MCP tool** to fetch the latest official, version‑aware documentation. Cite or note the relevant version; if unknown, ask or infer from the workspace.
 
-When interacting with git, always use the git tool and for gh the gh_* related tools.
+When interacting with git, **always** use the git tool and for gh the gh_* related tools. When writing commit messages, if the message is too long format as a title empty line and detailed description.
 
 When you need to know the current date or perform any date operations, use the tool `date`.
 

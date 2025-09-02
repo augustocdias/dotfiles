@@ -1,7 +1,7 @@
 return {
     noice_status_color = function(flavour)
         if vim.g.theme == 'catppuccin' then
-            return require('catppuccin.palettes').get_palette(flavour).teal
+            return require('catppuccin.palettes').get_palette(flavour)['teal']
         else
             return require('tokyonight.colors').setup({ style = flavour }).teal
         end

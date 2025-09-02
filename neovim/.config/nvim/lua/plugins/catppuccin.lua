@@ -1,3 +1,25 @@
+function get_customizations(flavour)
+    local colors = require('catppuccin.palettes').get_palette(flavour)
+    local ucolors = require('catppuccin.utils.colors')
+    local customizations = {
+        ['latte'] = {
+            float_prompt = ucolors.lighten(colors.crust, 0.95, '#EEEEEE'),
+            float_prompt_title = colors.sky,
+            noice_mini_bg = ucolors.darken(colors.flamingo, 0.1, '#EEEEEE'),
+            mini_modified_bg = ucolors.darken(colors.flamingo, 0.3, '#EEEEEE'),
+            mini_cursor = { bg = ucolors.lighten(colors.mantle, 0.1, '#EEEEEE') },
+        },
+        ['mocha'] = {
+            float_prompt = ucolors.darken(colors.crust, 0.95, '#000000'),
+            float_prompt_title = colors.sky,
+            noice_mini_bg = ucolors.lighten(colors.flamingo, 0.1, '#000000'),
+            mini_modified_bg = ucolors.lighten(colors.flamingo, 0.3, '#000000'),
+            mini_cursor = { bg = ucolors.lighten(colors.mantle, 0.1, '#000000') },
+        },
+    }
+    return customizations[flavour]
+end
+
 return {
     'catppuccin/nvim',
     lazy = false,
@@ -5,11 +27,11 @@ return {
     config = function()
         local flavour = vim.g.flavours.catppuccin
         local colors = require('catppuccin.palettes').get_palette(flavour)
-        local ucolors = require('catppuccin.utils.colors')
-        local float_prompt = ucolors.darken(colors.crust, 0.95, '#000000')
-        local float_prompt_title = colors.sky
-        local noice_mini_bg = ucolors.lighten(colors.flamingo, 0.1, '#000000')
-        local mini_modified_bg = ucolors.lighten(colors.flamingo, 0.3, '#000000')
+        local customs = get_customizations(flavour)
+        local float_prompt = customs.float_prompt
+        local float_prompt_title = customs.float_prompt_title
+        local noice_mini_bg = customs.noice_mini_bg
+        local mini_modified_bg = customs.mini_modified_bg
         require('catppuccin').setup({
             flavour = flavour,
             dim_inactive = {
@@ -58,6 +80,7 @@ return {
                 },
                 lsp_trouble = true,
                 markdown = true,
+                markview = true,
                 mason = true,
                 mini = {
                     enabled = true,
@@ -100,7 +123,7 @@ return {
                     MiniFilesBorderModified = { bg = mini_modified_bg, fg = mini_modified_bg },
                     MiniFilesNormal = { bg = noice_mini_bg },
                     MiniFilesModified = { bg = mini_modified_bg },
-                    MiniFilesCursorLine = { bg = ucolors.lighten(colors.mantle, 0.1, '#000000') },
+                    MiniFilesCursorLine = customs.mini_cursor,
                     MiniFilesTitle = { fg = colors.base, bg = float_prompt_title },
                     MiniFilesTitleFocused = { fg = colors.base, bg = float_prompt_title },
                     NoiceConfirmBorder = { fg = float_prompt, bg = float_prompt },
