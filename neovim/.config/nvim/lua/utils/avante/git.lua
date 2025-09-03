@@ -111,6 +111,10 @@ function M.git_tool()
                 on_complete(false, 'command parameter is required')
                 return
             end
+            if params.command:find('%s') then
+                on_complete(false, 'Command must not contain spaces. Use the "args" parameter for arguments.')
+                return
+            end
 
             -- Build the command
             local cmd_parts = { 'git', params.command }

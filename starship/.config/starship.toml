@@ -28,14 +28,6 @@ home_symbol = " "
 truncation_length = 5
 fish_style_pwd_dir_length = 1
 
-[directory.substitutions]
-"Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = " "
-"Pictures" = " "
-"dev" = " "
-"dotfiles" = " "
-
 [aws]
 symbol = " "
 

@@ -19,7 +19,7 @@ return {
         }
     end,
 
-    -- Given a Rust target triple, return a descriptive host name
+    -- Given a Rust target triple, return a descriptive hostname
     describe_host = function(target)
         local mappings = {
             ['x86_64-apple-darwin'] = ' Mac (Intel)',
