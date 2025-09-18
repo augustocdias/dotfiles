@@ -10,6 +10,7 @@ yabai -m rule --add app="^Godot$" title!="Godot Engine$|^$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^QuickTime Player$" manage=off
 yabai -m rule --add app="^Safari$" title="Advanced" manage=off
+yabai -m rule --apply
 
 # Scripting abilities for yabai: 
 # https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition

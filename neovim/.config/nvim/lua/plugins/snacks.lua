@@ -38,6 +38,27 @@ return {
                     backdrop = 70,
                 },
             },
+            layouts = {
+                -- If any plugin tries to use the default, overwrite with the ivy preset
+                default = {
+                    layout = {
+                        box = 'vertical',
+                        backdrop = 70,
+                        row = -1,
+                        width = 0,
+                        height = 0.4,
+                        border = 'top',
+                        title = ' {title} {live} {flags}',
+                        title_pos = 'left',
+                        { win = 'input', height = 1, border = 'bottom' },
+                        {
+                            box = 'horizontal',
+                            { win = 'list', border = 'none' },
+                            { win = 'preview', title = '{preview}', width = 0.6, border = 'left' },
+                        },
+                    },
+                },
+            },
             ui_select = true, -- replace `vim.ui.select` with the snacks picker
             win = {
                 input = {

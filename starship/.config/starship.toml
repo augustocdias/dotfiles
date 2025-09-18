@@ -24,7 +24,6 @@ command_timeout = 10000
 [directory]
 style = "fg:#e3e5e5 bg:#769ff0"
 format = "[$read_only]($read_only_style)[ $path ]($style)"
-home_symbol = " "
 truncation_length = 5
 fish_style_pwd_dir_length = 1
 
