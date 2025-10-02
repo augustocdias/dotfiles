@@ -15,7 +15,7 @@ return {
             '<leader>a',
             'rhs',
             mode = { 'n' },
-            desc = 'Avante',
+            desc = 'AI',
             noremap = true,
         },
         {

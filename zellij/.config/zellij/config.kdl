@@ -272,7 +272,7 @@ load_plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
-theme "catppuccin-latte"
+theme "tokyonight_night"
 
 themes {
     tokyonight_day {

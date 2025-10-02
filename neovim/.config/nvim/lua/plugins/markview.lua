@@ -1,5 +1,17 @@
 -- markdown enhancements -- alternative render-markdown
 
+local function conceal_tag(icon, hl_group)
+    return {
+        on_node = { hl_group = hl_group },
+        on_closing_tag = { conceal = '' },
+        on_opening_tag = {
+            conceal = '',
+            virt_text_pos = 'inline',
+            virt_text = { { icon .. ' ', hl_group } },
+        },
+    }
+end
+
 return {
     'OXY2DEV/markview.nvim',
     event = 'VeryLazy',
@@ -13,21 +25,23 @@ return {
             prefer_nvim = true,
         },
         preview = {
-            filetypes = { 'markdown', 'quarto', 'rmd', 'typst', 'Avante' },
+            filetypes = { 'markdown', 'quarto', 'rmd', 'typst', 'Avante', 'codecompanion' },
             icon_provider = 'devicons',
-            -- Avante sets the buffer type to `nofile` and it wouldn't enable for Avante in that case
             ignore_buftypes = {},
-            condition = function(buffer)
-                local ft, bt = vim.bo[buffer].ft, vim.bo[buffer].bt
-
-                if bt == 'nofile' and ft == 'Avante' then
-                    return true
-                elseif bt == 'nofile' then
-                    return false
-                else
-                    return true
-                end
-            end,
+        },
+        html = {
+            container_elements = {
+                ['^buf$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+                ['^file$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+                ['^help$'] = conceal_tag('󰘥', 'CodeCompanionChatVariable'),
+                ['^image$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+                ['^symbols$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+                ['^url$'] = conceal_tag('󰖟', 'CodeCompanionChatVariable'),
+                ['^var$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+                ['^tool$'] = conceal_tag('', 'CodeCompanionChatTool'),
+                ['^user_prompt$'] = conceal_tag('', 'CodeCompanionChatTool'),
+                ['^group$'] = conceal_tag('', 'CodeCompanionChatToolGroup'),
+            },
         },
     },
 }

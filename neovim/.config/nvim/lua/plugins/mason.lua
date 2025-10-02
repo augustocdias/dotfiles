@@ -1,10 +1,10 @@
 -- auto installer for lsp servers and linters
 
 return {
-    'williamboman/mason.nvim', -- lsp server installer
+    'mason-org/mason.nvim', -- lsp server installer
     -- opts = { log_level = vim.log.levels.DEBUG },
     dependencies = {
-        'williamboman/mason-lspconfig.nvim',
+        'mason-org/mason-lspconfig.nvim',
         'WhoIsSethDaniel/mason-tool-installer.nvim',
         { 'Zeioth/none-ls-autoload.nvim', config = true },
     },

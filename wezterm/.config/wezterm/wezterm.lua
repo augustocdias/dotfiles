@@ -17,8 +17,8 @@ local function get_current_track()
     end
 end
 
--- local theme = 'Tokyo Night Day'
-local theme = 'Catppuccin Latte'
+local theme = 'Tokyo Night'
+-- local theme = 'Catppuccin Latte'
 
 local font_features = {
     'calt',

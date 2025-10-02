@@ -1,0 +1,58 @@
+{
+    "mcpServers": {
+        "Notion": {
+            "autoApprove": [
+                "search",
+                "fetch",
+                "notion-create-pages",
+                "notion-update-page",
+                "notion-move-pages",
+                "notion-duplicate-page",
+                "notion-create-database",
+                "notion-update-database",
+                "notion-create-comment",
+                "notion-get-comments",
+                "notion-get-users",
+                "notion-get-self",
+                "notion-get-user"
+            ],
+            "disabled": false,
+            "url": "https://mcp.notion.com/mcp"
+        },
+        "context7": {
+            "args": [
+                "-y",
+                "@upstash/context7-mcp"
+            ],
+            "autoApprove": [
+                "resolve-library-id",
+                "get-library-docs"
+            ],
+            "command": "npx",
+            "disabled": false,
+            "env": {
+                "DEFAULT_MINIMUM_TOKENS": "64000"
+            }
+        },
+        "memory": {
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-memory"
+            ],
+            "command": "npx"
+        },
+        "octocode": {
+            "args": [
+                "mcp",
+                "--path",
+                "."
+            ],
+            "command": "octocode"
+        }
+    },
+    "nativeMCPServers": {
+        "neovim": {
+            "disabled": true
+        }
+    }
+}

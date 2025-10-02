@@ -24,12 +24,12 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.theme = 'catppuccin'
+vim.g.theme = 'tokyonight'
 vim.g.flavours = {
     -- catppuccin = 'mocha', -- dark
     catppuccin = 'latte', -- light
-    tokyonight = 'day', -- light
-    -- tokyonight = 'night', -- dark
+    -- tokyonight = 'day', -- light
+    tokyonight = 'night', -- dark
 }
 vim.g.flavour = vim.g.flavours[vim.g.theme]
 

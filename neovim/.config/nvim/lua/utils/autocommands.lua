@@ -154,5 +154,21 @@ return {
                 vim.cmd.loadview({ mods = { emsg_silent = true } })
             end,
         })
+
+        local code_companion = augroup('CodeCompanion')
+        autocmd('User', {
+            pattern = 'CodeCompanionChatSubmitted',
+            group = code_companion,
+            callback = function()
+                vim.cmd('stopinsert')
+            end,
+        })
+        autocmd('User', {
+            pattern = 'CodeCompanionChatOpened',
+            group = code_companion,
+            callback = function()
+                vim.wo.winbar = nil
+            end,
+        })
     end,
 }
