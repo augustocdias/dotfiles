@@ -326,6 +326,9 @@ return handlers.create_tool({
         },
     },
     required = { 'action' },
+    ui_log = function(tool)
+        return '📋Activity Watch: ' .. tool.args.action
+    end,
     func = function(_, schema_params, _, output_handler)
         local action = schema_params.action
 

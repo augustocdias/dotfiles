@@ -190,6 +190,9 @@ return handlers.create_tool({
         },
     },
     required = { 'action' },
+    ui_log = function(tool)
+        return ' Jira: ' .. tool.args.action
+    end,
     prompt = function(self)
         if self.args.action == 'transition' then
             local config, config_error = get_jira_config()
@@ -229,30 +232,30 @@ return handlers.create_tool({
         -- Get Jira configuration
         local config, config_error = get_jira_config()
         if config_error then
-            return output_handler({ status = 'error', data = config_error })
+            output_handler({ status = 'error', data = config_error })
         end
 
         if action == 'get_issue' then
             if not schema_params.issue_key then
-                return output_handler({ status = 'error', data = 'issue_key is required for get_issue action' })
+                output_handler({ status = 'error', data = 'issue_key is required for get_issue action' })
             end
 
             local response, err = make_jira_request(config, 'GET', '/issue/' .. schema_params.issue_key, nil)
             if err then
-                return output_handler({ status = 'error', data = 'Failed to get issue: ' .. err })
+                output_handler({ status = 'error', data = 'Failed to get issue: ' .. err })
             end
 
             if response.errorMessages then
-                return output_handler({
+                output_handler({
                     status = 'error',
                     data = 'Jira API error: ' .. table.concat(response.errorMessages, ', '),
                 })
             end
 
-            return output_handler({ status = 'success', data = format_issue_output(response) })
+            output_handler({ status = 'success', data = format_issue_output(response) })
         elseif action == 'get_transitions' then
             if not schema_params.issue_key then
-                return output_handler({
+                output_handler({
                     status = 'error',
                     data = 'issue_key is required for get_transitions action',
                 })
@@ -261,23 +264,23 @@ return handlers.create_tool({
             local response, err =
                 make_jira_request(config, 'GET', '/issue/' .. schema_params.issue_key .. '/transitions', nil)
             if err then
-                return output_handler({ status = 'error', data = 'Failed to get transitions: ' .. err })
+                output_handler({ status = 'error', data = 'Failed to get transitions: ' .. err })
             end
 
             if response.errorMessages then
-                return output_handler({
+                output_handler({
                     status = 'error',
                     data = 'Jira API error: ' .. table.concat(response.errorMessages, ', '),
                 })
             end
 
-            return output_handler({ status = 'success', data = format_transitions_output(response) })
+            output_handler({ status = 'success', data = format_transitions_output(response) })
         elseif action == 'transition' then
             if not schema_params.issue_key then
-                return output_handler({ status = 'error', data = 'issue_key is required for transition action' })
+                output_handler({ status = 'error', data = 'issue_key is required for transition action' })
             end
             if not schema_params.transition_id then
-                return output_handler({
+                output_handler({
                     status = 'error',
                     data = 'transition_id is required for transition action',
                 })
@@ -296,7 +299,7 @@ return handlers.create_tool({
                 if success then
                     transition_body.fields = fields
                 else
-                    return output_handler({
+                    output_handler({
                         status = 'error',
                         data = 'Invalid JSON in fields parameter: ' .. schema_params.fields,
                     })
@@ -322,17 +325,17 @@ return handlers.create_tool({
                 make_jira_request(config, 'POST', '/issue/' .. schema_params.issue_key .. '/transitions', body_json)
 
             if err then
-                return output_handler({ status = 'error', data = 'Failed to transition issue: ' .. err })
+                output_handler({ status = 'error', data = 'Failed to transition issue: ' .. err })
             end
 
             if response and response.errorMessages then
-                return output_handler({
+                output_handler({
                     status = 'error',
                     data = 'Jira API error: ' .. table.concat(response.errorMessages, ', '),
                 })
             end
 
-            return output_handler({
+            output_handler({
                 status = 'success',
                 data = 'Successfully transitioned issue '
                     .. schema_params.issue_key
@@ -342,10 +345,10 @@ return handlers.create_tool({
             })
         elseif action == 'add_comment' then
             if not schema_params.issue_key then
-                return output_handler({ status = 'error', data = 'issue_key is required for add_comment action' })
+                output_handler({ status = 'error', data = 'issue_key is required for add_comment action' })
             end
             if not schema_params.comment_text then
-                return output_handler({
+                output_handler({
                     status = 'error',
                     data = 'comment_text is required for add_comment action',
                 })
@@ -361,11 +364,11 @@ return handlers.create_tool({
                 make_jira_request(config, 'POST', '/issue/' .. schema_params.issue_key .. '/comment', body_json)
 
             if err then
-                return output_handler({ status = 'error', data = 'Failed to add comment: ' .. err })
+                output_handler({ status = 'error', data = 'Failed to add comment: ' .. err })
             end
 
             if response and response.errorMessages then
-                return output_handler({
+                output_handler({
                     status = 'error',
                     data = 'Jira API error: ' .. table.concat(response.errorMessages, ', '),
                 })
@@ -376,10 +379,10 @@ return handlers.create_tool({
                 output = output .. ' (Comment ID: ' .. response.id .. ')'
             end
 
-            return output_handler({ status = 'success', data = output })
+            output_handler({ status = 'success', data = output })
         elseif action == 'get_comments' then
             if not schema_params.issue_key then
-                return output_handler({
+                output_handler({
                     status = 'error',
                     data = 'issue_key is required for get_comments action',
                 })
@@ -388,11 +391,11 @@ return handlers.create_tool({
             local response, err =
                 make_jira_request(config, 'GET', '/issue/' .. schema_params.issue_key .. '/comment', nil)
             if err then
-                return output_handler({ status = 'error', data = 'Failed to get comments: ' .. err })
+                output_handler({ status = 'error', data = 'Failed to get comments: ' .. err })
             end
 
             if response.errorMessages then
-                return output_handler({
+                output_handler({
                     status = 'error',
                     data = 'Jira API error: ' .. table.concat(response.errorMessages, ', '),
                 })
@@ -428,21 +431,27 @@ return handlers.create_tool({
                 )
             end
 
-            return output_handler({ status = 'success', data = table.concat(comments_output, '\n') })
+            output_handler({ status = 'success', data = table.concat(comments_output, '\n') })
         elseif action == 'search' then
             if not schema_params.jql_query then
-                return output_handler({ status = 'error', data = 'jql_query is required for search action' })
+                output_handler({ status = 'error', data = 'jql_query is required for search action' })
             end
 
-            local search_endpoint = '/search?jql=' .. vim.uri_encode(schema_params.jql_query) .. '&maxResults=50'
-            local response, err = make_jira_request(config, 'GET', search_endpoint, nil)
+            local search_body = {
+                jql = schema_params.jql_query,
+                maxResults = 50,
+                fields = { 'summary', 'status', 'assignee', 'reporter', 'priority' },
+            }
+
+            local body_json = vim.json.encode(search_body)
+            local response, err = make_jira_request(config, 'POST', '/search/jql', body_json)
 
             if err then
-                return output_handler({ status = 'error', data = 'Failed to search issues: ' .. err })
+                output_handler({ status = 'error', data = 'Failed to search issues: ' .. err })
             end
 
             if response.errorMessages then
-                return output_handler({
+                output_handler({
                     status = 'error',
                     data = 'Jira API error: ' .. table.concat(response.errorMessages, ', '),
                 })
@@ -463,9 +472,9 @@ return handlers.create_tool({
                 )
             end
 
-            return output_handler({ status = 'success', data = table.concat(search_output, '\n') })
+            output_handler({ status = 'success', data = table.concat(search_output, '\n') })
         else
-            return output_handler({
+            output_handler({
                 status = 'error',
                 data = 'Invalid action. Use: get_issue, get_transitions, transition, add_comment, get_comments, or search',
             })

@@ -24,7 +24,7 @@ return handlers.create_tool({
     description = 'Fetch unread emails from Apple Mail',
     func = function(_, _, _, output_handler)
         if vim.fn.has('mac') == 0 then
-            return output_handler({ status = 'error', data = 'AppleScript is only available on macOS' })
+            output_handler({ status = 'error', data = 'AppleScript is only available on macOS' })
         end
 
         local cmd = { 'osascript', '-e', mail_script }
@@ -46,6 +46,7 @@ return handlers.create_tool({
         end)
     end,
     properties = {},
+    ui_log = ' Apple Mail',
     system_prompt = [[Fetch unread emails from Apple Mail application on macOS. This is a specialized read-only tool for retrieving email information.
 
 **What it returns**:

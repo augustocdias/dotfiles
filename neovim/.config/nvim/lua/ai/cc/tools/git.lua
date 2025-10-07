@@ -87,6 +87,9 @@ return handlers.create_tool({
         },
     },
     required = { 'command' },
+    ui_log = function(tool)
+        return ' Git ' .. tool.args.command
+    end,
     prompt = function(self)
         local full_command = full_command_str(self.args.command, self.args.args)
         return 'Are you sure you want to run: ' .. full_command .. '?'
@@ -99,11 +102,11 @@ return handlers.create_tool({
         local args = schema_params.args or ''
 
         if not command then
-            return output_handler({ status = 'error', data = 'command parameter is required' })
+            output_handler({ status = 'error', data = 'command parameter is required' })
         end
 
         if command:find('%s') then
-            return output_handler({
+            output_handler({
                 status = 'error',
                 data = 'Command must not contain spaces. Use the "args" parameter for arguments.',
             })

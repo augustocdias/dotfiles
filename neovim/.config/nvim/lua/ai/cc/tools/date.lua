@@ -26,6 +26,7 @@ S: second]],
             },
         },
     },
+    ui_log = '󰸗 Date',
     func = function(_, schema_params, _, output_handler)
         local operations = schema_params.operations or {}
         local format = schema_params.format

@@ -1,20 +1,65 @@
-local default_error_handler = function(self, tools, _, result)
-    local chat = tools.chat
-    if result and type(result) == 'table' and result[1] ~= '' then
-        local output = string.format('**Error:**\n```\n%s\n```', result[1])
-        return chat:add_tool_output(self, output)
-    else
-        return chat:add_tool_output(self, 'Unknown error')
+local default_error_handler = function(prefix_text)
+    return function(self, tools, _, result)
+        local prefix
+        if type(prefix_text) == 'function' then
+            prefix = prefix_text(self)
+        else
+            prefix = tostring(prefix_text)
+        end
+        local chat = tools.chat
+        if result and type(result) == 'table' and result[1] ~= '' then
+            local output = string.format('**Error:**\n```\n%s\n```', result[1])
+            local fancy_error = string
+                .format(
+                    [[
+            %s
+            %s
+            ]],
+                    prefix,
+                    output
+                )
+                :match('^%s*(.-)%s*$')
+            return chat:add_tool_output(self, output, fancy_error)
+        else
+            local fancy_error = string
+                .format(
+                    [[
+            %s
+            Unknown error
+            ]],
+                    prefix
+                )
+                :match('^%s*(.-)%s*$')
+            return chat:add_tool_output(self, 'Unknown error', fancy_error)
+        end
     end
 end
 
-local default_success_handler = function(self, tools, _, result)
-    local chat = tools.chat
-    if result and type(result) == 'table' and result[1] ~= '' then
-        local output = tostring(result[1])
-        return chat:add_tool_output(self, output)
-    else
-        return chat:add_tool_output(self, 'Tool executed successfully without any output')
+local default_success_handler = function(prefix_text)
+    return function(self, tools, _, result)
+        local prefix
+        if type(prefix_text) == 'function' then
+            prefix = prefix_text(self)
+        else
+            prefix = tostring(prefix_text)
+        end
+        local chat = tools.chat
+        if result and type(result) == 'table' and result[1] ~= '' then
+            local output = tostring(result[1])
+            local fancy_output = string
+                .format(
+                    [[
+            %s
+            %s
+            ]],
+                    prefix,
+                    output
+                )
+                :match('^%s*(.-)%s*$')
+            return chat:add_tool_output(self, output, fancy_output)
+        else
+            return chat:add_tool_output(self, 'Tool executed successfully without any output', prefix)
+        end
     end
 end
 
@@ -56,8 +101,8 @@ return {
             output = {
                 prompt = opts.prompt or nil,
                 rejected = opts.rejected or reject_reason,
-                error = opts.error or default_error_handler,
-                success = opts.success or default_success_handler,
+                error = opts.error or default_error_handler(opts.ui_log or opts.name),
+                success = opts.success or default_success_handler(opts.ui_log or opts.name),
             },
         }
     end,

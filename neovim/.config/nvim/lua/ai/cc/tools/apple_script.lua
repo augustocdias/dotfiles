@@ -10,16 +10,17 @@ return handlers.create_tool({
         },
     },
     required = { 'script' },
+    ui_log = ' Apple Script',
     func = function(_, schema_params, _, output_handler)
         local script = schema_params.script
 
         if not script then
-            return output_handler({ status = 'error', data = 'script parameter is required' })
+            output_handler({ status = 'error', data = 'script parameter is required' })
         end
 
         -- Check if running on macOS
         if vim.fn.has('mac') == 0 then
-            return output_handler({ status = 'error', data = 'AppleScript is only available on macOS' })
+            output_handler({ status = 'error', data = 'AppleScript is only available on macOS' })
         end
 
         -- Execute the script

@@ -25,11 +25,14 @@ return handlers.create_tool({
         },
     },
     required = { 'action' },
+    ui_log = function(tool)
+        return ' Google Calendar: ' .. tool.args.action
+    end,
     func = function(_, schema_params, _, output_handler)
         local action = schema_params.action
 
         if not action then
-            return output_handler({ status = 'error', error = 'action parameter is required' })
+            output_handler({ status = 'error', data = 'action parameter is required' })
         end
 
         local cmd_args = { 'gcalcli' }
@@ -58,7 +61,7 @@ return handlers.create_tool({
             table.insert(cmd_args, 'today')
         elseif action == 'search' then
             if not schema_params.query then
-                return output_handler({ status = 'error', error = 'query is required for search action' })
+                output_handler({ status = 'error', data = 'query is required for search action' })
             end
 
             table.insert(cmd_args, 'search')
@@ -70,9 +73,9 @@ return handlers.create_tool({
                 table.insert(cmd_args, schema_params.calendar)
             end
         else
-            return output_handler({
+            output_handler({
                 status = 'error',
-                error = 'Invalid action. Use: list_calendars, agenda, search, or list_today',
+                data = 'Invalid action. Use: list_calendars, agenda, search, or list_today',
             })
         end
 
@@ -113,10 +116,10 @@ return handlers.create_tool({
                         error_msg = 'gcalcli not installed. Install with: brew install gcalcli'
                     end
 
-                    output_handler({ status = 'error', error = error_msg })
+                    output_handler({ status = 'error', data = error_msg })
                 else
                     local output = result.stdout or ''
-                    output_handler({ status = 'success', output = output })
+                    output_handler({ status = 'success', data = output })
                 end
             end)
         end)

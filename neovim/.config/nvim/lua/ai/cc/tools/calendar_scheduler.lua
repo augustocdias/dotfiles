@@ -59,18 +59,21 @@ return handlers.create_tool({
         },
     },
     required = { 'action' },
+    ui_log = function(tool)
+        return '󱙭 Calendar Scheduler: ' .. tool.args.action
+    end,
     func = function(_, schema_params, _, output_handler)
         local action = schema_params.action
 
         if not action then
-            return output_handler({ status = 'error', data = 'Missing required parameter: action' })
+            output_handler({ status = 'error', data = 'Missing required parameter: action' })
         end
 
         if action == 'schedule_meetings' then
             local meetings = schema_params.meetings
 
             if not meetings or #meetings == 0 then
-                return output_handler({ status = 'error', data = 'No meetings provided to schedule' })
+                output_handler({ status = 'error', data = 'No meetings provided to schedule' })
             end
 
             local schedule_commands = {}

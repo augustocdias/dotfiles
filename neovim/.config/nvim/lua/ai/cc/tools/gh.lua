@@ -251,6 +251,9 @@ local function create_gh_tool(name, description, properties, required)
         properties = properties,
         required = required or {},
         system_prompt = description,
+        ui_log = function(tool)
+            return string.format(' GitHub(%s): %s', name:gsub('^gh_', ''), tool.args.action or tool.args.type)
+        end,
         prompt_condition = function(self)
             return requires_approval(name, self.args.action)
         end,
