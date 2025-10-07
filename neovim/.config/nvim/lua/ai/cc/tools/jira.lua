@@ -84,25 +84,6 @@ local function make_jira_request(config, method, endpoint, body)
     end
 end
 
--- Helper function to format comment text as Atlassian Document Format (ADF)
-local function format_comment_adf(text)
-    return {
-        type = 'doc',
-        version = 1,
-        content = {
-            {
-                type = 'paragraph',
-                content = {
-                    {
-                        type = 'text',
-                        text = text,
-                    },
-                },
-            },
-        },
-    }
-end
-
 -- Helper function to format issue output
 local function format_issue_output(issue)
     local output = {}
@@ -356,7 +337,7 @@ return handlers.create_tool({
 
             -- Build comment request body
             local comment_body = {
-                body = format_comment_adf(schema_params.comment_text),
+                body = schema_params.comment_text,
             }
 
             local body_json = vim.json.encode(comment_body)
@@ -506,7 +487,7 @@ return handlers.create_tool({
 4. **add_comment**: Add a comment to an issue
    - Requires: `issue_key`, `comment_text`
    - **Requires user approval**
-   - Comments are formatted in Atlassian Document Format (ADF) automatically
+   - Comments should be either formatted in Atlassian Document Format (https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/) or plain text (don't add markdown markups there)
 
 5. **get_comments**: Retrieve all comments on an issue
    - Requires: `issue_key`

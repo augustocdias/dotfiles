@@ -58,6 +58,7 @@ local default_success_handler = function(prefix_text)
                 :match('^%s*(.-)%s*$')
             return chat:add_tool_output(self, output, fancy_output)
         else
+            vim.print('empty ' .. prefix)
             return chat:add_tool_output(self, 'Tool executed successfully without any output', prefix)
         end
     end

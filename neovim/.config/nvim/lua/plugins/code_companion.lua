@@ -23,10 +23,10 @@ return {
                         callback = 'ai.cc.tools.activitywatch',
                         description = 'Query ActivityWatch data for productivity analytics and time tracking. Remember to always include neovim buckets when searching',
                     },
-                    -- ['apple_mail'] = {
-                    --     callback = 'ai.cc.tools.apple_mail',
-                    --     description = 'Fetch unread emails from Apple Mail',
-                    -- },
+                    ['apple_mail'] = {
+                        callback = 'ai.cc.tools.apple_mail',
+                        description = 'Fetch unread emails from Apple Mail',
+                    },
                     ['apple_script'] = {
                         callback = 'ai.cc.tools.apple_script',
                         description = 'Execute AppleScript code on macOS',
@@ -127,7 +127,7 @@ return {
                             'mcp',
                             -- custom
                             'activitywatch',
-                            -- 'apple_mail',
+                            'apple_mail',
                             'apple_script',
                             'calendar_scheduler',
                             'datadog',

@@ -45,7 +45,12 @@ return handlers.create_tool({
             end)
         end)
     end,
-    properties = {},
+    properties = {
+        placeholder = {
+            type = 'string',
+            description = "So that the LLM API doesn't complain",
+        },
+    },
     ui_log = ' Apple Mail',
     system_prompt = [[Fetch unread emails from Apple Mail application on macOS. This is a specialized read-only tool for retrieving email information.
 
@@ -64,5 +69,6 @@ For each unread email in the inbox, you'll get:
 - Extract information from recent emails
 - Build email summaries or reports
 
-This tool is read-only and does not modify any emails or mark them as read. It simply queries the Mail application for unread messages in the inbox. Only works on macOS systems with Mail.app configured.]],
+This tool is read-only and does not modify any emails or mark them as read. It simply queries the Mail application for unread messages in the inbox. Only works on macOS systems with Mail.app configured.
+No input is necessary. There's an `placeholder` field just so that the LLM API doesn't break.]],
 })
