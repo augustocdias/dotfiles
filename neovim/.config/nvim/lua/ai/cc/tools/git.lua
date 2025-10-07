@@ -67,7 +67,7 @@ end
 
 local function full_command_str(command, args)
     local result = 'git ' .. command
-    if args ~= '' then
+    if args and args ~= '' then
         result = result .. ' ' .. args
     end
     return result
