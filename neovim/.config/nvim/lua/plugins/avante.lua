@@ -162,6 +162,7 @@ return {
             return 'make'
         end
     end,
+    enabled = false,
     event = 'VeryLazy',
     version = false,
     cmd = {

@@ -4,7 +4,7 @@ return {
     'nvim-lualine/lualine.nvim',
     event = 'UIEnter',
     config = function()
-        local cc = require('utils.ai.cc.lualine')
+        local cc = require('ai.cc.lualine')
         cc:init()
         local utils = require('utils')
         local command_status = utils.command_status(require('utils').noice_status_color(vim.g.flavour))
