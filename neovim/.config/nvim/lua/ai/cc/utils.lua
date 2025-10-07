@@ -12,7 +12,7 @@ local default_error_handler = function(prefix_text)
             local fancy_error = string.format('%s\n%s', prefix, output)
             return chat:add_tool_output(self, output, fancy_error)
         else
-            local fancy_error = string.format('%s\nUnknown error', prefix)
+            local fancy_error = string.format('%s\n    Unknown error', prefix)
             return chat:add_tool_output(self, 'Unknown error', fancy_error)
         end
     end
@@ -29,10 +29,10 @@ local default_success_handler = function(prefix_text)
         local chat = tools.chat
         if result and type(result) == 'table' and result[1] ~= '' then
             local output = tostring(result[1])
-            local fancy_output = string.format('%s\n%s', prefix, output)
+            local fancy_output = string.format('%s\n    %s', prefix, output)
             return chat:add_tool_output(self, output, fancy_output)
         else
-            local fancy_output = string.format('%s\nTool executed successfully without any output', prefix)
+            local fancy_output = string.format('%s\n    Tool executed successfully without any output', prefix)
             return chat:add_tool_output(self, 'Tool executed successfully without any output', fancy_output)
         end
     end
