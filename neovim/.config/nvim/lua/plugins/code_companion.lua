@@ -109,6 +109,9 @@ return {
                     ['jira'] = {
                         callback = 'ai.cc.tools.jira',
                         description = 'Interact with Atlassian Jira API for ticket management, transitions, and comments',
+                        opts = {
+                            requires_approval = {},
+                        },
                     },
                     opts = {
                         auto_submit_errors = true,
@@ -221,12 +224,18 @@ return {
             --         },
             --     },
             -- },
+            spinner = {},
         },
         display = {
             chat = {
                 start_in_insert_mode = true,
                 show_token_count = true,
                 fold_context = true,
+                window = {
+                    position = 'right',
+                    width = 0.3,
+                    sticky = true,
+                },
             },
         },
     },
@@ -242,6 +251,7 @@ return {
     },
     dependencies = {
         'nvim-lua/plenary.nvim',
+        'franco-ruggeri/codecompanion-spinner.nvim',
         'ravitemer/codecompanion-history.nvim',
         {
             'ravitemer/mcphub.nvim',
