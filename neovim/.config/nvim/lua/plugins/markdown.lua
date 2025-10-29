@@ -16,9 +16,10 @@ return {
     'OXY2DEV/markview.nvim',
     event = 'VeryLazy',
     priority = 49,
-    ft = { 'markdown', 'Avante' },
+    ft = { 'markdown', 'Avante', 'codecompanion' },
     dependencies = {
         'nvim-tree/nvim-web-devicons',
+        { 'yousefhadder/markdown-plus.nvim', ft = { 'markdown', 'Avante', 'codecompanion' }, config = true },
     },
     opts = {
         experimental = {

@@ -159,7 +159,7 @@ return handlers.create_tool({
         },
         comment_text = {
             type = 'string',
-            description = 'Comment text to add (required for "add_comment" action)',
+            description = 'Comment text to add (required for "add_comment" action). Needs to be specified in full ADF (Atlasian Document Format) format.',
         },
         jql_query = {
             type = 'string',
@@ -337,7 +337,7 @@ return handlers.create_tool({
 
             -- Build comment request body
             local comment_body = {
-                body = schema_params.comment_text,
+                body = vim.json.decode(schema_params.comment_text),
             }
 
             local body_json = vim.json.encode(comment_body)

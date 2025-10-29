@@ -38,12 +38,6 @@ local default_success_handler = function(prefix_text)
     end
 end
 
-local reject_reason = function(self, tools)
-    local chat = tools.chat
-    local reason = vim.fn.input('Reason?')
-    return chat:add_tool_output(self, 'User rejected. Reason: ' .. reason, '')
-end
-
 return {
     create_tool = function(opts)
         if opts.prompt_condition then
@@ -75,7 +69,6 @@ return {
             },
             output = {
                 prompt = opts.prompt or nil,
-                rejected = opts.rejected or reject_reason,
                 error = opts.error or default_error_handler(opts.ui_log or opts.name),
                 success = opts.success or default_success_handler(opts.ui_log or opts.name),
             },

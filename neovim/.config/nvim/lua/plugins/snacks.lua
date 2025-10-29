@@ -64,6 +64,16 @@ return {
                 input = {
                     keys = {
                         ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
+                        ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
+                        ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
+                        ['<c-l>'] = { 'select_and_next', mode = { 'i', 'n' } },
+                        ['<c-h>'] = { 'select_and_prev', mode = { 'i', 'n' } },
+                        ['<c-c>'] = {
+                            function()
+                                vim.cmd('stopinsert')
+                            end,
+                            mode = { 'i' },
+                        },
                     },
                 },
             },

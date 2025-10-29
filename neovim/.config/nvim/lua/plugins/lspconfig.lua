@@ -26,6 +26,7 @@ return {
 
         vim.diagnostic.config({
             severity_sort = true,
+            update_in_insert = true,
             signs = {
                 text = {
                     [vim.diagnostic.severity.ERROR] = '',
@@ -130,6 +131,19 @@ return {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
         })
+
+        -- rust diagnostics (faster than rust-analyzer)
+        -- vim.lsp.enable('bacon_ls')
+        -- vim.lsp.config('bacon_ls', {
+        --     on_attach = lsp_utils.on_attach,
+        --     capabilities = lsp_utils.capabilities(),
+        --     init_options = {
+        --         useBaconBackend = true,
+        --         updateOnSave = true,
+        --         updateOnChange = true,
+        --         updateOnSaveWaitMillis = 1000,
+        --     },
+        -- })
     end,
     keys = {
         {

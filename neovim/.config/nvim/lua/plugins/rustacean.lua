@@ -115,7 +115,9 @@ return {
                                 autoClosingAngleBrackets = { enable = true },
                             },
                             interpret = { tests = true },
-                            checkOnSave = true,
+                            checkOnSave = {
+                                enable = true,
+                            },
                             check = {
                                 -- https://github.com/rust-analyzer/rust-analyzer/issues/9768
                                 command = 'clippy',
