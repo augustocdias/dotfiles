@@ -21,3 +21,4 @@ _darcs
 \.DS_Store
 ^/\.others
 ^/install_deps.sh
+nix

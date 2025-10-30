@@ -1,4 +1,4 @@
-ulimit -n unlimited
+# ulimit -n unlimited
 
 test -e {$HOME}/.fish_variables.fish; and source {$HOME}/.fish_variables.fish
 test -e {$HOME}/.fish_secret_variables.fish; and source {$HOME}/.fish_secret_variables.fish
@@ -33,8 +33,8 @@ starship init fish | source
 enable_transience
 
 # pnpm
-set -gx PNPM_HOME "/Users/augusto/Library/pnpm"
+set -gx PNPM_HOME /Users/augusto/Library/pnpm
 if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
