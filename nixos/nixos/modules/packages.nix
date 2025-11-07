@@ -4,11 +4,12 @@
   pkgs,
   vicinae,
   awww,
+  neovim-nightly-overlay,
   ...
 }: {
   environment.systemPackages = with pkgs; [
     # ===== EDITORS =====
-    neovim
+    neovim-nightly-overlay.packages.${pkgs.system}.default
 
     # ===== VERSION CONTROL =====
     git

@@ -68,11 +68,9 @@
     nixosConfigurations.augusto = nixpkgs.lib.nixosSystem {
       # system = "x86_64-linux";
       system = "aarch64-linux";
-      specialArgs = {inherit vicinae awww;};
+      specialArgs = {inherit vicinae awww neovim-nightly-overlay;};
       modules = [
         hyprland.nixosModules.default
-
-        {nixpkgs.overlays = [neovim-nightly-overlay.overlays.default];}
 
         ./hardware-configuration.nix
         ./modules/configuration.nix

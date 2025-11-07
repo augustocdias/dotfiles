@@ -1,0 +1,8 @@
+module components
+ActiveWindow 1.0 ActiveWindow.qml
+ClockDisplay 1.0 ClockDisplay.qml
+DateDisplay 1.0 DateDisplay.qml
+NixLogo 1.0 NixLogo.qml
+SystemIcons 1.0 SystemIcons.qml
+SystemTray 1.0 SystemTray.qml
+Workspaces 1.0 Workspaces.qml
