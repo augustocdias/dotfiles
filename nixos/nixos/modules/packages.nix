@@ -11,6 +11,39 @@
     # ===== EDITORS =====
     neovim-nightly-overlay.packages.${pkgs.system}.default
 
+    # ===== LSP SERVERS =====
+    emmylua-ls # Lua LSP
+    yaml-language-server
+    vscode-langservers-extracted # jsonls, eslint, html, css
+    nodePackages.sql-language-server
+    taplo # TOML LSP
+    dockerfile-language-server-nodejs
+    docker-compose-language-service
+    bash-language-server
+    nodePackages.typescript-language-server
+    harper # Grammar checker LSP
+    nil # Nix LSP
+    qt6.qtdeclarative # qmlls for Quickshell
+
+    # ===== FORMATTERS =====
+    black # Python
+    nodePackages.prettier
+    markdownlint-cli
+    shfmt # Shell
+    stylua # Lua
+    sqlfluff # SQL
+    alejandra # Nix formatter (recommended)
+
+    # ===== LINTERS =====
+    codespell
+    selene # Lua
+    nodePackages.write-good
+    yamllint
+    hadolint # Dockerfile
+    actionlint # GitHub Actions
+    statix # Nix linter
+    deadnix # Nix dead code detection
+
     # ===== VERSION CONTROL =====
     git
     git-cliff
@@ -58,6 +91,13 @@
     python313 # python@3.13
     ruby
     zig
+
+    # ===== RUST TOOLCHAIN =====
+    cargo
+    rustc
+    clippy
+    rustfmt
+    rust-analyzer
 
     # ===== PYTHON TOOLS =====
     pipenv

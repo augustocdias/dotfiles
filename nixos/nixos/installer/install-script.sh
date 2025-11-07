@@ -275,6 +275,28 @@ else
     exit 1
 fi
 
+# ===== NEOVIM SETUP =====
+echo ""
+echo -e "${YELLOW}Setting up Neovim plugins and parsers...${NC}"
+
+# Install Lazy plugins
+echo "Installing Lazy plugins..."
+if nixos-enter --root /mnt -- su - "$USERNAME" -c 'nvim --headless "+Lazy! sync" +qa'; then
+    echo -e "${GREEN}✓ Lazy plugins installed${NC}"
+else
+    echo -e "${YELLOW}⚠ Lazy plugin installation had issues (this is sometimes normal on first run)${NC}"
+fi
+
+# Install treesitter parsers
+echo "Installing treesitter parsers..."
+if nixos-enter --root /mnt -- su - "$USERNAME" -c 'nvim --headless "+TSUpdateSync" +qa'; then
+    echo -e "${GREEN}✓ Treesitter parsers installed${NC}"
+else
+    echo -e "${YELLOW}⚠ Treesitter parser installation had issues (this is sometimes normal on first run)${NC}"
+fi
+
+echo -e "${GREEN}✓ Neovim setup complete${NC}"
+
 # ===== COMPLETION =====
 rm -f /tmp/partition-info
 
@@ -291,6 +313,7 @@ echo "  • Shell: fish"
 echo "  • Home: encrypted with systemd-homed"
 echo "  • Dotfiles: cloned and stowed"
 echo "  • NixOS config: ~/.dotfiles/nixos/nixos"
+echo "  • Neovim: plugins and parsers installed"
 echo ""
 echo "On reboot, login with your username and password"
 echo "(Your home directory will be automatically decrypted)"
