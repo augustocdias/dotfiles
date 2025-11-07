@@ -1,5 +1,5 @@
 {
-  description = "Custom NixOS installer with Hyprland";
+  description = "Custom NixOS installer/system with Hyprland";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -28,6 +28,10 @@
     neovim-nightly-overlay,
     ...
   }: {
+    packages.aarch64-linux.installer =
+      self.nixosConfigurations.installer.config.system.build.isoImage;
+    # packages.x86_64.installer =
+    #   self.nixosConfigurations.installer.config.system.build.isoImage;
     # ISO Image configuration
     nixosConfigurations.installer = nixpkgs.lib.nixosSystem {
       # system = "x86_64-linux";
