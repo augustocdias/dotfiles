@@ -1,0 +1,50 @@
+{
+  "conventional-comments": {
+    "slug": "conventional-comments-pullpo",
+    "name": "Conventional Comments",
+    "url": "https://addons.mozilla.org/firefox/downloads/file/4659531/conventional_comments_pullpo-0.2.6.xpi",
+    "addonId": "conventional-comments-addon@pullpo.io"
+  },
+  "ublock-origin": {
+    "slug": "ublock-origin",
+    "name": "uBlock Origin",
+    "url": "https://addons.mozilla.org/firefox/downloads/file/4675310/ublock_origin-1.69.0.xpi",
+    "addonId": "uBlock0@raymondhill.net"
+  },
+  "onepassword-password-manager": {
+    "slug": "1password-x-password-manager",
+    "name": "1Password",
+    "url": "https://addons.mozilla.org/firefox/downloads/file/4677239/1password_x_password_manager-8.12.1.3.xpi",
+    "addonId": "{d634138d-c276-4fc8-924b-40a0ea21d284}"
+  },
+  "vimium-ff": {
+    "slug": "vimium-ff",
+    "name": "Vimium",
+    "url": "https://addons.mozilla.org/firefox/downloads/file/4618554/vimium_ff-2.3.1.xpi",
+    "addonId": "{d7742d87-e61d-4b78-b8a1-b469842139fa}"
+  },
+  "translate-web-pages": {
+    "slug": "traduzir-paginas-web",
+    "name": "TWP - Translate Web Pages",
+    "url": "https://addons.mozilla.org/firefox/downloads/file/4455681/traduzir_paginas_web-10.1.1.1.xpi",
+    "addonId": "{036a55b4-5e72-4d05-a06c-cba2dfcc134a}"
+  },
+  "json-lite": {
+    "slug": "json-lite",
+    "name": "JSON Lite",
+    "url": "https://addons.mozilla.org/firefox/downloads/file/3736573/json_lite-21.3.0.xpi",
+    "addonId": "{16a49f65-1369-4839-a5ef-db2581e08b16}"
+  },
+  "pia": {
+    "slug": "pia",
+    "name": "PAYBACK Internet Assistent",
+    "url": "https://addons.mozilla.org/firefox/downloads/file/4520480/pia-3.80.4.xpi",
+    "addonId": "toolbar-ff@payback.de"
+  },
+  "catppuccin-mocha-blue": {
+    "slug": "catppuccin-mocha-blue",
+    "name": "Catppuccin Mocha Blue",
+    "url": "https://addons.mozilla.org/firefox/downloads/file/3954923/catppuccin_mocha_blue-2.0.xpi",
+    "addonId": "{88b098c8-19be-421e-8ffa-85ddd1f3f004}"
+  }
+}

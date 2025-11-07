@@ -1,0 +1,51 @@
+{
+  "catppuccin-mocha-blue": {
+    "slug": "catppuccin-mocha-blue",
+    "name": "Catppuccin Mocha Blue",
+    "url": "https://raw.githubusercontent.com/catppuccin/thunderbird/main/themes/mocha/mocha-blue.xpi",
+    "addonId": "{f6d05f0c-39a8-5c4d-96dd-4852202a8244}",
+    "sha256": "1dd0hnvqayix5df6j1dxr9a42qycm1bgmk58p5h8snc63r4sm6q2"
+  },
+  "gmail-conversation-view": {
+    "slug": "gmail-conversation-view",
+    "name": "Thunderbird Conversations",
+    "url": "https://addons.thunderbird.net/thunderbird/downloads/file/1043436/thunderbird_conversations-4.3.8-tb.xpi?src=",
+    "addonId": "gconversation@xulforum.org",
+    "sha256": "11idx5rwgbvcvg2bdh62mk7w13lzbgx5bdnyvk0d24nfqnvglzj6"
+  },
+  "ai-grammar": {
+    "slug": "ai-grammar",
+    "name": "AI Grammar",
+    "url": "https://addons.thunderbird.net/thunderbird/downloads/file/1030893/ai_grammar-2-tb.xpi?src=",
+    "addonId": "llama3-grammar-thunderbird@johannes.buchner.net",
+    "sha256": "021wxs2h34l8irrx3nmxavyi05v8xks1pz3dm38si06sxd0cmk40"
+  },
+  "signature-switch": {
+    "slug": "signature-switch",
+    "name": "Signature Switch",
+    "url": "https://addons.thunderbird.net/thunderbird/downloads/file/1042180/signature_switch-2.20.1-tb.xpi?src=",
+    "addonId": "{2ab1b709-ba03-4361-abf9-c50b964ff75d}",
+    "sha256": "12ls24dbha2xlxkrpzzxypcs6qwra0dc8s3nhpb0siyqd0r7nfvy"
+  },
+  "web-translate": {
+    "slug": "web_translate",
+    "name": "Web Translate",
+    "url": "https://addons.thunderbird.net/thunderbird/downloads/file/1042097/web_translate-6.1-tb.xpi?src=",
+    "addonId": "admin@fastaddons.com_WebTranslate",
+    "sha256": "1jkmkj70gv9m5q60xxsl2ygr78vl1dpgs30bk12a6wdjzq1rd5ki"
+  },
+  "dictionary-de-de": {
+    "slug": "german-dictionary-de_de-for-sp",
+    "name": "German Dictionary (de_DE)",
+    "url": "https://addons.thunderbird.net/thunderbird/downloads/file/1012621/german_dictionary_de_de-20180701.1webext.xpi?src=",
+    "addonId": "de_DE@dicts.j3e.de",
+    "sha256": "1ahd5lsih4jl6mn376fr18j5xwc3gxlr3j61sfakvs6v4lcm01kj"
+  },
+  "dictionary-pt-br": {
+    "slug": "verificador-ortográfico-para-p",
+    "name": "Verificador Ortografico Portugues do Brasil",
+    "url": "https://addons.thunderbird.net/thunderbird/downloads/file/1012599/verificador_ortografico_para_portugues_do_brasil-2.5-3.2.13.1webext.xpi?src=",
+    "addonId": "pt-BR@dellalibera.sf.net",
+    "sha256": "042s3vipjqbm35iarhbcxkk53mybbi1aksh1jzpx5h7g2kpjmryd"
+  }
+}

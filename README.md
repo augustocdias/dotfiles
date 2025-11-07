@@ -1,68 +1,47 @@
-# Personal Settings and Tools
+# Personal Settings and Tools all setup through NixOS + Home Manager
 
-My personal mac os settings and tools
+My personal NixOS settings and tools
 
-First of all install command line tools and rosetta (the install script should be doing all of it).
+## NixOS Installer ISO
 
-## Brew Tips
+To build the iso, run:
 
-To generate the dump: `brew bundle dump`
+```bash
+docker run --rm -it -v $(pwd):/workspace -w /workspace nixos/nix sh -c "nix build --extra-experimental-features 'nix-command flakes' .#nixosConfigurations.installer.config.system.build.isoImage && cp result/iso/*.iso ."
+```
 
-To install from the bundle: `brew bundle install`
+The installer will guide through the process and at the end the machine should be ready to roll.
 
-## Install
+## OS + Home manager
 
-Run the script `./install_deps.sh`
+Apps like Neovim and Fish come already pre-configured from home-manager. All plugins and configurations are pre installed.
 
-### Cargo
+### Secrets Management
 
-- bindgen-cli
-- cargo-bundle
-- cargo-deny
-- cargo-edit
-- cargo-expand
-- cargo-generate
-- cargo-license
-- cargo-make
-- cargo-nextest
-- cargo-tree
-- cargo-update
-- cargo-watch
-- diffr
-- flamegraph
-- git-cliff
-- miri
-- rust-code-analysis-cli
-- rust-script
-- rusty-man (--locked)
-- silicon
-- stylua
-- wasm-pack
-- websocat
+Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix) with a hybrid age + GPG setup:
 
-### Npm
+- **Age keys**: Per-machine keys for automatic decryption at login
+- **GPG (YubiKey)**: Master key for bootstrapping new machines
 
-- yarn
-- fixjson
+#### First-time setup on a new machine
 
-## Safari Extensions
+1. Clone the dotfiles repository
+2. Plug in the YubiKey
+3. Run the setup script:
+   ```fish
+   nix-shell -p age sops yq-go --run "fish ~/.dotfiles/home/secrets/sops-setup.fish"
+   ```
+4. The script will:
+   - Generate a new age key for this machine
+   - Update `.sops.yaml` with the new key
+   - Re-encrypt secrets
 
-1. 1Blocker
-2. Duplicate!
-3. 1Password
-4. JSON Peep
-5. Polyglot
+#### Adding new secrets
 
-## Other Apps
-
-1. Meeter
-2. GameTrack
-3. [EurKey](https://eurkey.steffen.bruentjen.eu)
-4. Dash
-5. ngrok (cask)
-
-## To Remember
-
-1. If ssh doesn't work with the yubikey connected, run `gpg --card-status` and `ssh-add -L`. Both must work otherwise something is wrong. Check environment vars for the `SSH_AUTH_SOCK`.
-2. `ykman oath accounts code -s "SEARCH_QUERY"` returns the 2FA from the service queried in the yubikey.
-3. Create a file in the home with the name `.fish_secret_variables.fish` and call in it `set -gx VAR_NAME VAR_VAULE` to set secret values in fish env.
+1. Edit the secrets file:
+   ```fish
+   sops ~/.dotfiles/home/secrets/env.yaml
+   ```
+2. Add the new secret key to `home/secrets.nix`
+3. Add the environment variable to the template in `home/secrets.nix`
+4. Rebuild

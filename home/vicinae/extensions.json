@@ -1,0 +1,20 @@
+{
+  "vicinae": ["bluetooth", "nix", "wifi-commander", "searxng"],
+  "raycast": {
+    "jira": {
+      "rev": "e2b0d762797ae321e81bdbf1ab68c2b6a1a9f0ec"
+    },
+    "notion": {
+      "rev": "e2b0d762797ae321e81bdbf1ab68c2b6a1a9f0ec"
+    },
+    "1password": {
+      "rev": "e2b0d762797ae321e81bdbf1ab68c2b6a1a9f0ec"
+    },
+    "github": {
+      "rev": "e2b0d762797ae321e81bdbf1ab68c2b6a1a9f0ec"
+    },
+    "chatgpt": {
+      "rev": "e2b0d762797ae321e81bdbf1ab68c2b6a1a9f0ec"
+    }
+  }
+}

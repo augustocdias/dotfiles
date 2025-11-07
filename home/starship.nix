@@ -1,0 +1,241 @@
+# Starship prompt configuration
+{...}: {
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+
+    settings = {
+      palette = "catppuccin_mocha";
+      format = "[](color_surface0)$os[](fg:prev_bg bg:color_maroon)$username$hostname[](fg:prev_bg bg:color_yellow)$directory[](fg:prev_bg bg:color_teal)$git_branch$git_status$git_state[](prev_bg)$fill[](color_blue)$c$rust$golang$nodejs$php$java$kotlin$haskell$python$lua[](fg:color_mauve bg:color_blue)$docker_context$aws$conda$jobs$nix_shell[](fg:color_surface0 bg:color_mauve)$time[ ](fg:prev_bg)$line_break$character";
+
+      command_timeout = 10000;
+
+      directory = {
+        style = "bg:prev_bg fg:color_crust";
+        read_only_style = "fg:color_red bg:prev_bg";
+        format = "[ $path ]($style)[$read_only]($read_only_style)";
+        truncation_length = 3;
+        truncation_symbol = "…/";
+        read_only = "󰌾 ";
+      };
+
+      os = {
+        disabled = false;
+        style = "bg:color_surface0 fg:color_text";
+        format = "[$symbol ]($style)";
+        symbols = {
+          Windows = "󰍲";
+          Ubuntu = "󰕈";
+          SUSE = "";
+          Raspbian = "󰐿";
+          Mint = "󰣭";
+          Macos = "";
+          Manjaro = "";
+          Linux = "󰌽";
+          Gentoo = "󰣨";
+          Fedora = "󰣛";
+          Alpine = "";
+          Amazon = "";
+          Android = "";
+          Arch = "󰣇";
+          Artix = "󰣇";
+          CentOS = "";
+          Debian = "󰣚";
+          Redhat = "󱄛";
+          RedHatEnterprise = "󱄛";
+          NixOS = "";
+        };
+      };
+
+      username = {
+        style_user = "bg:prev_bg fg:color_crust";
+        style_root = "bg:prev_bg fg:color_crust";
+        format = "[  $user ]($style)";
+      };
+      hostname = {
+        ssh_symbol = "";
+        style = "fg:prev_fg bg:prev_bg";
+        format = "[$ssh_symbol $hostname ]($style)";
+      };
+
+      git_branch = {
+        symbol = "";
+        style = "fg:color_crust bg:prev_bg";
+        format = "[ $symbol $branch ]($style)";
+      };
+      git_commit = {
+        style = "fg:prev_fg bg:prev_bg";
+        format = "[($tag)]($style) ";
+      };
+      git_status = {
+        style = "fg:color_crust bg:prev_bg";
+        format = "[($all_status$ahead_behind )]($style)";
+      };
+      git_state = {
+        style = "fg:color_crust bg:prev_bg";
+        format = "[$state( $progress_current/$progress_total)]($style)";
+      };
+
+      nodejs = {
+        symbol = "";
+        style = "fg:color_crust bg:color_blue";
+        format = "[ $symbol( $version) ]($style)";
+      };
+      c = {
+        symbol = "";
+        style = "fg:color_crust bg:color_blue";
+        format = "[ $symbol( $version) ]($style)";
+      };
+
+      rust = {
+        symbol = "";
+        style = "fg:color_crust bg:color_blue";
+        format = "[ $symbol( $version) ]($style)";
+      };
+      golang = {
+        symbol = "";
+        style = "fg:color_crust bg:color_blue";
+        format = "[ $symbol( $version) ]($style)";
+      };
+
+      php = {
+        symbol = "";
+        style = "fg:color_crust bg:color_blue";
+        format = "[ $symbol( $version) ]($style)";
+      };
+
+      java = {
+        symbol = "";
+        style = "fg:color_crust bg:color_blue";
+        format = "[ $symbol( $version) ]($style)";
+      };
+
+      kotlin = {
+        symbol = "";
+        style = "fg:color_crust bg:color_blue";
+        format = "[ $symbol( $version) ]($style)";
+      };
+
+      python = {
+        symbol = "";
+        style = "fg:color_crust bg:color_blue";
+        format = "[ $symbol( $version)( $virtualenv) ]($style)";
+      };
+
+      lua = {
+        symbol = "";
+        style = "fg:color_crust bg:color_blue";
+        format = "[ $symbol ($version) ]($style)";
+      };
+      aws = {
+        symbol = " ";
+        style = "fg:color_crust bg:color_mauve";
+        format = "[ $symbol($profile )($region )($duration )]($style)";
+      };
+      docker_context = {
+        symbol = "";
+        style = "fg:color_crust bg:color_mauve";
+        format = "[ $symbol( $context) ]($style)";
+      };
+
+      conda = {
+        symbol = "";
+        style = "fg:color_crust bg:color_mauve";
+        format = "[ $symbol( $environment) ]($style)";
+      };
+      jobs = {
+        symbol = "󰆅";
+        style = "fg:color_crust bg:color_mauve";
+        format = "[ $symbol( $number) ]($style)";
+      };
+      nix_shell = {
+        symbol = "";
+        style = "fg:color_crust bg:color_mauve";
+        format = "[ $symbol$state($name) ]($style) ";
+      };
+
+      time = {
+        disabled = false;
+        time_format = "%R";
+        style = "fg:color_text bg:color_surface0";
+        format = "[  $time ]($style)";
+      };
+
+      package = {
+        disabled = true;
+      };
+
+      fill = {
+        style = "overlay0";
+      };
+
+      character = {
+        disabled = false;
+        success_symbol = "[❯](bold fg:color_green)";
+        error_symbol = "[❯](bold fg:color_red)";
+        vimcmd_symbol = "[❮](bold fg:color_green)";
+        vimcmd_replace_one_symbol = "[❮](bold fg:color_purple)";
+        vimcmd_replace_symbol = "[❮](bold fg:color_purple)";
+        vimcmd_visual_symbol = "[❮](bold fg:color_yellow)";
+      };
+      palettes = {
+        catppuccin_mocha = {
+          color_rosewater = "#f5e0dc";
+          color_flamingo = "#f2cdcd";
+          color_pink = "#f5c2e7";
+          color_mauve = "#cba6f7";
+          color_red = "#f38ba8";
+          color_maroon = "#eba0ac";
+          color_peach = "#fab387";
+          color_yellow = "#f9e2af";
+          color_green = "#a6e3a1";
+          color_teal = "#94e2d5";
+          color_sky = "#89dceb";
+          color_sapphire = "#74c7ec";
+          color_blue = "#89b4fa";
+          color_lavender = "#b4befe";
+          color_text = "#cdd6f4";
+          color_subtext1 = "#bac2de";
+          color_subtext0 = "#a6adc8";
+          color_overlay2 = "#9399b2";
+          color_overlay1 = "#7f849c";
+          color_overlay0 = "#6c7086";
+          color_surface2 = "#585b70";
+          color_surface1 = "#45475a";
+          color_surface0 = "#313244";
+          color_base = "#1e1e2e";
+          color_mantle = "#181825";
+          color_crust = "#11111b";
+        };
+        catppuccin_latte = {
+          color_rosewater = "#dc8a78";
+          color_flamingo = "#dd7878";
+          color_pink = "#ea76cb";
+          color_mauve = "#8839ef";
+          color_red = "#d20f39";
+          color_maroon = "#e64553";
+          color_peach = "#fe640b";
+          color_yellow = "#df8e1d";
+          color_green = "#40a02b";
+          color_teal = "#179299";
+          color_sky = "#04a5e5";
+          color_sapphire = "#209fb5";
+          color_blue = "#1e66f5";
+          color_lavender = "#7287fd";
+          color_text = "#4c4f69";
+          color_subtext1 = "#5c5f77";
+          color_subtext0 = "#6c6f85";
+          color_overlay2 = "#7c7f93";
+          color_overlay1 = "#8c8fa1";
+          color_overlay0 = "#9ca0b0";
+          color_surface2 = "#acb0be";
+          color_surface1 = "#bcc0cc";
+          color_surface0 = "#ccd0da";
+          color_base = "#eff1f5";
+          color_mantle = "#e6e9ef";
+          color_crust = "#dce0e8";
+        };
+      };
+    };
+  };
+}

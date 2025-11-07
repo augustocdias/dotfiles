@@ -1,0 +1,11 @@
+---
+keys:
+  # Master key (YubiKey) - can decrypt on any machine
+  - &yubikey 7D8396F74725A208D835CE3730E62A1E4F078650
+  # Per-machine age keys
+  - &nixos age16322wyyx908pj9jrs6m6gmrdgq5yym0g5mm8zpf9tasr08700fdskd3jwq
+
+creation_rules:
+  - path_regex: home/secrets/.*\.ya?ml$
+    pgp: [*yubikey]
+    age: [*nixos]
