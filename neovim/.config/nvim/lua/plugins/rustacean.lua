@@ -3,10 +3,10 @@
 return {
     'mrcjkb/rustaceanvim',
     dependencies = {
-        'Saecki/crates.nvim', -- auto complete for Cargo.toml
+        'Saecki/crates.nvim',    -- auto complete for Cargo.toml
         'nvim-lua/plenary.nvim', -- its a dependency from crates.nvim
     },
-    lazy = false, -- the plugin is already lazy
+    lazy = false,                -- the plugin is already lazy
     init = function()
         vim.g.rustaceanvim = function()
             local lsp_utils = require('utils.lsp')
@@ -119,10 +119,12 @@ return {
                                 enable = true,
                             },
                             check = {
-                                -- https://github.com/rust-analyzer/rust-analyzer/issues/9768
                                 command = 'clippy',
                                 features = 'all',
+                                workspace = false,
                                 allTargets = true,
+                                -- targets = { 'i686-pc-windows-gnu', 'aarch64-apple-darwin' },
+                                -- extraArgs = { '--tests' },
                             },
                             rustfmt = {
                                 extraArgs = { '+nightly' },
