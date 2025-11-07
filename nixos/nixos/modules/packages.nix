@@ -115,8 +115,10 @@
 
     # ===== SECURITY & CRYPTO =====
     gnupg
+    pinentry-curses # Terminal-based pinentry for GPG
     mkcert
     yubikey-manager # ykman
+    yubikey-personalization # Yubikey configuration tools
     yubico-piv-tool
     openssl # for bcrypt functionality
 

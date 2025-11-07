@@ -64,6 +64,19 @@
   # Enable fish system-wide
   programs.fish.enable = true;
 
+  # GPG Agent for Yubikey
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+    pinentryPackage = pkgs.pinentry-curses; # Terminal-based pinentry
+  };
+
+  # Smart card support for Yubikey
+  services.pcscd.enable = true;
+
+  # Yubikey udev rules
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+
   # System-wide shell aliases
   environment.shellAliases = {
     ls = "eza --icons --group-directories-first";
