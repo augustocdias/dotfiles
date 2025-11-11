@@ -3,19 +3,15 @@
   config,
   pkgs,
   lib,
+  catppuccin-grub,
   ...
 }: let
-  # Catppuccin GRUB theme
-  catppuccin-grub = pkgs.stdenv.mkDerivation {
-    pname = "catppuccin-grub";
+  # Catppuccin GRUB theme from flake input
+  catppuccin-grub-theme = pkgs.stdenv.mkDerivation {
+    pname = "catppuccin-grub-theme";
     version = "1.0.0";
 
-    src = pkgs.fetchFromGitHub {
-      owner = "catppuccin";
-      repo = "grub";
-      rev = "0a37ab19f654e77129b409fed371891c01ffd0b9";
-      hash = "sha256-9jfMa42rZqK66J7w4rs+LEUtHjWdw94c/G6mbowHiJc=";
-    };
+    src = catppuccin-grub;
 
     installPhase = ''
       mkdir -p $out
@@ -36,7 +32,7 @@ in {
       useOSProber = true;
 
       # Catppuccin Mocha theme
-      theme = catppuccin-grub;
+      theme = catppuccin-grub-theme;
     };
 
     efi.canTouchEfiVariables = true;

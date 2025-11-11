@@ -17,6 +17,11 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    catppuccin-grub = {
+      url = "github:catppuccin/grub/0a37ab19f654e77129b409fed371891c01ffd0b9";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -26,6 +31,7 @@
     vicinae,
     awww,
     neovim-nightly-overlay,
+    catppuccin-grub,
     ...
   }: {
     packages.aarch64-linux.installer =
@@ -69,7 +75,7 @@
     nixosConfigurations.augusto = nixpkgs.lib.nixosSystem {
       # system = "x86_64-linux";
       system = "aarch64-linux";
-      specialArgs = {inherit vicinae awww neovim-nightly-overlay;};
+      specialArgs = {inherit vicinae awww neovim-nightly-overlay catppuccin-grub;};
       modules = [
         hyprland.nixosModules.default
 
