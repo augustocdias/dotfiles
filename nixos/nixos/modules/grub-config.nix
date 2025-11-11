@@ -13,8 +13,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "catppuccin";
       repo = "grub";
-      rev = "88bdaa02cffe76e80506e9a3b8ca7b1e5d653d1d";
-      hash = "sha256-I/oOp/cFRO9pePRI4KbXPP7zW/SYKUNIPEhqaflL2ng=";
+      rev = "0a37ab19f654e77129b409fed371891c01ffd0b9";
+      hash = "sha256-9jfMa42rZqK66J7w4rs+LEUtHjWdw94c/G6mbowHiJc=";
     };
 
     installPhase = ''
