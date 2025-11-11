@@ -170,10 +170,7 @@ cp /etc/nixos-installer/configuration.nix /mnt/home/$USERNAME/nixos/modules/
 cp /etc/nixos-installer/hyprland-config.nix /mnt/home/$USERNAME/nixos/modules/
 cp /etc/nixos-installer/packages.nix /mnt/home/$USERNAME/nixos/modules/
 cp /etc/nixos-installer/eurkey.nix /mnt/home/$USERNAME/nixos/modules/
-cp /etc/nixos-installer/refind-config.nix /mnt/home/$USERNAME/nixos/modules/
-
-# Copy refind theme directory
-cp -r /etc/nixos-installer/refind-theme /mnt/home/$USERNAME/nixos/modules/
+cp /etc/nixos-installer/grub-config.nix /mnt/home/$USERNAME/nixos/modules/
 
 # Move hardware-configuration.nix to root of nixos directory
 cp /mnt/etc/nixos/hardware-configuration.nix /mnt/home/$USERNAME/nixos/
@@ -192,6 +189,8 @@ echo -e "${YELLOW}Installing NixOS... (10-20 minutes)${NC}"
 # Use the target disk for temporary nix store to avoid filling RAM
 mkdir -p /mnt/nix-install-tmp
 export TMPDIR=/mnt/nix-install-tmp
+
+cd /mnt/home/$USERNAME/nixos && nix flake update
 
 # Install using flake from temp directory
 nixos-install --flake /mnt/home/$USERNAME/nixos#augusto --no-root-password

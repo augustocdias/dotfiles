@@ -38,13 +38,6 @@
   # Security for screen locking
   security.pam.services.hyprlock = {};
 
-  # XDG Desktop Portal for screen sharing, file pickers, etc.
-  xdg.portal = {
-    enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
-    config.common.default = "*";
-  };
-
   # Polkit authentication agent (Qt-based)
   systemd.user.services.polkit-kde-agent = {
     description = "Polkit KDE Authentication Agent";

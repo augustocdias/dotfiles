@@ -52,7 +52,7 @@
           environment.etc."nixos-installer/hyprland-config.nix".text = builtins.readFile ./modules/hyprland-config.nix;
           environment.etc."nixos-installer/packages.nix".text = builtins.readFile ./modules/packages.nix;
           environment.etc."nixos-installer/eurkey.nix".text = builtins.readFile ./modules/eurkey.nix;
-          environment.etc."nixos-installer/refind-config.nix".text = builtins.readFile ./modules/refind-config.nix;
+          environment.etc."nixos-installer/grub-config.nix".text = builtins.readFile ./modules/grub-config.nix;
           environment.etc."nixos-installer/install-script.sh" = {
             mode = "0755";
             text = builtins.readFile ./installer/install-script.sh;
@@ -61,9 +61,6 @@
             mode = "0755";
             text = builtins.readFile ./installer/partition-disk.sh;
           };
-
-          # Copy refind theme directory
-          environment.etc."nixos-installer/refind-theme".source = ./modules/refind-theme;
         }
       ];
     };

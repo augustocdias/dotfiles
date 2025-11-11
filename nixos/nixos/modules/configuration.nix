@@ -8,10 +8,8 @@
     ../hardware-configuration.nix
     ./hyprland-config.nix
     ./packages.nix
-    ./refind-config.nix
+    ./grub-config.nix
   ];
-
-  # Boot loader configuration is in refind-config.nix
 
   # Networking
   networking.hostName = "augusto";
@@ -61,6 +59,8 @@
   # Allow homed users to use sudo
   users.groups.wheel.members = [];
 
+  services.userdbd.silenceHighSystemUsers = true;
+
   # Enable fish system-wide
   programs.fish.enable = true;
 
@@ -75,7 +75,7 @@
   services.pcscd.enable = true;
 
   # Yubikey udev rules
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.udev.packages = [pkgs.yubikey-personalization];
 
   # System-wide shell aliases
   environment.shellAliases = {
@@ -96,20 +96,12 @@
   # Polkit for privilege escalation
   security.polkit.enable = true;
 
-  # XDG portal for screen sharing, file picking, etc.
-  xdg.portal = {
-    enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
-  };
-
   # Docker
   virtualisation.docker.enable = true;
 
   programs = {
     _1password.enable = true;
     _1password-gui.enable = true;
-
-    _1password-gui.polkitPolicyOwners = ["USERNAME_PLACEHOLDER"];
   };
 
   system.stateVersion = "25.05";

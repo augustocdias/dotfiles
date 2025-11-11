@@ -8,10 +8,8 @@
   # Enable experimental features for nix commands
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  # Increase tmpfs size for installation (50% of RAM instead of default)
-  # This helps when installing large package sets
-  boot.tmpOnTmpfs = true;
-  boot.tmpOnTmpfsSize = "50%";
+  boot.tmp.useTmpfs = true;
+  boot.tmp.tmpfsSize = "90%";
 
   # Enable networking tools
   networking.networkmanager.enable = true;
@@ -28,11 +26,15 @@
   users.users.nixos = {
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager"];
-    initialPassword = "nixos";
+    initialHashedPassword = lib.mkForce null;
+    password = lib.mkForce "nixos";
   };
 
   # Set root password for the installer
-  users.users.root.initialPassword = "nixos";
+  users.users.root = {
+    initialHashedPassword = lib.mkForce null;
+    password = lib.mkForce "nixos";
+  };
 
   # Create auto-run wrapper that launches installer on first login
   environment.etc."auto-install-wrapper.sh" = {
@@ -92,7 +94,6 @@
     mkpasswd
     stow
     fish
-    cfdisk
     util-linux
     jq
     networkmanager

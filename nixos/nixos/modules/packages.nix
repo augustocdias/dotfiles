@@ -15,9 +15,8 @@
     emmylua-ls # Lua LSP
     yaml-language-server
     vscode-langservers-extracted # jsonls, eslint, html, css
-    nodePackages.sql-language-server
     taplo # TOML LSP
-    dockerfile-language-server-nodejs
+    dockerfile-language-server
     docker-compose-language-service
     bash-language-server
     nodePackages.typescript-language-server
@@ -129,7 +128,7 @@
     ffmpeg
     imagemagick
     exiftool
-    poppler_utils
+    poppler-utils
     zbar
 
     # ===== FILE MANAGERS & MULTIPLEXERS =====
@@ -148,7 +147,7 @@
 
     # ===== BROWSERS & COMMUNICATION =====
     firefox
-    whatsapp-for-linux
+    wasistlos
 
     # ===== DEVELOPMENT GUI =====
     zed-editor # zed
@@ -194,17 +193,16 @@
     playerctl
     slurp
     wl-clipboard
-    xdg-desktop-portal-hyprland
 
     # ===== WAYLAND/QT TOOLS =====
-    qt5ct
-    qt6ct
+    libsForQt5.qt5ct
+    kdePackages.qt6ct
     libsForQt5.qtstyleplugin-kvantum
     kdePackages.qtstyleplugin-kvantum
     kdePackages.polkit-kde-agent-1
     quickshell
-    awww.packages.${pkgs.system}.awww
-    vicinae.packages.${pkgs.system}.default
+    awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
+    vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   # Enable fonts
@@ -212,7 +210,7 @@
     [
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       fira-code
       fira-code-symbols
       font-awesome

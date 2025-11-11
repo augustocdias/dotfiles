@@ -63,55 +63,6 @@ while true; do
   esac
 done
 
-# ===== SWAP CONFIGURATION =====
-echo ""
-echo -e "${CYAN}Swap configuration:${NC}"
-echo "  [1] No swap (can add swapfile later)"
-echo "  [2] Swap partition (you'll create it in cfdisk)"
-echo "  [3] Swapfile (created after install)"
-echo ""
-
-SWAP_TYPE=""
-SWAP_SIZE=""
-
-while true; do
-  read -p "Choice (1-3): " SWAP_CHOICE
-  case "$SWAP_CHOICE" in
-    1)
-      SWAP_TYPE="none"
-      echo -e "${GREEN}No swap will be configured${NC}"
-      break
-      ;;
-    2)
-      SWAP_TYPE="partition"
-      while true; do
-        read -p "Swap size in GB (e.g., 8): " SWAP_SIZE
-        if [[ "$SWAP_SIZE" =~ ^[0-9]+$ ]]; then
-          echo -e "${GREEN}Will look for ${SWAP_SIZE}GB swap partition${NC}"
-          break
-        fi
-        echo -e "${RED}Please enter a valid number${NC}"
-      done
-      break
-      ;;
-    3)
-      SWAP_TYPE="file"
-      while true; do
-        read -p "Swapfile size in GB (e.g., 8): " SWAP_SIZE
-        if [[ "$SWAP_SIZE" =~ ^[0-9]+$ ]]; then
-          echo -e "${GREEN}Will create ${SWAP_SIZE}GB swapfile after install${NC}"
-          break
-        fi
-        echo -e "${RED}Please enter a valid number${NC}"
-      done
-      break
-      ;;
-    *)
-      echo -e "${RED}Invalid choice. Please enter 1, 2, or 3.${NC}"
-      ;;
-  esac
-done
-
 # ===== INTERACTIVE PARTITIONING =====
 echo ""
 echo -e "${YELLOW}Opening cfdisk for manual partitioning...${NC}"
@@ -126,11 +77,9 @@ echo ""
 echo "  • ${CYAN}/home partition (optional):${NC} User data"
 echo "    ${YELLOW}Recommended: Use remaining space${NC}"
 echo ""
-
-if [ "$SWAP_TYPE" = "partition" ]; then
-  echo "  • ${CYAN}Swap partition:${NC} ${SWAP_SIZE}GB (Type: Linux swap)"
-  echo ""
-fi
+echo "  • ${CYAN}Swap partition (optional):${NC} Type: Linux swap"
+echo "    ${YELLOW}Optional: Will be auto-detected if created${NC}"
+echo ""
 
 echo "Press Enter when ready to open cfdisk..."
 read
@@ -218,11 +167,14 @@ fi
 echo -e "${GREEN}✓ EFI partition found${NC}"
 echo -e "${GREEN}✓ Linux root partition found${NC}"
 
-if [ "$SWAP_TYPE" = "partition" ] && [ "$SWAP_FOUND" = true ]; then
-  echo -e "${GREEN}✓ Swap partition found${NC}"
-elif [ "$SWAP_TYPE" = "partition" ] && [ "$SWAP_FOUND" = false ]; then
-  echo -e "${YELLOW}⚠ Swap partition not found (you chose swap partition option)${NC}"
-  echo "Continuing anyway..."
+# Auto-detect swap configuration
+if [ "$SWAP_FOUND" = true ]; then
+  echo -e "${GREEN}✓ Swap partition found - will be used${NC}"
+  SWAP_TYPE="partition"
+else
+  echo -e "${YELLOW}⚠ No swap partition found${NC}"
+  SWAP_TYPE="none"
+  SWAP_SIZE=""
 fi
 
 # ===== AUTO-SUGGEST ASSIGNMENTS =====
@@ -271,6 +223,8 @@ for i in $(seq 1 $PART_COUNT); do
   if [ "${PART_TYPES[$i]}" = "Linux swap" ]; then
     SWAP_PART="${PARTITIONS[$i]}"
     SWAP_NUM=$i
+    # Get swap size in GB for reference
+    SWAP_SIZE=$(lsblk -n -o SIZE "$SWAP_PART" | head -1 | sed 's/[^0-9.]//g' | cut -d. -f1)
     break
   fi
 done
