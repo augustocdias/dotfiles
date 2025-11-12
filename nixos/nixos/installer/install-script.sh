@@ -72,26 +72,22 @@ while true; do
 done
 
 # ===== PASSWORD =====
-# HARDCODED FOR TESTING - CHANGE IN PRODUCTION!
-PASSWORD="12345678"
-echo "Using test password: 12345678"
+while true; do
+    read -s -p "Enter password for $USERNAME: " PASSWORD
+    echo ""
+    read -s -p "Confirm password: " PASSWORD2
+    echo ""
 
-# while true; do
-#   read -s -p "Enter password for $USERNAME: " PASSWORD
-#   echo ""
-#   read -s -p "Confirm password: " PASSWORD2
-#   echo ""
-#
-#   if [ "$PASSWORD" = "$PASSWORD2" ]; then
-#     if [ ${#PASSWORD} -ge 8 ]; then
-#       break
-#     else
-#       echo -e "${RED}Password must be at least 8 characters.${NC}"
-#     fi
-#   else
-#     echo -e "${RED}Passwords do not match. Try again.${NC}"
-#   fi
-# done
+    if [ "$PASSWORD" = "$PASSWORD2" ]; then
+        if [ ${#PASSWORD} -ge 8 ]; then
+            break
+        else
+            echo -e "${RED}Password must be at least 8 characters.${NC}"
+        fi
+    else
+        echo -e "${RED}Passwords do not match. Try again.${NC}"
+    fi
+done
 
 # ===== DISK PARTITIONING =====
 echo ""
@@ -202,99 +198,108 @@ rm -rf /mnt/nix-install-tmp
 rm -rf /mnt/etc/nixos
 echo -e "${GREEN}✓ NixOS installed${NC}"
 
-# ===== CREATE SYSTEMD-HOMED USER =====
+# ===== SETUP SYSTEMD-HOMED USER CREATION ON FIRST BOOT =====
 echo ""
-echo -e "${YELLOW}Creating encrypted user with systemd-homed...${NC}"
+echo -e "${YELLOW}Setting up user creation for first boot...${NC}"
 
-# Create user with homectl (encrypted home directory)
-if nixos-enter --root /mnt -- homectl create "$USERNAME" \
-    --real-name="$USERNAME" \
-    --member-of=wheel \
-    --shell=/run/current-system/sw/bin/fish \
-    --storage=luks \
-    --password="$PASSWORD"; then
-    echo -e "${GREEN}✓ User created with encrypted home directory${NC}"
-else
-    echo -e "${RED}✗ Failed to create user${NC}"
-    exit 1
-fi
+# Create first-boot setup script
+cat >/mnt/tmp/first-boot-setup.fish <<EOF
+#!/run/current-system/sw/bin/fish
 
-# Activate the user
-if nixos-enter --root /mnt -- homectl activate "$USERNAME"; then
-    echo -e "${GREEN}✓ User activated${NC}"
-else
-    echo -e "${RED}✗ Failed to activate user${NC}"
-    exit 1
-fi
+set USERNAME $argv[1]
 
-# ===== SETUP HYPRLAND CONFIG =====
-echo ""
-echo -e "${YELLOW}Creating Hyprland configuration...${NC}"
+# Get user's home directory
+set USER_HOME (homectl inspect "$USERNAME" -j | grep -Po '"homeDirectory":\s*"\K[^"]+')
 
-# Note: Hyprland config will be managed by dotfiles, no need to create it here
+# Copy dotfiles to user home
+cp -r /opt/first-boot-setup/dotfiles "$USER_HOME/.dotfiles"
+
+# Run stow to create symlinks
+cd "$USER_HOME/.dotfiles"
+env HOME="$USER_HOME" stow .
+
+# Set ownership
+set USER_ID (id -u "$USERNAME")
+set USER_GID (id -g "$USERNAME")
+chown -R "$USER_ID:$USER_GID" "$USER_HOME/.dotfiles"
+chown -R "$USER_ID:$USER_GID" "$USER_HOME/.config"; or true
+chown -R "$USER_ID:$USER_GID" "$USER_HOME/.local"; or true
+
+# Clean up
+rm -rf /opt/first-boot-setup
+rm -f /tmp/first-boot-setup.fish
+EOF
+
+chmod +x /mnt/tmp/first-boot-setup.fish
+
+# Create service file in /mnt/tmp (accessible as /tmp inside nixos-enter)
+cat >/mnt/tmp/create-homed-user.service <<EOF
+[Unit]
+Description=Create systemd-homed user on first boot
+After=systemd-homed.service
+Before=display-manager.service
+ConditionPathExists=!/var/lib/homed-user-created
+
+[Service]
+Type=oneshot
+Environment="NEWPASSWORD=${PASSWORD}"
+ExecStart=/run/current-system/sw/bin/homectl create ${USERNAME} --real-name="${USERNAME}" --member-of=wheel --shell=/run/current-system/sw/bin/fish --storage=luks
+ExecStartPost=/tmp/first-boot-setup.sh ${USERNAME}
+ExecStartPost=/run/current-system/sw/bin/touch /var/lib/homed-user-created
+ExecStartPost=/run/current-system/sw/bin/rm -f /etc/systemd/system/create-homed-user.service
+ExecStartPost=/run/current-system/sw/bin/systemctl daemon-reload
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Move files and enable service using nixos-enter
+nixos-enter --root /mnt -- mv /tmp/first-boot-setup.sh /tmp/first-boot-setup.sh
+nixos-enter --root /mnt -- mv /tmp/create-homed-user.service /etc/systemd/system/create-homed-user.service
+nixos-enter --root /mnt -- systemctl enable create-homed-user.service
+
+echo -e "${GREEN}✓ User will be created automatically on first boot${NC}"
+echo -e "${YELLOW}⚠ Important: You will need to login at the console after first boot${NC}"
+echo -e "${YELLOW}  The user will be created with the password you entered.${NC}"
 
 # ===== SETUP DOTFILES =====
 echo ""
 echo -e "${YELLOW}Setting up dotfiles...${NC}"
 
-# Get the actual home directory path (systemd-homed might use different location)
-USER_HOME=$(nixos-enter --root /mnt -- homectl inspect "$USERNAME" -j | grep -Po '"homeDirectory":\s*"\K[^"]+')
+# Clone dotfiles to temporary location
+mkdir -p /mnt/opt/first-boot-setup
+git clone https://github.com/augustocdias/dotfiles.git /mnt/opt/first-boot-setup/dotfiles
+echo -e "${GREEN}✓ Dotfiles cloned${NC}"
 
-# Clone dotfiles repository
-echo "Cloning dotfiles to ~/.dotfiles..."
-if nixos-enter --root /mnt -- su - "$USERNAME" -c "git clone https://github.com/augustocdias/dotfiles.git $USER_HOME/.dotfiles"; then
-    echo -e "${GREEN}✓ Dotfiles cloned${NC}"
-else
-    echo -e "${RED}✗ Failed to clone dotfiles${NC}"
-    exit 1
-fi
+# Move nixos config into temp dotfiles structure
+mkdir -p /mnt/opt/first-boot-setup/dotfiles/nixos
+mv /mnt/home/$USERNAME/nixos /mnt/opt/first-boot-setup/dotfiles/nixos/nixos
+echo -e "${GREEN}✓ NixOS config moved to dotfiles${NC}"
 
-# Move nixos config into .dotfiles structure
-echo "Moving NixOS config into .dotfiles/nixos/nixos..."
-nixos-enter --root /mnt -- su - "$USERNAME" -c "mkdir -p $USER_HOME/.dotfiles/nixos"
-mv /mnt/home/$USERNAME/nixos "$USER_HOME/.dotfiles/nixos/nixos" 2>/dev/null ||
-    nixos-enter --root /mnt -- su - "$USERNAME" -c "mv /home/$USERNAME/nixos $USER_HOME/.dotfiles/nixos/nixos"
-echo -e "${GREEN}✓ NixOS config moved to ~/.dotfiles/nixos/nixos${NC}"
-
-# Run stow to symlink dotfiles
-echo "Running stow to symlink dotfiles..."
-if nixos-enter --root /mnt -- su - "$USERNAME" -c "cd $USER_HOME/.dotfiles && stow ."; then
-    echo -e "${GREEN}✓ Dotfiles stowed${NC}"
-else
-    echo -e "${RED}✗ Failed to stow dotfiles${NC}"
-    exit 1
-fi
-
-# Install fisher for fish shell
+# Install fisher (run as root with HOME set to dotfiles location)
 echo -e "${YELLOW}Installing fisher for fish shell...${NC}"
-if nixos-enter --root /mnt -- su - "$USERNAME" -c 'fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"'; then
+if nixos-enter --root /mnt -- env HOME=/opt/first-boot-setup/dotfiles/fish fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"; then
     echo -e "${GREEN}✓ Fisher installed${NC}"
 else
-    echo -e "${RED}✗ Failed to install fisher${NC}"
-    exit 1
+    echo -e "${YELLOW}⚠ Fisher installation had issues (may complete on first boot)${NC}"
 fi
 
-# ===== NEOVIM SETUP =====
-echo ""
-echo -e "${YELLOW}Setting up Neovim plugins and parsers...${NC}"
-
-# Install Lazy plugins
-echo "Installing Lazy plugins..."
-if nixos-enter --root /mnt -- su - "$USERNAME" -c 'nvim --headless "+Lazy! sync" +qa'; then
-    echo -e "${GREEN}✓ Lazy plugins installed${NC}"
+# Install neovim plugins (run as root with HOME set to dotfiles location)
+echo -e "${YELLOW}Installing Neovim plugins...${NC}"
+if nixos-enter --root /mnt -- env XDG_CONFIG_HOME=/opt/first-boot-setup/dotfiles/neovim/.config HOME=/home/augusto nvim --headless "+Lazy! sync" +qa; then
+    echo -e "${GREEN}✓ Neovim Lazy plugins installed${NC}"
 else
-    echo -e "${YELLOW}⚠ Lazy plugin installation had issues (this is sometimes normal on first run)${NC}"
+    echo -e "${YELLOW}⚠ Neovim plugin installation had issues (may complete on first boot)${NC}"
 fi
 
-# Install treesitter parsers
-echo "Installing treesitter parsers..."
-if nixos-enter --root /mnt -- su - "$USERNAME" -c 'nvim --headless "+TSUpdateSync" +qa'; then
-    echo -e "${GREEN}✓ Treesitter parsers installed${NC}"
+if nixos-enter --root /mnt -- env XDG_CONFIG_HOME=/opt/first-boot-setup/dotfiles/neovim/.config HOME=/home/augusto nvim --headless "+TSUpdateSync" +qa; then
+    echo -e "${GREEN}✓ Neovim treesitter parsers installed${NC}"
 else
-    echo -e "${YELLOW}⚠ Treesitter parser installation had issues (this is sometimes normal on first run)${NC}"
+    echo -e "${YELLOW}⚠ Treesitter installation had issues (may complete on first boot)${NC}"
 fi
 
-echo -e "${GREEN}✓ Neovim setup complete${NC}"
+echo -e "${GREEN}✓ Dotfiles setup complete${NC}"
 
 # ===== COMPLETION =====
 rm -f /tmp/partition-info
@@ -307,15 +312,19 @@ echo "╚═══════════════════════�
 echo -e "$NC"
 echo ""
 echo "Your system is ready!"
-echo "  • Username: $USERNAME"
+echo "  • Username: $USERNAME (will be created on first boot)"
+echo "  • Password: as you entered during installation"
 echo "  • Shell: fish"
 echo "  • Home: encrypted with systemd-homed"
 echo "  • Dotfiles: cloned and stowed"
 echo "  • NixOS config: ~/.dotfiles/nixos/nixos"
 echo "  • Neovim: plugins and parsers installed"
 echo ""
-echo "On reboot, login with your username and password"
-echo "(Your home directory will be automatically decrypted)"
+echo -e "${YELLOW}IMPORTANT:${NC}"
+echo "  • Your user will be created automatically on first boot"
+echo "  • Wait for the boot process to complete before logging in"
+echo "  • Then login with your username and password"
+echo "  • Your home directory will be automatically decrypted"
 echo ""
 echo "To rebuild your system after making changes:"
 echo "  cd ~/.dotfiles/nixos/nixos && sudo nixos-rebuild switch --flake .#augusto"
