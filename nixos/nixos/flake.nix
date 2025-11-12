@@ -67,6 +67,10 @@
             mode = "0755";
             text = builtins.readFile ./installer/partition-disk.sh;
           };
+          environment.etc."nixos-installer/first-boot-setup.fish" = {
+            mode = "0755";
+            text = builtins.readFile ./installer/first-boot-setup.fish;
+          };
         }
       ];
     };

@@ -206,42 +206,8 @@ echo -e "${YELLOW}Setting up user creation for first boot...${NC}"
 
 mkdir /mnt/opt
 
-# Create first-boot setup script
-cat >/mnt/tmp/first-boot-setup.fish <<EOF
-#!/run/current-system/sw/bin/fish
-
-set USERNAME $argv[1]
-
-homectl create $USERNAME --real-name="$USERNAME" --member-of=wheel --shell=/run/current-system/sw/bin/fish --storage=luks
-
-# Get user's home directory
-set USER_HOME (homectl inspect "$USERNAME" -j | grep -Po '"homeDirectory":\s*"\K[^"]+')
-
-homectl with $USERNAME -- rsync -arHAXv --remove-source-files /opt/home/ .
-
-# Copy dotfiles to user home
-cp -r /opt/first-boot-setup/dotfiles "$USER_HOME/.dotfiles"
-
-# Run stow to create symlinks
-cd "$USER_HOME/.dotfiles"
-env HOME="$USER_HOME" stow .
-
-# Set ownership
-set USER_ID (id -u "$USERNAME")
-set USER_GID (id -g "$USERNAME")
-chown -R "$USER_ID:$USER_GID" "$USER_HOME/.dotfiles"
-chown -R "$USER_ID:$USER_GID" "$USER_HOME/.config"; or true
-chown -R "$USER_ID:$USER_GID" "$USER_HOME/.local"; or true
-
-# Clean up
-rm -f /etc/systemd/system/create-homed-user.service
-systemctl daemon-reload
-
-rm -rf /opt/first-boot-setup
-rm -f /opt/first-boot-setup.fish
-EOF
-
-chmod +x /mnt/tmp/first-boot-setup.fish
+# Copy first-boot setup script
+cp /etc/nixos-installer/first-boot-setup.fish /mnt/opt/
 
 # Create service file in /mnt/tmp (accessible as /tmp inside nixos-enter)
 cat >/mnt/tmp/create-homed-user.service <<EOF
@@ -262,7 +228,6 @@ WantedBy=multi-user.target
 EOF
 
 # Move files and enable service using nixos-enter
-nixos-enter --root /mnt -- mv /tmp/first-boot-setup.fish /opt/first-boot-setup.fish
 nixos-enter --root /mnt -- mv /tmp/create-homed-user.service /etc/systemd/system/create-homed-user.service
 nixos-enter --root /mnt -- systemctl enable create-homed-user.service
 

@@ -66,3 +66,11 @@ Run the script `./install_deps.sh`
 1. If ssh doesn't work with the yubikey connected, run `gpg --card-status` and `ssh-add -L`. Both must work otherwise something is wrong. Check environment vars for the `SSH_AUTH_SOCK`.
 2. `ykman oath accounts code -s "SEARCH_QUERY"` returns the 2FA from the service queried in the yubikey.
 3. Create a file in the home with the name `.fish_secret_variables.fish` and call in it `set -gx VAR_NAME VAR_VAULE` to set secret values in fish env.
+
+## NixOs
+
+To build the iso, run:
+
+```bash
+docker run --rm -it -v $(pwd):/workspace -w /workspace/nixos/nixos nixos/nix sh -c "nix build --extra-experimental-features 'nix-command flakes' .#nixosConfigurations.installer.config.system.build.isoImage && cp result/iso/*.iso ."
+```
