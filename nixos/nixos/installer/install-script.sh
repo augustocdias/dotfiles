@@ -202,11 +202,15 @@ echo -e "${GREEN}✓ NixOS installed${NC}"
 echo ""
 echo -e "${YELLOW}Setting up user creation for first boot...${NC}"
 
+mkdir /mnt/opt
+
 # Create first-boot setup script
 cat >/mnt/tmp/first-boot-setup.fish <<EOF
 #!/run/current-system/sw/bin/fish
 
 set USERNAME $argv[1]
+
+homectl create $USERNAME --real-name="$USERNAME" --member-of=wheel --shell=/run/current-system/sw/bin/fish --storage=luks
 
 # Get user's home directory
 set USER_HOME (homectl inspect "$USERNAME" -j | grep -Po '"homeDirectory":\s*"\K[^"]+')
@@ -226,11 +230,14 @@ chown -R "$USER_ID:$USER_GID" "$USER_HOME/.config"; or true
 chown -R "$USER_ID:$USER_GID" "$USER_HOME/.local"; or true
 
 # Clean up
+rm -f /etc/systemd/system/create-homed-user.service
+systemctl daemon-reload
+
 rm -rf /opt/first-boot-setup
-rm -f /tmp/first-boot-setup.fish
+rm -f /opt/first-boot-setup.fish
 EOF
 
-chmod +x /mnt/tmp/first-boot-setup.fish
+chmod +x /mnt/opt/first-boot-setup.fish
 
 # Create service file in /mnt/tmp (accessible as /tmp inside nixos-enter)
 cat >/mnt/tmp/create-homed-user.service <<EOF
@@ -238,16 +245,12 @@ cat >/mnt/tmp/create-homed-user.service <<EOF
 Description=Create systemd-homed user on first boot
 After=systemd-homed.service
 Before=display-manager.service
-ConditionPathExists=!/var/lib/homed-user-created
+ConditionPathExists=/opt/first-boot-setup.fish
 
 [Service]
 Type=oneshot
 Environment="NEWPASSWORD=${PASSWORD}"
-ExecStart=/run/current-system/sw/bin/homectl create ${USERNAME} --real-name="${USERNAME}" --member-of=wheel --shell=/run/current-system/sw/bin/fish --storage=luks
-ExecStartPost=/tmp/first-boot-setup.sh ${USERNAME}
-ExecStartPost=/run/current-system/sw/bin/touch /var/lib/homed-user-created
-ExecStartPost=/run/current-system/sw/bin/rm -f /etc/systemd/system/create-homed-user.service
-ExecStartPost=/run/current-system/sw/bin/systemctl daemon-reload
+ExecStart=/opt/first-boot-setup.fish ${USERNAME}
 RemainAfterExit=yes
 
 [Install]
@@ -255,7 +258,7 @@ WantedBy=multi-user.target
 EOF
 
 # Move files and enable service using nixos-enter
-nixos-enter --root /mnt -- mv /tmp/first-boot-setup.sh /tmp/first-boot-setup.sh
+nixos-enter --root /mnt -- mv /tmp/first-boot-setup.fish /opt/first-boot-setup.fish
 nixos-enter --root /mnt -- mv /tmp/create-homed-user.service /etc/systemd/system/create-homed-user.service
 nixos-enter --root /mnt -- systemctl enable create-homed-user.service
 
