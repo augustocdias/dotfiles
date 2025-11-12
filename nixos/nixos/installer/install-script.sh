@@ -173,8 +173,6 @@ cp /etc/nixos-installer/grub-config.nix /opt/home/nixos/modules/
 # Move hardware-configuration.nix to root of nixos directory
 cp /mnt/etc/nixos/hardware-configuration.nix /opt/home/nixos/
 
-# Update configuration.nix with actual username
-sed -i "s/USERNAME_PLACEHOLDER/$USERNAME/g" /opt/home/nixos/modules/configuration.nix
 
 # Set ownership of temp nixos directory (user will be created by homectl later)
 mkdir -p /opt/home
@@ -209,6 +207,10 @@ mkdir /mnt/opt
 # Copy first-boot setup script
 cp /etc/nixos-installer/first-boot-setup.fish /mnt/opt/
 
+# Store password in a temporary file with restricted permissions
+echo -n "${PASSWORD}" > /mnt/opt/first-boot-password
+chmod 0600 /mnt/opt/first-boot-password
+
 # Create service file in /mnt/tmp (accessible as /tmp inside nixos-enter)
 cat >/mnt/tmp/create-homed-user.service <<EOF
 [Unit]
@@ -219,7 +221,6 @@ ConditionPathExists=/opt/first-boot-setup.fish
 
 [Service]
 Type=oneshot
-Environment="NEWPASSWORD=${PASSWORD}"
 ExecStart=/opt/first-boot-setup.fish ${USERNAME}
 RemainAfterExit=yes
 
@@ -257,20 +258,6 @@ else
     echo -e "${YELLOW}⚠ Fisher installation had issues (may complete on first boot)${NC}"
 fi
 
-# Install neovim plugins (run as root with HOME set to dotfiles location)
-echo -e "${YELLOW}Installing Neovim plugins...${NC}"
-if nixos-enter --root /mnt -- env XDG_CONFIG_HOME=/opt/first-boot-setup/dotfiles/neovim/.config HOME=/opt/home/ nvim --headless "+Lazy! sync" +qa; then
-    echo -e "${GREEN}✓ Neovim Lazy plugins installed${NC}"
-else
-    echo -e "${YELLOW}⚠ Neovim plugin installation had issues (may complete on first boot)${NC}"
-fi
-
-if nixos-enter --root /mnt -- env XDG_CONFIG_HOME=/opt/first-boot-setup/dotfiles/neovim/.config HOME=/opt/home/nvim --headless "+TSUpdateSync" +qa; then
-    echo -e "${GREEN}✓ Neovim treesitter parsers installed${NC}"
-else
-    echo -e "${YELLOW}⚠ Treesitter installation had issues (may complete on first boot)${NC}"
-fi
-
 echo -e "${GREEN}✓ Dotfiles setup complete${NC}"
 
 # ===== COMPLETION =====
@@ -287,10 +274,9 @@ echo "Your system is ready!"
 echo "  • Username: $USERNAME (will be created on first boot)"
 echo "  • Password: as you entered during installation"
 echo "  • Shell: fish"
-echo "  • Home: encrypted with systemd-homed"
+echo "  • Home: will be encrypted with systemd-homed"
 echo "  • Dotfiles: cloned and stowed"
 echo "  • NixOS config: ~/.dotfiles/nixos/nixos"
-echo "  • Neovim: plugins and parsers installed"
 echo ""
 echo -e "${YELLOW}IMPORTANT:${NC}"
 echo "  • Your user will be created automatically on first boot"
