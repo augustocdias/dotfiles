@@ -12,7 +12,7 @@
   ];
 
   # Networking
-  networking.hostName = "augusto";
+  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
   services.resolved.enable = true;
   hardware.bluetooth.enable = true;
@@ -60,6 +60,16 @@
   users.groups.wheel.members = [];
 
   services.userdbd.silenceHighSystemUsers = true;
+
+  # ========== TEMPORARY DEBUG USER - REMOVE AFTER TROUBLESHOOTING ==========
+  users.users.debug = {
+    isNormalUser = true;
+    description = "Temporary Debug User";
+    extraGroups = ["wheel" "networkmanager" "docker"];
+    shell = pkgs.fish;
+    initialPassword = "debug"; # Change this on first login with 'passwd'
+  };
+  # ========== END TEMPORARY DEBUG USER ==========
 
   # Enable fish system-wide
   programs.fish.enable = true;

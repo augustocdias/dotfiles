@@ -156,27 +156,29 @@ echo "Creating system configuration..."
 echo -e "$NC"
 
 # Create temporary nixos config directory for installation
-mkdir -p /mnt/home/$USERNAME/nixos/modules
+mkdir -p /opt/home/nixos/modules
+mkdir -p /opt/home/.config
+mkdir -p /opt/home/.local
 
 # Copy flake.nix to root of nixos directory
-cp /etc/nixos-installer/flake.nix /mnt/home/$USERNAME/nixos/
+cp /etc/nixos-installer/flake.nix /opt/home/nixos/
 
 # Copy module files to modules/ subdirectory
-cp /etc/nixos-installer/configuration.nix /mnt/home/$USERNAME/nixos/modules/
-cp /etc/nixos-installer/hyprland-config.nix /mnt/home/$USERNAME/nixos/modules/
-cp /etc/nixos-installer/packages.nix /mnt/home/$USERNAME/nixos/modules/
-cp /etc/nixos-installer/eurkey.nix /mnt/home/$USERNAME/nixos/modules/
-cp /etc/nixos-installer/grub-config.nix /mnt/home/$USERNAME/nixos/modules/
+cp /etc/nixos-installer/configuration.nix /opt/home/nixos/modules/
+cp /etc/nixos-installer/hyprland-config.nix /opt/home/nixos/modules/
+cp /etc/nixos-installer/packages.nix /opt/home/nixos/modules/
+cp /etc/nixos-installer/eurkey.nix /opt/home/nixos/modules/
+cp /etc/nixos-installer/grub-config.nix /opt/home/nixos/modules/
 
 # Move hardware-configuration.nix to root of nixos directory
-cp /mnt/etc/nixos/hardware-configuration.nix /mnt/home/$USERNAME/nixos/
+cp /mnt/etc/nixos/hardware-configuration.nix /opt/home/nixos/
 
 # Update configuration.nix with actual username
-sed -i "s/USERNAME_PLACEHOLDER/$USERNAME/g" /mnt/home/$USERNAME/nixos/modules/configuration.nix
+sed -i "s/USERNAME_PLACEHOLDER/$USERNAME/g" /opt/home/nixos/modules/configuration.nix
 
 # Set ownership of temp nixos directory (user will be created by homectl later)
-mkdir -p /mnt/home/$USERNAME
-chown -R 1000:100 /mnt/home/$USERNAME/nixos
+mkdir -p /opt/home
+chown -R 1000:100 /opt/home/nixos
 
 # ===== INSTALL NIXOS =====
 echo ""
@@ -186,10 +188,10 @@ echo -e "${YELLOW}Installing NixOS... (10-20 minutes)${NC}"
 mkdir -p /mnt/nix-install-tmp
 export TMPDIR=/mnt/nix-install-tmp
 
-cd /mnt/home/$USERNAME/nixos && nix flake update
+cd /opt/home/nixos && nix flake update
 
 # Install using flake from temp directory
-nixos-install --flake /mnt/home/$USERNAME/nixos#augusto --no-root-password
+nixos-install --flake /opt/home/nixos#augusto --no-root-password
 
 # Clean up
 rm -rf /mnt/nix-install-tmp
@@ -215,6 +217,8 @@ homectl create $USERNAME --real-name="$USERNAME" --member-of=wheel --shell=/run/
 # Get user's home directory
 set USER_HOME (homectl inspect "$USERNAME" -j | grep -Po '"homeDirectory":\s*"\K[^"]+')
 
+homectl with $USERNAME -- rsync -arHAXv --remove-source-files /opt/home/ .
+
 # Copy dotfiles to user home
 cp -r /opt/first-boot-setup/dotfiles "$USER_HOME/.dotfiles"
 
@@ -237,7 +241,7 @@ rm -rf /opt/first-boot-setup
 rm -f /opt/first-boot-setup.fish
 EOF
 
-chmod +x /mnt/opt/first-boot-setup.fish
+chmod +x /mnt/tmp/first-boot-setup.fish
 
 # Create service file in /mnt/tmp (accessible as /tmp inside nixos-enter)
 cat >/mnt/tmp/create-homed-user.service <<EOF
@@ -277,7 +281,7 @@ echo -e "${GREEN}✓ Dotfiles cloned${NC}"
 
 # Move nixos config into temp dotfiles structure
 mkdir -p /mnt/opt/first-boot-setup/dotfiles/nixos
-mv /mnt/home/$USERNAME/nixos /mnt/opt/first-boot-setup/dotfiles/nixos/nixos
+mv /opt/home/nixos /mnt/opt/first-boot-setup/dotfiles/nixos/nixos
 echo -e "${GREEN}✓ NixOS config moved to dotfiles${NC}"
 
 # Install fisher (run as root with HOME set to dotfiles location)
@@ -290,13 +294,13 @@ fi
 
 # Install neovim plugins (run as root with HOME set to dotfiles location)
 echo -e "${YELLOW}Installing Neovim plugins...${NC}"
-if nixos-enter --root /mnt -- env XDG_CONFIG_HOME=/opt/first-boot-setup/dotfiles/neovim/.config HOME=/home/augusto nvim --headless "+Lazy! sync" +qa; then
+if nixos-enter --root /mnt -- env XDG_CONFIG_HOME=/opt/first-boot-setup/dotfiles/neovim/.config HOME=/opt/home/ nvim --headless "+Lazy! sync" +qa; then
     echo -e "${GREEN}✓ Neovim Lazy plugins installed${NC}"
 else
     echo -e "${YELLOW}⚠ Neovim plugin installation had issues (may complete on first boot)${NC}"
 fi
 
-if nixos-enter --root /mnt -- env XDG_CONFIG_HOME=/opt/first-boot-setup/dotfiles/neovim/.config HOME=/home/augusto nvim --headless "+TSUpdateSync" +qa; then
+if nixos-enter --root /mnt -- env XDG_CONFIG_HOME=/opt/first-boot-setup/dotfiles/neovim/.config HOME=/opt/home/nvim --headless "+TSUpdateSync" +qa; then
     echo -e "${GREEN}✓ Neovim treesitter parsers installed${NC}"
 else
     echo -e "${YELLOW}⚠ Treesitter installation had issues (may complete on first boot)${NC}"
