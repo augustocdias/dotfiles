@@ -2,8 +2,13 @@
 {
   config,
   pkgs,
+  silentSDDM,
   ...
-}: {
+}: let
+  sddm-theme = silentSDDM.packages.${pkgs.system}.default.override {
+    theme = "rei";
+  };
+in {
   # Enable Hyprland
   programs.hyprland = {
     enable = true;
@@ -21,19 +26,32 @@
   };
 
   # Display manager - SDDM for nice login screen
-  services.xserver = {
+  qt.enable = true;
+  environment.systemPackages = with pkgs.kdePackages; [
+    sddm-theme
+    qtmultimedia
+    qtsvg
+    qtvirtualkeyboard
+  ];
+  services.displayManager.sddm = {
     enable = true;
-    displayManager.sddm = {
-      enable = true;
-      wayland.enable = true;
+    wayland.enable = true;
+    package = pkgs.kdePackages.sddm;
+    theme = sddm-theme.pname;
+    extraPackages = with pkgs.kdePackages; [
+      qtmultimedia
+      qtsvg
+      qtvirtualkeyboard
+    ];
+    settings = {
+      General = {
+        GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
+        InputMethod = "qtvirtualkeyboard";
+      };
     };
   };
 
-  # Initial login experience
-  services.greetd = {
-    enable = true;
-    settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
-  };
+  services.xserver.enable = true;
 
   # Security for screen locking
   security.pam.services.hyprlock = {};

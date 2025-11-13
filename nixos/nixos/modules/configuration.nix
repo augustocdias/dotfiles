@@ -61,7 +61,7 @@
   users.users.augusto = {
     isNormalUser = true;
     description = "Augusto";
-    extraGroups = ["wheel" "networkmanager" "docker"];
+    extraGroups = ["wheel" "networkmanager" "docker" "video" "render"];
     shell = pkgs.fish;
     hashedPasswordFile = "/etc/nixos/secrets/augusto-password";
   };

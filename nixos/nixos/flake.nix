@@ -22,6 +22,11 @@
       url = "github:catppuccin/grub/0a37ab19f654e77129b409fed371891c01ffd0b9";
       flake = false;
     };
+
+    silentSDDM = {
+      url = "github:uiriansan/SilentSDDM";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -32,6 +37,7 @@
     awww,
     neovim-nightly-overlay,
     catppuccin-grub,
+    silentSDDM,
     ...
   }: {
     packages.aarch64-linux.installer =
@@ -75,7 +81,7 @@
     nixosConfigurations.augusto = nixpkgs.lib.nixosSystem {
       # system = "x86_64-linux";
       system = "aarch64-linux";
-      specialArgs = {inherit vicinae awww neovim-nightly-overlay catppuccin-grub;};
+      specialArgs = {inherit vicinae awww neovim-nightly-overlay catppuccin-grub silentSDDM;};
       modules = [
         hyprland.nixosModules.default
 

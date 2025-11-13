@@ -27,11 +27,13 @@ ColumnLayout {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    modelData.activate();
-                }
-                onRightClicked: {
-                    modelData.menu?.open();
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: (mouse) => {
+                    if (mouse.button === Qt.LeftButton) {
+                        modelData.activate();
+                    } else if (mouse.button === Qt.RightButton) {
+                        modelData.menu?.open();
+                    }
                 }
             }
         }

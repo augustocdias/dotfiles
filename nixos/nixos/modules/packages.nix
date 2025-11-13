@@ -173,6 +173,7 @@
 
     # ===== AI & LLM =====
     ollama
+    claude-code
 
     # ===== SCIENTIFIC =====
     gnuplot

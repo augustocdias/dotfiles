@@ -17,7 +17,7 @@ ColumnLayout {
             property bool isActive: Hyprland.activeWorkspace?.id === workspaceId
             property bool isOccupied: {
                 for (const ws of Hyprland.workspaces.values) {
-                    if (ws.id === workspaceId && ws.windows.length > 0) {
+                    if (ws.id === workspaceId && ws.windows && ws.windows.length > 0) {
                         return true;
                     }
                 }

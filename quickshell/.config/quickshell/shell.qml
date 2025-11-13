@@ -17,8 +17,8 @@ ShellRoot {
                 bottom: true
             }
 
-            width: 50
-            height: screen.height
+            implicitWidth: 50
+            implicitHeight: screen.height
 
             WlrLayershell.layer: WlrLayer.Top
             WlrLayershell.exclusiveZone: width
