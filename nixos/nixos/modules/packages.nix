@@ -120,6 +120,9 @@
     yubikey-personalization # Yubikey configuration tools
     yubico-piv-tool
     openssl # for bcrypt functionality
+    tpm2-tools # TPM2 management for LUKS auto-unlock
+    libfido2 # FIDO2 support for LUKS
+    cryptsetup # LUKS disk encryption
 
     # ===== NETWORKING =====
     awscli2 # awscli

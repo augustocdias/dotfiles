@@ -2,7 +2,15 @@
 set -e
 
 # Interactive disk partitioning script
-# Called by install-script.sh
+# Called by install-script.sh with password argument
+
+# Get password from argument
+LUKS_PASSWORD="$1"
+
+if [ -z "$LUKS_PASSWORD" ]; then
+  echo "Error: No password provided"
+  exit 1
+fi
 
 # Colors
 RED='\033[0;31m'
@@ -397,27 +405,45 @@ while true; do
   echo -e "${RED}Please type 'yes' exactly to confirm${NC}"
 done
 
-# ===== FORMAT & MOUNT =====
+# ===== BUILD UNIFIED MOUNT STRUCTURE =====
+# Combine all Linux filesystem partitions into unified structure
+declare -A ALL_MOUNTS  # mount_point -> partition
+declare -A ALL_FS      # mount_point -> filesystem_type
+
+ALL_MOUNTS["/"]="$ROOT_PART"
+ALL_FS["/"]="$ROOT_FS"
+
+if [ -n "$HOME_PART" ]; then
+  ALL_MOUNTS["/home"]="$HOME_PART"
+  ALL_FS["/home"]="$HOME_FS"
+fi
+
+for mount in "${!EXTRA_MOUNTS[@]}"; do
+  ALL_MOUNTS["$mount"]="${EXTRA_MOUNTS[$mount]}"
+  ALL_FS["$mount"]="${EXTRA_FS[$mount]}"
+done
+
+# ===== LUKS ENCRYPTION & FORMAT =====
 echo ""
-echo -e "${YELLOW}Formatting partitions...${NC}"
+echo -e "${YELLOW}Setting up LUKS2 encryption and formatting partitions...${NC}"
 
 # Helper function to format partition based on filesystem type
 format_partition() {
-  local part=$1
+  local device=$1
   local fs=$2
 
   case "$fs" in
     ext4)
-      mkfs.ext4 -F "$part"
+      mkfs.ext4 -F "$device"
       ;;
     btrfs)
-      mkfs.btrfs -f "$part"
+      mkfs.btrfs -f "$device"
       ;;
     xfs)
-      mkfs.xfs -f "$part"
+      mkfs.xfs -f "$device"
       ;;
     f2fs)
-      mkfs.f2fs -f "$part"
+      mkfs.f2fs -f "$device"
       ;;
     *)
       echo -e "${RED}Unknown filesystem type: $fs${NC}"
@@ -426,22 +452,35 @@ format_partition() {
   esac
 }
 
+# Format boot partition (no encryption)
 mkfs.fat -F32 "$BOOT_PART"
 echo -e "${GREEN}✓ $BOOT_PART formatted as FAT32${NC}"
 
-format_partition "$ROOT_PART" "$ROOT_FS"
-echo -e "${GREEN}✓ $ROOT_PART formatted as $ROOT_FS${NC}"
+# Encrypt and format all Linux filesystem partitions
+declare -A LUKS_DEVICES  # mount_point -> /dev/mapper/cryptX
 
-if [ -n "$HOME_PART" ]; then
-  format_partition "$HOME_PART" "$HOME_FS"
-  echo -e "${GREEN}✓ $HOME_PART formatted as $HOME_FS${NC}"
-fi
+for mount_point in $(echo "${!ALL_MOUNTS[@]}" | tr ' ' '\n' | sort); do
+  partition="${ALL_MOUNTS[$mount_point]}"
+  fs="${ALL_FS[$mount_point]}"
 
-for mount in "${!EXTRA_MOUNTS[@]}"; do
-  format_partition "${EXTRA_MOUNTS[$mount]}" "${EXTRA_FS[$mount]}"
-  echo -e "${GREEN}✓ ${EXTRA_MOUNTS[$mount]} formatted as ${EXTRA_FS[$mount]}${NC}"
+  # Generate LUKS name based on mount point
+  if [ "$mount_point" = "/" ]; then
+    luks_name="cryptroot"
+  else
+    # Strip leading slash: /home -> crypthome, /var -> cryptvar, etc.
+    luks_name="crypt${mount_point#/}"
+  fi
+
+  # Encrypt and format
+  echo "$LUKS_PASSWORD" | cryptsetup luksFormat --type luks2 "$partition" -
+  echo "$LUKS_PASSWORD" | cryptsetup open "$partition" "$luks_name" -
+  format_partition "/dev/mapper/$luks_name" "$fs"
+  echo -e "${GREEN}✓ $partition encrypted and formatted as $fs (${mount_point})${NC}"
+
+  LUKS_DEVICES["$mount_point"]="/dev/mapper/$luks_name"
 done
 
+# Format swap (no encryption)
 if [ -n "$SWAP_PART" ]; then
   mkswap "$SWAP_PART"
   echo -e "${GREEN}✓ $SWAP_PART initialized as swap${NC}"
@@ -450,25 +489,25 @@ fi
 echo ""
 echo -e "${YELLOW}Mounting filesystems...${NC}"
 
-mount "$ROOT_PART" /mnt
-echo -e "${GREEN}✓ Mounted $ROOT_PART on /mnt${NC}"
+# Mount root first
+mount "${LUKS_DEVICES[/]}" /mnt
+echo -e "${GREEN}✓ Mounted ${LUKS_DEVICES[/]} on /mnt${NC}"
 
+# Mount boot
 mkdir -p /mnt/boot
 mount "$BOOT_PART" /mnt/boot
 echo -e "${GREEN}✓ Mounted $BOOT_PART on /mnt/boot${NC}"
 
-if [ -n "$HOME_PART" ]; then
-  mkdir -p /mnt/home
-  mount "$HOME_PART" /mnt/home
-  echo -e "${GREEN}✓ Mounted $HOME_PART on /mnt/home${NC}"
-fi
-
-for mount in "${!EXTRA_MOUNTS[@]}"; do
-  mkdir -p "/mnt$mount"
-  mount "${EXTRA_MOUNTS[$mount]}" "/mnt$mount"
-  echo -e "${GREEN}✓ Mounted ${EXTRA_MOUNTS[$mount]} on /mnt$mount${NC}"
+# Mount all other encrypted partitions
+for mount_point in $(echo "${!LUKS_DEVICES[@]}" | tr ' ' '\n' | sort); do
+  if [ "$mount_point" != "/" ]; then
+    mkdir -p "/mnt$mount_point"
+    mount "${LUKS_DEVICES[$mount_point]}" "/mnt$mount_point"
+    echo -e "${GREEN}✓ Mounted ${LUKS_DEVICES[$mount_point]} on /mnt$mount_point${NC}"
+  fi
 done
 
+# Enable swap
 if [ -n "$SWAP_PART" ]; then
   swapon "$SWAP_PART"
   echo -e "${GREEN}✓ Swap enabled${NC}"
@@ -488,12 +527,11 @@ SWAP_SIZE=$SWAP_SIZE
 DISK=$DISK
 EOF
 
-# Save extra mounts and their filesystems
-if [ ${#EXTRA_MOUNTS[@]} -gt 0 ]; then
-  for mount in "${!EXTRA_MOUNTS[@]}"; do
-    echo "$mount=${EXTRA_MOUNTS[$mount]}:${EXTRA_FS[$mount]}" >> /tmp/extra-mounts
-  done
-fi
+# Save LUKS encrypted partitions for TPM2/FIDO2 enrollment
+# Format: mount_point:partition_device
+for mount_point in "${!ALL_MOUNTS[@]}"; do
+  echo "$mount_point:${ALL_MOUNTS[$mount_point]}" >> /tmp/luks-devices
+done
 
 echo ""
 echo -e "${GREEN}✓ Disk setup complete!${NC}"

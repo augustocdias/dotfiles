@@ -53,23 +53,18 @@
     enable = true;
   };
 
-  # Enable systemd-homed for encrypted home directories
-  services.homed.enable = true;
+  # Use systemd in initrd for LUKS TPM2/FIDO2 unlock
+  boot.initrd.systemd.enable = true;
 
-  # Allow homed users to use sudo
-  users.groups.wheel.members = [];
-
-  services.userdbd.silenceHighSystemUsers = true;
-
-  # ========== TEMPORARY DEBUG USER - REMOVE AFTER TROUBLESHOOTING ==========
-  users.users.debug = {
+  # User Management
+  users.mutableUsers = false;
+  users.users.augusto = {
     isNormalUser = true;
-    description = "Temporary Debug User";
+    description = "Augusto";
     extraGroups = ["wheel" "networkmanager" "docker"];
     shell = pkgs.fish;
-    initialPassword = "debug"; # Change this on first login with 'passwd'
+    hashedPasswordFile = "/etc/nixos/secrets/augusto-password";
   };
-  # ========== END TEMPORARY DEBUG USER ==========
 
   # Enable fish system-wide
   programs.fish.enable = true;

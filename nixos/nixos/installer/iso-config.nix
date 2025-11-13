@@ -91,6 +91,8 @@
     parted
     gptfdisk
     cryptsetup
+    tpm2-tools # For TPM2 LUKS enrollment
+    libfido2 # For FIDO2 LUKS enrollment
     mkpasswd
     stow
     fish

@@ -61,15 +61,8 @@ fi
 echo ""
 
 # ===== USERNAME =====
-while true; do
-    read -p "Enter username: " USERNAME
-    if [[ -n "$USERNAME" && "$USERNAME" =~ ^[a-z_][a-z0-9_-]*$ ]]; then
-        break
-    fi
-    echo -e "$RED"
-    echo "Invalid username. Must start with lowercase letter or underscore."
-    echo -e "$NC"
-done
+# Hardcoded username
+USERNAME="augusto"
 
 # ===== PASSWORD =====
 while true; do
@@ -94,9 +87,9 @@ echo ""
 echo -e "${YELLOW}Starting interactive disk partitioning...${NC}"
 echo ""
 
-# Call the partition-disk.sh script
+# Call the partition-disk.sh script with password
 if [ -f /etc/nixos-installer/partition-disk.sh ]; then
-    bash /etc/nixos-installer/partition-disk.sh
+    bash /etc/nixos-installer/partition-disk.sh "$PASSWORD"
 else
     echo -e "${RED}✗ partition-disk.sh not found!${NC}"
     exit 1
@@ -128,7 +121,7 @@ if [ -n "$SWAP_PART" ]; then
 elif [ "$SWAP_TYPE" = "swapfile" ]; then
     echo "  Swap:        ${SWAP_SIZE}GB swapfile"
 fi
-echo "  Encryption:  systemd-homed (encrypted home directory)"
+echo "  Encryption:  LUKS2 (full disk encryption with TPM2/FIDO2)"
 echo "  Dotfiles:    github.com/augustocdias/dotfiles"
 echo ""
 
@@ -144,39 +137,36 @@ while true; do
     esac
 done
 
-# ===== GENERATE HARDWARE CONFIG =====
-echo -e "$YELLOW"
-echo "Generating hardware configuration..."
-echo -e "$NC"
-nixos-generate-config --root /mnt
+# ===== SETUP DOTFILES =====
+echo ""
+echo -e "${YELLOW}Setting up dotfiles and configuration...${NC}"
 
-# ===== CREATE CONFIGURATION =====
-echo -e "$YELLOW"
-echo "Creating system configuration..."
-echo -e "$NC"
+# Clone dotfiles first
+git clone https://github.com/augustocdias/dotfiles.git /mnt/home/augusto/.dotfiles
+echo -e "${GREEN}✓ Dotfiles cloned${NC}"
 
-# Create temporary nixos config directory for installation
-mkdir -p /opt/home/nixos/modules
-mkdir -p /opt/home/.config
-mkdir -p /opt/home/.local
+# Create nixos config directory structure
+mkdir -p /mnt/home/augusto/.dotfiles/nixos/nixos/modules
 
-# Copy flake.nix to root of nixos directory
-cp /etc/nixos-installer/flake.nix /opt/home/nixos/
+# Copy nixos configs from ISO to dotfiles
+cp /etc/nixos-installer/flake.nix /mnt/home/augusto/.dotfiles/nixos/nixos/
+cp /etc/nixos-installer/configuration.nix /mnt/home/augusto/.dotfiles/nixos/nixos/modules/
+cp /etc/nixos-installer/hyprland-config.nix /mnt/home/augusto/.dotfiles/nixos/nixos/modules/
+cp /etc/nixos-installer/packages.nix /mnt/home/augusto/.dotfiles/nixos/nixos/modules/
+cp /etc/nixos-installer/eurkey.nix /mnt/home/augusto/.dotfiles/nixos/nixos/modules/
+cp /etc/nixos-installer/grub-config.nix /mnt/home/augusto/.dotfiles/nixos/nixos/modules/
+echo -e "${GREEN}✓ NixOS configs copied${NC}"
 
-# Copy module files to modules/ subdirectory
-cp /etc/nixos-installer/configuration.nix /opt/home/nixos/modules/
-cp /etc/nixos-installer/hyprland-config.nix /opt/home/nixos/modules/
-cp /etc/nixos-installer/packages.nix /opt/home/nixos/modules/
-cp /etc/nixos-installer/eurkey.nix /opt/home/nixos/modules/
-cp /etc/nixos-installer/grub-config.nix /opt/home/nixos/modules/
+# Generate hardware-configuration.nix directly into dotfiles
+nixos-generate-config --root /mnt --dir /mnt/home/augusto/.dotfiles/nixos/nixos
+echo -e "${GREEN}✓ Hardware configuration generated${NC}"
 
-# Move hardware-configuration.nix to root of nixos directory
-cp /mnt/etc/nixos/hardware-configuration.nix /opt/home/nixos/
-
-
-# Set ownership of temp nixos directory (user will be created by homectl later)
-mkdir -p /opt/home
-chown -R 1000:100 /opt/home/nixos
+# Create secrets directory and store hashed password
+mkdir -p /mnt/etc/nixos/secrets
+chmod 700 /mnt/etc/nixos/secrets
+echo -n "$PASSWORD" | mkpasswd -m yescrypt -s > /mnt/etc/nixos/secrets/augusto-password
+chmod 600 /mnt/etc/nixos/secrets/augusto-password
+echo -e "${GREEN}✓ Password hash stored securely${NC}"
 
 # ===== INSTALL NIXOS =====
 echo ""
@@ -186,79 +176,89 @@ echo -e "${YELLOW}Installing NixOS... (10-20 minutes)${NC}"
 mkdir -p /mnt/nix-install-tmp
 export TMPDIR=/mnt/nix-install-tmp
 
-cd /opt/home/nixos && nix flake update
+cd /mnt/home/augusto/.dotfiles/nixos/nixos && nix flake update
 
-# Install using flake from temp directory
-nixos-install --flake /opt/home/nixos#augusto --no-root-password
+# Install using flake from dotfiles
+nixos-install --flake /mnt/home/augusto/.dotfiles/nixos/nixos#augusto --no-root-password
 
 # Clean up
 rm -rf /mnt/nix-install-tmp
-
-# Remove /etc/nixos - all config will be moved to ~/.dotfiles/nixos/nixos
-rm -rf /mnt/etc/nixos
 echo -e "${GREEN}✓ NixOS installed${NC}"
 
-# ===== SETUP SYSTEMD-HOMED USER CREATION ON FIRST BOOT =====
+# ===== TPM2 & FIDO2 ENROLLMENT =====
 echo ""
-echo -e "${YELLOW}Setting up user creation for first boot...${NC}"
+echo -e "${YELLOW}Enrolling TPM2 and FIDO2 for disk auto-unlock...${NC}"
 
-mkdir /mnt/opt
+# Read LUKS encrypted partitions
+if [ -f /tmp/luks-devices ]; then
+  while IFS=: read -r mount_point partition; do
+    echo ""
+    echo -e "${CYAN}Enrolling keys for $partition ($mount_point)${NC}"
 
-# Copy first-boot setup script
-cp /etc/nixos-installer/first-boot-setup.fish /mnt/opt/
+    # Try TPM2 enrollment
+    if echo "$PASSWORD" | nixos-enter --root /mnt -- \
+      systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+2+7+12 "$partition" -; then
+      echo -e "${GREEN}✓ TPM2 enrolled for $partition${NC}"
 
-# Store password in a temporary file with restricted permissions
-echo -n "${PASSWORD}" > /mnt/opt/first-boot-password
-chmod 0600 /mnt/opt/first-boot-password
+      # Set TPM2 slot as preferred (slot 1)
+      nixos-enter --root /mnt -- cryptsetup config "$partition" --priority prefer --key-slot 1 || true
+    else
+      echo -e "${YELLOW}⚠ TPM2 enrollment failed (may not be available in VM)${NC}"
+    fi
 
-# Create service file in /mnt/tmp (accessible as /tmp inside nixos-enter)
-cat >/mnt/tmp/create-homed-user.service <<EOF
-[Unit]
-Description=Create systemd-homed user on first boot
-After=systemd-homed.service
-Before=display-manager.service
-ConditionPathExists=/opt/first-boot-setup.fish
-
-[Service]
-Type=oneshot
-ExecStart=/opt/first-boot-setup.fish ${USERNAME}
-RemainAfterExit=yes
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# Move files and enable service using nixos-enter
-nixos-enter --root /mnt -- mv /tmp/create-homed-user.service /etc/systemd/system/create-homed-user.service
-nixos-enter --root /mnt -- systemctl enable create-homed-user.service
-
-echo -e "${GREEN}✓ User will be created automatically on first boot${NC}"
-echo -e "${YELLOW}⚠ Important: You will need to login at the console after first boot${NC}"
-echo -e "${YELLOW}  The user will be created with the password you entered.${NC}"
-
-# ===== SETUP DOTFILES =====
-echo ""
-echo -e "${YELLOW}Setting up dotfiles...${NC}"
-
-# Clone dotfiles to temporary location
-mkdir -p /mnt/opt/first-boot-setup
-git clone https://github.com/augustocdias/dotfiles.git /mnt/opt/first-boot-setup/dotfiles
-echo -e "${GREEN}✓ Dotfiles cloned${NC}"
-
-# Move nixos config into temp dotfiles structure
-mkdir -p /mnt/opt/first-boot-setup/dotfiles/nixos
-mv /opt/home/nixos /mnt/opt/first-boot-setup/dotfiles/nixos/nixos
-echo -e "${GREEN}✓ NixOS config moved to dotfiles${NC}"
-
-# Install fisher (run as root with HOME set to dotfiles location)
-echo -e "${YELLOW}Installing fisher for fish shell...${NC}"
-if nixos-enter --root /mnt -- env HOME=/opt/first-boot-setup/dotfiles/fish fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"; then
-    echo -e "${GREEN}✓ Fisher installed${NC}"
+    # Enroll FIDO2
+    echo -e "${YELLOW}Please insert your FIDO2 key for $partition and press Enter...${NC}"
+    read
+    if echo "$PASSWORD" | nixos-enter --root /mnt -- \
+      systemd-cryptenroll --fido2-device=auto "$partition" -; then
+      echo -e "${GREEN}✓ FIDO2 enrolled for $partition${NC}"
+    else
+      echo -e "${YELLOW}⚠ FIDO2 enrollment failed${NC}"
+    fi
+  done < /tmp/luks-devices
 else
-    echo -e "${YELLOW}⚠ Fisher installation had issues (may complete on first boot)${NC}"
+  echo -e "${YELLOW}⚠ No LUKS devices found for enrollment${NC}"
 fi
 
-echo -e "${GREEN}✓ Dotfiles setup complete${NC}"
+echo -e "${GREEN}✓ Enrollment complete${NC}"
+
+# ===== SETUP USER ENVIRONMENT =====
+echo ""
+echo -e "${YELLOW}Setting up user environment...${NC}"
+
+# Stow dotfiles
+cd /mnt/home/augusto/.dotfiles
+nixos-enter --root /mnt -- env HOME=/home/augusto stow -d /home/augusto/.dotfiles -t /home/augusto .
+echo -e "${GREEN}✓ Dotfiles stowed${NC}"
+
+# Install fisher
+echo -e "${YELLOW}Installing fisher...${NC}"
+if nixos-enter --root /mnt -- env HOME=/home/augusto fish -c \
+  "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"; then
+  echo -e "${GREEN}✓ Fisher installed${NC}"
+else
+  echo -e "${YELLOW}⚠ Fisher installation had issues${NC}"
+fi
+
+# Install neovim plugins
+echo -e "${YELLOW}Installing Neovim plugins...${NC}"
+if nixos-enter --root /mnt -- env HOME=/home/augusto nvim --headless "+Lazy! sync" +qa; then
+  echo -e "${GREEN}✓ Neovim Lazy plugins installed${NC}"
+else
+  echo -e "${YELLOW}⚠ Neovim plugin installation had issues${NC}"
+fi
+
+if nixos-enter --root /mnt -- env HOME=/home/augusto nvim --headless "+TSUpdateSync" +qa; then
+  echo -e "${GREEN}✓ Neovim treesitter parsers installed${NC}"
+else
+  echo -e "${YELLOW}⚠ Treesitter installation had issues${NC}"
+fi
+
+# Set ownership
+nixos-enter --root /mnt -- chown -R augusto:users /home/augusto
+echo -e "${GREEN}✓ Ownership set${NC}"
+
+echo -e "${GREEN}✓ User environment complete${NC}"
 
 # ===== COMPLETION =====
 rm -f /tmp/partition-info
@@ -271,18 +271,18 @@ echo "╚═══════════════════════�
 echo -e "$NC"
 echo ""
 echo "Your system is ready!"
-echo "  • Username: $USERNAME (will be created on first boot)"
-echo "  • Password: as you entered during installation"
+echo "  • Username: $USERNAME"
+echo "  • Password: as you entered"
 echo "  • Shell: fish"
-echo "  • Home: will be encrypted with systemd-homed"
-echo "  • Dotfiles: cloned and stowed"
+echo "  • Encryption: LUKS2 with TPM2/FIDO2 auto-unlock"
+echo "  • Dotfiles: ~/.dotfiles (stowed)"
 echo "  • NixOS config: ~/.dotfiles/nixos/nixos"
 echo ""
 echo -e "${YELLOW}IMPORTANT:${NC}"
-echo "  • Your user will be created automatically on first boot"
-echo "  • Wait for the boot process to complete before logging in"
-echo "  • Then login with your username and password"
-echo "  • Your home directory will be automatically decrypted"
+echo "  • Disk will auto-unlock via TPM2 (if available)"
+echo "  • Fallback to FIDO2 key if TPM2 fails"
+echo "  • Password fallback if FIDO2 unavailable"
+echo "  • Login with username: $USERNAME"
 echo ""
 echo "To rebuild your system after making changes:"
 echo "  cd ~/.dotfiles/nixos/nixos && sudo nixos-rebuild switch --flake .#augusto"
