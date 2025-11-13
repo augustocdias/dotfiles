@@ -170,7 +170,7 @@ echo -e "${GREEN}✓ Password hash stored securely${NC}"
 
 # ===== INSTALL NIXOS =====
 echo ""
-echo -e "${YELLOW}Installing NixOS... (10-20 minutes)${NC}"
+echo -e "${YELLOW}Installing NixOS... Be patient and please wait...${NC}"
 
 # Use the target disk for temporary nix store to avoid filling RAM
 mkdir -p /mnt/nix-install-tmp
@@ -178,8 +178,8 @@ export TMPDIR=/mnt/nix-install-tmp
 
 cd /mnt/home/augusto/.dotfiles/nixos/nixos && nix flake update
 
-# Install using flake from dotfiles
-nixos-install --flake /mnt/home/augusto/.dotfiles/nixos/nixos#augusto --no-root-password
+# Install using flake from dotfiles (path: prefix ignores git state)
+nixos-install --flake path:/mnt/home/augusto/.dotfiles/nixos/nixos#augusto --no-root-password
 
 # Clean up
 rm -rf /mnt/nix-install-tmp
