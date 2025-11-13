@@ -176,9 +176,8 @@ echo -e "${YELLOW}Installing NixOS... Be patient and please wait...${NC}"
 mkdir -p /mnt/nix-install-tmp
 export TMPDIR=/mnt/nix-install-tmp
 
-cd /mnt/home/augusto/.dotfiles/nixos/nixos && nix flake update
-
 # Install using flake from dotfiles (path: prefix ignores git state)
+nix flake update --flake path:/mnt/home/augusto/.dotfiles/nixos/nixos
 nixos-install --flake path:/mnt/home/augusto/.dotfiles/nixos/nixos#augusto --no-root-password
 
 # Clean up
