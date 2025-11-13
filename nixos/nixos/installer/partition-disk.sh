@@ -209,20 +209,30 @@ for i in $(seq 1 $PART_COUNT); do
   fi
 done
 
+# Count Linux filesystem partitions
+LINUX_FS_COUNT=0
+for i in $(seq 1 $PART_COUNT); do
+  if [ "${PART_TYPES[$i]}" = "Linux filesystem" ]; then
+    LINUX_FS_COUNT=$((LINUX_FS_COUNT + 1))
+  fi
+done
+
 # Find home partition (second Linux filesystem if exists)
 HOME_PART=""
 HOME_NUM=""
-COUNT=0
-for i in $(seq 1 $PART_COUNT); do
-  if [ "${PART_TYPES[$i]}" = "Linux filesystem" ]; then
-    COUNT=$((COUNT + 1))
-    if [ $COUNT -eq 2 ]; then
-      HOME_PART="${PARTITIONS[$i]}"
-      HOME_NUM=$i
-      break
+if [ $LINUX_FS_COUNT -ge 2 ]; then
+  COUNT=0
+  for i in $(seq 1 $PART_COUNT); do
+    if [ "${PART_TYPES[$i]}" = "Linux filesystem" ]; then
+      COUNT=$((COUNT + 1))
+      if [ $COUNT -eq 2 ]; then
+        HOME_PART="${PARTITIONS[$i]}"
+        HOME_NUM=$i
+        break
+      fi
     fi
-  fi
-done
+  done
+fi
 
 # Find swap partition
 SWAP_PART=""
@@ -236,6 +246,15 @@ for i in $(seq 1 $PART_COUNT); do
     break
   fi
 done
+
+# Warn if more than 2 Linux filesystem partitions
+if [ $LINUX_FS_COUNT -gt 2 ]; then
+  echo ""
+  echo -e "${YELLOW}⚠ Warning: More than 2 Linux filesystem partitions detected${NC}"
+  echo "This installer only handles Boot (EFI), Root (/), Home (/home), and Swap."
+  echo "Extra partitions will be ignored. Configure them manually after installation."
+  echo ""
+fi
 
 echo "  Boot (EFI):   $BOOT_PART (${PART_SIZES[$BOOT_NUM]})"
 echo "  Root (/):     $ROOT_PART (${PART_SIZES[$ROOT_NUM]})"
@@ -265,56 +284,20 @@ if [[ "${ACCEPT^^}" != "Y" ]]; then
   ROOT_INPUT=${ROOT_INPUT:-$ROOT_NUM}
   ROOT_PART="${PARTITIONS[$ROOT_INPUT]}"
 
-  # Build list of unassigned partitions
-  declare -a UNASSIGNED
+  # Home partition (optional)
+  echo ""
+  echo "Assign home partition (optional, leave empty to skip):"
   for i in $(seq 1 $PART_COUNT); do
-    if [ $i -ne $BOOT_INPUT ] && [ $i -ne $ROOT_INPUT ] && [ "${PART_TYPES[$i]}" != "Linux swap" ]; then
-      UNASSIGNED+=($i)
+    if [ $i -ne $BOOT_INPUT ] && [ $i -ne $ROOT_INPUT ] && [ "${PART_TYPES[$i]}" = "Linux filesystem" ]; then
+      echo "  [$i] ${PARTITIONS[$i]} (${PART_SIZES[$i]})"
     fi
   done
-
-  # Assign additional partitions
-  HOME_PART=""
-  declare -A EXTRA_MOUNTS
-
-  for idx in "${UNASSIGNED[@]}"; do
-    echo ""
-    echo "Additional partition found: ${PARTITIONS[$idx]} (${PART_SIZES[$idx]})"
-    echo "Mount ${PARTITIONS[$idx]} at:"
-    echo "  [1] /home"
-    echo "  [2] /var"
-    echo "  [3] /tmp"
-    echo "  [4] Custom path"
-    echo "  [5] Don't mount (skip)"
-    echo ""
-
-    read -p "Choice: " MOUNT_CHOICE
-    case "$MOUNT_CHOICE" in
-      1)
-        HOME_PART="${PARTITIONS[$idx]}"
-        echo -e "${GREEN}Assigned to /home${NC}"
-        ;;
-      2)
-        EXTRA_MOUNTS["/var"]="${PARTITIONS[$idx]}"
-        echo -e "${GREEN}Assigned to /var${NC}"
-        ;;
-      3)
-        EXTRA_MOUNTS["/tmp"]="${PARTITIONS[$idx]}"
-        echo -e "${GREEN}Assigned to /tmp${NC}"
-        ;;
-      4)
-        read -p "Enter mount point (e.g., /data): " CUSTOM_MOUNT
-        EXTRA_MOUNTS["$CUSTOM_MOUNT"]="${PARTITIONS[$idx]}"
-        echo -e "${GREEN}Assigned to $CUSTOM_MOUNT${NC}"
-        ;;
-      5)
-        echo -e "${YELLOW}Skipped${NC}"
-        ;;
-      *)
-        echo -e "${RED}Invalid choice, skipping${NC}"
-        ;;
-    esac
-  done
+  read -p "Home partition (/home) [empty=none]: " HOME_INPUT
+  if [ -n "$HOME_INPUT" ]; then
+    HOME_PART="${PARTITIONS[$HOME_INPUT]}"
+  else
+    HOME_PART=""
+  fi
 
   # Swap assignment
   if [ -n "$SWAP_PART" ]; then
@@ -370,26 +353,16 @@ if [ -n "$HOME_PART" ]; then
   echo -e "${GREEN}/home will use $HOME_FS${NC}"
 fi
 
-# Extra mount filesystems
-declare -A EXTRA_FS
-for mount in "${!EXTRA_MOUNTS[@]}"; do
-  EXTRA_FS["$mount"]=$(choose_fs "${EXTRA_MOUNTS[$mount]}" "$mount")
-  echo -e "${GREEN}$mount will use ${EXTRA_FS[$mount]}${NC}"
-done
-
 # ===== FORMAT CONFIRMATION =====
 echo ""
 echo -e "${RED}⚠️  FINAL CONFIRMATION${NC}"
 echo ""
 echo "The following operations will be performed:"
 echo "  • Format $BOOT_PART as FAT32 (EFI)"
-echo "  • Format $ROOT_PART as $ROOT_FS (root)"
+echo "  • Encrypt and format $ROOT_PART as $ROOT_FS (root)"
 if [ -n "$HOME_PART" ]; then
-  echo "  • Format $HOME_PART as $HOME_FS (/home)"
+  echo "  • Encrypt and format $HOME_PART as $HOME_FS (/home)"
 fi
-for mount in "${!EXTRA_MOUNTS[@]}"; do
-  echo "  • Format ${EXTRA_MOUNTS[$mount]} as ${EXTRA_FS[$mount]} ($mount)"
-done
 if [ -n "$SWAP_PART" ]; then
   echo "  • Format $SWAP_PART as swap"
 fi
@@ -405,8 +378,8 @@ while true; do
   echo -e "${RED}Please type 'yes' exactly to confirm${NC}"
 done
 
-# ===== BUILD UNIFIED MOUNT STRUCTURE =====
-# Combine all Linux filesystem partitions into unified structure
+# ===== BUILD MOUNT STRUCTURE =====
+# Only handle root and optionally home
 declare -A ALL_MOUNTS  # mount_point -> partition
 declare -A ALL_FS      # mount_point -> filesystem_type
 
@@ -417,11 +390,6 @@ if [ -n "$HOME_PART" ]; then
   ALL_MOUNTS["/home"]="$HOME_PART"
   ALL_FS["/home"]="$HOME_FS"
 fi
-
-for mount in "${!EXTRA_MOUNTS[@]}"; do
-  ALL_MOUNTS["$mount"]="${EXTRA_MOUNTS[$mount]}"
-  ALL_FS["$mount"]="${EXTRA_FS[$mount]}"
-done
 
 # ===== LUKS ENCRYPTION & FORMAT =====
 echo ""
@@ -453,6 +421,7 @@ format_partition() {
 }
 
 # Format boot partition (no encryption)
+wipefs -a "$BOOT_PART" >/dev/null 2>&1 || true
 mkfs.fat -F32 "$BOOT_PART"
 echo -e "${GREEN}✓ $BOOT_PART formatted as FAT32${NC}"
 
@@ -471,9 +440,12 @@ for mount_point in $(echo "${!ALL_MOUNTS[@]}" | tr ' ' '\n' | sort); do
     luks_name="crypt${mount_point#/}"
   fi
 
+  # Wipe any existing signatures
+  wipefs -a "$partition" >/dev/null 2>&1 || true
+
   # Encrypt and format
-  echo "$LUKS_PASSWORD" | cryptsetup luksFormat --type luks2 "$partition" -
-  echo "$LUKS_PASSWORD" | cryptsetup open "$partition" "$luks_name" -
+  printf "%s" "$LUKS_PASSWORD" | cryptsetup luksFormat --type luks2 -q "$partition" --key-file=-
+  printf "%s" "$LUKS_PASSWORD" | cryptsetup open "$partition" "$luks_name" --key-file=-
   format_partition "/dev/mapper/$luks_name" "$fs"
   echo -e "${GREEN}✓ $partition encrypted and formatted as $fs (${mount_point})${NC}"
 
@@ -482,6 +454,7 @@ done
 
 # Format swap (no encryption)
 if [ -n "$SWAP_PART" ]; then
+  wipefs -a "$SWAP_PART" >/dev/null 2>&1 || true
   mkswap "$SWAP_PART"
   echo -e "${GREEN}✓ $SWAP_PART initialized as swap${NC}"
 fi

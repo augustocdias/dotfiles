@@ -164,7 +164,7 @@ echo -e "${GREEN}✓ Hardware configuration generated${NC}"
 # Create secrets directory and store hashed password
 mkdir -p /mnt/etc/nixos/secrets
 chmod 700 /mnt/etc/nixos/secrets
-echo -n "$PASSWORD" | mkpasswd -m yescrypt -s > /mnt/etc/nixos/secrets/augusto-password
+printf "%s" "$PASSWORD" | mkpasswd -m yescrypt -s > /mnt/etc/nixos/secrets/augusto-password
 chmod 600 /mnt/etc/nixos/secrets/augusto-password
 echo -e "${GREEN}✓ Password hash stored securely${NC}"
 
@@ -196,7 +196,7 @@ if [ -f /tmp/luks-devices ]; then
     echo -e "${CYAN}Enrolling keys for $partition ($mount_point)${NC}"
 
     # Try TPM2 enrollment
-    if echo "$PASSWORD" | nixos-enter --root /mnt -- \
+    if printf "%s" "$PASSWORD" | nixos-enter --root /mnt -- \
       systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+2+7+12 "$partition" -; then
       echo -e "${GREEN}✓ TPM2 enrolled for $partition${NC}"
 
@@ -209,7 +209,7 @@ if [ -f /tmp/luks-devices ]; then
     # Enroll FIDO2
     echo -e "${YELLOW}Please insert your FIDO2 key for $partition and press Enter...${NC}"
     read
-    if echo "$PASSWORD" | nixos-enter --root /mnt -- \
+    if printf "%s" "$PASSWORD" | nixos-enter --root /mnt -- \
       systemd-cryptenroll --fido2-device=auto "$partition" -; then
       echo -e "${GREEN}✓ FIDO2 enrolled for $partition${NC}"
     else
