@@ -172,16 +172,11 @@ echo -e "${GREEN}✓ Password hash stored securely${NC}"
 echo ""
 echo -e "${YELLOW}Installing NixOS... Be patient and please wait...${NC}"
 
-# Use the target disk for temporary nix store to avoid filling RAM
-mkdir -p /mnt/nix-install-tmp
-export TMPDIR=/mnt/nix-install-tmp
 
 # Install using flake from dotfiles (path: prefix ignores git state)
 nix flake update --flake path:/mnt/home/augusto/.dotfiles/nixos/nixos
 nixos-install --flake path:/mnt/home/augusto/.dotfiles/nixos/nixos#augusto --no-root-password
 
-# Clean up
-rm -rf /mnt/nix-install-tmp
 echo -e "${GREEN}✓ NixOS installed${NC}"
 
 # ===== TPM2 & FIDO2 ENROLLMENT =====
@@ -195,8 +190,8 @@ if [ -f /tmp/luks-devices ]; then
     echo -e "${CYAN}Enrolling keys for $partition ($mount_point)${NC}"
 
     # Try TPM2 enrollment
-    if printf "%s" "$PASSWORD" | nixos-enter --root /mnt -- \
-      systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+2+7+12 "$partition" -; then
+    if nixos-enter --root /mnt -- \
+      systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+2+7+12 "$partition"; then
       echo -e "${GREEN}✓ TPM2 enrolled for $partition${NC}"
 
       # Set TPM2 slot as preferred (slot 1)
@@ -208,8 +203,8 @@ if [ -f /tmp/luks-devices ]; then
     # Enroll FIDO2
     echo -e "${YELLOW}Please insert your FIDO2 key for $partition and press Enter...${NC}"
     read
-    if printf "%s" "$PASSWORD" | nixos-enter --root /mnt -- \
-      systemd-cryptenroll --fido2-device=auto "$partition" -; then
+    if nixos-enter --root /mnt -- \
+      systemd-cryptenroll --fido2-device=auto "$partition" ; then
       echo -e "${GREEN}✓ FIDO2 enrolled for $partition${NC}"
     else
       echo -e "${YELLOW}⚠ FIDO2 enrollment failed${NC}"
@@ -226,8 +221,7 @@ echo ""
 echo -e "${YELLOW}Setting up user environment...${NC}"
 
 # Stow dotfiles
-cd /mnt/home/augusto/.dotfiles
-nixos-enter --root /mnt -- env HOME=/home/augusto stow -d /home/augusto/.dotfiles -t /home/augusto .
+nixos-enter --root /mnt -- env HOME=/home/augusto bash -c 'cd /home/augusto/.dotfiles && stow */'
 echo -e "${GREEN}✓ Dotfiles stowed${NC}"
 
 # Install fisher
@@ -241,6 +235,7 @@ fi
 
 # Install neovim plugins
 echo -e "${YELLOW}Installing Neovim plugins...${NC}"
+mkdir -p /mnt/home/augusto/.cache/nvim
 if nixos-enter --root /mnt -- env HOME=/home/augusto nvim --headless "+Lazy! sync" +qa; then
   echo -e "${GREEN}✓ Neovim Lazy plugins installed${NC}"
 else
