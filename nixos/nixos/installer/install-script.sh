@@ -254,8 +254,24 @@ echo -e "${GREEN}✓ Ownership set${NC}"
 
 echo -e "${GREEN}✓ User environment complete${NC}"
 
+# ===== GPG KEY SETUP =====
+echo ""
+echo -e "${YELLOW}Setting up GPG key...${NC}"
+
+GPG_FINGERPRINT="7D8396F74725A208D835CE3730E62A1E4F078650"
+
+# Import GPG key
+if nixos-enter --root /mnt -- env HOME=/home/augusto gpg --keyserver keys.openpgp.org --recv-keys "$GPG_FINGERPRINT"; then
+  # Trust the key (5 = ultimate trust)
+  nixos-enter --root /mnt -- env HOME=/home/augusto bash -c "echo '$GPG_FINGERPRINT:5:' | gpg --import-ownertrust"
+  echo -e "${GREEN}✓ GPG key imported and trusted${NC}"
+else
+  echo -e "${YELLOW}⚠ GPG key import had issues${NC}"
+fi
+
 # ===== COMPLETION =====
 rm -f /tmp/partition-info
+rm -f /tmp/luks-devices
 
 clear
 echo -e "$GREEN"
