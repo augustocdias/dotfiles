@@ -158,7 +158,7 @@ cp /etc/nixos-installer/grub-config.nix /mnt/home/augusto/.dotfiles/nixos/nixos/
 echo -e "${GREEN}✓ NixOS configs copied${NC}"
 
 # Generate hardware-configuration.nix directly into dotfiles
-nixos-generate-config --root /mnt --dir /mnt/home/augusto/.dotfiles/nixos/nixos
+nixos-generate-config --show-hardware-config --root /mnt > /mnt/home/augusto/.dotfiles/nixos/nixos/hardware-configuration.nix
 echo -e "${GREEN}✓ Hardware configuration generated${NC}"
 
 # Create secrets directory and store hashed password
@@ -202,7 +202,7 @@ if [ -f /tmp/luks-devices ]; then
 
     # Enroll FIDO2
     echo -e "${YELLOW}Please insert your FIDO2 key for $partition and press Enter...${NC}"
-    read
+    read < /dev/tty
     if nixos-enter --root /mnt -- \
       systemd-cryptenroll --fido2-device=auto "$partition" ; then
       echo -e "${GREEN}✓ FIDO2 enrolled for $partition${NC}"
@@ -248,12 +248,6 @@ else
   echo -e "${YELLOW}⚠ Treesitter installation had issues${NC}"
 fi
 
-# Set ownership
-nixos-enter --root /mnt -- chown -R augusto:users /home/augusto
-echo -e "${GREEN}✓ Ownership set${NC}"
-
-echo -e "${GREEN}✓ User environment complete${NC}"
-
 # ===== GPG KEY SETUP =====
 echo ""
 echo -e "${YELLOW}Setting up GPG key...${NC}"
@@ -268,6 +262,15 @@ if nixos-enter --root /mnt -- env HOME=/home/augusto gpg --keyserver keys.openpg
 else
   echo -e "${YELLOW}⚠ GPG key import had issues${NC}"
 fi
+
+# Set ownership
+nixos-enter --root /mnt -- chown -R augusto:users /home/augusto
+echo -e "${GREEN}✓ Ownership set${NC}"
+
+nixos-enter --root /mnt -- chmod 600 /home/augusto/.gnupg/*
+nixos-enter --root /mnt -- chmod 700 /home/augusto/.gnupg
+
+echo -e "${GREEN}✓ User environment complete${NC}"
 
 # ===== COMPLETION =====
 rm -f /tmp/partition-info
