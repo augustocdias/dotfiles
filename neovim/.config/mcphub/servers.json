@@ -58,6 +58,27 @@
         "DEFAULT_MINIMUM_TOKENS": "64000"
       }
     },
+    "datadog": {
+      "autoApprove": [
+        "analyze_datadog_logs",
+        "get_datadog_incident",
+        "get_datadog_metric",
+        "get_datadog_trace",
+        "search_datadog_dashboards",
+        "search_datadog_docs",
+        "search_datadog_events",
+        "search_datadog_hosts",
+        "search_datadog_incidents",
+        "search_datadog_logs",
+        "search_datadog_metrics",
+        "search_datadog_monitors",
+        "search_datadog_rum_events",
+        "search_datadog_services",
+        "search_datadog_spans"
+      ],
+      "type": "http",
+      "url": "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp"
+    },
     "memory": {
       "args": [
         "-y",
@@ -75,22 +96,6 @@
         "open_nodes"
       ],
       "command": "npx"
-    },
-    "octocode": {
-      "args": [
-        "mcp",
-        "--path",
-        "."
-      ],
-      "autoApprove": [
-        "semantic_search",
-        "view_signatures",
-        "memorize",
-        "remember",
-        "forget",
-        "graphrag"
-      ],
-      "command": "octocode"
     }
   },
   "nativeMCPServers": {

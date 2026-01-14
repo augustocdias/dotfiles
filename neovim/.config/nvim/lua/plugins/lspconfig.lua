@@ -43,7 +43,7 @@ return {
             },
         })
 
-        vim.lsp.on_type_formatting.enable()
+        -- vim.lsp.on_type_formatting.enable()
 
         -- bash
         vim.lsp.enable('bashls')
@@ -138,10 +138,11 @@ return {
         --     on_attach = lsp_utils.on_attach,
         --     capabilities = lsp_utils.capabilities(),
         --     init_options = {
-        --         useBaconBackend = true,
+        --         useBaconBackend = false,
         --         updateOnSave = true,
         --         updateOnChange = true,
         --         updateOnSaveWaitMillis = 1000,
+        --         cargoCommandArgs = 'clippy --target x86_64-pc-windows-msvc --tests --feature use-codebase-lib --all-targets --message-format json-diagnostic-rendered-ansi',
         --     },
         -- })
     end,

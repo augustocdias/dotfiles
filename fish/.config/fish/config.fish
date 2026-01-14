@@ -6,6 +6,7 @@ test -e {$HOME}/.fish_secret_variables.fish; and source {$HOME}/.fish_secret_var
 source {$HOME}/.config/fish/abbreviations.fish
 
 set -xg SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+set -xg GPG_TTY (tty)
 
 # warmup so ssh will work at first try
 gpg --card-status 2>/dev/null 1>/dev/null

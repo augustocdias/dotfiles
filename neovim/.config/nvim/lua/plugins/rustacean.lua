@@ -1,4 +1,118 @@
 -- rust enhancements
+local lsp_utils = require('utils.lsp')
+vim.g.rustaceanvim = {
+    tools = {
+        reload_workspace_from_cargo_toml = true,
+        hover_actions = {
+            replace_builtin_hover = false,
+        },
+        float_win_config = {
+            auto_focus = true,
+        },
+    },
+    server = {
+        on_attach = lsp_utils.on_attach,
+        capabilities = lsp_utils.capabilities(),
+        standalone = false,
+        settings = {
+            ['rust-analyzer'] = {
+                diagnostics = {
+                    enable = true,
+                    enableExperimental = true,
+                },
+                completion = {
+                    autoself = { enable = true },
+                    autoimport = { enable = true },
+                    postfix = { enable = true },
+                },
+                imports = {
+                    group = { enable = true },
+                    merge = { glob = false },
+                    prefix = 'self',
+                    preferPrelude = true,
+                    granularity = {
+                        enforce = true,
+                        group = 'crate',
+                    },
+                },
+                cargo = {
+                    loadOutDirsFromCheck = true,
+                    autoreload = true,
+                    runBuildScripts = true,
+                    features = 'all',
+                    allTargets = true,
+                },
+                procMacro = {
+                    enable = true,
+                    attributes = { enable = true },
+                },
+                lens = {
+                    enable = true,
+                    run = { enable = true },
+                    debug = { enable = true },
+                    implementations = { enable = true },
+                    references = {
+                        adt = { enable = true },
+                        enumVariant = { enable = true },
+                        method = { enable = true },
+                        trait = { enable = true },
+                    },
+                },
+                hover = {
+                    actions = {
+                        enable = true,
+                        run = { enable = true },
+                        debug = { enable = true },
+                        gotoTypeDef = { enable = true },
+                        implementations = { enable = true },
+                        references = { enable = true },
+                    },
+                    links = { enable = true },
+                    documentation = { enable = true },
+                },
+                inlayHints = {
+                    enable = true,
+                    bindingModeHints = { enable = true },
+                    chainingHints = { enable = true },
+                    closingBraceHints = {
+                        enable = true,
+                        minLines = 0,
+                    },
+                    closureCaptureHints = { enbale = true },
+                    closureReturnTypeHints = { enable = 'always' },
+                    lifetimeElisionHints = {
+                        enable = 'skip_trivial',
+                        useParameterNames = true,
+                    },
+                    typeHints = { enable = true },
+                    implicitDrops = { enable = true },
+                },
+                typing = {
+                    autoClosingAngleBrackets = { enable = true },
+                },
+                interpret = { tests = true },
+                checkOnSave = {
+                    enable = true,
+                },
+                check = {
+                    command = 'clippy',
+                    features = 'all',
+                    workspace = false,
+                    allTargets = true,
+                    extraArgs = { '--tests' },
+                },
+                rustfmt = {
+                    extraArgs = { '+nightly' },
+                },
+                semanticHighlighting = {
+                    strings = {
+                        enable = false,
+                    },
+                },
+            },
+        },
+    },
+}
 
 return {
     'mrcjkb/rustaceanvim',
@@ -8,137 +122,20 @@ return {
     },
     lazy = false,                -- the plugin is already lazy
     init = function()
-        vim.g.rustaceanvim = function()
-            local lsp_utils = require('utils.lsp')
-            require('crates').setup({
-                lsp = {
+        require('crates').setup({
+            lsp = {
+                enabled = true,
+                on_attach = lsp_utils.on_attach,
+                actions = true,
+                completion = true,
+                hover = true,
+            },
+            completion = {
+                crates = {
                     enabled = true,
-                    on_attach = lsp_utils.on_attach,
-                    actions = true,
-                    completion = true,
-                    hover = true,
                 },
-                completion = {
-                    crates = {
-                        enabled = true,
-                    },
-                },
-            })
-            return {
-                tools = {
-                    reload_workspace_from_cargo_toml = true,
-                    hover_actions = {
-                        replace_builtin_hover = false,
-                    },
-                    float_win_config = {
-                        auto_focus = true,
-                    },
-                },
-                server = {
-                    on_attach = lsp_utils.on_attach,
-                    capabilities = lsp_utils.capabilities(),
-                    standalone = false,
-                    settings = {
-                        ['rust-analyzer'] = {
-                            diagnostics = {
-                                enable = true,
-                                enableExperimental = true,
-                            },
-                            completion = {
-                                autoself = { enable = true },
-                                autoimport = { enable = true },
-                                postfix = { enable = true },
-                            },
-                            imports = {
-                                group = { enable = true },
-                                merge = { glob = false },
-                                prefix = 'self',
-                                preferPrelude = true,
-                                granularity = {
-                                    enforce = true,
-                                    group = 'crate',
-                                },
-                            },
-                            cargo = {
-                                loadOutDirsFromCheck = true,
-                                autoreload = true,
-                                runBuildScripts = true,
-                                features = 'all',
-                                allTargets = true,
-                            },
-                            procMacro = {
-                                enable = true,
-                                attributes = { enable = true },
-                            },
-                            lens = {
-                                enable = true,
-                                run = { enable = true },
-                                debug = { enable = true },
-                                implementations = { enable = true },
-                                references = {
-                                    adt = { enable = true },
-                                    enumVariant = { enable = true },
-                                    method = { enable = true },
-                                    trait = { enable = true },
-                                },
-                            },
-                            hover = {
-                                actions = {
-                                    enable = true,
-                                    run = { enable = true },
-                                    debug = { enable = true },
-                                    gotoTypeDef = { enable = true },
-                                    implementations = { enable = true },
-                                    references = { enable = true },
-                                },
-                                links = { enable = true },
-                                documentation = { enable = true },
-                            },
-                            inlayHints = {
-                                enable = true,
-                                bindingModeHints = { enable = true },
-                                chainingHints = { enable = true },
-                                closingBraceHints = {
-                                    enable = true,
-                                    minLines = 0,
-                                },
-                                closureCaptureHints = { enbale = true },
-                                closureReturnTypeHints = { enable = 'always' },
-                                lifetimeElisionHints = {
-                                    enable = 'skip_trivial',
-                                    useParameterNames = true,
-                                },
-                                typeHints = { enable = true },
-                                implicitDrops = { enable = true },
-                            },
-                            typing = {
-                                autoClosingAngleBrackets = { enable = true },
-                            },
-                            interpret = { tests = true },
-                            checkOnSave = {
-                                enable = true,
-                            },
-                            check = {
-                                command = 'clippy',
-                                features = 'all',
-                                workspace = false,
-                                allTargets = true,
-                                -- targets = { 'i686-pc-windows-gnu', 'aarch64-apple-darwin' },
-                                -- extraArgs = { '--tests' },
-                            },
-                            rustfmt = {
-                                extraArgs = { '+nightly' },
-                            },
-                            semanticHighlighting = {
-                                strings = {
-                                    enable = false,
-                                },
-                            },
-                        },
-                    },
-                },
-            }
-        end
+            },
+        })
     end,
     keys = {
         {
