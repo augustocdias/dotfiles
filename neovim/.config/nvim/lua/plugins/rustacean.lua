@@ -41,6 +41,9 @@ vim.g.rustaceanvim = {
                     runBuildScripts = true,
                     features = 'all',
                     allTargets = true,
+                    extraEnv = {
+                        CARGO_TARGET_DIR = './ratarget',
+                    },
                 },
                 procMacro = {
                     enable = true,
@@ -117,10 +120,10 @@ vim.g.rustaceanvim = {
 return {
     'mrcjkb/rustaceanvim',
     dependencies = {
-        'Saecki/crates.nvim',    -- auto complete for Cargo.toml
+        'Saecki/crates.nvim', -- auto complete for Cargo.toml
         'nvim-lua/plenary.nvim', -- its a dependency from crates.nvim
     },
-    lazy = false,                -- the plugin is already lazy
+    lazy = false, -- the plugin is already lazy
     init = function()
         require('crates').setup({
             lsp = {

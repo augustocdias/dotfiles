@@ -166,13 +166,13 @@ return {
             http = {
                 anthropic = function()
                     return require('codecompanion.adapters').extend('anthropic', {
-                        formatted_name = 'Anthropic Claude Sonnet 4.5',
+                        formatted_name = 'Anthropic Claude',
                         headers = {
                             ['anthropic-beta'] = 'context-1m-2025-08-07',
                         },
                         schema = {
                             model = {
-                                default = 'claude-sonnet-4-5-20250929',
+                                default = 'claude-opus-4-5',
                             },
                             thinking_budget = {
                                 default = 63000,

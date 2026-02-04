@@ -28,6 +28,7 @@
     cmd = nvim -n -c "DiffviewOpen" "$MERGE"
 [rebase]
     autosquash = true
+    updateRefs = true
 [filter "lfs"]
     process = git-lfs filter-process
     required = true
