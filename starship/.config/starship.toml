@@ -1,25 +1,6 @@
 palette = "catppuccin_mocha"
 
-format = """
-[░▒▓](#a3aed2)\
-[  ](bg:#a3aed2 fg:#090c0c)\
-[](bg:#769ff0 fg:#a3aed2)\
-$directory\
-[](fg:#769ff0 bg:#394260)\
-$git_branch\
-$git_status\
-$git_state[ ](fg:#769ff0 bg:#394260)[](fg:#394260)\
-$fill \
-[](fg:#212736)\
-$nodejs\
-$rust\
-$golang\
-$php\
-$lua\
-[](bg:#212736 fg:#a3aed2)\
-[ $time ](bg:#a3aed2 fg:#090c0c)\
-[▓▒░](#a3aed2)
-$character"""
+format = "[](color_surface0)$os[](fg:prev_bg bg:color_maroon)$username$hostname[](fg:prev_bg bg:color_yellow)$directory[](fg:prev_bg bg:color_teal)$git_branch$git_status$git_state[](prev_bg)$fill[](color_blue)$c$rust$golang$nodejs$php$java$kotlin$haskell$python$lua[](fg:color_mauve bg:color_blue)$docker_context$aws$conda$jobs$nix_shell[](fg:color_surface0 bg:color_mauve)$time[ ](fg:prev_bg)$line_break$character"
 
 command_timeout = 10000
 
