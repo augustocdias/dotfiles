@@ -15,8 +15,8 @@ yabai -m rule --apply
 # Scripting abilities for yabai: 
 # https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition
 
-# yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
-# sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
 
 # default layout (can be bsp, stack or float)
 yabai -m config layout bsp
