@@ -1,5 +1,5 @@
 # Firefox browser configuration
-{...}: let
+{pkgs, ...}: let
   extensionData = builtins.fromJSON (builtins.readFile ./extensions.json);
   extensionNames = builtins.attrNames extensionData;
 
@@ -147,6 +147,18 @@ in {
           wikipedia.metaData.alias = "@wiki";
         };
       };
+    };
+  };
+
+  # Set Firefox as default browser
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/html" = "firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/about" = "firefox.desktop";
+      "x-scheme-handler/unknown" = "firefox.desktop";
     };
   };
 }

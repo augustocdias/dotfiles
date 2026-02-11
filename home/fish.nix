@@ -92,8 +92,7 @@ in {
       v = "nvim";
       vim = "nvim";
 
-      # NixOS operations
-      nix-rebuild = "sudo nixos-rebuild switch --flake ~/nixos#augusto";
+      # NixOS operations (nix-rebuild is a function, see below)
       nix-clean = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
       nix-flake-update = "nix flake update --flake ~/nixos";
       nix-check = "nix flake check ~/nixos";
@@ -103,6 +102,17 @@ in {
 
       # Lock screen
       afk = "dms ipc call lock lock";
+    };
+
+    # Fish functions
+    functions = {
+      nix-rebuild = ''
+        if test "$argv[1]" = "--home"
+          nix run home-manager -- switch --flake ~/nixos#augusto
+        else
+          sudo nixos-rebuild switch --flake ~/nixos#augusto $argv
+        end
+      '';
     };
 
     # Shell abbreviations from abbreviations.fish

@@ -1,5 +1,9 @@
 # Display manager configuration
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   qt.enable = true;
 
   programs.dank-material-shell.greeter = {
@@ -10,7 +14,7 @@
       env = XCURSOR_THEME,catppuccin-mocha-blue-cursors
       exec-once = hyprctl setcursor catppuccin-mocha-blue-cursors 24
     '';
-    configHome = "/home/augusto";
+    configHome = config.users.users.augusto.home;
   };
 
   # Install cursor and icon themes system-wide

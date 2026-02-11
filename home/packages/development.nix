@@ -28,14 +28,37 @@
     sqlit-with-postgres
     libsecret # For keyring CLI access
 
+    # Compilers and build tools
+    cmake
+    gnumake
+    ninja
+    gcc
+    llvm
+
+    # Programming languages
+    nodejs
+    python3
+    ruby
+
+    # Rust toolchain
+    cargo
+    rustc
+    cargo-expand
+    cargo-nextest
+    cargo-xwin
+
+    # Version control
+    git-lfs
     git-cliff
     git-extras
     gh
 
+    # Development environment
+    direnv
     pipenv
-
     just
 
+    # Data processing
     jq
     yq-go
     jsonnet

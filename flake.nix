@@ -66,7 +66,27 @@
     self,
     nixpkgs,
     ...
-  }: {
+  }: let
+    overlays = import ./home/overlays.nix inputs;
+
+    # Standalone home-manager configuration
+    mkHome = system: let
+      pkgs = import nixpkgs {
+        inherit system overlays;
+        config.allowUnfree = true;
+      };
+    in
+      inputs.home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {inherit inputs;};
+        modules = [
+          inputs.sops-nix.homeManagerModules.sops
+          ./home/standalone.nix
+        ];
+      };
+  in {
+    homeConfigurations.augusto = mkHome "aarch64-linux";
+
     packages.aarch64-linux.installer =
       self.nixosConfigurations.installer.config.system.build.isoImage;
     # packages.x86_64.installer =
@@ -113,31 +133,8 @@
         ./hardware-configuration.nix
         ./modules/configuration.nix
         inputs.home-manager.nixosModules.home-manager
-        {
-          nixpkgs.overlays = [
-            inputs.neovim-nightly-overlay.overlays.default
-            # Overlay to add psycopg2 to sqlit
-            (final: prev: {
-              sqlit-with-postgres = let
-                sqlitPkg = inputs.sqlit.packages.${prev.stdenv.hostPlatform.system}.default;
-              in
-                prev.symlinkJoin {
-                  name = "sqlit-with-postgres";
-                  paths = [sqlitPkg];
-                  buildInputs = [prev.makeWrapper];
-                  postBuild = ''
-                    wrapProgram $out/bin/sqlit \
-                      --prefix PYTHONPATH : "${prev.python3Packages.psycopg2}/${prev.python3.sitePackages}"
-                  '';
-                };
-            })
-          ];
-        }
-        {
-          imports = [
-            ./home
-          ];
-        }
+        {nixpkgs.overlays = overlays;}
+        {imports = [./home];}
       ];
     };
   };
