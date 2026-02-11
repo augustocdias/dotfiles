@@ -18,6 +18,7 @@
     ./services/docker.nix
     ./services/yubikey.nix
     ./services/work.nix
+    ./services/input-devices.nix
 
     # System packages
     ./system-packages/essential.nix

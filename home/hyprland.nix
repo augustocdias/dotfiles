@@ -91,15 +91,16 @@
       input = {
         kb_layout = "us";
         follow_mouse = 1;
+        accel_profile = "flat";
+        sensitivity = 1; # Max speed (-1.0 to 1.0)
 
         touchpad = {
           natural_scroll = true;
           tap-to-click = true;
           disable_while_typing = true;
           clickfinger_behavior = true;
+          scroll_factor = 1.0;
         };
-
-        sensitivity = 0;
       };
 
       # ===== VARIABLES =====
