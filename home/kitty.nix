@@ -55,13 +55,6 @@ in {
       "ctrl+shift+]" = "launch --location=vsplit --cwd=current";
       "ctrl+shift+v" = "paste_from_clipboard";
       "ctrl+shift+c" = "copy_to_clipboard";
-
-      # macOS-style shortcuts
-      "super+c" = "copy_to_clipboard";
-      "super+v" = "paste_from_clipboard";
-      "super+t" = "new_tab_with_cwd";
-      "super+w" = "close_tab";
-      "super+n" = "new_os_window_with_cwd";
     };
   };
 }

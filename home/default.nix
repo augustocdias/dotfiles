@@ -42,7 +42,6 @@ in {
 
       # Terminal & File Manager
       ./kitty.nix
-      ./keyd.nix
       ./yazi.nix
 
       # Shell Environment

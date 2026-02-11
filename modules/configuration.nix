@@ -16,7 +16,6 @@
     # Services
     ./services/display-manager.nix
     ./services/docker.nix
-    ./services/keyd.nix
     ./services/yubikey.nix
     ./services/work.nix
 
