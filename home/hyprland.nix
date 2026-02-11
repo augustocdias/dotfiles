@@ -245,6 +245,48 @@
         "move 100%-w-20 100%-w-20, match:title ^(Picture-in-Picture)$"
       ];
     };
+
+    # Resize submap - must use extraConfig due to submap boundary syntax
+    extraConfig = ''
+      # Enter resize mode with Super+Alt+R
+      bind = $mainMod ALT, r, submap, resize
+
+      submap = resize
+
+      # Arrows (10px steps)
+      binde = , right, resizeactive, 10 0
+      binde = , left, resizeactive, -10 0
+      binde = , up, resizeactive, 0 -10
+      binde = , down, resizeactive, 0 10
+
+      # Vim keys (10px steps)
+      binde = , l, resizeactive, 10 0
+      binde = , h, resizeactive, -10 0
+      binde = , k, resizeactive, 0 -10
+      binde = , j, resizeactive, 0 10
+
+      # Shift + arrows (5px steps)
+      binde = SHIFT, right, resizeactive, 5 0
+      binde = SHIFT, left, resizeactive, -5 0
+      binde = SHIFT, up, resizeactive, 0 -5
+      binde = SHIFT, down, resizeactive, 0 5
+
+      # Shift + vim keys (5px steps)
+      binde = SHIFT, l, resizeactive, 5 0
+      binde = SHIFT, h, resizeactive, -5 0
+      binde = SHIFT, k, resizeactive, 0 -5
+      binde = SHIFT, j, resizeactive, 0 5
+
+      # Ignore modifier keys (prevent catchall from triggering)
+      bind = , Shift_L, exec,
+      bind = , Shift_R, exec,
+
+      # Exit resize mode
+      bind = , escape, submap, reset
+      bind = , catchall, submap, reset
+
+      submap = reset
+    '';
   };
 
   # Set cursor theme for GTK and other applications
