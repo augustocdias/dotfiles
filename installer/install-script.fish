@@ -169,8 +169,6 @@ echo -e "$GREEN""✓ Password hash stored securely$NC"
 echo ""
 echo -e "$YELLOW""Installing NixOS... Be patient and please wait...$NC"
 
-# Install using flake from dotfiles
-nix flake update --flake path:/mnt/home/augusto/nixos
 nixos-install --flake path:/mnt/home/augusto/nixos#augusto --no-root-password
 
 echo -e "$GREEN""✓ NixOS installed$NC"
