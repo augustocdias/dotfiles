@@ -4,19 +4,6 @@ return {
         local augroup = function(name)
             return vim.api.nvim_create_augroup(name, { clear = false })
         end
-        if client.server_capabilities.code_lens or client.server_capabilities.codeLensProvider then
-            local group = augroup('LSPRefreshLens')
-
-            -- Code Lens
-            autocmd({ 'BufEnter', 'InsertLeave' }, {
-                desc = 'Auto show code lenses',
-                buffer = bufnr,
-                callback = function()
-                    vim.lsp.codelens.refresh({ bufnr = bufnr })
-                end,
-                group = group,
-            })
-        end
         if client.server_capabilities.document_highlight or client.server_capabilities.documentHighlightProvider then
             local group = augroup('LSPHighlightSymbols')
 
@@ -31,23 +18,6 @@ return {
                 desc = 'Clear highlights when cursor is moved',
                 buffer = bufnr,
                 callback = vim.lsp.buf.clear_references,
-                group = group,
-            })
-        end
-        if client.server_capabilities.document_formatting or client.server_capabilities.documentFormattingProvider then
-            local group = augroup('LSPAutoFormat')
-            -- set the autoformat flag
-            vim.b.autoformat = vim.g.autoformat
-
-            -- auto format file on save
-            autocmd({ 'BufWritePre' }, {
-                desc = 'Auto format file before saving',
-                buffer = bufnr,
-                callback = function()
-                    if vim.b.autoformat then
-                        vim.lsp.buf.format({ async = false })
-                    end
-                end,
                 group = group,
             })
         end

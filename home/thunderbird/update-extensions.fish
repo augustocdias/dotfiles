@@ -111,7 +111,7 @@ mv $temp_json $json_file
 echo -e $GREEN"Done!"$NC
 
 if test $rebuild = true
-    sudo nixos-rebuild switch --flake ~/.dotfiles
+    nix run home-manager -- switch --flake ~/nixos#augusto
 else
-    echo "Run: sudo nixos-rebuild switch --flake ~/.dotfiles"
+    echo "Run: nix run home-manager -- switch --flake ~/nixos#augusto"
 end

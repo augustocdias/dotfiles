@@ -1,292 +1,292 @@
 {
-  "lze": {
-    "owner": "BirdeeHub",
-    "repo": "lze",
-    "rev": "master",
-    "lazy": false
-  },
-  "plenary": {
-    "owner": "nvim-lua",
-    "repo": "plenary.nvim",
-    "rev": "master"
-  },
-  "nui": {
-    "owner": "MunifTanjim",
-    "repo": "nui.nvim",
-    "rev": "main"
-  },
-  "nvim-web-devicons": {
-    "owner": "nvim-tree",
-    "repo": "nvim-web-devicons",
-    "rev": "master"
-  },
-  "nvim-lspconfig": {
-    "owner": "neovim",
-    "repo": "nvim-lspconfig",
-    "rev": "master"
-  },
-  "SchemaStore": {
-    "owner": "b0o",
-    "repo": "SchemaStore.nvim",
-    "rev": "main"
-  },
-  "nvim-treesitter-textobjects": {
-    "owner": "nvim-treesitter",
-    "repo": "nvim-treesitter-textobjects",
-    "rev": "main"
-  },
-  "nvim-treesitter-context": {
-    "owner": "nvim-treesitter",
-    "repo": "nvim-treesitter-context",
-    "rev": "master"
-  },
-  "catppuccin": {
-    "owner": "catppuccin",
-    "repo": "nvim",
-    "rev": "main"
-  },
-  "tokyonight": {
-    "owner": "folke",
-    "repo": "tokyonight.nvim",
-    "rev": "main"
-  },
-  "lualine": {
-    "owner": "nvim-lualine",
-    "repo": "lualine.nvim",
-    "rev": "master"
-  },
-  "which-key": {
-    "owner": "folke",
-    "repo": "which-key.nvim",
-    "rev": "main"
-  },
-  "noice": {
-    "owner": "folke",
-    "repo": "noice.nvim",
-    "rev": "main"
-  },
-  "nvim-notify": {
-    "owner": "rcarriga",
-    "repo": "nvim-notify",
-    "rev": "master"
-  },
-  "tabby": {
-    "owner": "nanozuki",
-    "repo": "tabby.nvim",
-    "rev": "main"
-  },
-  "dropbar": {
-    "owner": "Bekaboo",
-    "repo": "dropbar.nvim",
-    "rev": "master"
-  },
-  "auto-session": {
-    "owner": "rmagatti",
-    "repo": "auto-session",
-    "rev": "main"
-  },
-  "snacks": {
-    "owner": "folke",
-    "repo": "snacks.nvim",
-    "rev": "main"
-  },
-  "helpview": {
-    "owner": "OXY2DEV",
-    "repo": "helpview.nvim",
-    "rev": "main"
-  },
-  "tabout": {
-    "owner": "abecodes",
-    "repo": "tabout.nvim",
-    "rev": "master"
-  },
-  "blink-cmp": {
-    "owner": "Saghen",
-    "repo": "blink.cmp",
-    "rev": "v1.9.1",
-    "_comment": "binary field requires rev to be a tag",
-    "binary": {
-      "filename": "aarch64-unknown-linux-gnu.so",
-      "destPath": "target/release/libblink_cmp_fuzzy.so"
+    "lze": {
+        "owner": "BirdeeHub",
+        "repo": "lze",
+        "rev": "master",
+        "lazy": false
+    },
+    "plenary": {
+        "owner": "nvim-lua",
+        "repo": "plenary.nvim",
+        "rev": "master"
+    },
+    "nui": {
+        "owner": "MunifTanjim",
+        "repo": "nui.nvim",
+        "rev": "main"
+    },
+    "nvim-lspconfig": {
+        "owner": "neovim",
+        "repo": "nvim-lspconfig",
+        "rev": "master"
+    },
+    "SchemaStore": {
+        "owner": "b0o",
+        "repo": "SchemaStore.nvim",
+        "rev": "main"
+    },
+    "nvim-treesitter-textobjects": {
+        "owner": "nvim-treesitter",
+        "repo": "nvim-treesitter-textobjects",
+        "rev": "main"
+    },
+    "nvim-treesitter-context": {
+        "owner": "nvim-treesitter",
+        "repo": "nvim-treesitter-context",
+        "rev": "master"
+    },
+    "catppuccin": {
+        "owner": "catppuccin",
+        "repo": "nvim",
+        "rev": "main"
+    },
+    "tokyonight": {
+        "owner": "folke",
+        "repo": "tokyonight.nvim",
+        "rev": "main"
+    },
+    "lualine": {
+        "owner": "nvim-lualine",
+        "repo": "lualine.nvim",
+        "rev": "master"
+    },
+    "which-key": {
+        "owner": "folke",
+        "repo": "which-key.nvim",
+        "rev": "main"
+    },
+    "noice": {
+        "owner": "folke",
+        "repo": "noice.nvim",
+        "rev": "main"
+    },
+    "nvim-notify": {
+        "owner": "rcarriga",
+        "repo": "nvim-notify",
+        "rev": "master"
+    },
+    "tabby": {
+        "owner": "nanozuki",
+        "repo": "tabby.nvim",
+        "rev": "main"
+    },
+    "dropbar": {
+        "owner": "Bekaboo",
+        "repo": "dropbar.nvim",
+        "rev": "master"
+    },
+    "auto-session": {
+        "owner": "rmagatti",
+        "repo": "auto-session",
+        "rev": "main"
+    },
+    "snacks": {
+        "owner": "folke",
+        "repo": "snacks.nvim",
+        "rev": "main"
+    },
+    "helpview": {
+        "owner": "OXY2DEV",
+        "repo": "helpview.nvim",
+        "rev": "main"
+    },
+    "tabout": {
+        "owner": "abecodes",
+        "repo": "tabout.nvim",
+        "rev": "master"
+    },
+    "blink-cmp": {
+        "owner": "Saghen",
+        "repo": "blink.cmp",
+        "rev": "v1.9.1",
+        "_comment": "binary field requires rev to be a tag",
+        "binary": {
+            "filename": "aarch64-unknown-linux-gnu.so",
+            "destPath": "target/release/libblink_cmp_fuzzy.so"
+        }
+    },
+    "colorful-menu": {
+        "owner": "xzbdmw",
+        "repo": "colorful-menu.nvim",
+        "rev": "master"
+    },
+    "gitsigns": {
+        "owner": "lewis6991",
+        "repo": "gitsigns.nvim",
+        "rev": "main"
+    },
+    "diffview": {
+        "owner": "sindrets",
+        "repo": "diffview.nvim",
+        "rev": "main"
+    },
+    "octo": {
+        "owner": "pwntester",
+        "repo": "octo.nvim",
+        "rev": "master"
+    },
+    "flash": {
+        "owner": "folke",
+        "repo": "flash.nvim",
+        "rev": "main"
+    },
+    "trouble": {
+        "owner": "folke",
+        "repo": "trouble.nvim",
+        "rev": "main"
+    },
+    "todo-comments": {
+        "owner": "folke",
+        "repo": "todo-comments.nvim",
+        "rev": "main"
+    },
+    "nvim-autopairs": {
+        "owner": "windwp",
+        "repo": "nvim-autopairs",
+        "rev": "master"
+    },
+    "vim-matchup": {
+        "owner": "andymass",
+        "repo": "vim-matchup",
+        "rev": "master"
+    },
+    "nvim-surround": {
+        "owner": "kylechui",
+        "repo": "nvim-surround",
+        "rev": "main"
+    },
+    "mini-icons": {
+        "owner": "nvim-mini",
+        "repo": "mini.icons",
+        "rev": "main"
+    },
+    "mini-ai": {
+        "owner": "nvim-mini",
+        "repo": "mini.ai",
+        "rev": "main"
+    },
+    "mini-files": {
+        "owner": "nvim-mini",
+        "repo": "mini.files",
+        "rev": "main"
+    },
+    "mini-move": {
+        "owner": "nvim-mini",
+        "repo": "mini.move",
+        "rev": "main"
+    },
+    "conform": {
+        "owner": "stevearc",
+        "repo": "conform.nvim",
+        "rev": "master"
+    },
+    "nvim-lint": {
+        "owner": "mfussenegger",
+        "repo": "nvim-lint",
+        "rev": "master"
+    },
+    "lightbulb": {
+        "owner": "kosayoda",
+        "repo": "nvim-lightbulb",
+        "rev": "master"
+    },
+    "nvim-dap": {
+        "owner": "mfussenegger",
+        "repo": "nvim-dap",
+        "rev": "master"
+    },
+    "nvim-dap-ui": {
+        "owner": "rcarriga",
+        "repo": "nvim-dap-ui",
+        "rev": "master"
+    },
+    "nvim-dap-virtual-text": {
+        "owner": "theHamsta",
+        "repo": "nvim-dap-virtual-text",
+        "rev": "master"
+    },
+    "typescript-tools": {
+        "owner": "pmizio",
+        "repo": "typescript-tools.nvim",
+        "rev": "master"
+    },
+    "gx": {
+        "owner": "chrishrb",
+        "repo": "gx.nvim",
+        "rev": "main"
+    },
+    "undotree": {
+        "owner": "jiaoshijie",
+        "repo": "undotree",
+        "rev": "main"
+    },
+    "markview": {
+        "owner": "OXY2DEV",
+        "repo": "markview.nvim",
+        "rev": "main"
+    },
+    "codecompanion": {
+        "owner": "olimorris",
+        "repo": "codecompanion.nvim",
+        "rev": "main"
+    },
+    "rustaceanvim": {
+        "owner": "mrcjkb",
+        "repo": "rustaceanvim",
+        "rev": "master"
+    },
+    "gatekeeper": {
+        "owner": "augustocdias",
+        "repo": "gatekeeper.nvim",
+        "rev": "main"
+    },
+    "codesnap": {
+        "owner": "mistricky",
+        "repo": "codesnap.nvim",
+        "rev": "v2.0.0",
+        "_comment": "binary field requires rev to be a tag",
+        "binary": {
+            "filename": "linux-aarch64_generator.so",
+            "destPath": "lua/libs/linux-aarch64_generator.so",
+            "versionFile": {
+                "path": "lua/libs/.version",
+                "content": "2.0.0"
+            }
+        }
+    },
+    "codecompanion-spinner": {
+        "owner": "franco-ruggeri",
+        "repo": "codecompanion-spinner.nvim",
+        "rev": "main"
+    },
+    "nvim-nio": {
+        "owner": "nvim-neotest",
+        "repo": "nvim-nio",
+        "rev": "master"
+    },
+    "codecompanion-history": {
+        "owner": "ravitemer",
+        "repo": "codecompanion-history.nvim",
+        "rev": "main"
+    },
+    "mcphub": {
+        "owner": "ravitemer",
+        "repo": "mcphub.nvim",
+        "rev": "main"
+    },
+    "crates": {
+        "owner": "Saecki",
+        "repo": "crates.nvim",
+        "rev": "main"
+    },
+    "refactoring": {
+        "owner": "ThePrimeagen",
+        "repo": "refactoring.nvim",
+        "rev": "master"
+    },
+    "markdown-plus": {
+        "owner": "yousefhadder",
+        "repo": "markdown-plus.nvim",
+        "rev": "main"
     }
-  },
-  "colorful-menu": {
-    "owner": "xzbdmw",
-    "repo": "colorful-menu.nvim",
-    "rev": "master"
-  },
-  "gitsigns": {
-    "owner": "lewis6991",
-    "repo": "gitsigns.nvim",
-    "rev": "main"
-  },
-  "diffview": {
-    "owner": "sindrets",
-    "repo": "diffview.nvim",
-    "rev": "main"
-  },
-  "octo": {
-    "owner": "pwntester",
-    "repo": "octo.nvim",
-    "rev": "master"
-  },
-  "flash": {
-    "owner": "folke",
-    "repo": "flash.nvim",
-    "rev": "main"
-  },
-  "trouble": {
-    "owner": "folke",
-    "repo": "trouble.nvim",
-    "rev": "main"
-  },
-  "todo-comments": {
-    "owner": "folke",
-    "repo": "todo-comments.nvim",
-    "rev": "main"
-  },
-  "nvim-autopairs": {
-    "owner": "windwp",
-    "repo": "nvim-autopairs",
-    "rev": "master"
-  },
-  "vim-matchup": {
-    "owner": "andymass",
-    "repo": "vim-matchup",
-    "rev": "master"
-  },
-  "nvim-surround": {
-    "owner": "kylechui",
-    "repo": "nvim-surround",
-    "rev": "main"
-  },
-  "comment": {
-    "owner": "numToStr",
-    "repo": "Comment.nvim",
-    "rev": "master"
-  },
-  "mini-ai": {
-    "owner": "nvim-mini",
-    "repo": "mini.ai",
-    "rev": "main"
-  },
-  "mini-files": {
-    "owner": "nvim-mini",
-    "repo": "mini.files",
-    "rev": "main"
-  },
-  "mini-move": {
-    "owner": "nvim-mini",
-    "repo": "mini.move",
-    "rev": "main"
-  },
-  "none-ls": {
-    "owner": "nvimtools",
-    "repo": "none-ls.nvim",
-    "rev": "main"
-  },
-  "nvim-dap": {
-    "owner": "mfussenegger",
-    "repo": "nvim-dap",
-    "rev": "master"
-  },
-  "nvim-dap-ui": {
-    "owner": "rcarriga",
-    "repo": "nvim-dap-ui",
-    "rev": "master"
-  },
-  "nvim-dap-virtual-text": {
-    "owner": "theHamsta",
-    "repo": "nvim-dap-virtual-text",
-    "rev": "master"
-  },
-  "typescript-tools": {
-    "owner": "pmizio",
-    "repo": "typescript-tools.nvim",
-    "rev": "master"
-  },
-  "gx": {
-    "owner": "chrishrb",
-    "repo": "gx.nvim",
-    "rev": "main"
-  },
-  "undotree": {
-    "owner": "jiaoshijie",
-    "repo": "undotree",
-    "rev": "main"
-  },
-  "markview": {
-    "owner": "OXY2DEV",
-    "repo": "markview.nvim",
-    "rev": "main"
-  },
-  "codecompanion": {
-    "owner": "olimorris",
-    "repo": "codecompanion.nvim",
-    "rev": "main"
-  },
-  "rustaceanvim": {
-    "owner": "mrcjkb",
-    "repo": "rustaceanvim",
-    "rev": "master"
-  },
-  "gatekeeper": {
-    "owner": "augustocdias",
-    "repo": "gatekeeper.nvim",
-    "rev": "main"
-  },
-  "codesnap": {
-    "owner": "mistricky",
-    "repo": "codesnap.nvim",
-    "rev": "v2.0.0",
-    "_comment": "binary field requires rev to be a tag",
-    "binary": {
-      "filename": "linux-aarch64_generator.so",
-      "destPath": "lua/libs/linux-aarch64_generator.so",
-      "versionFile": {
-        "path": "lua/libs/.version",
-        "content": "2.0.0"
-      }
-    }
-  },
-  "codecompanion-spinner": {
-    "owner": "franco-ruggeri",
-    "repo": "codecompanion-spinner.nvim",
-    "rev": "main"
-  },
-  "nvim-nio": {
-    "owner": "nvim-neotest",
-    "repo": "nvim-nio",
-    "rev": "master"
-  },
-  "codecompanion-history": {
-    "owner": "ravitemer",
-    "repo": "codecompanion-history.nvim",
-    "rev": "main"
-  },
-  "mcphub": {
-    "owner": "ravitemer",
-    "repo": "mcphub.nvim",
-    "rev": "main"
-  },
-  "crates": {
-    "owner": "Saecki",
-    "repo": "crates.nvim",
-    "rev": "main"
-  },
-  "refactoring": {
-    "owner": "ThePrimeagen",
-    "repo": "refactoring.nvim",
-    "rev": "master"
-  },
-  "markdown-plus": {
-    "owner": "yousefhadder",
-    "repo": "markdown-plus.nvim",
-    "rev": "main"
-  },
-  "securemodelines": {
-    "owner": "ciaranm",
-    "repo": "securemodelines",
-    "rev": "master"
-  }
 }

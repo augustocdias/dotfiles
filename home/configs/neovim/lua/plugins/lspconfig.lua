@@ -5,6 +5,15 @@ return {
         dep_of = 'nvim-lspconfig',
     },
     {
+        'lightbulb', -- adds sign for code actions in sign column
+        after = function()
+            require('nvim-lightbulb').setup({
+                autocmd = { enabled = true },
+                sign = { text = '󰛩' },
+            })
+        end,
+    },
+    {
         'nvim-lspconfig',
         priority = 100,
         lazy = false,
@@ -12,22 +21,9 @@ return {
             local lsp_utils = require('utils.lsp')
 
             -- general LSP config
-            vim.lsp.handlers['textDocument/publishDiagnostics'] =
-                vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-                    underline = true,
-                    update_in_insert = true,
-                    virtual_text = false,
-                    signs = true,
-                })
-
-            -- TODO: check if this works
-            vim.fn.sign_define('LightBulbSign', {
-                text = '󰛩',
-                texthl = 'LspDiagnosticsDefaultInformation',
-                numhl = 'LspDiagnosticsDefaultInformation',
-            })
-
             vim.diagnostic.config({
+                underline = true,
+                virtual_text = false,
                 severity_sort = true,
                 update_in_insert = true,
                 signs = {
@@ -77,13 +73,6 @@ return {
             vim.lsp.config('jsonls', {
                 on_attach = lsp_utils.on_attach,
                 capabilities = lsp_utils.capabilities(),
-                commands = {
-                    Format = {
-                        function()
-                            vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line('$'), 0 })
-                        end,
-                    },
-                },
                 settings = {
                     json = {
                         schemas = require('schemastore').json.schemas(),
@@ -129,10 +118,36 @@ return {
             })
 
             -- lua
+            local function get_plugin_paths()
+                local paths = {}
+                local pack_dir = vim.fn.stdpath('data') .. '/site/pack/hm'
+                for _, dir in ipairs({ pack_dir .. '/opt', pack_dir .. '/start' }) do
+                    vim.list_extend(paths, vim.fn.glob(dir .. '/*', false, true))
+                end
+                table.insert(paths, vim.env.VIMRUNTIME)
+                return paths
+            end
+
             vim.lsp.enable('emmylua_ls')
             vim.lsp.config('emmylua_ls', {
                 on_attach = lsp_utils.on_attach,
                 capabilities = lsp_utils.capabilities(),
+                settings = {
+                    emmylua = {
+                        runtime = {
+                            version = 'LuaJIT',
+                            requirePattern = {
+                                'lua/?.lua',
+                                'lua/?/init.lua',
+                                '?/lua/?.lua',
+                                '?/lua/?/init.lua',
+                            },
+                        },
+                        workspace = {
+                            library = get_plugin_paths(),
+                        },
+                    },
+                },
             })
 
             -- nix
@@ -202,15 +217,6 @@ return {
                 silent = true,
             },
             {
-                '<M-f>',
-                function()
-                    vim.lsp.buf.format({ async = false })
-                end,
-                mode = { 'n' },
-                desc = 'Format code',
-                silent = true,
-            },
-            {
                 '<leader>la',
                 '<cmd>lua vim.lsp.buf.code_action()<CR>',
                 mode = { 'n' },
@@ -219,25 +225,9 @@ return {
             },
             {
                 '<leader>lb',
-                '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
+                vim.diagnostic.open_float,
                 mode = { 'n' },
                 desc = 'Show line diagnostics',
-                noremap = true,
-            },
-            {
-                '<leader>lc',
-                function()
-                    vim.b.autoformat = not vim.b.autoformat
-                end,
-                mode = { 'n' },
-                desc = 'Toggle autoformat',
-                noremap = true,
-            },
-            {
-                '<leader>lf',
-                '<cmd>lua vim.lsp.buf.format({ async = false })<CR>',
-                mode = { 'n' },
-                desc = 'Format',
                 noremap = true,
             },
             {
@@ -256,16 +246,16 @@ return {
             },
             {
                 '<leader>lq',
-                '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',
+                vim.diagnostic.setloclist,
                 mode = { 'n' },
                 desc = 'Diagnostic set loclist',
                 noremap = true,
             },
             {
                 '<leader>la',
-                '<cmd>lua vim.lsp.buf.range_code_action()<CR>',
+                '<cmd>lua vim.lsp.buf.code_action()<CR>',
                 mode = { 'v' },
-                desc = 'Range Code Action',
+                desc = 'Code Action',
                 noremap = true,
             },
         },

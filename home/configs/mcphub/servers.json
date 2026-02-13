@@ -41,7 +41,7 @@
                 "searchJiraIssuesUsingJql"
             ],
             "command": "npx",
-            "disabled": true
+            "disabled": false
         },
         "context7": {
             "args": [
@@ -50,7 +50,7 @@
             ],
             "autoApprove": [
                 "resolve-library-id",
-                "get-library-docs"
+                "query-docs"
             ],
             "command": "npx",
             "disabled": false,
@@ -79,7 +79,13 @@
     },
     "nativeMCPServers": {
         "neovim": {
-            "disabled": true
+            "disabled": false,
+            "autoApprove": [
+                "find_files",
+                "list_directory",
+                "read_file",
+                "read_multiple_files"
+            ]
         }
     }
 }

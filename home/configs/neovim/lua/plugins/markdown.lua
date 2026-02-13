@@ -1,5 +1,4 @@
--- markdown enhancements -- alternative render-markdown
--- TODO: check markview lazy loading
+-- markdown enhancements
 
 local function conceal_tag(icon, hl_group)
     return {
@@ -14,34 +13,43 @@ local function conceal_tag(icon, hl_group)
 end
 
 return {
-    { 'markdown-plus', ft = { 'markdown',  'codecompanion' }, after = function() require('markdown-plus').setup()end },
     {
-    'markview',
-    event = 'DeferredUIEnter',
-    priority = 59,
-    ft = { 'markdown', 'codecompanion' },
-    after = function() require('markview').setup({
-        experimental = {
-            prefer_nvim = true,
-        },
-        preview = {
-            filetypes = { 'markdown', 'quarto', 'rmd', 'typst', 'Avante', 'codecompanion' },
-            icon_provider = 'devicons',
-            ignore_buftypes = {},
-        },
-        html = {
-            container_elements = {
-                ['^buf$'] = conceal_tag('', 'CodeCompanionChatVariable'),
-                ['^file$'] = conceal_tag('', 'CodeCompanionChatVariable'),
-                ['^help$'] = conceal_tag('󰘥', 'CodeCompanionChatVariable'),
-                ['^image$'] = conceal_tag('', 'CodeCompanionChatVariable'),
-                ['^symbols$'] = conceal_tag('', 'CodeCompanionChatVariable'),
-                ['^url$'] = conceal_tag('󰖟', 'CodeCompanionChatVariable'),
-                ['^var$'] = conceal_tag('', 'CodeCompanionChatVariable'),
-                ['^tool$'] = conceal_tag('', 'CodeCompanionChatTool'),
-                ['^user_prompt$'] = conceal_tag('', 'CodeCompanionChatTool'),
-                ['^group$'] = conceal_tag('', 'CodeCompanionChatToolGroup'),
-            },
-        },
-    })end,
-}}
+        'markdown-plus',
+        ft = { 'markdown', 'codecompanion' },
+        after = function()
+            require('markdown-plus').setup()
+        end,
+    },
+    {
+        'markview',
+        event = 'DeferredUIEnter',
+        priority = 59,
+        ft = { 'markdown', 'codecompanion' },
+        after = function()
+            require('markview').setup({
+                experimental = {
+                    prefer_nvim = true,
+                },
+                preview = {
+                    filetypes = { 'markdown', 'quarto', 'rmd', 'typst', 'Avante', 'codecompanion' },
+                    icon_provider = 'mini',
+                    ignore_buftypes = {},
+                },
+                html = {
+                    container_elements = {
+                        ['^buf$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+                        ['^file$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+                        ['^help$'] = conceal_tag('󰘥', 'CodeCompanionChatVariable'),
+                        ['^image$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+                        ['^symbols$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+                        ['^url$'] = conceal_tag('󰖟', 'CodeCompanionChatVariable'),
+                        ['^var$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+                        ['^tool$'] = conceal_tag('', 'CodeCompanionChatTool'),
+                        ['^user_prompt$'] = conceal_tag('', 'CodeCompanionChatTool'),
+                        ['^group$'] = conceal_tag('', 'CodeCompanionChatToolGroup'),
+                    },
+                },
+            })
+        end,
+    },
+}

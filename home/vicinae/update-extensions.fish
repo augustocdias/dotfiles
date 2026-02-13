@@ -188,9 +188,9 @@ echo "Extensions updated: $raycast_count"
 if test "$REBUILD" = true
     echo ""
     set_color yellow
-    echo "Rebuilding NixOS configuration..."
+    echo "Rebuilding Home-Manager configuration..."
     set_color normal
-    if nixos-rebuild switch --flake ~/.dotfiles#augusto
+    ifnix run home-manager -- switch --flake ~/nixos#augusto 
         echo ""
         set_color green
         echo "System rebuild complete!"
@@ -205,7 +205,7 @@ if test "$REBUILD" = true
 else
     echo ""
     echo "To apply changes, run:"
-    echo "  nixos-rebuild switch --flake ~/.dotfiles#augusto"
+    echo "  nix run home-manager -- switch --flake ~/nixos#augusto"
     echo ""
     echo "Or use: vicinae-update --rebuild"
 end

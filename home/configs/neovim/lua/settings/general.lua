@@ -4,37 +4,6 @@ vim.loader.enable()
 -- map leader to space
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
--- vim.g.maplocalleader = '='
--- timeout for leader key
-vim.o.timeoutlen = 500
--- secure modelines
-vim.g.secure_modelines_allowed_items = {
-    'textwidth',
-    'tw',
-    'softtabstop',
-    'sts',
-    'tabstop',
-    'ts',
-    'shiftwidth',
-    'sw',
-    'expandtab',
-    'et',
-    'noexpandtab',
-    'noet',
-    'filetype',
-    'ft',
-    'foldmethod',
-    'fdm',
-    'readonly',
-    'ro',
-    'noreadonly',
-    'noro',
-    'rightleft',
-    'rl',
-    'norightleft',
-    'norl',
-    'colorcolumn',
-}
 
 -- replace grep with rgsettings
 vim.go.grepprg = 'rg --no-heading --vimgrep'
@@ -67,13 +36,13 @@ vim.o.signcolumn = 'yes'
 vim.o.numberwidth = 1
 
 -- folding
-vim.o.foldenable = true -- Enable folding.
-vim.o.foldcolumn = '1' -- Show folding signs.
+vim.o.foldenable = true                            -- Enable folding.
+vim.o.foldcolumn = '1'                             -- Show folding signs.
 vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()' -- Use treesitter for folding.
-vim.o.foldlevel = 999 -- Open all folds.
-vim.o.foldmethod = 'expr' -- Use expr to determine fold level.
-vim.o.foldopen = 'insert,mark,search,tag' -- Which commands open folds if the cursor moves into a closed fold.
-vim.o.foldtext = 'v:lua.custom_fold_text()' -- What to display on fold
+vim.o.foldlevel = 999                              -- Open all folds.
+vim.o.foldmethod = 'expr'                          -- Use expr to determine fold level.
+vim.o.foldopen = 'insert,mark,search,tag'          -- Which commands open folds if the cursor moves into a closed fold.
+vim.o.foldtext = 'v:lua.custom_fold_text()'        -- What to display on fold
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 -- Settings needed for .lvimrc
@@ -92,7 +61,7 @@ vim.o.undofile = true
 vim.o.wildmenu = true
 vim.o.wildmode = 'list:longest'
 vim.o.wildignore =
-    '.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite'
+'.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite'
 
 -- Use wide tabs
 vim.o.shiftwidth = 4
@@ -104,11 +73,13 @@ vim.o.expandtab = true
 vim.o.backspace = 'indent,eol,start'
 
 -- Wrapping options
-vim.o.formatoptions = 'tc' -- wrap text and comments using textwidth
-vim.o.formatoptions = vim.o.formatoptions .. 'r' -- continue comments when pressing ENTER in I mode
-vim.o.formatoptions = vim.o.formatoptions .. 'q' -- enable formatting of comments with gq
-vim.o.formatoptions = vim.o.formatoptions .. 'n' -- detect lists for formatting
-vim.o.formatoptions = vim.o.formatoptions .. 'b' -- auto-wrap in insert mode, and do not wrap old long lines
+-- t -> wrap text using textwidth
+-- c -> wrap comments using textwidth
+-- r -> continue comments when pressing ENTER in I mode
+-- q -> enable formatting of comments with gq
+-- n -> detect lists for formatting
+-- b -> auto-wrap in insert mode, and do not wrap old long lines
+vim.o.formatoptions = 'tcrqnb'
 
 -- Proper search
 vim.o.incsearch = true
@@ -118,24 +89,23 @@ vim.o.smartcase = true
 vim.o.gdefault = true
 
 -- Abbreviations
-vim.cmd('cnoreabbrev W! w!')
-vim.cmd('cnoreabbrev Q! q!')
-vim.cmd('cnoreabbrev Qall! qall!')
-vim.cmd('cnoreabbrev Wq wq')
-vim.cmd('cnoreabbrev Wa wa')
-vim.cmd('cnoreabbrev wQ wq')
-vim.cmd('cnoreabbrev WQ wq')
-vim.cmd('cnoreabbrev W w')
-vim.cmd('cnoreabbrev Q q')
-vim.cmd('cnoreabbrev Qall qall')
+for _, pair in ipairs({
+    { 'W!',    'w!' },
+    { 'Q!',    'q!' },
+    { 'Qall!', 'qall!' },
+    { 'Wq',    'wq' },
+    { 'Wa',    'wa' },
+    { 'wQ',    'wq' },
+    { 'WQ',    'wq' },
+    { 'W',     'w' },
+    { 'Q',     'q' },
+    { 'Qall',  'qall' },
+}) do
+    vim.cmd.cnoreabbrev(pair[1] .. ' ' .. pair[2])
+end
 
--- No whitespace in vimdiff
-vim.o.diffopt = vim.o.diffopt .. ',iwhite'
 -- Make diffing better: https://vimways.org/2018/the-power-of-diff/
-vim.o.diffopt = vim.o.diffopt .. ',algorithm:patience'
-vim.o.diffopt = vim.o.diffopt .. ',indent-heuristic'
--- https://github.com/neovim/neovim/pull/14537
-vim.o.diffopt = vim.o.diffopt .. ',linematch:50'
+vim.o.diffopt = 'internal,filler,closeoff,indent-heuristic,inline:char,iwhite,algorithm:patience,linematch:50'
 
 -- don't create swap files because it is very annoying
 vim.o.swapfile = false
@@ -170,10 +140,7 @@ vim.o.list = true
 vim.o.splitkeep = 'topline'
 
 -- sync system clipboard
--- vim.o.clipboard = 'unnamedplus'
-
--- enable autoformat when saving. it is set for each buffer when lsp is attached
-vim.g.autoformat = true
+vim.o.clipboard = 'unnamedplus'
 
 -- disable legacy perl provider
 vim.g.loaded_perl_provider = false

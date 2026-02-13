@@ -3,9 +3,11 @@ local M = {}
 M.on_attach = function(client, bufnr)
     require('utils.autocommands').lsp_autocmds(client, bufnr)
 
-    -- enable inlay hints if server supports it
     if client.server_capabilities.inlayHintProvider then
         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+    if client.server_capabilities.code_lens or client.server_capabilities.codeLensProvider then
+        vim.lsp.codelens.enable(true, { bufnr = bufnr })
     end
 end
 M.capabilities = function()

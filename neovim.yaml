@@ -6,6 +6,8 @@ globals:
     property: read-only
   Snacks:
     any: true
+  MiniIcons:
+    any: true
   vim.g:
     property: new-fields
   vim.b:

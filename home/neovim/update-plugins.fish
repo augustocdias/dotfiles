@@ -181,6 +181,7 @@ if test (count $errors) -gt 0
     for error_file in $errors
         cat $error_file
     end
+    echo -e "Check if their revisions exist"
     exit 1
 end
 
@@ -248,8 +249,8 @@ end
 
 if test $rebuild = true
     echo ""
-    echo -e $YELLOW"🔨 Rebuilding NixOS configuration..."$NC
-    sudo nixos-rebuild switch --flake ~/.dotfiles
+    echo -e $YELLOW"🔨 Rebuilding Home-Manager configuration..."$NC
+    nix run home-manager -- switch --flake ~/nixos#augusto
 
     if test $status -eq 0
         echo ""
@@ -262,7 +263,7 @@ if test $rebuild = true
 else
     echo ""
     echo "To apply changes, run:"
-    echo "  sudo nixos-rebuild switch --flake ~/.dotfiles"
+    echo "  nix run home-manager -- switch --flake ~/nixos#augusto"
     echo ""
     echo "Or use: nvim-update --rebuild"
 end
