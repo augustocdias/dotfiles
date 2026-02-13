@@ -6,25 +6,20 @@ return {
     lazy = false,
     dependencies = {
         'b0o/schemastore.nvim', -- adds schemas for json lsp
+        {
+            'kosayoda/nvim-lightbulb',
+            opts = {
+                autocmd = { enabled = true },
+                sign = { text = '󰛩' },
+            },
+        },
     },
     config = function()
         local lsp_utils = require('utils.lsp')
 
-        -- general LSP config
-        vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-            underline = true,
-            update_in_insert = true,
-            virtual_text = false,
-            signs = true,
-        })
-
-        -- TODO: check if this works
-        vim.fn.sign_define(
-            'LightBulbSign',
-            { text = '󰛩', texthl = 'LspDiagnosticsDefaultInformation', numhl = 'LspDiagnosticsDefaultInformation' }
-        )
-
         vim.diagnostic.config({
+            virtual_text = false,
+            underline = true,
             severity_sort = true,
             update_in_insert = true,
             signs = {
@@ -74,13 +69,6 @@ return {
         vim.lsp.config('jsonls', {
             on_attach = lsp_utils.on_attach,
             capabilities = lsp_utils.capabilities(),
-            commands = {
-                Format = {
-                    function()
-                        vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line('$'), 0 })
-                    end,
-                },
-            },
             settings = {
                 json = {
                     schemas = require('schemastore').json.schemas(),
@@ -208,7 +196,7 @@ return {
         {
             '<M-f>',
             function()
-                vim.lsp.buf.format({ async = false })
+                require('conform').format({ async = false, lsp_format = 'fallback' })
             end,
             mode = { 'n' },
             desc = 'Format code',
@@ -223,23 +211,16 @@ return {
         },
         {
             '<leader>lb',
-            '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
+            vim.diagnostic.open_float,
             mode = { 'n' },
             desc = 'Show line diagnostics',
             noremap = true,
         },
         {
-            '<leader>lc',
-            function()
-                vim.b.autoformat = not vim.b.autoformat
-            end,
-            mode = { 'n' },
-            desc = 'Toggle autoformat',
-            noremap = true,
-        },
-        {
             '<leader>lf',
-            '<cmd>lua vim.lsp.buf.format({ async = false })<CR>',
+            function()
+                require('conform').format({ async = false, lsp_format = 'fallback' })
+            end,
             mode = { 'n' },
             desc = 'Format',
             noremap = true,
@@ -260,16 +241,16 @@ return {
         },
         {
             '<leader>lq',
-            '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',
+            vim.diagnostic.setloclist,
             mode = { 'n' },
             desc = 'Diagnostic set loclist',
             noremap = true,
         },
         {
             '<leader>la',
-            '<cmd>lua vim.lsp.buf.range_code_action()<CR>',
+            '<cmd>lua vim.lsp.buf.code_action()<CR>',
             mode = { 'v' },
-            desc = 'Range Code Action',
+            desc = 'Code Action',
             noremap = true,
         },
     },

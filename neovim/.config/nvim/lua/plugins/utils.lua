@@ -1,10 +1,11 @@
 return {
     -- common utilities
     {
-        'ciaranm/securemodelines',
-    }, -- https://vim.fandom.com/wiki/Modeline_magic
-    {
-        'kyazdani42/nvim-web-devicons',
-        config = true,
-    }, -- icon support for several plugins
+        'echasnovski/mini.icons',
+        lazy = false,
+        config = function()
+            require('mini.icons').setup()
+            MiniIcons.mock_nvim_web_devicons()
+        end,
+    },
 }

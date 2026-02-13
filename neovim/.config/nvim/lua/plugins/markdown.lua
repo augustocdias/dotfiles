@@ -18,7 +18,6 @@ return {
     priority = 49,
     ft = { 'markdown', 'Avante', 'codecompanion' },
     dependencies = {
-        'nvim-tree/nvim-web-devicons',
         { 'yousefhadder/markdown-plus.nvim', ft = { 'markdown', 'Avante', 'codecompanion' }, config = true },
     },
     opts = {
@@ -27,7 +26,7 @@ return {
         },
         preview = {
             filetypes = { 'markdown', 'quarto', 'rmd', 'typst', 'Avante', 'codecompanion' },
-            icon_provider = 'devicons',
+            icon_provider = 'mini',
             ignore_buftypes = {},
         },
         html = {

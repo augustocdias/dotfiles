@@ -41,7 +41,7 @@
         "searchJiraIssuesUsingJql"
       ],
       "command": "npx",
-      "disabled": true
+      "disabled": false
     },
     "context7": {
       "args": [
@@ -50,7 +50,7 @@
       ],
       "autoApprove": [
         "resolve-library-id",
-        "get-library-docs"
+        "query-docs"
       ],
       "command": "npx",
       "disabled": false,
@@ -79,6 +79,21 @@
       "type": "http",
       "url": "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp"
     },
+    "looker-toolbox": {
+      "args": [
+        "--stdio",
+        "--prebuilt",
+        "looker"
+      ],
+      "command": "/Users/augusto/.config/toolbox",
+      "disabled": false,
+      "env": {
+        "LOOKER_BASE_URL": "https://nellyinternal.cloud.looker.com",
+        "LOOKER_CLIENT_ID": "redacted",
+        "LOOKER_CLIENT_SECRET": "redacted",
+        "LOOKER_VERIFY_SSL": "true"
+      }
+    },
     "memory": {
       "args": [
         "-y",
@@ -99,8 +114,20 @@
     }
   },
   "nativeMCPServers": {
+    "mcphub": {
+      "autoApprove": [
+        "get_current_servers",
+        "toggle_mcp_server"
+      ]
+    },
     "neovim": {
-      "disabled": true
+      "autoApprove": [
+        "find_files",
+        "list_directory",
+        "read_file",
+        "read_multiple_files"
+      ],
+      "disabled": false
     }
   }
 }

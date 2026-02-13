@@ -14,18 +14,37 @@ return {
         opts = {
             log_level = 'DEBUG',
         },
-        system_prompt = require('ai.prompt').system_prompt(),
-        -- memory = { opts = { chat = { enabled = true } } },
-        strategies = {
+        interactions = {
             chat = {
                 opts = {
                     system_prompt = require('ai.prompt').system_prompt(),
                 },
                 adapter = 'anthropic',
                 tools = {
-                    ['activitywatch'] = {
-                        callback = 'ai.cc.tools.activitywatch',
-                        description = 'Query ActivityWatch data for productivity analytics and time tracking. Remember to always include neovim buckets when searching',
+                    -- builtin auto-approve
+                    ['file_search'] = {
+                        opts = {
+                            require_cmd_approval = false,
+                            require_approval_before = false,
+                        },
+                    },
+                    ['memory'] = {
+                        opts = {
+                            require_cmd_approval = false,
+                            require_approval_before = false,
+                        },
+                    },
+                    ['read_file'] = {
+                        opts = {
+                            require_cmd_approval = false,
+                            require_approval_before = false,
+                        },
+                    },
+                    ['grep_search'] = {
+                        opts = {
+                            require_cmd_approval = false,
+                            require_approval_before = false,
+                        },
                     },
                     ['apple_mail'] = {
                         callback = 'ai.cc.tools.apple_mail',
@@ -35,17 +54,17 @@ return {
                         callback = 'ai.cc.tools.apple_script',
                         description = 'Execute AppleScript code on macOS',
                         opts = {
-                            requires_approval = true,
+                            requires_approval_before = true,
                         },
                     },
                     ['calendar_scheduler'] = {
                         callback = 'ai.cc.tools.calendar_scheduler',
                         description = 'Fetch calendar appointments and manage meeting URL scheduling via Hammerspoon. Never filter out possible duplicates',
                     },
-                    ['datadog'] = {
-                        callback = 'ai.cc.tools.datadog',
-                        description = 'Interact with Datadog API for logs, metrics, events, and monitoring data to help troubleshoot production issues',
-                    },
+                    -- ['datadog'] = {
+                    --     callback = 'ai.cc.tools.datadog',
+                    --     description = 'Interact with Datadog API for logs, metrics, events, and monitoring data to help troubleshoot production issues',
+                    -- },
                     ['date'] = {
                         callback = 'ai.cc.tools.date',
                         description = 'Get current date or make date operations',
@@ -54,67 +73,70 @@ return {
                         callback = gh_tool.gh_issue,
                         description = 'GitHub Issue operations (create, list, view, close, reopen)',
                         opts = {
-                            requires_approval = {},
+                            requires_approval_before = {},
                         },
                     },
                     ['gh_pr'] = {
                         callback = gh_tool.gh_pr,
                         description = 'GitHub Pull Request operations (create, list, view, merge, close, reopen, ready, draft)',
                         opts = {
-                            requires_approval = {},
+                            requires_approval_before = {},
                         },
                     },
                     ['gh_repo'] = {
                         callback = gh_tool.gh_repo,
                         description = 'GitHub Repository operations (view, list, create, clone, fork)',
                         opts = {
-                            requires_approval = {},
+                            requires_approval_before = {},
                         },
                     },
                     ['gh_run'] = {
                         callback = gh_tool.gh_run,
                         description = 'GitHub Actions run operations (list, view, cancel, rerun)',
                         opts = {
-                            requires_approval = {},
+                            requires_approval_before = {},
                         },
                     },
                     ['gh_search'] = {
                         callback = gh_tool.gh_search,
                         description = 'GitHub search operations (repos, issues, prs, code)',
                         opts = {
-                            requires_approval = {},
+                            requires_approval_before = {},
                         },
                     },
                     ['gh_status'] = {
                         callback = gh_tool.gh_status,
                         description = 'GitHub repository and user status operations',
                         opts = {
-                            requires_approval = {},
+                            requires_approval_before = {},
                         },
                     },
                     ['gh_workflow'] = {
                         callback = gh_tool.gh_workflow,
                         description = 'GitHub Actions workflow operations (list, view, run)',
                         opts = {
-                            requires_approval = {},
+                            requires_approval_before = {},
                         },
                     },
                     ['git'] = {
                         callback = 'ai.cc.tools.git',
                         description = 'Git command line tool',
                         opts = {
-                            requires_approval = {}, -- if not a boolean will call prompt_condition
+                            requires_approval_before = {}, -- if not a boolean will call prompt_condition
                         },
                     },
                     ['google_calendar'] = {
                         callback = 'ai.cc.tools.google_calendar',
                         description = 'Query events and details from Google Calendar using gcalcli',
+                        opts = {
+                            requires_approval_before = false,
+                        },
                     },
                     ['jira'] = {
                         callback = 'ai.cc.tools.jira',
                         description = 'Interact with Atlassian Jira API for ticket management, transitions, and comments',
                         opts = {
-                            requires_approval = {},
+                            requires_approval_before = {},
                         },
                     },
                     opts = {
@@ -134,11 +156,10 @@ return {
                             'list_code_usages',
                             'mcp',
                             -- custom
-                            'activitywatch',
                             'apple_mail',
                             'apple_script',
                             'calendar_scheduler',
-                            'datadog',
+                            -- 'datadog',
                             'date',
                             'gh',
                             'git',
@@ -162,11 +183,25 @@ return {
                 adapter = 'anthropic',
             },
         },
+        rules = {
+            skills = {
+                description = 'LLM Skills',
+                enabled = function()
+                    local Path = require('plenary.path')
+                    return Path:new(vim.fn.getcwd() .. '/.claude/skills'):exists()
+                end,
+                files = {
+                    {
+                        path = vim.fn.getcwd() .. '/.claude/skills',
+                        files = '*.md',
+                    },
+                },
+            },
+        },
         adapters = {
             http = {
                 anthropic = function()
                     return require('codecompanion.adapters').extend('anthropic', {
-                        formatted_name = 'Anthropic Claude',
                         headers = {
                             ['anthropic-beta'] = 'context-1m-2025-08-07',
                         },
@@ -191,6 +226,15 @@ return {
                     show_result_in_chat = true,
                     make_tools = true,
                     show_server_tools_in_chat = true,
+                    format_tool = function(_, tool)
+                        return 'MCP: '
+                            .. tool.args.server_name
+                            .. '.'
+                            .. tool.args.tool_name
+                            .. '('
+                            .. vim.inspect(tool.args.tool_input)
+                            .. ')'
+                    end,
                 },
             },
             history = {
@@ -214,7 +258,7 @@ return {
                         max_refreshes = 3,
                     },
                     ---On exiting and entering neovim, loads the last chat on opening chat
-                    continue_last_chat = true,
+                    continue_last_chat = false,
                     delete_on_clearing_chat = false,
                     dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
                     chat_filter = function(chat_data)

@@ -6,7 +6,6 @@ return {
     dependencies = {
         'mason-org/mason-lspconfig.nvim',
         'WhoIsSethDaniel/mason-tool-installer.nvim',
-        { 'Zeioth/none-ls-autoload.nvim', config = true },
     },
     config = function()
         require('mason').setup()
