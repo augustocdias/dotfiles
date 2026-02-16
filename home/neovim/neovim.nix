@@ -98,6 +98,7 @@ in {
       actionlint
       deadnix
       write-good
+      markdownlint-cli
 
       # code actions
       statix

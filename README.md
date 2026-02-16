@@ -1,6 +1,4 @@
-# Personal Settings and Tools all setup through NixOS + Home Manager
-
-My personal NixOS settings and tools
+# Personal Settings and Tools (NixOS + Home-Manager)
 
 ## NixOS Installer ISO
 
@@ -12,9 +10,9 @@ docker run --rm -it -v $(pwd):/workspace -w /workspace nixos/nix sh -c "nix buil
 
 The installer will guide through the process and at the end the machine should be ready to roll.
 
-## NixOS + Home manager
+## Post Installation
 
-Apps like Neovim and Fish come already pre-configured from home-manager. All plugins and configurations are pre-installed. Some features require manual setup after the first boot as described below.
+Most apps come already pre-configured from home-manager. All plugins and configurations are pre-installed. Some features require manual setup after the first boot as described below.
 
 ### Fingerprint Enrollment
 
@@ -44,9 +42,11 @@ Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix) with a h
 
 1. Plug in the YubiKey
 2. Run the setup script:
+
    ```fish
    nix-shell -p age sops yq-go --run "fish ~/nixos/home/secrets/sops-setup.fish"
    ```
+
 3. The script will:
    - Generate a new age key for this machine
    - Update `.sops.yaml` with the new key
@@ -55,9 +55,11 @@ Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix) with a h
 #### Adding new secrets
 
 1. Edit the secrets file:
+
    ```fish
    sops ~/.dotfiles/home/secrets/env.yaml
    ```
-2. Add the new secret key to `home/secrets.nix`
-3. Add the environment variable to the template in `home/secrets.nix`
-4. Rebuild
+
+1. Add the new secret key to `home/secrets.nix`
+1. Add the environment variable to the template in `home/secrets.nix`
+1. Rebuild

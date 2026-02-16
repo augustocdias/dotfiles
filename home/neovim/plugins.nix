@@ -16,10 +16,10 @@
   # Then run nixos-rebuild and copy the correct hash from the error message
   # Binary hashes use the format: plugin-name-binary
   shas = {
-    auto-session = "17lgypmrf7g6jqx68vbnh32ws20kx6ivndcvqw0m89vnk730rq9l";
+    auto-session = "1lnx5rgb68f0s57xm97hr585qyp3lpxvn3fxd7az40sdh7zh7fjm";
     blink-cmp = "1bzagack76cc78fa7l9hr63fx5sawxmzsdaqrxv82hm9smfis2hs";
     blink-cmp-binary = "1x7pvbddnk1yslczjnw0yik8wzr051fsaiax7bi5lng22d06dcjj";
-    catppuccin = "01aax3h15xkqpmw0yv4k1zvqbaqh531wzlwfyj84gcxxbrw9b7ki";
+    catppuccin = "1gcrv04b5gpjy0gzfgfwwiwl9jfl928qzwb6ji1hkhr8liil8k6j";
     codecompanion = "1mdn4q2c89pk2anr3490gfw4p9pxkiv81dgqrrsb8hb3w5jp63iw";
     codecompanion-history = "1s6qki0xrk936wm0rwwdsd67y0lqhw5nzjffassgw0dbgb4yjz2a";
     codecompanion-spinner = "05qhr9v9rkl9npv4xayjjn5phfzqa625vlr9mh05k47lbv4j4aa1";
@@ -61,8 +61,8 @@
     octo = "1kg7b5blk860jm1kc7gqmkh31hld32l0biw7901vwhb3ygy1514l";
     plenary = "1kg043h7dqcrqqgg8pp6hsldx7jdhlh8qwad2kkckia191xgnjgm";
     refactoring = "1wl2167fly4r3yzpkhl0qlprcn1p4n6p6cg6g1dy3sas8mzzan98";
-    rustaceanvim = "1rfabkkarpqqnkg4qi0rp3casy3zxxm8qw1vr22nwfyh1yyargbf";
-    SchemaStore = "0d97gvn4h4fqh5k29k0m9c6847i1wp03x7lx7c9py15vakd7dbgm";
+    rustaceanvim = "0mwrspy7qygnik10b1z3hckr654ml98766g374hfckhvxhcppqiq";
+    SchemaStore = "1qz6g4p735bvqx99177rrf4m9plbm0rws5bs014qbkh8v9zpz1pn";
     snacks = "18x8m1fhq9kjch1jmzax3nd0h8j5kgd5ykj8bg366h5x1mi9s5xx";
     tabby = "1vaaiypq9c9rzjhsn31ddihyjqbcdyvy383vpsis4bjjbbyg02b0";
     tabout = "1mjnzrz2zh8kd95p12l70zmpw7nf5xnlr4pwss51s2cgy1wyfgz5";
