@@ -1,91 +1,99 @@
 {
-    "mcpServers": {
-        "Notion": {
-            "autoApprove": [
-                "fetch",
-                "notion-get-comments",
-                "notion-get-self",
-                "notion-get-teams",
-                "notion-get-user",
-                "notion-get-users",
-                "search"
-            ],
-            "disabled": false,
-            "url": "https://mcp.notion.com/mcp"
-        },
-        "atlassian": {
-            "args": [
-                "-y",
-                "mcp-remote",
-                "https://mcp.atlassian.com/v1/sse"
-            ],
-            "autoApprove": [
-                "atlassianUserInfo",
-                "fetch",
-                "getAccessibleAtlassianResources",
-                "getConfluencePage",
-                "getConfluencePageDescendants",
-                "getConfluencePageFooterComments",
-                "getConfluencePageInlineComments",
-                "getConfluenceSpaces",
-                "getJiraIssue",
-                "getJiraIssueRemoteIssueLinks",
-                "getJiraIssueTypeMetaWithFields",
-                "getJiraProjectIssueTypesMetadata",
-                "getPagesInConfluenceSpace",
-                "getTransitionsForJiraIssue",
-                "getVisibleJiraProjects",
-                "lookupJiraAccountId",
-                "search",
-                "searchConfluenceUsingCql",
-                "searchJiraIssuesUsingJql"
-            ],
-            "command": "npx",
-            "disabled": false
-        },
-        "context7": {
-            "args": [
-                "-y",
-                "@upstash/context7-mcp"
-            ],
-            "autoApprove": [
-                "resolve-library-id",
-                "query-docs"
-            ],
-            "command": "npx",
-            "disabled": false,
-            "env": {
-                "DEFAULT_MINIMUM_TOKENS": "64000"
-            }
-        },
-        "memory": {
-            "args": [
-                "-y",
-                "@modelcontextprotocol/server-memory"
-            ],
-            "autoApprove": [
-                "create_entities",
-                "create_relations",
-                "add_observations",
-                "delete_entities",
-                "delete_observations",
-                "delete_relations",
-                "read_graph",
-                "search_nodes",
-                "open_nodes"
-            ],
-            "command": "npx"
-        }
+  "mcpServers": {
+    "Notion": {
+      "autoApprove": [
+        "fetch",
+        "notion-get-comments",
+        "notion-get-self",
+        "notion-get-teams",
+        "notion-get-user",
+        "notion-get-users",
+        "search"
+      ],
+      "disabled": false,
+      "url": "https://mcp.notion.com/mcp"
     },
-    "nativeMCPServers": {
-        "neovim": {
-            "disabled": false,
-            "autoApprove": [
-                "find_files",
-                "list_directory",
-                "read_file",
-                "read_multiple_files"
-            ]
-        }
+    "atlassian": {
+      "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v1/sse"],
+      "autoApprove": [
+        "atlassianUserInfo",
+        "fetch",
+        "getAccessibleAtlassianResources",
+        "getConfluencePage",
+        "getConfluencePageDescendants",
+        "getConfluencePageFooterComments",
+        "getConfluencePageInlineComments",
+        "getConfluenceSpaces",
+        "getJiraIssue",
+        "getJiraIssueRemoteIssueLinks",
+        "getJiraIssueTypeMetaWithFields",
+        "getJiraProjectIssueTypesMetadata",
+        "getPagesInConfluenceSpace",
+        "getTransitionsForJiraIssue",
+        "getVisibleJiraProjects",
+        "lookupJiraAccountId",
+        "search",
+        "searchConfluenceUsingCql",
+        "searchJiraIssuesUsingJql"
+      ],
+      "command": "npx",
+      "disabled": false
+    },
+    "context7": {
+      "args": ["-y", "@upstash/context7-mcp"],
+      "autoApprove": ["resolve-library-id", "query-docs"],
+      "command": "npx",
+      "disabled": false,
+      "env": {
+        "DEFAULT_MINIMUM_TOKENS": "64000"
+      }
+    },
+    "datadog": {
+      "autoApprove": [
+        "analyze_datadog_logs",
+        "get_datadog_incident",
+        "get_datadog_metric",
+        "get_datadog_trace",
+        "search_datadog_dashboards",
+        "search_datadog_docs",
+        "search_datadog_events",
+        "search_datadog_hosts",
+        "search_datadog_incidents",
+        "search_datadog_logs",
+        "search_datadog_metrics",
+        "search_datadog_monitors",
+        "search_datadog_rum_events",
+        "search_datadog_services",
+        "search_datadog_spans"
+      ],
+      "type": "http",
+      "url": "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp"
+    },
+    "memory": {
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "autoApprove": [
+        "create_entities",
+        "create_relations",
+        "add_observations",
+        "delete_entities",
+        "delete_observations",
+        "delete_relations",
+        "read_graph",
+        "search_nodes",
+        "open_nodes"
+      ],
+      "command": "npx"
     }
+  },
+  "nativeMCPServers": {
+    "neovim": {
+      "disabled": false,
+      "autoApprove": [
+        "find_files",
+        "list_directory",
+        "read_file",
+        "read_multiple_files"
+      ]
+    }
+  }
 }

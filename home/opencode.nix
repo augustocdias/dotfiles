@@ -30,6 +30,10 @@
           type = "local";
           command = ["npx" "-y" "@modelcontextprotocol/server-memory"];
         };
+        datadog = {
+          type = "remote";
+          url = "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp";
+        };
       };
     };
   };
