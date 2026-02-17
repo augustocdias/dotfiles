@@ -244,14 +244,18 @@ return {
                             show_result_in_chat = true,
                             make_tools = true,
                             show_server_tools_in_chat = true,
-                            format_tool = function(_, tool)
-                                return 'MCP: '
-                                    .. tool.args.server_name
-                                    .. '.'
-                                    .. tool.args.tool_name
-                                    .. '('
-                                    .. vim.inspect(tool.args.tool_input)
-                                    .. ')'
+                            format_tool = function(name, tool)
+                                if name == 'use_mcp_tool' then
+                                    return 'MCP: '
+                                        .. tool.args.server_name
+                                        .. '.'
+                                        .. tool.args.tool_name
+                                        .. '('
+                                        .. vim.inspect(tool.args.tool_input)
+                                        .. ')'
+                                else
+                                    return 'MCP: ' .. name .. ' (' .. vim.inspect(tool.args) .. ')'
+                                end
                             end,
                         },
                     },
