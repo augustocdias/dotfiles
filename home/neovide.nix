@@ -1,6 +1,6 @@
 # Neovide - Neovim GUI configuration
-{...}: let
+{pkgs, ...}: let
 in {
-  # Neovide configuration
+  home.packages = with pkgs; [neovide];
   xdg.configFile."neovide/config.toml".source = ./configs/neovide/config.toml;
 }

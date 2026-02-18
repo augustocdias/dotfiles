@@ -4,6 +4,7 @@
   ./dank.nix
   ./hyprland.nix
   ./gpg.nix
+  ./xdg.nix
 
   # Package collections
   ./packages/development.nix

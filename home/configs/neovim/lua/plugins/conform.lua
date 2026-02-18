@@ -14,6 +14,7 @@ return {
                 json = { 'prettier' },
                 lua = { 'stylua' },
                 markdown = { 'markdownlint' },
+                nix = { 'alejandra' },
                 python = { 'black' },
                 sh = { 'shfmt' },
                 sql = { 'sqlfluff' },

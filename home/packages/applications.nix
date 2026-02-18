@@ -15,9 +15,13 @@
     zed-editor
 
     # Media players
-    vlc
     mpv
-    # cider
+
+    # Image viewer
+    imv
+
+    # Archive manager
+    peazip
 
     # Graphics & Diagrams
     drawio

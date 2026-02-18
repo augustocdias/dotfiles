@@ -114,10 +114,10 @@
         "$mainMod, Q, killactive,"
         "$mainMod SHIFT, SPACE, exec, dms ipc call powermenu toggle"
 
-        # Screenshots
-        ", PRINT, exec, grim -g \"$(slurp)\" - | wl-copy"
-        "SHIFT, PRINT, exec, grim - | wl-copy"
-        "$mainMod, PRINT, exec, grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png"
+        # Screenshots (via dms)
+        ", PRINT, exec, dms screenshot --no-file"
+        "SHIFT, PRINT, exec, dms screenshot full --no-file"
+        "$mainMod, PRINT, exec, dms screenshot --no-clipboard -d ~/pictures/screenshots"
 
         # Lock screen
         "$mainMod SHIFT, L, exec, dms ipc call lock lock"
