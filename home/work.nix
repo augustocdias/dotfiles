@@ -1,5 +1,9 @@
 # Work-related tools and applications
-{pkgs, lib, ...}: let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   isX86 = pkgs.stdenv.hostPlatform.system == "x86_64-linux";
 in {
   home.packages = with pkgs;

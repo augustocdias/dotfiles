@@ -243,7 +243,7 @@
 
         # Firefox picture-in-picture
         "size 640 360, match:title ^(Picture-in-Picture)$"
-        "move 100%-w-20 100%-w-20, match:title ^(Picture-in-Picture)$"
+        "move monitor_w-660 monitor_h-380, match:title ^(Picture-in-Picture)$"
       ];
     };
 

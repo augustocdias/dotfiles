@@ -42,6 +42,12 @@ in {
     rules.auth.u2f.control = "sufficient";
   };
 
+  # Polkit: security key OR fingerprint OR password
+  security.pam.services.polkit-1 = lib.mkIf u2fKeysExist {
+    u2fAuth = true;
+    rules.auth.u2f.control = "sufficient";
+  };
+
   # Deploy u2f_keys from dotfiles to /etc
   environment.etc."u2f_keys" = lib.mkIf u2fKeysExist {
     source = u2fKeysFile;
