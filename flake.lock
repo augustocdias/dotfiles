@@ -88,11 +88,11 @@
         "quickshell": "quickshell"
       },
       "locked": {
-        "lastModified": 1771220290,
-        "narHash": "sha256-av+QS7S9vVK4TMmnN4t3wETdChGhhs2Hqx7ogx16mhs=",
+        "lastModified": 1771385299,
+        "narHash": "sha256-vOniAQdrQ83AEYE6elUZ3LcmfKzhZhTgv49sQSTs138=",
         "owner": "AvengeMedia",
         "repo": "DankMaterialShell",
-        "rev": "a9ee91586ed21dab19ca8f242fc6f14be8ef6a9b",
+        "rev": "242ead722ae2bd5daee39221a452fccca1691601",
         "type": "github"
       },
       "original": {
@@ -108,11 +108,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771204609,
-        "narHash": "sha256-RU+u90+3we5RxrPHLZvv/yfsYn66qlDa79oewq2DJBY=",
+        "lastModified": 1771377493,
+        "narHash": "sha256-b9D9zBQBLZirBqOOan7NHN8ceqSgCQLZ3Az4Uu+sdAE=",
         "owner": "AvengeMedia",
         "repo": "dms-plugin-registry",
-        "rev": "54ffd60e7695f8546f88671f95d653fd91cfbfe1",
+        "rev": "efc83556690f3227f1279ba439ad6a227ff3ca59",
         "type": "github"
       },
       "original": {
@@ -226,11 +226,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771188132,
-        "narHash": "sha256-qLXxN/tPrZtnekaLBQuVtxQfvqqs5cT5WbyH4zZaTGI=",
+        "lastModified": 1771269455,
+        "narHash": "sha256-BZ31eN5F99YH6vkc4AhzKGE+tJgJ52kl8f01K7wCs8w=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ae8003d8b61d0d373e7ca3da1a48f9c870d15df9",
+        "rev": "5f1d42a97b19803041434f66681d5c44c9ae62e3",
         "type": "github"
       },
       "original": {
@@ -343,11 +343,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1771177803,
-        "narHash": "sha256-6I5oJItQ5187J6gELPqLZDRbcjcxfQGnVUu5AcKQ0Gc=",
+        "lastModified": 1771336666,
+        "narHash": "sha256-b3UT9mOjQTNwfT/MHO3ZpBHlAvTC+BaqUokqS0VEgRo=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "6716b8a0e32b1adf68cd158ea38acec73f3fc22e",
+        "rev": "0de216e783d02748183ac5a5712201517685f492",
         "type": "github"
       },
       "original": {
@@ -792,11 +792,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771200309,
-        "narHash": "sha256-2UQHZ8BsRSwtzl2R1OqtYR80SQF+HG3kJdTxfiDZR9s=",
+        "lastModified": 1771373098,
+        "narHash": "sha256-QbqVr1nPO2YKd5jwQ3XGdDBgKdNO7PkHuWmwm1Xb0W8=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "c3e52f66f877cddce4167041546524abb76c0a70",
+        "rev": "3a8cfad64aeeaea6147d4443f15f56549f32d60c",
         "type": "github"
       },
       "original": {
@@ -808,11 +808,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1771195863,
-        "narHash": "sha256-WB0xr61z2nHB3/u42xYilqDCA/x3tvVZ21/bx2pNmgc=",
+        "lastModified": 1771351969,
+        "narHash": "sha256-AvX9xpjcgWCarffnNYvkdVO5HpEPKpnDwDgIHYp93tk=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "7d8653575f2a1170f0c7651f271c45a15a185d5e",
+        "rev": "29a46a11aa0820e4efcad80a2dfb9ca600924f58",
         "type": "github"
       },
       "original": {
@@ -1039,11 +1039,11 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1771172711,
-        "narHash": "sha256-+aDfn8JG1CU0RYIZi4UGCziyYF2YqIji7TUeA8/2qwg=",
+        "lastModified": 1771257846,
+        "narHash": "sha256-2tz4RVC1IwSpQL/t0raRZ+ydHQje0QzN65rcJo+JjyQ=",
         "owner": "vicinaehq",
         "repo": "vicinae",
-        "rev": "ed054c8fcc6b4a08ae20527fba57fd5850678b44",
+        "rev": "e9d804bfddad02ff80347401ae0d42ca8202519f",
         "type": "github"
       },
       "original": {
@@ -1061,11 +1061,11 @@
         "vicinae": "vicinae_2"
       },
       "locked": {
-        "lastModified": 1771192147,
-        "narHash": "sha256-m/OEmUIdpodyunJ4nLexiCordw0/pn1tWO3MLkoGuIM=",
+        "lastModified": 1771358594,
+        "narHash": "sha256-KwNv+THKbNUey10q26NZPDMSzYTObRHaSDr81QP9CPY=",
         "owner": "vicinaehq",
         "repo": "extensions",
-        "rev": "5bd1c123c10e4452df86c6a140f3cd5993547678",
+        "rev": "cf30b80f619282d45b1748eb76e784a4f875bb01",
         "type": "github"
       },
       "original": {

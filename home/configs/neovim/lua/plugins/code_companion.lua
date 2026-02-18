@@ -74,8 +74,7 @@ return {
                             },
                             ['calendar_scheduler'] = {
                                 callback = 'ai.cc.tools.calendar_scheduler',
-                                description =
-                                'Fetch calendar appointments and manage meeting URL scheduling via Hammerspoon. Never filter out possible duplicates',
+                                description = 'Fetch calendar appointments and manage meeting URL scheduling via Hammerspoon. Never filter out possible duplicates',
                             },
                             -- ['datadog'] = {
                             --     callback = 'ai.cc.tools.datadog',
@@ -95,8 +94,7 @@ return {
                             },
                             ['gh_pr'] = {
                                 callback = gh_tool.gh_pr,
-                                description =
-                                'GitHub Pull Request operations (create, list, view, merge, close, reopen, ready, draft)',
+                                description = 'GitHub Pull Request operations (create, list, view, merge, close, reopen, ready, draft)',
                                 opts = {
                                     requires_approval_before = {},
                                 },
@@ -152,8 +150,7 @@ return {
                             },
                             ['jira'] = {
                                 callback = 'ai.cc.tools.jira',
-                                description =
-                                'Interact with Atlassian Jira API for ticket management, transitions, and comments',
+                                description = 'Interact with Atlassian Jira API for ticket management, transitions, and comments',
                                 opts = {
                                     requires_approval_before = {},
                                 },
@@ -219,13 +216,12 @@ return {
                     http = {
                         anthropic = function()
                             return require('codecompanion.adapters').extend('anthropic', {
-                                formatted_name = 'Anthropic Claude',
                                 headers = {
                                     ['anthropic-beta'] = 'context-1m-2025-08-07',
                                 },
                                 schema = {
                                     model = {
-                                        default = 'claude-opus-4-5',
+                                        default = 'claude-opus-4-6',
                                     },
                                     thinking_budget = {
                                         default = 63000,
@@ -291,8 +287,8 @@ return {
                                 browse_summaries_keymap = '<leader>ay',
 
                                 generation_opts = {
-                                    context_size = 1000000,      -- max tokens that the model supports
-                                    include_references = true,   -- include slash command content
+                                    context_size = 1000000, -- max tokens that the model supports
+                                    include_references = true, -- include slash command content
                                     include_tool_outputs = true, -- include tool execution results
                                 },
                             },

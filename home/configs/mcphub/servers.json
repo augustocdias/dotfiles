@@ -68,21 +68,6 @@
       ],
       "type": "http",
       "url": "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp"
-    },
-    "memory": {
-      "args": ["-y", "@modelcontextprotocol/server-memory"],
-      "autoApprove": [
-        "create_entities",
-        "create_relations",
-        "add_observations",
-        "delete_entities",
-        "delete_observations",
-        "delete_relations",
-        "read_graph",
-        "search_nodes",
-        "open_nodes"
-      ],
-      "command": "npx"
     }
   },
   "nativeMCPServers": {

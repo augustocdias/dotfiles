@@ -44,23 +44,19 @@ in {
         src = pkgs.fishPlugins.puffer.src;
       }
 
-      # Custom plugins from GitHub
+      # Custom plugins from GitHub (pinned to commit SHAs for reproducibility)
       {
         name = "enhancd";
-        src = pkgs.fetchFromGitHub {
-          owner = "babarot";
-          repo = "enhancd";
-          rev = "main";
-          sha256 = "09wa6s36xlyzbakgqadcjk4g2rzinp2l3irn8ikagl445b11p954";
+        src = builtins.fetchGit {
+          url = "https://github.com/babarot/enhancd";
+          rev = "5afb4eb6ba36c15821de6e39c0a7bb9d6b0ba415";
         };
       }
       {
         name = "plugin-wttr";
-        src = pkgs.fetchFromGitHub {
-          owner = "oh-my-fish";
-          repo = "plugin-wttr";
-          rev = "master";
-          sha256 = "sha256-k3FrRPxKCiObO6HgtDx8ORbcLmfSYQsQeq5SAoNfZbE=";
+        src = builtins.fetchGit {
+          url = "https://github.com/oh-my-fish/plugin-wttr";
+          rev = "7500e382e6b29a463edc57598217ce0cfaf8c90c";
         };
       }
     ];

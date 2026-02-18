@@ -1,5 +1,6 @@
-# Neovim plugins fetched from GitHub
-# To update SHA256 hashes: Run update-nvim
+# Neovim plugins fetched from git remotes (defaults to GitHub)
+# To update plugin revisions: Run update-nvim
+# Uses builtins.fetchGit with pinned commit SHAs for reproducibility
 {
   pkgs,
   lib,
@@ -9,70 +10,75 @@
 
   # Helper to construct binary download URL from plugin info
   # Note: Plugins with binary field must use a tag for rev
-  mkBinaryUrl = plugin: "https://github.com/${plugin.owner}/${plugin.repo}/releases/download/${plugin.rev}/${plugin.binary.filename}";
+  # Note: Binary URL pattern assumes GitHub releases; custom remotes may need different handling
+  mkBinaryUrl = plugin: "${plugin.remote or "https://github.com"}/${plugin.owner}/${plugin.repo}/releases/download/${plugin.rev}/${plugin.binary.filename}";
 
-  # Plugin SHA256 hashes
-  # When adding a new plugin or updating, use lib.fakeSha256 first
-  # Then run nixos-rebuild and copy the correct hash from the error message
-  # Binary hashes use the format: plugin-name-binary
-  shas = {
-    auto-session = "1lnx5rgb68f0s57xm97hr585qyp3lpxvn3fxd7az40sdh7zh7fjm";
-    blink-cmp = "1bzagack76cc78fa7l9hr63fx5sawxmzsdaqrxv82hm9smfis2hs";
-    blink-cmp-binary = "1x7pvbddnk1yslczjnw0yik8wzr051fsaiax7bi5lng22d06dcjj";
-    catppuccin = "1gcrv04b5gpjy0gzfgfwwiwl9jfl928qzwb6ji1hkhr8liil8k6j";
-    codecompanion = "1mdn4q2c89pk2anr3490gfw4p9pxkiv81dgqrrsb8hb3w5jp63iw";
-    codecompanion-history = "1s6qki0xrk936wm0rwwdsd67y0lqhw5nzjffassgw0dbgb4yjz2a";
-    codecompanion-spinner = "05qhr9v9rkl9npv4xayjjn5phfzqa625vlr9mh05k47lbv4j4aa1";
-    codesnap = "1bw634i34djxcncdnjlkx1icn7gmfbi0vg7mi70cyjd51sx0v6w2";
-    codesnap-binary = "0n2snm2sb5b444g7il5v49h6wsrqvj5vm179m0h7k3pvcdxwjfsr";
-    colorful-menu = "18y5mzjqs43hcf9n2mjzqq159lnyxyihw3b606nqmc4na90bpdl6";
-    conform = "03ri7h47ff1fzh7p3ygm506m2q7zhhj1bj6cx281h092bws8cs9k";
-    crates = "10hc28r9k4syay1pir24mk6kjj96llilqkyz8ch6rjmxyi7r5ycd";
-    diffview = "0brabpd02596hg98bml118bx6z2sly98kf1cr2p0xzybiinb4zs9";
-    dropbar = "0hibhh46g0gnc9av4xd0zfc6xgdwbajw0ib4m827k4zhqrjmfchp";
-    flash = "1xm26117d95qcnx2hpi8g469awmsr8wwdg1bmvipgjkzjys78y54";
-    gatekeeper = "18d85971ir1z93kdq0wa2hgfm3p51fq04n8kmwnk6c1wl0y2imd4";
-    gitsigns = "0v2mzydpinpj1ids6b1wb17a3c7c7hp4z5nyv1b2hnhslfj7a0gi";
-    gx = "14g19wr83vbclqwgg928bkygh31kmil7s505l952dzllipyy3ym1";
-    helpview = "0i21sffzvf5gq0zghf60hkz7sbmd01w5q3maqz48f037zydivmsj";
-    lightbulb = "0wp8f6yphb28iaxlhg326kvrh3h8xn5fkkcfn1whbacch6562wym";
-    lualine = "1q34vy3rcwv4nz1b2n2hvp2yxs8clczzvyf3mpvcir8bxcgxk4is";
-    lze = "0y6ad92wgrankw8hs26fvlmrbm3qyigz7xw7mk8y2axs3fc5j720";
-    markdown-plus = "1qzfxhwk789gvwm42ndn88xaxxsg6h2nfi5874p9mxglpblkpngp";
-    markview = "0awjpc9rzbl24n7br3vzr5zhayn5y0ayl6539pr7014v3amxc2k8";
-    mcphub = "009w7iq31k9sx94p3izqnjbgi0gr9fwn7p5wjcaa3kz16jz4znw3";
-    mini-ai = "1ic1x1117yyswid51a3l1857wxhdf7aq3jl0mdwwx1xdlzlrn60j";
-    mini-files = "0qxmvjnhsald2pa9535g0han7alwcj5w3kczkj444pljljpxn437";
-    mini-icons = "1q98s0jgarp6d8ac5cx0z9y9hmmcas982rsa3kkwr6mnkjdq2zc0";
-    mini-move = "0hm9adfn4p3s4i97vqgpkbki6wz3r0g22l5mjyy0ffz8qdrdjvv5";
-    noice = "02mc75dqn7h4ylgynpd9vsjx3y51rcys95l9ax1wiilgb4ay3b0l";
-    nui = "0l1ga86dr2rhfjshiicsw3nn03wrhmdqks8v1gn3xmzdgfd2anz3";
-    nvim-autopairs = "19czzkgz7kdvhrg1hh472xymsh97v0rnll1gx9rsbkl22akrg2nh";
-    nvim-dap = "15y2ib360mz9h7ypzp3324l35qlm2k52wrcx8q8qmchya473z9kw";
-    nvim-dap-ui = "04378nxmh37dys2zbpwqs0wp82yr8racpmy7r44y1snx30577pfz";
-    nvim-dap-virtual-text = "1xg16c3ncs6nrd1gxdrysa1m123vzp17bx0n6v183gi79kw286zj";
-    nvim-lint = "19xjgl0932avqi8bdx442jl7is1nq0z2dl8q7bzl22in5kbmaasm";
-    nvim-lspconfig = "1ygzfr76mscj7l61aaazbz2svxkfyb8bcsj50v4lqrsj85qrl8mz";
-    nvim-nio = "1bz5msxwk232zkkhfxcmr7a665la8pgkdx70q99ihl4x04jg6dkq";
-    nvim-notify = "1qsxv5w8pb4pv0963lwhsy21cgi75mw2a0s20vm1821y6qr97d47";
-    nvim-surround = "15ynh9rfhvg46z1a7aynpmm5nh01ydyhhryf39v0w4qyclypsci3";
-    nvim-treesitter-context = "0dmcpn7l1f4bxvfa4li9sw8k1a5gh0r9zslflb5yrnax1ww71nyw";
-    nvim-treesitter-textobjects = "0h3n73n12k4sqzdnhls480iyx92vvsxhyhg1d5wac9m5nsfzww17";
-    octo = "1kg7b5blk860jm1kc7gqmkh31hld32l0biw7901vwhb3ygy1514l";
-    plenary = "1kg043h7dqcrqqgg8pp6hsldx7jdhlh8qwad2kkckia191xgnjgm";
-    refactoring = "1wl2167fly4r3yzpkhl0qlprcn1p4n6p6cg6g1dy3sas8mzzan98";
-    rustaceanvim = "0mwrspy7qygnik10b1z3hckr654ml98766g374hfckhvxhcppqiq";
-    SchemaStore = "1qz6g4p735bvqx99177rrf4m9plbm0rws5bs014qbkh8v9zpz1pn";
-    snacks = "18x8m1fhq9kjch1jmzax3nd0h8j5kgd5ykj8bg366h5x1mi9s5xx";
-    tabby = "1vaaiypq9c9rzjhsn31ddihyjqbcdyvy383vpsis4bjjbbyg02b0";
-    tabout = "1mjnzrz2zh8kd95p12l70zmpw7nf5xnlr4pwss51s2cgy1wyfgz5";
-    todo-comments = "091893pjvhs1qwcnd6ksa5mngzr0n9z9lkyg7c97ic0hzi2qhrsl";
-    tokyonight = "1s8qh9a8yajlfybcsky6rb31f0ihfhapm51531zn4xd0fyzy8dz3";
-    trouble = "0cpwraxfvhnw0lvq26w58s15ynzyah9xn26bqn41acyi7ddclkz9";
-    typescript-tools = "0h4v876rfgliynwshpbv2mdrxmimymr07z0j31ggdv9b8p0n5kh8";
-    undotree = "1wdip0ydb04in60x49zy9lkg364y743gm4qhlz04p22kqbgx7pq5";
-    vim-matchup = "15mka79mrs0lqrhmzwiqfh4npr3pjnpbb206rqvqb7yrw3g2jxkz";
-    which-key = "1dwri7gxqgb58pfy829s0ns709m0nrcj1cgz2wj1k09qfffri9mc";
+  # Resolved commit SHAs for each plugin (updated by update-nvim)
+  # The rev field in plugins.json specifies the branch/tag to track
+  # This block contains the actual commit SHA that rev resolves to
+  revs = {
+    auto-session = "62437532b38495551410b3f377bcf4aaac574ebe";
+    blink-cmp = "4b18c32adef2898f95cdef6192cbd5796c1a332d";
+    catppuccin = "0a5de4da015a175f416d6ef1eda84661623e0500";
+    codecompanion = "a6e922806d9e6abf0b9bbf2c753a36f04a097da1";
+    codecompanion-history = "bc1b4fe06eaaf0aa2399be742e843c22f7f1652a";
+    codecompanion-spinner = "7797a81141e5de62eecebf2af561698ed58900dc";
+    codesnap = "bd5668f13da97e0f0639131de2ef056b0560f2cc";
+    colorful-menu = "b51a659459df8d078201aefc995db8175ed55e84";
+    conform = "c2526f1cde528a66e086ab1668e996d162c75f4f";
+    crates = "ac9fa498a9edb96dc3056724ff69d5f40b898453";
+    diffview = "4516612fe98ff56ae0415a259ff6361a89419b0a";
+    dropbar = "ce202248134e3949aac375fd66c28e5207785b10";
+    flash = "fcea7ff883235d9024dc41e638f164a450c14ca2";
+    gatekeeper = "c38254f293c147949df009db29f6899815aef653";
+    gitsigns = "9f3c6dd7868bcc116e9c1c1929ce063b978fa519";
+    gx = "ba9c408fc0130fc4548760c3933a81b58fc50de8";
+    helpview = "518789535a0cb146224a428edf93a70f98b795db";
+    lightbulb = "aa3a8b0f4305b25cfe368f6c9be9923a7c9d0805";
+    lualine = "47f91c416daef12db467145e16bed5bbfe00add8";
+    lze = "7276233f8fbe883e0a3b2164a836a2b292883a1c";
+    markdown-plus = "438ea474f8f12993244c195b883dc1924a709086";
+    markview = "9e852c299351fc2110e763edc7fc899358ee112e";
+    mcphub = "7cd5db330f41b7bae02b2d6202218a061c3ebc1f";
+    mini-ai = "b0247752cf629ce7c6bd0a1efd82fb58ff60f9d6";
+    mini-files = "fafacfecdd6c5a66bb10d173a749f3c098e84498";
+    mini-icons = "68c178e0958d95b3977a771f3445429b1bded985";
+    mini-move = "4d214202d71e0a4066b6288176bbe88f268f9777";
+    noice = "7bfd942445fb63089b59f97ca487d605e715f155";
+    nui = "de740991c12411b663994b2860f1a4fd0937c130";
+    nvim-autopairs = "59bce2eef357189c3305e25bc6dd2d138c1683f5";
+    nvim-dap = "db321947bb289a2d4d76a32e76e4d2bd6103d7df";
+    nvim-dap-ui = "cf91d5e2d07c72903d052f5207511bf7ecdb7122";
+    nvim-dap-virtual-text = "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6";
+    nvim-lint = "a3d17105a79fc12055c2a0d732665d9c2b1c2dc3";
+    nvim-lspconfig = "44acfe887d4056f704ccc4f17513ed41c9e2b2e6";
+    nvim-nio = "21f5324bfac14e22ba26553caf69ec76ae8a7662";
+    nvim-notify = "8701bece920b38ea289b457f902e2ad184131a5d";
+    nvim-surround = "1098d7b3c34adcfa7feb3289ee434529abd4afd1";
+    nvim-treesitter-context = "64dd4cf3f6fd0ab17622c5ce15c91fc539c3f24a";
+    nvim-treesitter-textobjects = "a0e182ae21fda68c59d1f36c9ed45600aef50311";
+    octo = "5ae580df72589f25b775ff2bdacfd7f7be8d63bd";
+    plenary = "b9fd5226c2f76c951fc8ed5923d85e4de065e509";
+    refactoring = "6784b54587e6d8a6b9ea199318512170ffb9e418";
+    rustaceanvim = "13f7f5c46d2db0b8daee64a842d8faebfe9064c0";
+    SchemaStore = "55ca969ceed5209d62cbf4c20cef023ff188b6c5";
+    snacks = "fe7cfe9800a182274d0f868a74b7263b8c0c020b";
+    tabby = "3c130e1fcb598ce39a9c292847e32d7c3987cf11";
+    tabout = "9a3499480a8e53dcaa665e2836f287e3b7764009";
+    todo-comments = "31e3c38ce9b29781e4422fc0322eb0a21f4e8668";
+    tokyonight = "5da1b76e64daf4c5d410f06bcb6b9cb640da7dfd";
+    trouble = "bd67efe408d4816e25e8491cc5ad4088e708a69a";
+    typescript-tools = "c2f5910074103705661e9651aa841e0d7eea9932";
+    undotree = "f68aed28c8ff1294b012dfadaced2084dc045870";
+    vim-matchup = "0fb1e6b7cea34e931a2af50b8ad565c5c4fd8f4d";
+    which-key = "3aab2147e74890957785941f0c1ad87d0a44c15a";
+  };
+
+  # SHA256 hashes for binary downloads only (updated by update-nvim)
+  # These are needed because fetchurl requires content hashes
+  binaryShas = {
+    blink-cmp = "1x7pvbddnk1yslczjnw0yik8wzr051fsaiax7bi5lng22d06dcjj";
+    codesnap = "0n2snm2sb5b444g7il5v49h6wsrqvj5vm179m0h7k3pvcdxwjfsr";
   };
 
   # Helper to build a vim plugin from source
@@ -83,18 +89,16 @@
       then
         pkgs.fetchurl {
           url = mkBinaryUrl plugin;
-          sha256 = shas."${name}-binary" or lib.fakeSha256;
+          sha256 = binaryShas.${name} or lib.fakeSha256;
         }
       else null;
 
     basePlugin = pkgs.vimUtils.buildVimPlugin {
       pname = name;
       version = plugin.rev or "latest";
-      src = pkgs.fetchFromGitHub {
-        owner = plugin.owner;
-        repo = plugin.repo;
-        rev = plugin.rev or "HEAD";
-        sha256 = shas.${name};
+      src = builtins.fetchGit {
+        url = "${plugin.remote or "https://github.com"}/${plugin.owner}/${plugin.repo}";
+        rev = revs.${name};
       };
       # Disable require checks for all plugins
       # Many plugins have optional dependencies that fail the check
@@ -144,5 +148,5 @@ in {
     })
     sources;
 
-  inherit sources shas;
+  inherit sources revs binaryShas;
 }

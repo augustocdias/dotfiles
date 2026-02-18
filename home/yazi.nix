@@ -9,6 +9,7 @@
     enableFishIntegration = true;
     enableBashIntegration = true;
     initLua = ./configs/yazi/init.lua;
+    shellWrapperName = "y";
     settings = {
       theme = lib.importTOML ./configs/yazi/theme.toml;
       mgr = {

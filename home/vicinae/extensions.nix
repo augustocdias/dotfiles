@@ -36,7 +36,7 @@
       inherit name;
       pkg = mkRayCastExtension {
         inherit name;
-        rev = ext.rev or "main";
+        rev = ext.rev;
         sha256 = shas.${name};
       };
     })

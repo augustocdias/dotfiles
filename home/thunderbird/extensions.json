@@ -2,7 +2,7 @@
   "catppuccin-mocha-blue": {
     "slug": "catppuccin-mocha-blue",
     "name": "Catppuccin Mocha Blue",
-    "url": "https://raw.githubusercontent.com/catppuccin/thunderbird/main/themes/mocha/mocha-blue.xpi",
+    "url": "https://raw.githubusercontent.com/catppuccin/thunderbird/0289f3bd9566f9666682f66a3355155c0d0563fc/themes/mocha/mocha-blue.xpi",
     "addonId": "{f6d05f0c-39a8-5c4d-96dd-4852202a8244}",
     "sha256": "1dd0hnvqayix5df6j1dxr9a42qycm1bgmk58p5h8snc63r4sm6q2"
   },
