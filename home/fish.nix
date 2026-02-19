@@ -8,9 +8,6 @@ in {
 
     BAT_THEME = "Catppuccin Mocha";
 
-    FZF_DEFAULT_COMMAND = "rg --files --no-ignore-exclude";
-    FZF_ALT_C_COMMAND = "fd --type d";
-    FZF_PREVIEW_DIR_CMD = "eza";
     DD_SITE = "datadoghq.eu";
     JIRA_URL = "https://nelly.atlassian.net";
 
@@ -25,10 +22,6 @@ in {
       {
         name = "colored-man-pages";
         src = pkgs.fishPlugins.colored-man-pages.src;
-      }
-      {
-        name = "fzf-fish";
-        src = pkgs.fishPlugins.fzf-fish.src;
       }
       {
         name = "foreign-env";

@@ -28,6 +28,7 @@
 
   ./fish.nix
   ./starship.nix
+  ./skim.nix
 
   ./zellij.nix
 

@@ -3,7 +3,6 @@
     eza
     fd
     ripgrep
-    fzf
     starship
 
     bat

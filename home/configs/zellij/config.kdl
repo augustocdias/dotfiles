@@ -496,7 +496,7 @@ pane_frames false
 
 autolock location="https://github.com/fresh2dev/zellij-autolock/releases/latest/download/zellij-autolock.wasm" {
    triggers "nvim|vim|v|nv"  // Lock when any open these programs open. They are expected to unlock themselves when closed (e.g., using zellij.vim plugin).
-   watch_triggers "fzf|zoxide|atuin|atac"  // Lock when any of these open and monitor until closed.
+   watch_triggers "sk|zoxide|atuin|atac"  // Lock when any of these open and monitor until closed.
    watch_interval "1.0"  // When monitoring, check every X seconds.
 }
  
