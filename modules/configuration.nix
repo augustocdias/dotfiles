@@ -11,7 +11,7 @@
     ./core/users.nix
 
     ./services/display-manager.nix
-    ./services/docker.nix
+    ./services/podman.nix
     ./services/yubikey.nix
     ./services/work.nix
     ./services/input-devices.nix
