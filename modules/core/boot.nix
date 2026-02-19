@@ -1,9 +1,6 @@
-# Boot configuration
 {pkgs, ...}: {
-  # Use systemd in initrd for LUKS TPM2/FIDO2 unlock
   boot.initrd.systemd.enable = true;
 
-  # Plymouth splash screen
   boot.plymouth = {
     enable = true;
     theme = "catppuccin-mocha";
@@ -12,7 +9,6 @@
     ];
   };
 
-  # Silent boot - hide kernel messages
   boot.consoleLogLevel = 0;
   boot.initrd.verbose = false;
   boot.kernelParams = [

@@ -1,4 +1,3 @@
-# XDG user directories and MIME applications configuration
 {config, ...}: {
   xdg.userDirs = {
     enable = true;

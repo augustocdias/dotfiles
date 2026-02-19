@@ -1,4 +1,3 @@
-# Font configuration
 {
   pkgs,
   lib,
@@ -16,6 +15,5 @@
     ]
     ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
-  # Enable font configuration
   fonts.fontconfig.enable = true;
 }

@@ -1,6 +1,4 @@
-# User configuration
 {pkgs, ...}: {
-  # User Management
   users.mutableUsers = false;
   users.users.augusto = {
     isNormalUser = true;
@@ -10,10 +8,8 @@
     hashedPasswordFile = "/etc/nixos/secrets/augusto-password";
   };
 
-  # Enable AccountsService for profile pictures (used by DankMaterialShell)
   services.accounts-daemon.enable = true;
 
-  # Set profile picture via AccountsService
   system.activationScripts.userIcon = ''
         mkdir -p /var/lib/AccountsService/users
         cat > /var/lib/AccountsService/users/augusto << 'EOF'
@@ -22,7 +18,6 @@
     EOF
   '';
 
-  # DankGreeter manual sync - ACL and group permissions
   system.activationScripts.dankGreeterSync = ''
     # Create greeter cache directory
     mkdir -p /var/cache/dms-greeter
@@ -58,6 +53,5 @@
     ln -sf /home/augusto/.cache/DankMaterialShell/dms-colors.json /var/cache/dms-greeter/colors.json || true
   '';
 
-  # Enable fish system-wide
   programs.fish.enable = true;
 }

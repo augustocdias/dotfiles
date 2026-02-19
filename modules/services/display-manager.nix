@@ -1,4 +1,3 @@
-# Display manager configuration
 {
   pkgs,
   config,
@@ -17,7 +16,6 @@
     configHome = config.users.users.augusto.home;
   };
 
-  # Install cursor and icon themes system-wide
   environment.systemPackages = [
     pkgs.catppuccin-cursors.mochaBlue
     pkgs.papirus-icon-theme

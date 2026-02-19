@@ -1,4 +1,3 @@
-# Secrets management using sops-nix with age + GPG (YubiKey backup)
 {
   config,
   pkgs,
@@ -12,8 +11,6 @@ in {
     defaultSopsFile = ./secrets/env.yaml;
     defaultSopsFormat = "yaml";
 
-    # Use age for automatic decryption (key generated per-machine)
-    # GPG/YubiKey is kept as backup in .sops.yaml for new machine bootstrap
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
 
     secrets = {

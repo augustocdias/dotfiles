@@ -3,7 +3,6 @@
   lib,
   ...
 }: let
-  # Import all plugins from sources
   customPlugins = import ./plugins.nix {inherit pkgs lib;};
 in {
   programs.neovim = {
@@ -12,11 +11,10 @@ in {
     vimAlias = true;
     viAlias = true;
 
-    # Include all plugins from our sources
     plugins =
       customPlugins.pluginList
       ++ [
-        # Add nvim-treesitter with grammars
+        # treesitter from nixpkgs because of the grammars
         (pkgs.vimPlugins.nvim-treesitter.withPlugins (p:
           with p; [
             bash
@@ -66,7 +64,6 @@ in {
           ]))
       ];
 
-    # LSP servers and tools
     extraPackages = with pkgs; [
       # LSP servers
       bash-language-server
@@ -89,7 +86,7 @@ in {
       sqlfluff
 
       # Linters
-      harper # Grammar checker
+      harper # linter but hooks as lsp server
       eslint
       codespell
       selene
@@ -99,8 +96,6 @@ in {
       deadnix
       write-good
       markdownlint-cli
-
-      # code actions
       statix
     ];
   };

@@ -1,48 +1,39 @@
-# Kitty terminal emulator configuration
 {...}: let
 in {
   programs.kitty = {
     enable = true;
 
-    # Catppuccin Mocha theme (built-in)
     themeFile = "Catppuccin-Mocha";
 
-    # Font configuration
     font = {
       name = "MonaspiceNe Nerd Font";
       size = 12;
     };
 
     settings = {
-      # Cursor
       cursor_shape = "block";
       cursor_blink_interval = 0;
       cursor_trail = 1;
 
-      # Fonts
       bold_font = "auto";
       italic_font = "MonaspiceRn Nerd Font Light Italic";
       bold_italic_font = "auto";
       modify_font = "baseline 1";
       disable_ligatures = "never";
 
-      # Tabs
       tab_bar_style = "powerline";
       tab_title_template = "{index}:{title}";
       active_tab_font_style = "bold";
       inactive_tab_font_style = "normal";
 
-      # Clipboard
       copy_on_select = "clipboard";
       strip_trailing_spaces = "smart";
       clipboard_control = "write-clipboard write-primary";
 
-      # Window
       background_opacity = "0.90";
       window_border_width = 0;
       draw_minimal_borders = "no";
 
-      # Mouse
       mouse_hide_wait = "2.0";
       detect_urls = "yes";
       open_url_with = "default";

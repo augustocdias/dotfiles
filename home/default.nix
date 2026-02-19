@@ -1,4 +1,3 @@
-# Home-manager NixOS module configuration
 {inputs, ...}: let
   username = "augusto";
   homeDirectory = "/home/${username}";

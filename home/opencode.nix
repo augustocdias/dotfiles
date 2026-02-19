@@ -1,4 +1,3 @@
-# OpenCode AI coding agent configuration
 {...}: {
   programs.opencode = {
     enable = true;

@@ -1,6 +1,5 @@
-# Neovim plugins fetched from git remotes (defaults to GitHub)
+# Fetch plugins from their repos for newer releases
 # To update plugin revisions: Run update-nvim
-# Uses builtins.fetchGit with pinned commit SHAs for reproducibility
 {
   pkgs,
   lib,
@@ -8,14 +7,11 @@
 }: let
   sources = builtins.fromJSON (builtins.readFile ./plugins.json);
 
-  # Helper to construct binary download URL from plugin info
   # Note: Plugins with binary field must use a tag for rev
   # Note: Binary URL pattern assumes GitHub releases; custom remotes may need different handling
   mkBinaryUrl = plugin: "${plugin.remote or "https://github.com"}/${plugin.owner}/${plugin.repo}/releases/download/${plugin.rev}/${plugin.binary.filename}";
 
-  # Resolved commit SHAs for each plugin (updated by update-nvim)
-  # The rev field in plugins.json specifies the branch/tag to track
-  # This block contains the actual commit SHA that rev resolves to
+  # This block is updated by the script
   revs = {
     auto-session = "62437532b38495551410b3f377bcf4aaac574ebe";
     blink-cmp = "4b18c32adef2898f95cdef6192cbd5796c1a332d";
@@ -74,16 +70,13 @@
     which-key = "3aab2147e74890957785941f0c1ad87d0a44c15a";
   };
 
-  # SHA256 hashes for binary downloads only (updated by update-nvim)
-  # These are needed because fetchurl requires content hashes
+  # SHA256 hashes for binary downloads only
   binaryShas = {
     blink-cmp = "1x7pvbddnk1yslczjnw0yik8wzr051fsaiax7bi5lng22d06dcjj";
     codesnap = "0n2snm2sb5b444g7il5v49h6wsrqvj5vm179m0h7k3pvcdxwjfsr";
   };
 
-  # Helper to build a vim plugin from source
   buildPlugin = name: plugin: let
-    # Fetch binary if plugin has binary field
     binaryDrv =
       if plugin ? binary
       then
@@ -100,19 +93,16 @@
         url = "${plugin.remote or "https://github.com"}/${plugin.owner}/${plugin.repo}";
         rev = revs.${name};
       };
-      # Disable require checks for all plugins
-      # Many plugins have optional dependencies that fail the check
       doCheck = false;
     };
   in
-    # Apply build configuration or binary installation if needed
     if plugin ? binary
     then
       basePlugin.overrideAttrs (oldAttrs: {
         postInstall =
           (oldAttrs.postInstall or "")
           + ''
-            mkdir -p $out/${builtins.dirOf plugin.binary.destPath}
+            mkdir -p $out/${dirOf plugin.binary.destPath}
             cp ${binaryDrv} $out/${plugin.binary.destPath}
             chmod +x $out/${plugin.binary.destPath}
           ''
@@ -136,11 +126,8 @@
       })
     else basePlugin;
 in {
-  # Build all plugins
   plugins = lib.mapAttrs buildPlugin sources;
 
-  # Export as list for programs.neovim.plugins
-  # Wrapped with optional based on lazy field (defaults to true)
   pluginList =
     lib.mapAttrsToList (name: plugin: {
       plugin = buildPlugin name plugin;

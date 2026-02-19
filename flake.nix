@@ -69,7 +69,6 @@
   }: let
     overlays = import ./home/overlays.nix inputs;
 
-    # Standalone home-manager configuration
     mkHome = system: let
       pkgs = import nixpkgs {
         inherit system overlays;
@@ -98,13 +97,10 @@
       modules = [
         "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
 
-        # Make ISO build faster
         {isoImage.squashfsCompression = "lz4";}
 
-        # Our custom installer configuration
         ./installer/iso-config.nix
 
-        # Include configs in the ISO as plain files (not evaluated)
         {
           environment.etc."nixos-installer/flake.nix".text = builtins.readFile ./flake.nix;
           environment.etc."nixos-installer/configuration.nix".text = builtins.readFile ./modules/configuration.nix;
@@ -121,7 +117,7 @@
       ];
     };
 
-    # The target system configuration (what gets installed)
+    # Target system configuration
     nixosConfigurations.augusto = nixpkgs.lib.nixosSystem {
       # system = "x86_64-linux";
       system = "aarch64-linux";

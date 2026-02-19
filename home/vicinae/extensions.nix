@@ -1,7 +1,4 @@
-# Vicinae extensions
-# Vicinae native extensions: from vicinae-extensions flake
-# Raycast extensions: built from GitHub source
-# To update Raycast hashes: Run update-vicinae
+# To update extensions: Run update-vicinae
 {
   pkgs,
   lib,
@@ -10,7 +7,6 @@
 }: let
   config = builtins.fromJSON (builtins.readFile ./extensions.json);
 
-  # Vicinae native extensions - directly from the flake
   vicinaeExtPkgs = inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system};
   vicinaePackages =
     map (name: {
@@ -19,7 +15,6 @@
     })
     config.vicinae;
 
-  # Raycast extension SHA256 hashes (for GitHub sparse checkout)
   shas = {
     "1password" = "sha256-I1STC8w316kV8It3Be35mwLvNSYPJqy1bG+XaIRMRpg=";
     chatgpt = "sha256-n9WdOWQEgMkEL5Rqs7z8C2qil/0fru1kXYngNfxFlm4=";
@@ -28,7 +23,6 @@
     notion = "sha256-ZVijHU6QVIFk/rRhUDwxNZUjG1hufk6v9E2knEWg6LY=";
   };
 
-  # Build Raycast extensions from GitHub source
   mkRayCastExtension = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.mkRayCastExtension;
 
   raycastPackages =

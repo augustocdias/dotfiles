@@ -1,27 +1,21 @@
-# iso-config.nix - Configuration for the installer ISO
 {
   pkgs,
   lib,
   ...
 }: {
-  # Enable experimental features for nix commands
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   boot.tmp.useTmpfs = true;
   boot.tmp.tmpfsSize = "90%";
 
-  # Enable networking tools
   networking.networkmanager.enable = true;
   networking.wireless.enable = lib.mkForce false;
 
-  # Enable SSH in the installer
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "yes";
 
-  # Auto-login as nixos user and run installer
   services.getty.autologinUser = "nixos";
 
-  # Create nixos user with auto-run wrapper
   users.users.nixos = {
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager"];
@@ -29,13 +23,11 @@
     password = lib.mkForce "nixos";
   };
 
-  # Set root password for the installer
   users.users.root = {
     initialHashedPassword = lib.mkForce null;
     password = lib.mkForce "nixos";
   };
 
-  # Create auto-run wrapper that launches installer on first login
   environment.etc."auto-install-wrapper.sh" = {
     text = ''
       #!/usr/bin/env bash
@@ -61,7 +53,6 @@
     mode = "0755";
   };
 
-  # Make nixos user use the auto-run wrapper on login
   programs.bash.loginShellInit = ''
     # Welcome message
     clear
@@ -78,7 +69,6 @@
     fi
   '';
 
-  # Essential packages in the installer
   environment.systemPackages = with pkgs; [
     vim
     neovim
@@ -90,8 +80,8 @@
     parted
     gptfdisk
     cryptsetup
-    tpm2-tools # For TPM2 LUKS enrollment
-    libfido2 # For FIDO2 LUKS enrollment
+    tpm2-tools
+    libfido2
     mkpasswd
     fish
     util-linux
@@ -100,25 +90,21 @@
     nixos-install-tools
   ];
 
-  # Better console font
   console = {
     font = "ter-v22n";
     packages = [pkgs.terminus_font];
   };
 
-  # Interactive installation script
   environment.etc."install-script.fish" = {
     mode = "0755";
     text = builtins.readFile ./install-script.fish;
   };
 
-  # Partition script
   environment.etc."partition-disk.fish" = {
     mode = "0755";
     text = builtins.readFile ./partition-disk.fish;
   };
 
-  # Create convenient command alias
   environment.shellAliases = {
     install-system = "sudo fish /etc/install-script.fish";
   };

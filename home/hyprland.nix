@@ -6,18 +6,14 @@
     systemd.variables = ["all"];
 
     settings = {
-      # ===== MONITORS =====
       monitor = ",preferred,auto,1";
 
-      # ===== AUTOSTART =====
       exec-once = [
         "dms run"
         "vicinae server"
-        "hyprpolkitagent"
         # "mpvpaper -n 1800 -o '--shuffle --keepaspect=no' '*' ~/media/animated"
       ];
 
-      # ===== ENVIRONMENT VARIABLES =====
       env = [
         "XCURSOR_SIZE,24"
         "XCURSOR_THEME,catppuccin-mocha-blue-cursors"
@@ -25,7 +21,6 @@
         "QT_QUICK_CONTROLS_STYLE,org.hyprland.style"
       ];
 
-      # ===== VISUAL =====
       general = {
         gaps_in = 5;
         gaps_out = 5;
@@ -87,12 +82,11 @@
         # gesture = 4, pinch, togglefloating,
       };
 
-      # ===== INPUT =====
       input = {
         kb_layout = "us";
         follow_mouse = 1;
         accel_profile = "flat";
-        sensitivity = 1; # Max speed (-1.0 to 1.0)
+        sensitivity = 1;
 
         touchpad = {
           natural_scroll = true;
@@ -103,10 +97,8 @@
         };
       };
 
-      # ===== VARIABLES =====
       "$mainMod" = "SUPER";
 
-      # ===== KEYBINDINGS =====
       bind = [
         # Applications
         "$mainMod, RETURN, exec, kitty"
@@ -114,7 +106,7 @@
         "$mainMod, Q, killactive,"
         "$mainMod SHIFT, SPACE, exec, dms ipc call powermenu toggle"
 
-        # Screenshots (via dms)
+        # Screenshots
         ", PRINT, exec, dms screenshot --no-file"
         "SHIFT, PRINT, exec, dms screenshot full --no-file"
         "$mainMod, PRINT, exec, dms screenshot --no-clipboard -d ~/pictures/screenshots"
@@ -229,7 +221,6 @@
         "$mainMod, mouse:273, resizewindow"
       ];
 
-      # ===== WINDOW RULES =====
       windowrule = [
         # Floating windows
         "float on, match:class ^(pavucontrol)$"
@@ -247,7 +238,6 @@
       ];
     };
 
-    # Resize submap - must use extraConfig due to submap boundary syntax
     extraConfig = ''
       # Enter resize mode with Super+Alt+R
       bind = $mainMod ALT, r, submap, resize
@@ -290,7 +280,6 @@
     '';
   };
 
-  # Set cursor theme for GTK and other applications
   home.pointerCursor = {
     name = "catppuccin-mocha-blue-cursors";
     package = pkgs.catppuccin-cursors.mochaBlue;

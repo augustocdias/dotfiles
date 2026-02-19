@@ -1,4 +1,3 @@
-# Work-related tools and applications
 {
   pkgs,
   lib,
@@ -8,14 +7,11 @@
 in {
   home.packages = with pkgs;
     [
-      # VPN
       wireguard-tools
 
-      # Remote access
       teamviewer
     ]
     ++ lib.optionals isX86 [
-      # x86-only packages
       slack
       notion-app-enhanced
     ];

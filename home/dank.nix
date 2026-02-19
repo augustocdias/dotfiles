@@ -20,9 +20,7 @@
     enableCalendarEvents = true;
     enableClipboardPaste = true;
 
-    # Main settings (from settings.json)
     settings = {
-      # Theme & Appearance (catppuccin from local theme file)
       currentThemeName = "custom";
       currentThemeCategory = "registry";
       customThemeFile = "/home/augusto/.config/DankMaterialShell/themes/catppuccin/theme.json";
@@ -40,28 +38,23 @@
       widgetBackgroundColor = "s";
       widgetColorMode = "default";
 
-      # Fonts
       fontFamily = "Inter Variable";
       monoFontFamily = "MonaspiceRn Nerd Font Mono";
       fontWeight = 400;
       fontScale = 1;
 
-      # Clock & Weather
       use24HourClock = true;
       showSeconds = false;
       useFahrenheit = false;
       windSpeedUnit = "kmh";
 
-      # Animation
       animationSpeed = 1;
       customAnimationDuration = 500;
 
-      # Wallpaper
       wallpaperFillMode = "Fill";
       blurredWallpaperLayer = false;
       blurWallpaperOnOverview = false;
 
-      # UI Component Visibility
       showLauncherButton = true;
       showWorkspaceSwitcher = true;
       showFocusedWindow = true;
@@ -81,7 +74,6 @@
       showCapsLockIndicator = true;
       showPrivacyButton = true;
 
-      # Control Center Icons
       controlCenterShowNetworkIcon = true;
       controlCenterShowBluetoothIcon = true;
       controlCenterShowAudioIcon = true;
@@ -95,12 +87,10 @@
       controlCenterShowPrinterIcon = false;
       controlCenterShowScreenSharingIcon = true;
 
-      # Privacy Icons
-      privacyShowMicIcon = false;
-      privacyShowCameraIcon = false;
-      privacyShowScreenShareIcon = false;
+      privacyShowMicIcon = true;
+      privacyShowCameraIcon = true;
+      privacyShowScreenShareIcon = true;
 
-      # Control Center Widgets
       controlCenterWidgets = [
         {
           id = "volumeSlider";
@@ -154,7 +144,6 @@
         }
       ];
 
-      # Workspace Settings
       showWorkspaceIndex = true;
       showWorkspaceName = false;
       showWorkspacePadding = true;
@@ -173,14 +162,12 @@
       workspaceFocusedBorderColor = "primary";
       workspaceFocusedBorderThickness = 2;
 
-      # Media & Audio
       waveProgressEnabled = true;
       scrollTitleEnabled = true;
       audioVisualizerEnabled = true;
       audioScrollMode = "volume";
       mediaSize = 1;
 
-      # Compact Modes
       clockCompactMode = false;
       focusedWindowCompactMode = false;
       runningAppsCompactMode = true;
@@ -188,7 +175,6 @@
       runningAppsCurrentWorkspace = true;
       runningAppsGroupByApp = false;
 
-      # App Launcher
       centeringMode = "index";
       appLauncherViewMode = "list";
       spotlightModalViewMode = "list";
@@ -202,15 +188,12 @@
       dankLauncherV2BorderColor = "primary";
       dankLauncherV2ShowFooter = true;
 
-      # Weather
-      useAutoLocation = false;
+      useAutoLocation = true;
       weatherEnabled = true;
 
-      # Network & Icons
       networkPreference = "wifi";
       iconTheme = "Papirus";
 
-      # Cursor Settings
       cursorSettings = {
         theme = "System Default";
         size = 24;
@@ -226,7 +209,6 @@
         dwl.cursorHideTimeout = 0;
       };
 
-      # Launcher Logo
       launcherLogoMode = "os";
       launcherLogoColorOverride = "primary";
       launcherLogoColorInvertOnMode = false;
@@ -234,34 +216,29 @@
       launcherLogoContrast = 1;
       launcherLogoSizeOffset = 0;
 
-      # Notepad
       notepadUseMonospace = true;
       notepadFontSize = 14;
       notepadShowLineNumbers = false;
       notepadTransparencyOverride = -1;
       notepadLastCustomTransparency = 0.7;
 
-      # Sounds
       soundsEnabled = true;
       useSystemSoundTheme = false;
       soundNewNotification = true;
       soundVolumeChanged = true;
       soundPluggedIn = true;
 
-      # Power Management (AC)
       acMonitorTimeout = 600;
       acLockTimeout = 180;
       acSuspendTimeout = 0;
       acSuspendBehavior = 0;
 
-      # Power Management (Battery)
       batteryMonitorTimeout = 0;
       batteryLockTimeout = 0;
       batterySuspendTimeout = 0;
       batterySuspendBehavior = 0;
       batteryChargeLimit = 100;
 
-      # Lock Screen
       lockBeforeSuspend = true;
       loginctlLockIntegration = true;
       fadeToLockEnabled = true;
@@ -281,14 +258,12 @@
       lockScreenInactiveColor = "#000000";
       lockScreenNotificationMode = 0;
 
-      # Theming Integration
-      gtkThemingEnabled = false;
-      qtThemingEnabled = false;
+      gtkThemingEnabled = true;
+      qtThemingEnabled = true;
       syncModeWithPortal = true;
       terminalsAlwaysDark = false;
-      runDmsMatugenTemplates = true;
+      runDmsMatugenTemplates = false;
 
-      # Matugen Templates
       matugenTemplateGtk = true;
       matugenTemplateNiri = true;
       matugenTemplateHyprland = true;
@@ -311,7 +286,6 @@
       matugenTemplateVscode = true;
       matugenTemplateEmacs = true;
 
-      # Dock Settings
       showDock = false;
       dockAutoHide = false;
       dockSmartAutoHide = false;
@@ -334,14 +308,13 @@
       dockLauncherLogoBrightness = 0.5;
       dockLauncherLogoContrast = 1;
 
-      # Notifications
-      notificationOverlayEnabled = false;
+      notificationOverlayEnabled = true;
       modalDarkenBackground = true;
       hideBrightnessSlider = false;
       notificationTimeoutLow = 5000;
       notificationTimeoutNormal = 5000;
       notificationTimeoutCritical = 0;
-      notificationCompactMode = false;
+      notificationCompactMode = true;
       notificationPopupPosition = 0;
       notificationHistoryEnabled = true;
       notificationHistoryMaxCount = 50;
@@ -350,7 +323,6 @@
       notificationHistorySaveNormal = true;
       notificationHistorySaveCritical = true;
 
-      # OSD Settings
       osdAlwaysShowValue = false;
       osdPosition = 5;
       osdVolumeEnabled = true;
@@ -362,28 +334,22 @@
       osdPowerProfileEnabled = true;
       osdAudioOutputEnabled = true;
 
-      # Power Menu
       powerActionConfirm = true;
       powerActionHoldDuration = 0.5;
       powerMenuActions = ["reboot" "logout" "poweroff" "lock" "suspend" "restart"];
       powerMenuDefaultAction = "logout";
       powerMenuGridLayout = false;
 
-      # Custom power commands (hyprshutdown for graceful Hyprland exit)
       customPowerActionLogout = "hyprshutdown";
       customPowerActionPowerOff = "hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown -P 0'";
       customPowerActionReboot = "hyprshutdown -t 'Restarting...' --post-cmd 'reboot'";
 
-      # Updater
-      updaterHideWidget = false;
+      updaterHideWidget = true;
       updaterUseCustomCommand = false;
 
-      # Display
       displayNameMode = "system";
-      # Enable wallpaper on all screens
       screenPreferences.wallpaper = ["all"];
 
-      # Bar Configuration
       barConfigs = [
         {
           id = "default";
@@ -470,7 +436,6 @@
         }
       ];
 
-      # Desktop Widgets
       desktopClockEnabled = false;
       desktopClockStyle = "analog";
       desktopClockTransparency = 0.8;
@@ -508,7 +473,6 @@
       systemMonitorHeight = 480;
       systemMonitorDisplayPreferences = ["all"];
 
-      # Desktop Widget Instances
       desktopWidgetInstances = [
         {
           id = "dw_1769172254836_7kkr5ii2j";
@@ -585,7 +549,6 @@
       configVersion = 5;
     };
 
-    # Session settings (wallpaper cycling)
     session = {
       wallpaperPath = "${config.home.homeDirectory}/media/wallpapers/807509.jpg";
       wallpaperCyclingEnabled = true;
@@ -594,7 +557,6 @@
       wallpaperTransition = "random";
     };
 
-    # Plugins configuration
     plugins = {
       commandRunner.enable = true;
 
@@ -639,6 +601,5 @@
     };
   };
 
-  # Settings change watcher - reminds to sync changes to nix
   home.packages = [pkgs.inotify-tools];
 }

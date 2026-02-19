@@ -1,5 +1,3 @@
-# Standalone home-manager configuration
-# Used with: home-manager switch --flake .#augusto
 {...}: let
   username = "augusto";
   homeDirectory = "/home/${username}";

@@ -1,9 +1,6 @@
-# Hardware configuration
 {...}: {
-  # Graphics
   hardware.graphics.enable = true;
 
-  # Audio with PipeWire
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {

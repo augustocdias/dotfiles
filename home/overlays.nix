@@ -1,5 +1,3 @@
-# Home-manager overlays
-# Returns a list of overlays given inputs
 inputs: [
   inputs.neovim-nightly-overlay.overlays.default
   (final: prev: {

@@ -1,4 +1,3 @@
-# Neovide - Neovim GUI configuration
 {pkgs, ...}: let
 in {
   home.packages = with pkgs; [neovide];

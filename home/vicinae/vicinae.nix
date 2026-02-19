@@ -1,4 +1,3 @@
-# Vicinae launcher configuration
 {
   pkgs,
   lib,
@@ -7,7 +6,6 @@
 }: let
   extensions = import ./extensions.nix {inherit pkgs lib inputs;};
 
-  # Convert extension lists to xdg.dataFile format
   vicinaeDataFiles = builtins.listToAttrs (map (ext: {
       name = "vicinae/extensions/store.vicinae.${ext.name}";
       value = {
@@ -26,11 +24,9 @@
     })
     extensions.raycastPackages);
 in {
-  # Vicinae settings - merged with defaults
   xdg.configFile."vicinae/settings.json".text = builtins.toJSON {
     "$schema" = "https://vicinae.com/schemas/config.json";
 
-    # Theme - catppuccin mocha to match the rest of the system
     theme = {
       light = {
         name = "catppuccin-latte";
@@ -42,7 +38,6 @@ in {
       };
     };
 
-    # Window settings
     launcher_window = {
       layer_shell = {
         enabled = true;
@@ -52,6 +47,5 @@ in {
     };
   };
 
-  # Install all extensions
   xdg.dataFile = vicinaeDataFiles // raycastDataFiles;
 }

@@ -6,141 +6,140 @@ return {
     lazy = false,
     after = function()
         require('snacks').setup({
-        bigfile = { enabled = true },
-        bufdelete = { enabled = true },
-        gitbrowse = { enabled = true },
-        indent = { enabled = true, only_current = true },
-        notifier = { enabled = true, style = 'fancy' },
-        rename = { enabled = true },
-        words = { enabled = true },
-        scroll = { enabled = true },
-        input = { enabled = true },
-        styles = {
-            blame_line = { border = 'none' },
-            notification = { border = 'none' },
-            notification_history = { border = 'none' },
-            input = { relative = 'cursor' },
-        },
-        statuscolumn = {
-            enabled = true,
-            left = { 'sign', 'fold', 'mark' }, -- priority of signs on the left (high to low)
-            right = { 'git' }, -- priority of signs on the right (high to low)
-        },
-        picker = {
-            sources = {
-                files = {
-                    hidden = true,
-                    exclude = { '.others/alfred' },
-                },
+            bigfile = { enabled = true },
+            bufdelete = { enabled = true },
+            gitbrowse = { enabled = true },
+            indent = { enabled = true, only_current = true },
+            notifier = { enabled = true, style = 'fancy' },
+            rename = { enabled = true },
+            words = { enabled = true },
+            scroll = { enabled = true },
+            input = { enabled = true },
+            styles = {
+                blame_line = { border = 'none' },
+                notification = { border = 'none' },
+                notification_history = { border = 'none' },
+                input = { relative = 'cursor' },
             },
-            layout = {
-                preset = 'ivy',
+            statuscolumn = {
+                enabled = true,
+                left = { 'sign', 'fold', 'mark' }, -- priority of signs on the left (high to low)
+                right = { 'git' }, -- priority of signs on the right (high to low)
+            },
+            picker = {
+                matcher = {
+                    frecency = true,
+                    history_bonus = true,
+                },
                 layout = {
-                    backdrop = 70,
-                },
-            },
-            layouts = {
-                -- If any plugin tries to use the default, overwrite with the ivy preset
-                default = {
+                    preset = 'ivy',
                     layout = {
-                        box = 'vertical',
                         backdrop = 70,
-                        row = -1,
-                        width = 0,
-                        height = 0.4,
-                        border = 'top',
-                        title = ' {title} {live} {flags}',
-                        title_pos = 'left',
-                        { win = 'input', height = 1, border = 'bottom' },
-                        {
-                            box = 'horizontal',
-                            { win = 'list', border = 'none' },
-                            { win = 'preview', title = '{preview}', width = 0.6, border = 'left' },
+                    },
+                },
+                layouts = {
+                    -- If any plugin tries to use the default, overwrite with the ivy preset
+                    default = {
+                        layout = {
+                            box = 'vertical',
+                            backdrop = 70,
+                            row = -1,
+                            width = 0,
+                            height = 0.4,
+                            border = 'top',
+                            title = ' {title} {live} {flags}',
+                            title_pos = 'left',
+                            { win = 'input', height = 1, border = 'bottom' },
+                            {
+                                box = 'horizontal',
+                                { win = 'list', border = 'none' },
+                                { win = 'preview', title = '{preview}', width = 0.6, border = 'left' },
+                            },
                         },
                     },
                 },
-            },
-            ui_select = true, -- replace `vim.ui.select` with the snacks picker
-            win = {
-                input = {
-                    keys = {
-                        ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
-                        ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
-                        ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
-                        ['<c-l>'] = { 'select_and_next', mode = { 'i', 'n' } },
-                        ['<c-h>'] = { 'select_and_prev', mode = { 'i', 'n' } },
-                        ['<c-c>'] = {
-                            function()
-                                vim.cmd('stopinsert')
-                            end,
-                            mode = { 'i' },
+                ui_select = true, -- replace `vim.ui.select` with the snacks picker
+                win = {
+                    input = {
+                        keys = {
+                            ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
+                            ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
+                            ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
+                            ['<c-l>'] = { 'select_and_next', mode = { 'i', 'n' } },
+                            ['<c-h>'] = { 'select_and_prev', mode = { 'i', 'n' } },
+                            ['<c-c>'] = {
+                                function()
+                                    vim.cmd('stopinsert')
+                                end,
+                                mode = { 'i' },
+                            },
                         },
                     },
                 },
-            },
-            icons = {
-                ui = {
-                    ignored = ' ',
-                    hidden = ' ',
-                    follow = '󰭔 ',
-                },
-                git = {
-                    enabled = true, -- show git icons
-                    commit = '󰜘 ', -- used by git log
-                    staged = '● ', -- staged changes. always overrides the type icons
-                    added = ' ',
-                    deleted = ' ',
-                    ignored = ' ',
-                    modified = '○ ',
-                    renamed = '󰑕 ',
-                    unmerged = ' ',
-                    untracked = ' ',
-                },
-                kinds = {
-                    Control = ' ',
-                    Collapsed = ' ',
-                    Copilot = ' ',
-                    Key = ' ',
-                    Namespace = '󰦮 ',
-                    Null = ' ',
-                    Number = '󰎠 ',
-                    Object = ' ',
-                    Package = ' ',
-                    String = ' ',
-                    Unknown = ' ',
+                icons = {
+                    ui = {
+                        ignored = ' ',
+                        hidden = ' ',
+                        follow = '󰭔 ',
+                    },
+                    git = {
+                        enabled = true, -- show git icons
+                        commit = '󰜘 ', -- used by git log
+                        staged = '● ', -- staged changes. always overrides the type icons
+                        added = ' ',
+                        deleted = ' ',
+                        ignored = ' ',
+                        modified = '○ ',
+                        renamed = '󰑕 ',
+                        unmerged = ' ',
+                        untracked = ' ',
+                    },
+                    kinds = {
+                        Control = ' ',
+                        Collapsed = ' ',
+                        Copilot = ' ',
+                        Key = ' ',
+                        Namespace = '󰦮 ',
+                        Null = ' ',
+                        Number = '󰎠 ',
+                        Object = ' ',
+                        Package = ' ',
+                        String = ' ',
+                        Unknown = ' ',
 
-                    -- copy from cmp
-                    Text = '',
-                    Method = '󰊕',
-                    Function = '󰊕',
-                    Constructor = '',
-                    Field = '󰜢',
-                    Variable = '',
-                    Class = '',
-                    Interface = '',
-                    Module = '',
-                    Property = '',
-                    Unit = '',
-                    Value = '',
-                    Enum = '',
-                    Keyword = '󱕴',
-                    Snippet = '',
-                    Color = '',
-                    File = '',
-                    Reference = '',
-                    Folder = '',
-                    EnumMember = '',
-                    Constant = '󰏿',
-                    Struct = '',
-                    Event = '',
-                    Operator = '',
-                    TypeParameter = '',
-                    Boolean = ' ',
-                    Array = ' ',
+                        -- copy from cmp
+                        Text = '',
+                        Method = '󰊕',
+                        Function = '󰊕',
+                        Constructor = '',
+                        Field = '󰜢',
+                        Variable = '',
+                        Class = '',
+                        Interface = '',
+                        Module = '',
+                        Property = '',
+                        Unit = '',
+                        Value = '',
+                        Enum = '',
+                        Keyword = '󱕴',
+                        Snippet = '',
+                        Color = '',
+                        File = '',
+                        Reference = '',
+                        Folder = '',
+                        EnumMember = '',
+                        Constant = '󰏿',
+                        Struct = '',
+                        Event = '',
+                        Operator = '',
+                        TypeParameter = '',
+                        Boolean = ' ',
+                        Array = ' ',
+                    },
                 },
             },
-        },
-    })end,
+        })
+    end,
     keys = {
         {
             '<C-x>',

@@ -1,25 +1,20 @@
-# Git configuration with native Home Manager support
 {...}: {
   programs.git = {
     enable = true;
 
-    # Git LFS
     lfs.enable = true;
 
-    # GPG signing
     signing = {
       key = "7D8396F74725A208D835CE3730E62A1E4F078650";
       signByDefault = true;
     };
 
-    # Git settings using the new structure
     settings = {
       user = {
         name = "Augusto César Dias";
         email = "augusto.c.dias@gmail.com";
       };
 
-      # Aliases from your gitconfig
       alias = {
         a = "add";
         aa = "add .";
@@ -53,12 +48,11 @@
         t = "stash";
         tp = "stash pop";
         tl = "stash list";
+        sr = "rebase --update-refs --onto main";
       };
 
-      # Core settings
       core = {
         editor = "nvim --cmd 'let g:unception_block_while_host_edits=1'";
-        # pager is automatically set by delta.enable = true
       };
 
       pull = {
@@ -103,21 +97,19 @@
     };
   };
 
-  # Delta configuration (separate program now)
   programs.delta = {
     enable = true;
     enableGitIntegration = true;
     options = {
-      navigate = true; # use n and N to move between diff sections
+      navigate = true;
       true-color = "always";
-      side-by-side = false; # Can be enabled with diff-sbs alias
+      side-by-side = false;
       interactive = {
         diff-filter = "delta -s";
       };
-      features = "catppuccin-mocha"; # Use Catppuccin theme
+      features = "catppuccin-mocha";
     };
   };
 
-  # Copy the Catppuccin theme configurations for delta
   xdg.configFile."delta/catppuccin.gitconfig".source = ./configs/delta/catppuccin.gitconfig;
 }

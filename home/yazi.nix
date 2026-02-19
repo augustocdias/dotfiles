@@ -1,4 +1,3 @@
-# Yazi - Terminal file manager
 {
   lib,
   pkgs,

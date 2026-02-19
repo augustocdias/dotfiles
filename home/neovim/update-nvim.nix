@@ -1,4 +1,3 @@
-# Neovim plugin update command
 {pkgs, ...}: let
   update-nvim = pkgs.writeScriptBin "update-nvim" (builtins.readFile ./update-plugins.fish);
 in {

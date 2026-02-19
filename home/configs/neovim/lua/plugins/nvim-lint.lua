@@ -7,8 +7,13 @@ return {
 
         lint.linters_by_ft = {
             dockerfile = { 'hadolint' },
+            javascript = { 'eslint' },
+            javascriptreact = { 'eslint' },
+            typescript = { 'eslint' },
+            typescriptreact = { 'eslint' },
             lua = { 'selene' },
             markdown = { 'markdownlint', 'write_good', 'codespell' },
+            nix = { 'statix', 'deadnix' },
             tex = { 'codespell' },
             asciidoc = { 'codespell' },
             yaml = { 'yamllint', 'actionlint' },
