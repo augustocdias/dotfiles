@@ -29,6 +29,7 @@ return {
     { import = 'plugins.conform' },
     { import = 'plugins.nvim-lint' },
     { import = 'plugins.octo' },
+    { import = 'plugins.plugin-updates' },
     { import = 'plugins.rustacean' },
     { import = 'plugins.snacks' },
     { import = 'plugins.surround' },

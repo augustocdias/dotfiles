@@ -1,5 +1,9 @@
 local M = {}
 
+local Popup = require('nui.popup')
+local NuiLine = require('nui.line')
+local NuiText = require('nui.text')
+
 local function format_keys(keys)
     if type(keys) == 'string' then
         return keys
@@ -67,85 +71,135 @@ function M.show_status()
         end
     end
 
-    table.sort(loaded, function(a, b) return a.name < b.name end)
-    table.sort(pending, function(a, b) return a.name < b.name end)
+    table.sort(loaded, function(a, b)
+        return a.name < b.name
+    end)
+    table.sort(pending, function(a, b)
+        return a.name < b.name
+    end)
 
+    -- Build lines using NuiLine
     local lines = {}
-    local highlights = {} -- { line, col_start, col_end, hl_group }
 
     -- Title
-    table.insert(lines, ' lze Plugin Status')
-    table.insert(highlights, { #lines - 1, 0, -1, 'Title' })
-    table.insert(lines, '')
+    table.insert(lines, NuiLine({ NuiText(' lze Plugin Status', 'Title') }))
+    table.insert(lines, NuiLine({ NuiText('') }))
 
     -- Loaded section
-    local loaded_header = ' Loaded (' .. #loaded .. ')'
-    table.insert(lines, loaded_header)
-    table.insert(highlights, { #lines - 1, 0, -1, 'DiagnosticOk' })
+    table.insert(lines, NuiLine({ NuiText(' Loaded (' .. #loaded .. ')', 'DiagnosticOk') }))
 
     for _, plugin in ipairs(loaded) do
-        local line = '   ✓ ' .. plugin.name
-        table.insert(lines, line)
-        table.insert(highlights, { #lines - 1, 3, 5, 'DiagnosticOk' })
-        table.insert(highlights, { #lines - 1, 5, #line, 'Normal' })
+        table.insert(
+            lines,
+            NuiLine({
+                NuiText('   ✓ ', 'DiagnosticOk'),
+                NuiText(plugin.name, 'Normal'),
+            })
+        )
     end
 
-    table.insert(lines, '')
+    table.insert(lines, NuiLine({ NuiText('') }))
 
     -- Pending section
-    local pending_header = ' Pending (' .. #pending .. ')'
-    table.insert(lines, pending_header)
-    table.insert(highlights, { #lines - 1, 0, -1, 'DiagnosticWarn' })
+    table.insert(lines, NuiLine({ NuiText(' Pending (' .. #pending .. ')', 'DiagnosticWarn') }))
 
     for _, plugin in ipairs(pending) do
-        local line = '   ○ ' .. plugin.name
-        table.insert(lines, line)
-        table.insert(highlights, { #lines - 1, 3, 5, 'DiagnosticWarn' })
-        table.insert(highlights, { #lines - 1, 5, #line, 'Normal' })
+        table.insert(
+            lines,
+            NuiLine({
+                NuiText('   ○ ', 'DiagnosticWarn'),
+                NuiText(plugin.name, 'Normal'),
+            })
+        )
 
         -- Show triggers on separate indented lines
         for _, trigger in ipairs(plugin.triggers) do
-            local trigger_line = '       ' .. trigger.label .. ': ' .. trigger.value
-            table.insert(lines, trigger_line)
-            local label_end = 7 + #trigger.label
-            table.insert(highlights, { #lines - 1, 7, label_end, 'Comment' })
-            table.insert(highlights, { #lines - 1, label_end + 2, #trigger_line, trigger.hl })
+            table.insert(
+                lines,
+                NuiLine({
+                    NuiText('       ', 'Normal'),
+                    NuiText(trigger.label, 'Comment'),
+                    NuiText(': ', 'Comment'),
+                    NuiText(trigger.value, trigger.hl),
+                })
+            )
         end
     end
 
-    -- Create floating window
-    local buf = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+    -- Help line
+    table.insert(lines, NuiLine({ NuiText('') }))
+    table.insert(
+        lines,
+        NuiLine({
+            NuiText(' ', 'Comment'),
+            NuiText('q', 'Identifier'),
+            NuiText(' close', 'Comment'),
+        })
+    )
 
-    -- Apply highlights
-    local ns = vim.api.nvim_create_namespace('lze_status')
-    for _, hl in ipairs(highlights) do
-        vim.api.nvim_buf_add_highlight(buf, ns, hl[4], hl[1], hl[2], hl[3])
-    end
+    -- Calculate dimensions (capped to viewport)
+    local max_width = vim.o.columns - 4
+    local max_height = vim.o.lines - 4
+    local width = math.min(70, max_width)
+    local height = math.min(#lines + 2, 40, max_height)
 
-    vim.bo[buf].modifiable = false
-    vim.bo[buf].buftype = 'nofile'
-
-    local width = 70
-    local height = math.min(#lines + 2, 40)
+    -- Calculate centered position
     local row = math.floor((vim.o.lines - height) / 2)
     local col = math.floor((vim.o.columns - width) / 2)
 
-    vim.api.nvim_open_win(buf, true, {
+    local popup = Popup({
         relative = 'editor',
-        width = width,
-        height = height,
-        row = row,
-        col = col,
-        style = 'minimal',
-        border = 'rounded',
-        title = ' lze ',
-        title_pos = 'center',
+        position = {
+            row = row,
+            col = col,
+        },
+        size = {
+            width = width,
+            height = height,
+        },
+        enter = true,
+        focusable = true,
+        border = {
+            style = 'rounded',
+            text = {
+                top = ' lze ',
+                top_align = 'center',
+            },
+        },
+        buf_options = {
+            modifiable = false,
+            readonly = true,
+            buftype = 'nofile',
+            filetype = 'lze-status',
+        },
+        win_options = {
+            cursorline = true,
+            wrap = false,
+        },
     })
 
-    -- Close on q or Esc
-    vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = buf, silent = true })
-    vim.keymap.set('n', '<Esc>', '<cmd>close<cr>', { buffer = buf, silent = true })
+    popup:mount()
+
+    local buf = popup.bufnr
+
+    -- Render lines
+    vim.bo[buf].modifiable = true
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, {})
+
+    for i, line in ipairs(lines) do
+        line:render(buf, -1, i)
+    end
+
+    vim.bo[buf].modifiable = false
+
+    -- Keymaps
+    popup:map('n', 'q', function()
+        popup:unmount()
+    end, { silent = true })
+
+    popup:map('n', '<Esc>', function()
+        popup:unmount()
+    end, { silent = true })
 end
 
 return M
