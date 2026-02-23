@@ -72,4 +72,5 @@
     t = stash
     tp = stash pop
     tl = stash list
+    sr = rebase --update-refs --onto main
 

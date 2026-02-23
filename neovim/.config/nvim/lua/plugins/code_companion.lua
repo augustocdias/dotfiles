@@ -207,7 +207,7 @@ return {
                         },
                         schema = {
                             model = {
-                                default = 'claude-opus-4-5',
+                                default = 'claude-opus-4-6',
                             },
                             thinking_budget = {
                                 default = 63000,

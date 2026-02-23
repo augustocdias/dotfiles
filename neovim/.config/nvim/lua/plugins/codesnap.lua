@@ -4,6 +4,9 @@ return {
     cmd = { 'CodeSnap', 'CodeSnapSave', 'CodeSnapASCII', 'CodeSnapHighlight' },
     opts = {
         snapshot_config = {
+            window = {
+                mac_window_bar = false,
+            },
             code_config = {
                 font_family = 'MonaspiceNe Nerd Font',
             },

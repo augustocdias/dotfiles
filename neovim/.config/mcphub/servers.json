@@ -14,11 +14,7 @@
       "url": "https://mcp.notion.com/mcp"
     },
     "atlassian": {
-      "args": [
-        "-y",
-        "mcp-remote",
-        "https://mcp.atlassian.com/v1/sse"
-      ],
+      "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v1/sse"],
       "autoApprove": [
         "atlassianUserInfo",
         "fetch",
@@ -44,14 +40,8 @@
       "disabled": false
     },
     "context7": {
-      "args": [
-        "-y",
-        "@upstash/context7-mcp"
-      ],
-      "autoApprove": [
-        "resolve-library-id",
-        "query-docs"
-      ],
+      "args": ["-y", "@upstash/context7-mcp"],
+      "autoApprove": ["resolve-library-id", "query-docs"],
       "command": "npx",
       "disabled": false,
       "env": {
@@ -80,11 +70,7 @@
       "url": "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp"
     },
     "looker-toolbox": {
-      "args": [
-        "--stdio",
-        "--prebuilt",
-        "looker"
-      ],
+      "args": ["--stdio", "--prebuilt", "looker"],
       "command": "/Users/augusto/.config/toolbox",
       "disabled": false,
       "env": {
@@ -93,32 +79,11 @@
         "LOOKER_CLIENT_SECRET": "redacted",
         "LOOKER_VERIFY_SSL": "true"
       }
-    },
-    "memory": {
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ],
-      "autoApprove": [
-        "create_entities",
-        "create_relations",
-        "add_observations",
-        "delete_entities",
-        "delete_observations",
-        "delete_relations",
-        "read_graph",
-        "search_nodes",
-        "open_nodes"
-      ],
-      "command": "npx"
     }
   },
   "nativeMCPServers": {
     "mcphub": {
-      "autoApprove": [
-        "get_current_servers",
-        "toggle_mcp_server"
-      ]
+      "autoApprove": ["get_current_servers", "toggle_mcp_server"]
     },
     "neovim": {
       "autoApprove": [

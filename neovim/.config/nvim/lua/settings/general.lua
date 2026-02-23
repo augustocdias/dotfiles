@@ -132,7 +132,6 @@ vim.o.shortmess = 'IOocWTtFxnflCi'
 vim.o.autoread = true
 
 -- Show those damn hidden characters
--- Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
 vim.o.listchars = 'tab: >,nbsp:¬,extends:»,precedes:«,trail:•'
 
 -- Show problematic characters.
