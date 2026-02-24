@@ -17,7 +17,7 @@
     enableVPN = true;
     enableDynamicTheming = false;
     enableAudioWavelength = true;
-    enableCalendarEvents = true;
+    enableCalendarEvents = false;
     enableClipboardPaste = true;
 
     settings = {
