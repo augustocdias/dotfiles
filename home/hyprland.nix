@@ -16,7 +16,7 @@
       env = [
         "XCURSOR_SIZE,24"
         "XCURSOR_THEME,catppuccin-mocha-blue-cursors"
-        "QT_QPA_PLATFORMTHEME,hyprqt6engine"
+        "QT_QPA_PLATFORMTHEME,kde"
         "QT_QUICK_CONTROLS_STYLE,org.hyprland.style"
       ];
 
@@ -104,6 +104,7 @@
         "$mainMod, SPACE, exec, vicinae toggle"
         "$mainMod, Q, killactive,"
         "$mainMod SHIFT, SPACE, exec, dms ipc call powermenu toggle"
+        "$mainMod, A, exec, dms ipc call plugins toggle aiAssistant"
 
         # Screenshots
         ", PRINT, exec, dms screenshot --no-file"
