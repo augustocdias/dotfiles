@@ -37,5 +37,12 @@ in {
         set -gx DD_API_KEY ${config.sops.placeholder.dd_api_key}
       '';
     };
+
+    templates."dms-env" = {
+      path = "%r/dms-env";
+      content = ''
+        ANTHROPIC_API_KEY=${config.sops.placeholder.anthropic_api_key}
+      '';
+    };
   };
 }

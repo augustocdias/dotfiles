@@ -9,9 +9,13 @@
     inputs.dms-plugins.modules.default
   ];
 
+  systemd.user.services.dms.Service = {
+    EnvironmentFile = ["%t/dms-env"];
+  };
+
   programs.dank-material-shell = {
     enable = true;
-    systemd.enable = false;
+    systemd.enable = true;
 
     enableSystemMonitoring = true;
     enableVPN = true;
@@ -133,12 +137,12 @@
           width = 50;
         }
         {
-          id = "vpn";
+          id = "builtin_vpn";
           enabled = true;
           width = 50;
         }
         {
-          id = "screenRecording";
+          id = "plugin_dankKDEConnect";
           enabled = true;
           width = 50;
         }
@@ -382,6 +386,10 @@
               enabled = true;
             }
             {
+              id = "developerUtilities";
+              enabled = true;
+            }
+            {
               id = "clipboard";
               enabled = true;
             }
@@ -598,8 +606,26 @@
       displaySettings.enable = true;
 
       dankDesktopWeather.enable = true;
+
+      dankHyprlandWindows.enable = true;
+
+      developerUtilities.enable = true;
+
+      aiAssistant = {
+        enable = true;
+        settings = {
+          provider = "anthropic";
+          model = "claude-opus-4-6";
+          apiKeyEnvVar = "ANTHROPIC_API_KEY";
+        };
+      };
+
+      dankKDEConnect.enable = true;
     };
   };
 
-  home.packages = [pkgs.inotify-tools];
+  home.packages = [
+    pkgs.inotify-tools
+    pkgs.kdePackages.kdeconnect-kde
+  ];
 }

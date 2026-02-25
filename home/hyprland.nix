@@ -9,7 +9,6 @@
       monitor = ",preferred,auto,1";
 
       exec-once = [
-        "dms run"
         "vicinae server"
         # "mpvpaper -n 1800 -o '--shuffle --keepaspect=no' '*' ~/media/animated"
       ];
