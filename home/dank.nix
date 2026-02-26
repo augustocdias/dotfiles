@@ -65,6 +65,7 @@
       showWeather = true;
       showMusic = true;
       showClipboard = true;
+      clipboardEnterToPaste = true;
       showCpuUsage = true;
       showMemUsage = true;
       showCpuTemp = true;
@@ -256,7 +257,7 @@
       lockScreenShowProfileImage = true;
       lockScreenShowPasswordField = true;
       lockScreenPowerOffMonitorsOnLock = false;
-      enableFprint = false;
+      enableFprint = true;
       maxFprintTries = 3;
       lockScreenActiveMonitor = "all";
       lockScreenInactiveColor = "#000000";
@@ -563,6 +564,12 @@
       wallpaperCyclingMode = "interval";
       wallpaperCyclingInterval = 300; # 5 minutes
       wallpaperTransition = "random";
+    };
+
+    clipboardSettings = {
+      maxHistory = 100;
+      maxPinned = 50;
+      clearAtStartup = false;
     };
 
     plugins = {
