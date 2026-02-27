@@ -1,4 +1,14 @@
 {pkgs, ...}: {
+  xdg.configFile."hypr/hyprqt6engine.conf".text = ''
+    theme {
+      color_scheme = ${pkgs.catppuccin-qt5ct}/share/qt6ct/colors/catppuccin-mocha-blue.conf
+      icon_theme = Papirus-Dark
+      style = Fusion
+      font = Sans Serif
+      font_size = 11
+    }
+  '';
+
   wayland.windowManager.hyprland = {
     enable = true;
 
@@ -16,7 +26,7 @@
       env = [
         "XCURSOR_SIZE,24"
         "XCURSOR_THEME,catppuccin-mocha-blue-cursors"
-        "QT_QPA_PLATFORMTHEME,kde"
+        "QT_QPA_PLATFORMTHEME,qt6ct"
         "QT_QUICK_CONTROLS_STYLE,org.hyprland.style"
       ];
 

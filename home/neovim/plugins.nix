@@ -32,7 +32,7 @@
     helpview = "518789535a0cb146224a428edf93a70f98b795db";
     lightbulb = "aa3a8b0f4305b25cfe368f6c9be9923a7c9d0805";
     lualine = "47f91c416daef12db467145e16bed5bbfe00add8";
-    lze = "7276233f8fbe883e0a3b2164a836a2b292883a1c";
+    lze = "e1b8c2e99fc1812fb79d309d2aad95fcdf0e01a5";
     markdown-plus = "104a3d5dbf3ad96ad1f671af04bbfa5767fd8809";
     markview = "633e627f82011dc888ea4444a98c98bd783951b0";
     mcphub = "7cd5db330f41b7bae02b2d6202218a061c3ebc1f";
@@ -44,11 +44,11 @@
     noice = "7bfd942445fb63089b59f97ca487d605e715f155";
     nui = "de740991c12411b663994b2860f1a4fd0937c130";
     nvim-autopairs = "59bce2eef357189c3305e25bc6dd2d138c1683f5";
-    nvim-dap = "7b11f48753ea6a82f09485dadd08016e2a318cf6";
+    nvim-dap = "b516f20b487b0ac6a281e376dfac1d16b5040041";
     nvim-dap-ui = "cf91d5e2d07c72903d052f5207511bf7ecdb7122";
     nvim-dap-virtual-text = "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6";
     nvim-lint = "606b823a57b027502a9ae00978ebf4f5d5158098";
-    nvim-lspconfig = "ab5139c99df944479e5a26495a37840fcbb1d512";
+    nvim-lspconfig = "f386df19b145607a33885b6110ef5c04faae42cb";
     nvim-nio = "21f5324bfac14e22ba26553caf69ec76ae8a7662";
     nvim-notify = "8701bece920b38ea289b457f902e2ad184131a5d";
     nvim-treesitter-context = "64dd4cf3f6fd0ab17622c5ce15c91fc539c3f24a";
@@ -56,8 +56,8 @@
     octo = "5ae580df72589f25b775ff2bdacfd7f7be8d63bd";
     plenary = "b9fd5226c2f76c951fc8ed5923d85e4de065e509";
     refactoring = "6784b54587e6d8a6b9ea199318512170ffb9e418";
-    rustaceanvim = "bcb3a64b57f45da6c21c4141a45c495c6d7d0b89";
-    SchemaStore = "75b5210976cf6e5666ae566418f4f81cab26019e";
+    rustaceanvim = "d50597d482a6f44ddfc54d1af2f69f052053b4de";
+    SchemaStore = "905cc3d9684e77b054c380d969a27fc54b6240d4";
     snacks = "fe7cfe9800a182274d0f868a74b7263b8c0c020b";
     tabby = "3c130e1fcb598ce39a9c292847e32d7c3987cf11";
     tabout = "9a3499480a8e53dcaa665e2836f287e3b7764009";
@@ -65,7 +65,7 @@
     tokyonight = "5da1b76e64daf4c5d410f06bcb6b9cb640da7dfd";
     trouble = "bd67efe408d4816e25e8491cc5ad4088e708a69a";
     typescript-tools = "c2f5910074103705661e9651aa841e0d7eea9932";
-    undotree = "885bb2c975aaf20c71d38855788ca7b2c5137fb2";
+    undotree = "0e6d41d55ad147407e4ba00a292973de8db0b836";
     vim-matchup = "0fb1e6b7cea34e931a2af50b8ad565c5c4fd8f4d";
     which-key = "3aab2147e74890957785941f0c1ad87d0a44c15a";
   };

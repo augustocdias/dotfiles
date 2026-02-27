@@ -16,8 +16,8 @@
     hyprpwcenter
     inputs.hyprshutdown.packages.${pkgs.stdenv.hostPlatform.system}.default
 
-    libsForQt5.qt5ct
-    kdePackages.qt6ct
+    catppuccin-qt5ct
+    inputs.hyprqt6engine.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   systemd.user.services.wl-clip-persist = {

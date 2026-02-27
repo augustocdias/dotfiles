@@ -257,6 +257,9 @@
       lockScreenShowProfileImage = true;
       lockScreenShowPasswordField = true;
       lockScreenPowerOffMonitorsOnLock = false;
+      lockScreenVideoEnabled = true;
+      lockScreenVideoPath = "/home/augusto/media/animated/";
+      lockScreenVideoCycling = true;
       enableFprint = true;
       maxFprintTries = 3;
       lockScreenActiveMonitor = "all";
