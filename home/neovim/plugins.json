@@ -101,7 +101,7 @@
     "rev": "v1.9.1",
     "_comment": "binary field requires rev to be a tag",
     "binary": {
-      "filename": "aarch64-unknown-linux-gnu.so",
+      "filename": "x86_64-unknown-linux-gnu.so",
       "destPath": "target/release/libblink_cmp_fuzzy.so"
     }
   },
@@ -246,8 +246,8 @@
     "rev": "v2.0.0",
     "_comment": "binary field requires rev to be a tag",
     "binary": {
-      "filename": "linux-aarch64_generator.so",
-      "destPath": "lua/libs/linux-aarch64_generator.so",
+      "filename": "linux-x86_64_generator.so",
+      "destPath": "lua/libs/linux-x86_64_generator.so",
       "versionFile": {
         "path": "lua/libs/.version",
         "content": "2.0.0"

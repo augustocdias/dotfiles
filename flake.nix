@@ -89,16 +89,13 @@
         ];
       };
   in {
-    homeConfigurations.augusto = mkHome "aarch64-linux";
+    homeConfigurations.augusto = mkHome "x86_64-linux";
 
-    packages.aarch64-linux.installer =
+    packages.x86_64-linux.installer =
       self.nixosConfigurations.installer.config.system.build.isoImage;
-    # packages.x86_64.installer =
-    #   self.nixosConfigurations.installer.config.system.build.isoImage;
     # ISO Image configuration
     nixosConfigurations.installer = nixpkgs.lib.nixosSystem {
-      # system = "x86_64-linux";
-      system = "aarch64-linux";
+      system = "x86_64-linux";
       modules = [
         "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
 
@@ -124,8 +121,7 @@
 
     # Target system configuration
     nixosConfigurations.augusto = nixpkgs.lib.nixosSystem {
-      # system = "x86_64-linux";
-      system = "aarch64-linux";
+      system = "x86_64-linux";
       specialArgs = {inherit inputs;};
       modules = [
         inputs.hyprland.nixosModules.default
