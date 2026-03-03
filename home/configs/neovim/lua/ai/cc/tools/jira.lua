@@ -207,7 +207,8 @@ return handlers.create_tool({
     prompt_condition = function(self)
         return vim.tbl_contains({ 'transition', 'add_comment' }, self.args.action)
     end,
-    func = function(_, schema_params, _, output_handler)
+    func = function(_, schema_params, opts)
+        local output_handler = opts.output_cb
         local action = schema_params.action
 
         -- Get Jira configuration

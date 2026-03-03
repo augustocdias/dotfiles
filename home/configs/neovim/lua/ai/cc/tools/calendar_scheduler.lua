@@ -62,7 +62,8 @@ return handlers.create_tool({
     ui_log = function(tool)
         return '󱙭 Calendar Scheduler: ' .. tool.args.action
     end,
-    func = function(_, schema_params, _, output_handler)
+    func = function(_, schema_params, opts)
+        local output_handler = opts.output_cb
         local action = schema_params.action
 
         if not action then

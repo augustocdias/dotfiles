@@ -1,12 +1,12 @@
 local default_error_handler = function(prefix_text)
-    return function(self, tools, _, result)
+    return function(self, result, meta)
         local prefix
         if type(prefix_text) == 'function' then
             prefix = prefix_text(self)
         else
             prefix = tostring(prefix_text)
         end
-        local chat = tools.chat
+        local chat = meta.tools.chat
         if result and type(result) == 'table' and result[1] ~= '' then
             local output = string.format('**Error:**\n```\n%s\n```', result[1])
             local fancy_error = string.format('%s\n%s', prefix, output)
@@ -19,14 +19,14 @@ local default_error_handler = function(prefix_text)
 end
 
 local default_success_handler = function(prefix_text)
-    return function(self, tools, _, result)
+    return function(self, result, meta)
         local prefix
         if type(prefix_text) == 'function' then
             prefix = prefix_text(self)
         else
             prefix = tostring(prefix_text)
         end
-        local chat = tools.chat
+        local chat = meta.tools.chat
         if result and type(result) == 'table' and result[1] ~= '' then
             local output = tostring(result[1])
             local fancy_output = string.format('%s\n    %s', prefix, output)

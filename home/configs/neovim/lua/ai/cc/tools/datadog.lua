@@ -310,7 +310,8 @@ return handlers.create_tool({
     ui_log = function(tool)
         return '󰩃 Datadog: ' .. tool.args.action
     end,
-    func = function(_, schema_params, _, output_handler)
+    func = function(_, schema_params, opts)
+        local output_handler = opts.output_cb
         -- Get Datadog configuration
         local config, config_error = get_datadog_config()
         if config_error then

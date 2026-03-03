@@ -226,7 +226,8 @@ end
 local function create_gh_tool(name, description, properties, required)
     return handlers.create_tool({
         name = name,
-        func = function(_, schema_params, _, output_handler)
+        func = function(_, schema_params, opts)
+            local output_handler = opts.output_cb
             local cmd_parts = build_gh_command(name, schema_params)
             local cmd = { 'gh' }
             vim.list_extend(cmd, cmd_parts)

@@ -7,6 +7,7 @@
     ./core/locale.nix
     ./core/hardware.nix
     ./core/hyprland.nix
+    ./core/nixos.nix
     ./core/security.nix
     ./core/users.nix
 

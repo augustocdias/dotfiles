@@ -16,12 +16,12 @@
     auto-session = "62437532b38495551410b3f377bcf4aaac574ebe";
     blink-cmp = "4b18c32adef2898f95cdef6192cbd5796c1a332d";
     catppuccin = "0a5de4da015a175f416d6ef1eda84661623e0500";
-    codecompanion = "558518f8d78a44198cd428f6bf8bf48bfa38d76d";
+    codecompanion = "e3c27d534a85015a52b4cd82b45448f206d575d7";
     codecompanion-history = "bc1b4fe06eaaf0aa2399be742e843c22f7f1652a";
     codecompanion-spinner = "7797a81141e5de62eecebf2af561698ed58900dc";
     codesnap = "bd5668f13da97e0f0639131de2ef056b0560f2cc";
     colorful-menu = "b51a659459df8d078201aefc995db8175ed55e84";
-    conform = "e969e302bced7ffb9a0a0323629f31feb0ca35a6";
+    conform = "40dcec5555f960b0a04340d76eabdf4efe78599d";
     crates = "ac9fa498a9edb96dc3056724ff69d5f40b898453";
     diffview = "4516612fe98ff56ae0415a259ff6361a89419b0a";
     dropbar = "ce202248134e3949aac375fd66c28e5207785b10";
@@ -32,8 +32,8 @@
     helpview = "518789535a0cb146224a428edf93a70f98b795db";
     lightbulb = "aa3a8b0f4305b25cfe368f6c9be9923a7c9d0805";
     lualine = "47f91c416daef12db467145e16bed5bbfe00add8";
-    lze = "e1b8c2e99fc1812fb79d309d2aad95fcdf0e01a5";
-    markdown-plus = "104a3d5dbf3ad96ad1f671af04bbfa5767fd8809";
+    lze = "f50a84a5d84f6b16e254091e755f5a9e839a9924";
+    markdown-plus = "0e5deb2e62e732bf6a54d8d35c8f13b856de71ce";
     markview = "633e627f82011dc888ea4444a98c98bd783951b0";
     mcphub = "7cd5db330f41b7bae02b2d6202218a061c3ebc1f";
     mini-ai = "4b0a6207341d895b6cfe9bcb1e4d3e8607bfe4f4";
@@ -48,7 +48,7 @@
     nvim-dap-ui = "cf91d5e2d07c72903d052f5207511bf7ecdb7122";
     nvim-dap-virtual-text = "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6";
     nvim-lint = "606b823a57b027502a9ae00978ebf4f5d5158098";
-    nvim-lspconfig = "f386df19b145607a33885b6110ef5c04faae42cb";
+    nvim-lspconfig = "ead0f5f342d8d323441e7d4b88f0fc436a81ad5f";
     nvim-nio = "21f5324bfac14e22ba26553caf69ec76ae8a7662";
     nvim-notify = "8701bece920b38ea289b457f902e2ad184131a5d";
     nvim-treesitter-context = "64dd4cf3f6fd0ab17622c5ce15c91fc539c3f24a";
@@ -57,8 +57,8 @@
     plenary = "b9fd5226c2f76c951fc8ed5923d85e4de065e509";
     refactoring = "6784b54587e6d8a6b9ea199318512170ffb9e418";
     rustaceanvim = "d50597d482a6f44ddfc54d1af2f69f052053b4de";
-    SchemaStore = "905cc3d9684e77b054c380d969a27fc54b6240d4";
-    snacks = "fe7cfe9800a182274d0f868a74b7263b8c0c020b";
+    SchemaStore = "c4b3c25e5661600e04be787fbce8c6704583717f";
+    snacks = "9912042fc8bca2209105526ac7534e9a0c2071b2";
     tabby = "3c130e1fcb598ce39a9c292847e32d7c3987cf11";
     tabout = "9a3499480a8e53dcaa665e2836f287e3b7764009";
     todo-comments = "31e3c38ce9b29781e4422fc0322eb0a21f4e8668";

@@ -97,7 +97,8 @@ return handlers.create_tool({
     prompt_condition = function(self)
         return not is_read_only_command(self.args.command, self.args.args)
     end,
-    func = function(_, schema_params, _, output_handler)
+    func = function(_, schema_params, opts)
+        local output_handler = opts.output_cb
         local command = schema_params.command
         local args = schema_params.args or ''
 
