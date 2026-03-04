@@ -72,8 +72,8 @@
 
   # SHA256 hashes for binary downloads only
   binaryShas = {
-    blink-cmp = "1x7pvbddnk1yslczjnw0yik8wzr051fsaiax7bi5lng22d06dcjj";
-    codesnap = "0n2snm2sb5b444g7il5v49h6wsrqvj5vm179m0h7k3pvcdxwjfsr";
+    blink-cmp = "15jrb4zh14hsjgm2lvniw8va7v6jg2aphgghip356chx4nw8z52m";
+    codesnap = "1rmkakkqnzysr505c0cw9mp4759m73q3lx4wfql7vxh1cqy2ddb5";
   };
 
   buildPlugin = name: plugin: let
