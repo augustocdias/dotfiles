@@ -1,5 +1,5 @@
 {
-  "vicinae": ["bluetooth", "nix", "wifi-commander", "searxng"],
+  "vicinae": ["nix", "wifi-commander", "searxng"],
   "raycast": {
     "jira": {
       "rev": "e2b0d762797ae321e81bdbf1ab68c2b6a1a9f0ec"

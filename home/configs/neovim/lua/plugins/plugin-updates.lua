@@ -6,7 +6,7 @@
 -- to handle different API endpoints.
 
 -- Config
-local DOTFILES_PATH = vim.fn.expand('~/.dotfiles/home/neovim')
+local DOTFILES_PATH = vim.fn.expand('~/nixos/home/neovim')
 local PLUGINS_JSON = DOTFILES_PATH .. '/plugins.json'
 local PLUGINS_NIX = DOTFILES_PATH .. '/plugins.nix'
 local MAX_NOTIFICATION_ITEMS = 5

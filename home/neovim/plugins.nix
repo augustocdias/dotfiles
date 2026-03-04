@@ -15,11 +15,11 @@
   revs = {
     auto-session = "62437532b38495551410b3f377bcf4aaac574ebe";
     blink-cmp = "4b18c32adef2898f95cdef6192cbd5796c1a332d";
-    catppuccin = "0a5de4da015a175f416d6ef1eda84661623e0500";
-    codecompanion = "e3c27d534a85015a52b4cd82b45448f206d575d7";
+    catppuccin = "c4d475e4b5684747cde9b3f849186af7837d4397";
+    codecompanion = "ed367944ece02d0ab2a2552ba3ad0b092f1a2144";
     codecompanion-history = "bc1b4fe06eaaf0aa2399be742e843c22f7f1652a";
     codecompanion-spinner = "7797a81141e5de62eecebf2af561698ed58900dc";
-    codesnap = "bd5668f13da97e0f0639131de2ef056b0560f2cc";
+    codesnap = "0a0941340376439a25d6cd8a4d1d2b372edbfdbd";
     colorful-menu = "b51a659459df8d078201aefc995db8175ed55e84";
     conform = "40dcec5555f960b0a04340d76eabdf4efe78599d";
     crates = "ac9fa498a9edb96dc3056724ff69d5f40b898453";
@@ -34,7 +34,7 @@
     lualine = "47f91c416daef12db467145e16bed5bbfe00add8";
     lze = "f50a84a5d84f6b16e254091e755f5a9e839a9924";
     markdown-plus = "0e5deb2e62e732bf6a54d8d35c8f13b856de71ce";
-    markview = "633e627f82011dc888ea4444a98c98bd783951b0";
+    markview = "02824a95a0db2c9fd1bab3adba4510bc8f9c91e4";
     mcphub = "7cd5db330f41b7bae02b2d6202218a061c3ebc1f";
     mini-ai = "4b0a6207341d895b6cfe9bcb1e4d3e8607bfe4f4";
     mini-files = "57eb96a828f80efb8095a611e3aafcfa43548f8b";
@@ -52,12 +52,12 @@
     nvim-nio = "21f5324bfac14e22ba26553caf69ec76ae8a7662";
     nvim-notify = "8701bece920b38ea289b457f902e2ad184131a5d";
     nvim-treesitter-context = "64dd4cf3f6fd0ab17622c5ce15c91fc539c3f24a";
-    nvim-treesitter-textobjects = "a0e182ae21fda68c59d1f36c9ed45600aef50311";
+    nvim-treesitter-textobjects = "0bc4ef0a34d80fd6e67b59bd71fcbb0ef9ef4756";
     octo = "5ae580df72589f25b775ff2bdacfd7f7be8d63bd";
     plenary = "b9fd5226c2f76c951fc8ed5923d85e4de065e509";
     refactoring = "6784b54587e6d8a6b9ea199318512170ffb9e418";
-    rustaceanvim = "d50597d482a6f44ddfc54d1af2f69f052053b4de";
-    SchemaStore = "c4b3c25e5661600e04be787fbce8c6704583717f";
+    rustaceanvim = "f2f0c1231a5b019dbc1fd6dafac1751c878925a3";
+    SchemaStore = "e75f2362624698864957a694d80ca0c116bd24d3";
     snacks = "9912042fc8bca2209105526ac7534e9a0c2071b2";
     tabby = "3c130e1fcb598ce39a9c292847e32d7c3987cf11";
     tabout = "9a3499480a8e53dcaa665e2836f287e3b7764009";
@@ -73,7 +73,7 @@
   # SHA256 hashes for binary downloads only
   binaryShas = {
     blink-cmp = "15jrb4zh14hsjgm2lvniw8va7v6jg2aphgghip356chx4nw8z52m";
-    codesnap = "1rmkakkqnzysr505c0cw9mp4759m73q3lx4wfql7vxh1cqy2ddb5";
+    codesnap = "0qndg38hhah5924v4xx8qikrihfibyp7aaw4h9ix9bldr49vpb3n";
   };
 
   buildPlugin = name: plugin: let

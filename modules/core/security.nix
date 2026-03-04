@@ -36,6 +36,11 @@ in {
     };
   };
 
+  security.tpm2 = {
+    enable = true;
+    tctiEnvironment.enable = true;
+  };
+
   security.pam.services.greetd = lib.mkIf u2fKeysExist pamAuthConfig;
   security.pam.services.sudo = lib.mkIf u2fKeysExist pamAuthConfig;
   security.pam.services.polkit-1 = lib.mkIf u2fKeysExist pamAuthConfig;

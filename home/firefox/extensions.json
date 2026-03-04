@@ -46,5 +46,17 @@
     "name": "Catppuccin Mocha Blue",
     "url": "https://addons.mozilla.org/firefox/downloads/file/3954923/catppuccin_mocha_blue-2.0.xpi",
     "addonId": "{88b098c8-19be-421e-8ffa-85ddd1f3f004}"
+  },
+  "pwas-for-firefox": {
+    "slug": "pwas-for-firefox",
+    "name": "PWAs for Firefox",
+    "url": "https://addons.mozilla.org/firefox/downloads/file/4652385/pwas_for_firefox-2.18.0.xpi",
+    "addonId": "firefoxpwa@filips.si"
+  },
+  "notion-enhancer": {
+    "slug": "notion-enhancer",
+    "name": "notion-enhancer",
+    "url": "https://addons.mozilla.org/firefox/downloads/file/3887332/notion_enhancer-0.11.0.1.xpi",
+    "addonId": "{9b7fdccc-1ec0-478b-bfce-08a8820a5df6}"
   }
 }

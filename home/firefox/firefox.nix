@@ -1,4 +1,4 @@
-{...}: let
+{pkgs, ...}: let
   extensionData = builtins.fromJSON (builtins.readFile ./extensions.json);
   extensionNames = builtins.attrNames extensionData;
 
@@ -11,8 +11,11 @@
     })
     extensionNames);
 in {
+  home.packages = [pkgs.firefoxpwa];
+
   programs.firefox = {
     enable = true;
+    nativeMessagingHosts = [pkgs.firefoxpwa];
 
     policies = {
       ExtensionSettings = extensionPolicies;

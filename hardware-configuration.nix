@@ -2,17 +2,19 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
+  config,
   lib,
   modulesPath,
   ...
 }: {
   imports = [
-    (modulesPath + "/profiles/qemu-guest.nix")
+    (modulesPath + "/hardware/cpu/intel-npu.nix")
+    (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "virtio_pci" "usbhid" "usb_storage" "sr_mod"];
+  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = [];
+  boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
@@ -20,17 +22,22 @@
     fsType = "ext4";
   };
 
-  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/f5f17c79-11d1-4808-ad28-1c73affdf206";
+  boot.initrd.luks.devices."cryptroot" = {
+    device = "/dev/disk/by-uuid/c95f4e33-90c9-4cf5-b463-e815f8fbe1a2";
+    crypttabExtraOpts = ["tpm2-device=auto"];
+  };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/2CE9-A3EF";
+    device = "/dev/disk/by-uuid/D667-A9C2";
     fsType = "vfat";
     options = ["fmask=0022" "dmask=0022"];
   };
 
   swapDevices = [
-    {device = "/dev/vda2";}
+    {device = "/dev/nvme0n1p2";}
   ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.npu.enable = true;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

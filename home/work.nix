@@ -1,18 +1,10 @@
-{
-  pkgs,
-  lib,
-  ...
-}: let
-  isX86 = pkgs.stdenv.hostPlatform.system == "x86_64-linux";
+{pkgs, ...}: let
 in {
-  home.packages = with pkgs;
-    [
-      wireguard-tools
+  home.packages = with pkgs; [
+    wireguard-tools
 
-      teamviewer
-    ]
-    ++ lib.optionals isX86 [
-      slack
-      notion-app-enhanced
-    ];
+    slack
+    teamviewer
+    jetbrains.datagrip
+  ];
 }

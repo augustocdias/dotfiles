@@ -4,6 +4,8 @@
   ...
 }: {
   home.packages = with pkgs; [
+    cider
+
     wasistlos
 
     kitty

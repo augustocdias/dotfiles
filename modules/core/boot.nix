@@ -1,5 +1,8 @@
 {pkgs, ...}: {
-  boot.initrd.systemd.enable = true;
+  boot.initrd = {
+    systemd.enable = true;
+    availableKernelModules = ["tpm_crb" "tpm_tis"];
+  };
 
   boot.plymouth = {
     enable = true;

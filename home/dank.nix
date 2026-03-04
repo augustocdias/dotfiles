@@ -348,9 +348,9 @@
       powerMenuDefaultAction = "logout";
       powerMenuGridLayout = false;
 
-      customPowerActionLogout = "hyprshutdown";
-      customPowerActionPowerOff = "hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown -P 0'";
-      customPowerActionReboot = "hyprshutdown -t 'Restarting...' --post-cmd 'reboot'";
+      customPowerActionLogout = "hyprshutdown -t 'Logging off' --post-cmd 'loginctl terminate-session $XDG_SESSION_ID'";
+      customPowerActionPowerOff = "hyprshutdown -t 'Shutting down...' --post-cmd 'systemctl poweroff'";
+      customPowerActionReboot = "hyprshutdown -t 'Restarting...' --post-cmd 'systemctl reboot'";
 
       updaterHideWidget = true;
       updaterUseCustomCommand = false;
