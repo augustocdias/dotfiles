@@ -9,7 +9,7 @@
   boot.tmp.tmpfsSize = "90%";
 
   networking.networkmanager.enable = true;
-  networking.wireless.enable = lib.mkForce false;
+  networking.wireless.enable = true;
 
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "yes";
