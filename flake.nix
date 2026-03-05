@@ -6,16 +6,6 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
-    hyprshutdown = {
-      url = "github:hyprwm/hyprshutdown";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprqt6engine = {
-      url = "github:hyprwm/hyprqt6engine";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     vicinae = {
       url = "github:vicinaehq/vicinae";
       inputs.nixpkgs.follows = "nixpkgs";

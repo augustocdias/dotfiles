@@ -25,6 +25,7 @@
 
   ./kitty.nix
   ./yazi.nix
+  ./udiskie.nix
 
   ./fish.nix
   ./starship.nix

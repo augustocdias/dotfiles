@@ -36,13 +36,13 @@ vim.o.signcolumn = 'yes'
 vim.o.numberwidth = 1
 
 -- folding
-vim.o.foldenable = true                            -- Enable folding.
-vim.o.foldcolumn = '1'                             -- Show folding signs.
+vim.o.foldenable = true -- Enable folding.
+vim.o.foldcolumn = '1' -- Show folding signs.
 vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()' -- Use treesitter for folding.
-vim.o.foldlevel = 999                              -- Open all folds.
-vim.o.foldmethod = 'expr'                          -- Use expr to determine fold level.
-vim.o.foldopen = 'insert,mark,search,tag'          -- Which commands open folds if the cursor moves into a closed fold.
-vim.o.foldtext = 'v:lua.custom_fold_text()'        -- What to display on fold
+vim.o.foldlevel = 999 -- Open all folds.
+vim.o.foldmethod = 'expr' -- Use expr to determine fold level.
+vim.o.foldopen = 'insert,mark,search,tag' -- Which commands open folds if the cursor moves into a closed fold.
+vim.o.foldtext = 'v:lua.custom_fold_text()' -- What to display on fold
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 -- Settings needed for .lvimrc
@@ -61,7 +61,7 @@ vim.o.undofile = true
 vim.o.wildmenu = true
 vim.o.wildmode = 'list:longest'
 vim.o.wildignore =
-'.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite'
+    '.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite'
 
 -- Use wide tabs
 vim.o.shiftwidth = 4
@@ -90,16 +90,16 @@ vim.o.gdefault = true
 
 -- Abbreviations
 for _, pair in ipairs({
-    { 'W!',    'w!' },
-    { 'Q!',    'q!' },
+    { 'W!', 'w!' },
+    { 'Q!', 'q!' },
     { 'Qall!', 'qall!' },
-    { 'Wq',    'wq' },
-    { 'Wa',    'wa' },
-    { 'wQ',    'wq' },
-    { 'WQ',    'wq' },
-    { 'W',     'w' },
-    { 'Q',     'q' },
-    { 'Qall',  'qall' },
+    { 'Wq', 'wq' },
+    { 'Wa', 'wa' },
+    { 'wQ', 'wq' },
+    { 'WQ', 'wq' },
+    { 'W', 'w' },
+    { 'Q', 'q' },
+    { 'Qall', 'qall' },
 }) do
     vim.cmd.cnoreabbrev(pair[1] .. ' ' .. pair[2])
 end
@@ -140,7 +140,8 @@ vim.o.list = true
 vim.o.splitkeep = 'topline'
 
 -- sync system clipboard
-vim.o.clipboard = 'unnamedplus'
+-- vim.o.clipboard = 'unnamedplus'
+vim.o.clipboard = ''
 
 -- disable legacy perl provider
 vim.g.loaded_perl_provider = false

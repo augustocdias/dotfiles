@@ -1,8 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     blueberry
     brightnessctl
@@ -14,10 +10,10 @@
     hyprland-qt-support
     hyprland-qtutils
     hyprpwcenter
-    inputs.hyprshutdown.packages.${pkgs.stdenv.hostPlatform.system}.default
 
-    catppuccin-qt5ct
-    inputs.hyprqt6engine.packages.${pkgs.stdenv.hostPlatform.system}.default
+    libsForQt5.qt5ct
+    kdePackages.qt6ct
+    adw-gtk3
   ];
 
   systemd.user.services.wl-clip-persist = {

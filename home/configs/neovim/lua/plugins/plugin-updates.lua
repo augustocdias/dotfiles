@@ -371,7 +371,7 @@ local function render_content(buf)
 
         if result.status == 'updates' then
             local commit_count = #result.commits
-            local suffix = result.latest_tag and (' -> ' .. result.latest_tag)
+            local suffix = result.latest_tag and (' -> ' .. result.latest_tag:gsub('[\r\n]', ''))
                 or string.format(' (%d commits)', commit_count)
 
             local header_line = NuiLine({
@@ -384,8 +384,8 @@ local function render_content(buf)
             -- Show commits
             for _, commit in ipairs(result.commits) do
                 local msg = commit.commit and commit.commit.message or ''
-                -- Get first line only
-                msg = msg:match('^[^\n]+') or msg
+                -- Get first line only, strip any CR/LF
+                msg = msg:match('^([^\r\n]+)') or ''
                 -- Truncate if too long
                 if #msg > 60 then
                     msg = msg:sub(1, 57) .. '...'
@@ -414,7 +414,7 @@ local function render_content(buf)
             local line = NuiLine({
                 NuiText('  ✗ ', 'DiagnosticError'),
                 NuiText(name, 'Normal'),
-                NuiText(' - ' .. (result.error or 'unknown error'), 'DiagnosticError'),
+                NuiText(' - ' .. ((result.error or 'unknown error'):match('^([^\r\n]+)') or 'unknown error'), 'DiagnosticError'),
             })
             table.insert(lines, line)
         end

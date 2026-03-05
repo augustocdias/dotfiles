@@ -9,6 +9,9 @@
     inputs.dms-plugins.modules.default
   ];
 
+  # DMS uses StatusNotifierItem (SNI) for system tray
+  xsession.preferStatusNotifierItems = true;
+
   systemd.user.services.dms.Service = {
     EnvironmentFile = ["%t/dms-env"];
   };
@@ -19,7 +22,7 @@
 
     enableSystemMonitoring = true;
     enableVPN = true;
-    enableDynamicTheming = false;
+    enableDynamicTheming = true;
     enableAudioWavelength = true;
     enableCalendarEvents = false;
     enableClipboardPaste = true;
@@ -154,7 +157,7 @@
       showWorkspacePadding = true;
       workspaceScrolling = false;
       showWorkspaceApps = false;
-      maxWorkspaceIcons = 3;
+      maxWorkspaceIcons = 5;
       groupWorkspaceApps = true;
       workspaceFollowFocus = false;
       showOccupiedWorkspacesOnly = false;
@@ -270,29 +273,29 @@
       qtThemingEnabled = true;
       syncModeWithPortal = true;
       terminalsAlwaysDark = false;
-      runDmsMatugenTemplates = false;
+      runDmsMatugenTemplates = true;
 
       matugenTemplateGtk = true;
-      matugenTemplateNiri = true;
-      matugenTemplateHyprland = true;
-      matugenTemplateMangowc = true;
+      matugenTemplateNiri = false;
+      matugenTemplateHyprland = false;
+      matugenTemplateMangowc = false;
       matugenTemplateQt5ct = true;
       matugenTemplateQt6ct = true;
-      matugenTemplateFirefox = true;
-      matugenTemplatePywalfox = true;
-      matugenTemplateZenBrowser = true;
-      matugenTemplateVesktop = true;
-      matugenTemplateEquibop = true;
-      matugenTemplateGhostty = true;
-      matugenTemplateKitty = true;
-      matugenTemplateFoot = true;
-      matugenTemplateAlacritty = true;
-      matugenTemplateNeovim = true;
-      matugenTemplateWezterm = true;
+      matugenTemplateFirefox = false;
+      matugenTemplatePywalfox = false;
+      matugenTemplateZenBrowser = false;
+      matugenTemplateVesktop = false;
+      matugenTemplateEquibop = false;
+      matugenTemplateGhostty = false;
+      matugenTemplateKitty = false;
+      matugenTemplateFoot = false;
+      matugenTemplateAlacritty = false;
+      matugenTemplateNeovim = false;
+      matugenTemplateWezterm = false;
       matugenTemplateDgop = true;
       matugenTemplateKcolorscheme = true;
-      matugenTemplateVscode = true;
-      matugenTemplateEmacs = true;
+      matugenTemplateVscode = false;
+      matugenTemplateEmacs = false;
 
       showDock = false;
       dockAutoHide = false;
@@ -347,10 +350,6 @@
       powerMenuActions = ["reboot" "logout" "poweroff" "lock" "suspend" "restart"];
       powerMenuDefaultAction = "logout";
       powerMenuGridLayout = false;
-
-      customPowerActionLogout = "hyprshutdown -t 'Logging off' --post-cmd 'loginctl terminate-session $XDG_SESSION_ID'";
-      customPowerActionPowerOff = "hyprshutdown -t 'Shutting down...' --post-cmd 'systemctl poweroff'";
-      customPowerActionReboot = "hyprshutdown -t 'Restarting...' --post-cmd 'systemctl reboot'";
 
       updaterHideWidget = true;
       updaterUseCustomCommand = false;
@@ -636,6 +635,5 @@
 
   home.packages = [
     pkgs.inotify-tools
-    pkgs.kdePackages.kdeconnect-kde
   ];
 }

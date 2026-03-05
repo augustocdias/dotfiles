@@ -16,7 +16,7 @@
     auto-session = "62437532b38495551410b3f377bcf4aaac574ebe";
     blink-cmp = "4b18c32adef2898f95cdef6192cbd5796c1a332d";
     catppuccin = "c4d475e4b5684747cde9b3f849186af7837d4397";
-    codecompanion = "ed367944ece02d0ab2a2552ba3ad0b092f1a2144";
+    codecompanion = "f22fe1b04e47110a26abe70bad537cb9baf9c665";
     codecompanion-history = "bc1b4fe06eaaf0aa2399be742e843c22f7f1652a";
     codecompanion-spinner = "7797a81141e5de62eecebf2af561698ed58900dc";
     codesnap = "0a0941340376439a25d6cd8a4d1d2b372edbfdbd";
@@ -53,7 +53,7 @@
     nvim-notify = "8701bece920b38ea289b457f902e2ad184131a5d";
     nvim-treesitter-context = "64dd4cf3f6fd0ab17622c5ce15c91fc539c3f24a";
     nvim-treesitter-textobjects = "0bc4ef0a34d80fd6e67b59bd71fcbb0ef9ef4756";
-    octo = "5ae580df72589f25b775ff2bdacfd7f7be8d63bd";
+    octo = "c14f5b6ee92f0b2717efd525211bcb6cebf03fa6";
     plenary = "b9fd5226c2f76c951fc8ed5923d85e4de065e509";
     refactoring = "6784b54587e6d8a6b9ea199318512170ffb9e418";
     rustaceanvim = "f2f0c1231a5b019dbc1fd6dafac1751c878925a3";

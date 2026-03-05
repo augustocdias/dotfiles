@@ -1,14 +1,4 @@
 {pkgs, ...}: {
-  xdg.configFile."hypr/hyprqt6engine.conf".text = ''
-    theme {
-      color_scheme = ${pkgs.catppuccin-qt5ct}/share/qt6ct/colors/catppuccin-mocha-blue.conf
-      icon_theme = Papirus-Dark
-      style = Fusion
-      font = Sans Serif
-      font_size = 11
-    }
-  '';
-
   wayland.windowManager.hyprland = {
     enable = true;
 
@@ -16,7 +6,23 @@
     systemd.variables = ["all"];
 
     settings = {
-      monitor = ",preferred,auto,1";
+      monitor = [
+        "eDP-1,3072x1920@120,auto,1.5"
+        ",preferred,auto,1"
+      ];
+
+      workspace = [
+        "1, monitor:eDP-1, default:true"
+        "2, monitor:eDP-1"
+        "3, monitor:eDP-1"
+        "4, monitor:eDP-1"
+        "5, monitor:eDP-1"
+        "6, monitor:DP-1, default:true"
+        "7, monitor:DP-1"
+        "8, monitor:DP-1"
+        "9, monitor:DP-1"
+        "10, monitor:DP-1"
+      ];
 
       exec-once = [
         "vicinae server"
@@ -76,6 +82,7 @@
       dwindle = {
         pseudotile = true;
         preserve_split = true;
+        force_split = 2;
       };
 
       master = {
@@ -83,16 +90,17 @@
       };
 
       gestures = {
-        gesture = "3, horizontal, workspace";
-
-        # 4-finger swipe up for overview (qs-hyprview) FIXME:
-        # gesture = 4, up, exec, quickshell ipc -c qs-hyprview call expose toggle masonry
-        # 4-finger pinch to toggle floating FIXME:
-        # gesture = 4, pinch, togglefloating,
+        gesture = [
+          "3, horizontal, workspace"
+          # 4-finger swipe up for overview (qs-hyprview)
+          # "4, up, exec, quickshell ipc -c qs-hyprview call expose toggle masonry"
+          # 4-finger pinch to toggle floating
+          # "4, pinch, togglefloating,"
+        ];
       };
 
       input = {
-        kb_layout = "us";
+        kb_layout = "eu";
         follow_mouse = 1;
         accel_profile = "flat";
         sensitivity = 1;
@@ -102,7 +110,7 @@
           tap-to-click = true;
           disable_while_typing = true;
           clickfinger_behavior = true;
-          scroll_factor = 1.0;
+          scroll_factor = 0.3;
         };
       };
 

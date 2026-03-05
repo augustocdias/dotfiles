@@ -44,7 +44,9 @@ echo ""
 
 # Create temp directory for parallel results
 set temp_dir (mktemp -d)
-trap "rm -rf $temp_dir" EXIT
+function __vicinae_cleanup --on-event fish_exit
+    rm -rf $temp_dir
+end
 
 # Get Raycast extension names from JSON
 set raycast_extensions (jq -r '.raycast | keys[]' $json_file | sort)
@@ -190,7 +192,7 @@ if test "$REBUILD" = true
     set_color yellow
     echo "Rebuilding Home-Manager configuration..."
     set_color normal
-    ifnix run home-manager -- switch --flake ~/nixos#augusto 
+    if nix run home-manager -- switch --flake ~/nixos#augusto
         echo ""
         set_color green
         echo "System rebuild complete!"

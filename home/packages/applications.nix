@@ -4,7 +4,7 @@
   ...
 }: {
   home.packages = with pkgs; [
-    cider
+    cider-2
 
     wasistlos
 
