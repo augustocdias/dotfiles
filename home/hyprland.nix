@@ -25,7 +25,6 @@
       ];
 
       exec-once = [
-        "vicinae server"
         # "mpvpaper -n 1800 -o '--shuffle --keepaspect=no' '*' ~/media/animated"
 
         # Auto-launch apps on login
@@ -137,7 +136,7 @@
       bind = [
         # Applications
         "$mainMod, RETURN, exec, kitty"
-        "$mainMod, SPACE, exec, vicinae toggle"
+        "$mainMod, SPACE, exec, dms ipc call launcher toggle"
         "$mainMod, Q, killactive,"
         "$mainMod SHIFT, SPACE, exec, dms ipc call powermenu toggle"
         "$mainMod, A, exec, dms ipc call plugins toggle aiAssistant"

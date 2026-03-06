@@ -35,7 +35,7 @@ if test $show_help = true
     echo "  - Neovim plugins"
     echo "  - Firefox extensions"
     echo "  - Thunderbird extensions"
-    echo "  - Vicinae extensions"
+
     echo ""
     echo "Options:"
     echo "  -r, --rebuild    Rebuild NixOS configuration after updating"
@@ -50,28 +50,23 @@ echo -e $BLUE"══════════════════════
 echo ""
 
 # Update flake inputs
-echo -e $YELLOW"[1/5] Updating flake inputs..."$NC
+echo -e $YELLOW"[1/4] Updating flake inputs..."$NC
 nix flake update --flake ~/nixos
 echo ""
 
 # Update Neovim plugins
-echo -e $YELLOW"[2/5] Updating Neovim plugins..."$NC
+echo -e $YELLOW"[2/4] Updating Neovim plugins..."$NC
 update-nvim --update-tags
 echo ""
 
 # Update Firefox extensions
-echo -e $YELLOW"[3/5] Updating Firefox extensions..."$NC
+echo -e $YELLOW"[3/4] Updating Firefox extensions..."$NC
 update-firefox
 echo ""
 
 # Update Thunderbird extensions
-echo -e $YELLOW"[4/5] Updating Thunderbird extensions..."$NC
+echo -e $YELLOW"[4/4] Updating Thunderbird extensions..."$NC
 update-thunderbird
-echo ""
-
-# Update Vicinae extensions
-echo -e $YELLOW"[5/5] Updating Vicinae extensions..."$NC
-update-vicinae
 echo ""
 
 echo -e $GREEN"══════════════════════════════════════════"$NC

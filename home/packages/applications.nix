@@ -1,8 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     cider-2
 
@@ -21,7 +17,5 @@
     drawio
 
     libnotify
-
-    inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }

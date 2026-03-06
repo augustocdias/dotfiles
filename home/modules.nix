@@ -15,8 +15,6 @@
   ./neovide.nix
   ./bat.nix
   ./opencode.nix
-  ./vicinae/vicinae.nix
-  ./vicinae/update-vicinae.nix
   ./secrets.nix
 
   ./scripts/update-system.nix
