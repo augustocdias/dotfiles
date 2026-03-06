@@ -21,12 +21,24 @@
         "7, monitor:DP-1"
         "8, monitor:DP-1"
         "9, monitor:DP-1"
-        "10, monitor:DP-1"
+        "10, monitor:DP-1, layout:scrolling"
       ];
 
       exec-once = [
         "vicinae server"
         # "mpvpaper -n 1800 -o '--shuffle --keepaspect=no' '*' ~/media/animated"
+
+        # Auto-launch apps on login
+        "uwsm app -- slack"
+        "uwsm app -- thunderbird"
+        "uwsm app -- firefoxpwa site launch 01KJX7DRY7AH8NJEKJVEQRAQAV"
+        "uwsm app -- 1password"
+        "uwsm app -- kitty --class kitty-startup"
+        "uwsm app -- firefox --class firefox-startup"
+        "uwsm app -- datagrip"
+        "uwsm app -- virt-manager"
+        "uwsm app -- wasistlos"
+        "uwsm app -- cider-2"
       ];
 
       env = [
@@ -87,6 +99,12 @@
 
       master = {
         new_status = "master";
+      };
+
+      scrolling = {
+        column_width = 0.5;
+        direction = "right";
+        focus_fit_method = 1;
       };
 
       gestures = {
@@ -155,10 +173,7 @@
         "$mainMod CTRL ALT, L, focusmonitor, +1"
 
         # Window switching
-        "$mainMod, TAB, cyclenext,"
-        "$mainMod, TAB, alterzorder, top"
-        "$mainMod SHIFT, TAB, cyclenext, prev"
-        "$mainMod SHIFT, TAB, alterzorder, top"
+        "$mainMod, TAB, workspace, previous"
 
         "ALT, TAB, cyclenext, , , currentworkspace"
         "ALT, TAB, alterzorder, top"
@@ -223,6 +238,10 @@
 
         # Hyprland control
         "$mainMod SHIFT CTRL ALT, R, exec, hyprctl reload"
+
+        # Scrolling layout: Super + scroll wheel to move between columns
+        "$mainMod, mouse_down, layoutmsg, move +col"
+        "$mainMod, mouse_up, layoutmsg, move -col"
       ];
 
       # Bindings with repeat (binde)
@@ -239,7 +258,21 @@
         "$mainMod, mouse:273, resizewindow"
       ];
 
+
+
       windowrule = [
+        # Workspace assignments
+        "workspace 1 silent, match:class ^(Slack)$"
+        "workspace 2 silent, match:class ^(thunderbird)$"
+        "workspace 3 silent, match:class ^(FFPWA-01KJX7DRY7AH8NJEKJVEQRAQAV)$"
+        "workspace 4 silent, match:class ^(1password)$"
+        "workspace 6 silent, match:class ^(kitty-startup)$"
+        "workspace 7 silent, match:class ^(firefox-startup)$"
+        "workspace 8 silent, match:class ^(jetbrains-datagrip)$"
+        "workspace 9 silent, match:class ^(\\.virt-manager-wrapped)$"
+        "workspace 10 silent, match:class ^(wasistlos)$"
+        "workspace 10 silent, match:class ^(Cider)$"
+
         # Floating windows
         "float on, match:class ^(pavucontrol)$"
         "float on, match:class ^(nm-connection-editor)$"
