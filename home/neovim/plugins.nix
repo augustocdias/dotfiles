@@ -48,7 +48,7 @@
     nvim-dap-ui = "cf91d5e2d07c72903d052f5207511bf7ecdb7122";
     nvim-dap-virtual-text = "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6";
     nvim-lint = "606b823a57b027502a9ae00978ebf4f5d5158098";
-    nvim-lspconfig = "ead0f5f342d8d323441e7d4b88f0fc436a81ad5f";
+    nvim-lspconfig = "2b87d107942b9eebef768512f5849330335a9493";
     nvim-nio = "21f5324bfac14e22ba26553caf69ec76ae8a7662";
     nvim-notify = "8701bece920b38ea289b457f902e2ad184131a5d";
     nvim-treesitter-context = "64dd4cf3f6fd0ab17622c5ce15c91fc539c3f24a";
