@@ -106,6 +106,10 @@
         focus_fit_method = 1;
       };
 
+      misc = {
+        focus_on_activate = true;
+      };
+
       gestures = {
         gesture = [
           "3, horizontal, workspace"
@@ -145,6 +149,9 @@
         ", PRINT, exec, dms screenshot --no-file"
         "SHIFT, PRINT, exec, dms screenshot full --no-file"
         "$mainMod, PRINT, exec, dms screenshot --no-clipboard -d ~/pictures/screenshots"
+        "$mainMod SHIFT, 4, exec, dms screenshot --no-file"
+        "$mainMod SHIFT, 3, exec, dms screenshot full --no-file"
+        "$mainMod SHIFT, 5, exec, dms screenshot --no-clipboard -d ~/pictures/screenshots"
 
         # Lock screen
         "$mainMod SHIFT, L, exec, dms ipc call lock lock"

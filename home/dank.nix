@@ -484,6 +484,9 @@
       systemMonitorHeight = 480;
       systemMonitorDisplayPreferences = ["all"];
 
+      greeterEnableFprint = true;
+      greeterEnableU2f = true;
+
       desktopWidgetInstances = [
         {
           id = "dw_1769172254836_7kkr5ii2j";
@@ -514,17 +517,11 @@
             syncPositionAcrossScreens = true;
           };
           positions = {
-            "Virtual-1" = {
-              width = 320;
-              height = 480;
-              x = 0;
-              y = 32.01953125;
-            };
             "_synced" = {
-              x = 0;
-              y = 0.0400244140625;
               width = 320;
               height = 480;
+              x = 10;
+              y = 32;
             };
           };
         }
@@ -541,17 +538,11 @@
             viewMode = "forecast";
           };
           positions = {
-            "Virtual-1" = {
-              width = 200;
-              height = 200;
-              x = 540;
-              y = 300;
-            };
             "_synced" = {
-              x = 0.25311279296875;
-              y = 0.0400341796875;
-              width = 371.015625;
-              height = 481.01171875;
+              width = 320;
+              height = 480;
+              x = 340;
+              y = 32;
             };
           };
         }
