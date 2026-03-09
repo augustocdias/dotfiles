@@ -4,7 +4,6 @@ in {
     wireguard-tools
 
     slack
-    teamviewer
     jetbrains.datagrip
   ];
 }

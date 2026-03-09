@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
@@ -32,4 +36,8 @@
   systemd.tmpfiles.rules = [
     "d /var/lib/swtpm-localca 0750 tss tss -"
   ];
+
+  # TeamViewer daemon (manual start only: sudo systemctl start teamviewerd)
+  services.teamviewer.enable = true;
+  systemd.services.teamviewerd.wantedBy = lib.mkForce [];
 }
