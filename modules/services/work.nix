@@ -11,6 +11,14 @@
 
   virtualisation.spiceUSBRedirection.enable = true;
 
+  # Allow VM traffic to reach host services (dev servers, etc.) through the libvirt bridge
+  networking.firewall.interfaces."virbr0".allowedTCPPortRanges = [
+    {
+      from = 1;
+      to = 65535;
+    }
+  ];
+
   # Fix upstream libvirt service that hardcodes /usr/bin/sh (NixOS packaging bug)
   systemd.services.virt-secret-init-encryption.serviceConfig.ExecStart = let
     sh = "${pkgs.bash}/bin/sh";

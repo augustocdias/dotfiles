@@ -21,11 +21,21 @@
 
   services.power-profiles-daemon.enable = true;
 
+  # Prefer AAC codec for Bluetooth audio
+  services.pipewire.wireplumber.extraConfig."50-bluez-config" = {
+    "monitor.bluez.properties" = {
+      "bluez5.enable-sbc-xq" = true;
+      "bluez5.enable-msbc" = true;
+      "bluez5.enable-hw-volume" = true;
+      "bluez5.codecs" = ["aac" "sbc" "sbc_xq"];
+    };
+  };
+
   services.pipewire.wireplumber.extraConfig."99-disable-hdmi-audio" = {
     "monitor.alsa.rules" = [
       {
         matches = [
-          { "node.name" = "~alsa_output.*HDMI*"; }
+          {"node.name" = "~alsa_output.*HDMI*";}
         ];
         actions.update-props = {
           "node.disabled" = true;
@@ -42,7 +52,7 @@
     "monitor.alsa.rules" = [
       {
         matches = [
-          { "device.name" = "alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic"; }
+          {"device.name" = "alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic";}
         ];
         actions.update-props = {
           "device.profile" = "HiFi (HDMI1, HDMI2, HDMI3, Mic1, Mic2, Speaker)";

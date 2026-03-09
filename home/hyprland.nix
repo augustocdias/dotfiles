@@ -8,6 +8,8 @@
     settings = {
       monitor = [
         "eDP-1,3072x1920@120,auto,1.5"
+        # more space but datagrip and cider looks really bad :(
+        # "desc:LG Electronics LG ULTRAWIDE 0x00022714,2560x1080@60,auto,0.833333"
         ",preferred,auto,1"
       ];
 
@@ -16,12 +18,12 @@
         "2, monitor:eDP-1"
         "3, monitor:eDP-1"
         "4, monitor:eDP-1"
-        "5, monitor:eDP-1"
+        "5, monitor:eDP-1, layout:scrolling"
         "6, monitor:DP-1, default:true"
         "7, monitor:DP-1"
         "8, monitor:DP-1"
         "9, monitor:DP-1"
-        "10, monitor:DP-1, layout:scrolling"
+        "10, monitor:DP-1"
       ];
 
       exec-once = [
@@ -31,7 +33,6 @@
         "uwsm app -- slack"
         "uwsm app -- thunderbird"
         "uwsm app -- firefoxpwa site launch 01KJX7DRY7AH8NJEKJVEQRAQAV"
-        "uwsm app -- 1password"
         "uwsm app -- kitty --class kitty-startup"
         "uwsm app -- firefox --class firefox-startup"
         "uwsm app -- datagrip"
@@ -104,6 +105,10 @@
         column_width = 0.5;
         direction = "right";
         focus_fit_method = 1;
+      };
+
+      cursor = {
+        no_warps = true;
       };
 
       misc = {
@@ -236,6 +241,8 @@
         # Scroll workspaces
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
+        "$mainMod, RIGHT, workspace, e+1"
+        "$mainMod, LEFT, workspace, e-1"
 
         # Special workspace (scratchpad)
         "$mainMod, H, togglespecialworkspace, scratchpad"
@@ -245,9 +252,11 @@
         # Hyprland control
         "$mainMod SHIFT CTRL ALT, R, exec, hyprctl reload"
 
-        # Scrolling layout: Super + scroll wheel to move between columns
-        "$mainMod, mouse_down, layoutmsg, move +col"
-        "$mainMod, mouse_up, layoutmsg, move -col"
+        # Scrolling layout
+        "$mainMod ALT, mouse_down, layoutmsg, move +col"
+        "$mainMod ALT, mouse_up, layoutmsg, move -col"
+        "$mainMod ALT, period, layoutmsg, move +col"
+        "$mainMod ALT, comma, layoutmsg, move -col"
       ];
 
       # Bindings with repeat (binde)
@@ -264,20 +273,17 @@
         "$mainMod, mouse:273, resizewindow"
       ];
 
-
-
       windowrule = [
         # Workspace assignments
         "workspace 1 silent, match:class ^(Slack)$"
         "workspace 2 silent, match:class ^(thunderbird)$"
         "workspace 3 silent, match:class ^(FFPWA-01KJX7DRY7AH8NJEKJVEQRAQAV)$"
-        "workspace 4 silent, match:class ^(1password)$"
         "workspace 6 silent, match:class ^(kitty-startup)$"
         "workspace 7 silent, match:class ^(firefox-startup)$"
         "workspace 8 silent, match:class ^(jetbrains-datagrip)$"
         "workspace 9 silent, match:class ^(\\.virt-manager-wrapped)$"
-        "workspace 10 silent, match:class ^(wasistlos)$"
-        "workspace 10 silent, match:class ^(Cider)$"
+        "workspace 5 silent, match:class ^(wasistlos)$"
+        "workspace 5 silent, match:class ^(Cider)$"
 
         # Floating windows
         "float on, match:class ^(pavucontrol)$"

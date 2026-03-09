@@ -25,9 +25,6 @@ in {
 
   services.dbus.enable = true;
 
-  programs._1password.enable = true;
-  programs._1password-gui.enable = true;
-
   security.pam.u2f = lib.mkIf u2fKeysExist {
     enable = true;
     settings = {

@@ -495,7 +495,7 @@
           enabled = true;
           config = {
             showHeader = true;
-            transparency = 0.8;
+            transparency = 0.3;
             colorMode = "primary";
             customColor = "#ffffff";
             showCpu = true;
@@ -514,14 +514,32 @@
             graphInterval = 60;
             displayPreferences = ["all"];
             clickThrough = true;
-            syncPositionAcrossScreens = true;
+            syncPositionAcrossScreens = false;
           };
           positions = {
-            "_synced" = {
-              width = 320;
-              height = 480;
+            "eDP-1" = {
               x = 10;
               y = 32;
+              width = 320;
+              height = 480;
+            };
+            "DP-1" = {
+              x = 10;
+              y = 32;
+              width = 320;
+              height = 480;
+            };
+            "DP-2" = {
+              x = 10;
+              y = 32;
+              width = 320;
+              height = 480;
+            };
+            "DP-3" = {
+              x = 10;
+              y = 32;
+              width = 320;
+              height = 480;
             };
           };
         }
@@ -534,15 +552,34 @@
             displayPreferences = ["all"];
             showOnOverlay = false;
             clickThrough = true;
-            syncPositionAcrossScreens = true;
+            syncPositionAcrossScreens = false;
             viewMode = "forecast";
+            backgroundOpacity = 30;
           };
           positions = {
-            "_synced" = {
-              width = 320;
-              height = 480;
+            "eDP-1" = {
               x = 340;
               y = 32;
+              width = 320;
+              height = 480;
+            };
+            "DP-1" = {
+              x = 340;
+              y = 32;
+              width = 320;
+              height = 480;
+            };
+            "DP-2" = {
+              x = 340;
+              y = 32;
+              width = 320;
+              height = 480;
+            };
+            "DP-3" = {
+              x = 340;
+              y = 32;
+              width = 320;
+              height = 480;
             };
           };
         }
@@ -626,5 +663,6 @@
 
   home.packages = [
     pkgs.inotify-tools
+    pkgs.librepods
   ];
 }
