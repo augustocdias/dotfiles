@@ -12,6 +12,14 @@
     ];
   };
 
+  services.logind = {
+    lidSwitch = "suspend";
+    lidSwitchExternalPower = "suspend";
+    lidSwitchDocked = "ignore";
+    powerKey = "suspend";
+    powerKeyLongPress = "poweroff";
+  };
+
   boot.consoleLogLevel = 0;
   boot.initrd.verbose = false;
   boot.kernelParams = [
