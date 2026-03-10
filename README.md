@@ -63,3 +63,71 @@ Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix) with a h
 1. Add the new secret key to `home/secrets.nix`
 1. Add the environment variable to the template in `home/secrets.nix`
 1. Rebuild
+
+### FirefoxPWA (Progressive Web Apps)
+
+Web apps can be installed as standalone PWAs using [FirefoxPWA](https://github.com/nicegware/nicegware-nicegpwa). The CLI tool and browser connector are already installed.
+
+#### Creating a profile
+
+Each PWA should have its own profile to isolate cookies and data:
+
+```fish
+firefoxpwa profile create --name "WhatsApp"
+```
+
+Note the profile ID printed (e.g., `01KKC8KEY5WQTRM1P0WHT946CX`).
+
+#### Installing a PWA site
+
+```fish
+firefoxpwa site install https://web.whatsapp.com/data/manifest.json \
+  --profile 01KKC8KEY5WQTRM1P0WHT946CX \
+  --name "WhatsApp" \
+  --icon-url "https://pngimg.com/uploads/whatsapp/whatsapp_PNG95154.png" \
+  --document-url "https://web.whatsapp.com/" \
+  --categories social
+```
+
+Note the site ID printed (e.g., `01KKC8KPKEX5XZPBBK02D5ZM67`).
+
+#### Listing profiles and sites
+
+```fish
+firefoxpwa profile list
+```
+
+#### Hiding the browser toolbar
+
+By default, PWAs show a Firefox toolbar with navigation and settings buttons. To hide it:
+
+1. Launch the PWA once to initialize its profile directory:
+
+   ```fish
+   firefoxpwa site launch <SITE_ID>
+   ```
+
+2. Enable custom stylesheets — open `about:config` in the PWA window, search for `toolkit.legacyUserProfileCustomizations.stylesheets`, and set it to `true`. Alternatively, create a `user.js` file in the profile directory:
+
+   ```fish
+   echo 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);' > \
+     ~/.local/share/firefoxpwa/profiles/<PROFILE_ID>/user.js
+   ```
+
+3. Create the `userChrome.css` file:
+
+   ```fish
+   echo '#nav-bar { display: none !important; }
+   #TabsToolbar { display: none !important; }' > \
+     ~/.local/share/firefoxpwa/profiles/<PROFILE_ID>/chrome/userChrome.css
+   ```
+
+4. Restart the PWA.
+
+#### Auto-launching on login
+
+Add to the `exec-once` section in `home/hyprland.nix`:
+
+```nix
+"uwsm app -- firefoxpwa site launch <SITE_ID>"
+```
