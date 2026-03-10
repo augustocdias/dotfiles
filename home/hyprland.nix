@@ -37,7 +37,7 @@
         "hyprctl dispatch workspace 7 && uwsm app -- firefox"
         "uwsm app -- datagrip"
         "uwsm app -- virt-manager"
-        "uwsm app -- wasistlos"
+        "uwsm app -- firefoxpwa site launch 01KKC8KPKEX5XZPBBK02D5ZM67"
         "uwsm app -- cider-2"
       ];
 
@@ -281,7 +281,7 @@
         "workspace 6 silent, match:class ^(kitty-startup)$"
         "workspace 8 silent, match:class ^(jetbrains-datagrip)$"
         "workspace 9 silent, match:class ^(\\.virt-manager-wrapped)$"
-        "workspace 5 silent, match:class ^(wasistlos)$"
+        "workspace 5 silent, match:class ^(FFPWA-01KKC8KPKEX5XZPBBK02D5ZM67)$"
         "workspace 5 silent, match:class ^(Cider)$"
 
         # Floating windows

@@ -60,9 +60,9 @@ Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix) with a h
    sops ~/.dotfiles/home/secrets/env.yaml
    ```
 
-1. Add the new secret key to `home/secrets.nix`
-1. Add the environment variable to the template in `home/secrets.nix`
-1. Rebuild
+2. Add the new secret key to `home/secrets.nix`
+3. Add the environment variable to the template in `home/secrets.nix`
+4. Rebuild
 
 ### FirefoxPWA (Progressive Web Apps)
 
@@ -107,12 +107,14 @@ By default, PWAs show a Firefox toolbar with navigation and settings buttons. To
    firefoxpwa site launch <SITE_ID>
    ```
 
-2. Enable custom stylesheets — open `about:config` in the PWA window, search for `toolkit.legacyUserProfileCustomizations.stylesheets`, and set it to `true`. Alternatively, create a `user.js` file in the profile directory:
+2. Enable custom stylesheets and optionally disable MPRIS (prevents the PWA from registering as a media player, stealing media controls from actual music apps). Create a `user.js` file in the profile directory:
 
    ```fish
-   echo 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);' > \
+   printf 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);\nuser_pref("media.hardwaremediakeys.enabled", false);\n' > \
      ~/.local/share/firefoxpwa/profiles/<PROFILE_ID>/user.js
    ```
+
+   Alternatively go to `about:config` while inside the PWA application and change those settings manually.
 
 3. Create the `userChrome.css` file:
 
