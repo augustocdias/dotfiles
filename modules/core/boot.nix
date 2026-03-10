@@ -20,6 +20,11 @@
     HandlePowerKeyLongPress = "poweroff";
   };
 
+  # Blacklist the ACPI AC adapter module - it reports online=1 permanently
+  # on work laptop, preventing UPower from detecting battery state.
+  # Actual charging is handled by the UCSI subsystem.
+  boot.blacklistedKernelModules = ["ac"];
+
   boot.consoleLogLevel = 0;
   boot.initrd.verbose = false;
   boot.kernelParams = [

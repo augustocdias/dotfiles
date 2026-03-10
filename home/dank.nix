@@ -3,21 +3,12 @@
   inputs,
   config,
   ...
-}: let
-  powerProfileHook = pkgs.writeShellScriptBin "power-profile-hook" ''
-    if [ "$2" = "on-battery" ]; then
-      ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set power-saver
-    else
-      ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set performance
-    fi
-  '';
-in {
+}: {
   imports = [
     inputs.dms.homeModules.dank-material-shell
     inputs.dms-plugins.modules.default
   ];
 
-  # DMS uses StatusNotifierItem (SNI) for system tray
   xsession.preferStatusNotifierItems = true;
 
   systemd.user.services.dms.Service = {
@@ -248,11 +239,13 @@ in {
       acLockTimeout = 180;
       acSuspendTimeout = 1800;
       acSuspendBehavior = 0;
+      acProfileName = "2"; # Performance
 
-      batteryMonitorTimeout = 0;
-      batteryLockTimeout = 0;
-      batterySuspendTimeout = 0;
+      batteryMonitorTimeout = 600;
+      batteryLockTimeout = 180;
+      batterySuspendTimeout = 1200;
       batterySuspendBehavior = 0;
+      batteryProfileName = "0"; # Power Saver
       batteryChargeLimit = 100;
 
       lockBeforeSuspend = true;
@@ -668,13 +661,6 @@ in {
       dankKDEConnect.enable = true;
 
       wallpaperCarousel.enable = true;
-
-      dankHooks = {
-        enable = true;
-        settings = {
-          batteryPluggedIn = "${powerProfileHook}/bin/power-profile-hook";
-        };
-      };
     };
   };
 
