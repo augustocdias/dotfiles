@@ -64,4 +64,66 @@ inputs: [
         };
       };
   })
+  (_: prev: {
+    wasistlos-no-mpris = let
+      wasistlos = prev.wasistlos;
+      xdg-dbus-proxy = prev.xdg-dbus-proxy;
+      wrapper = prev.writeShellScript "wasistlos-dbus-filtered" ''
+        PROXY_SOCKET="''${XDG_RUNTIME_DIR}/wasistlos-dbus-proxy-$$"
+
+        cleanup() {
+          kill "$PROXY_PID" 2>/dev/null
+          rm -f "$PROXY_SOCKET"
+        }
+        trap cleanup EXIT
+
+        ${xdg-dbus-proxy}/bin/xdg-dbus-proxy \
+          "$DBUS_SESSION_BUS_ADDRESS" \
+          "$PROXY_SOCKET" \
+          --filter \
+          --sloppy-names \
+          --own=com.github.xeco23.WasIstLos \
+          --talk=org.freedesktop.DBus \
+          --talk=org.freedesktop.Notifications \
+          --talk="org.freedesktop.portal.*" \
+          --talk=org.freedesktop.ScreenSaver \
+          --talk=org.freedesktop.secrets \
+          --talk=ca.desrt.dconf \
+          --talk=org.kde.StatusNotifierWatcher \
+          --talk="org.gtk.vfs.*" \
+          --talk=org.a11y.Bus \
+          --talk=org.gtk.GLib.PACRunner \
+          --talk="org.mozilla.firefox.*" \
+          --broadcast="org.freedesktop.portal.*=@/org/freedesktop/portal/*" &
+
+        PROXY_PID=$!
+
+        # Wait for proxy socket to appear
+        for _i in $(seq 1 50); do
+          [ -S "$PROXY_SOCKET" ] && break
+          sleep 0.1
+        done
+
+        if [ ! -S "$PROXY_SOCKET" ]; then
+          echo "wasistlos-dbus-proxy: proxy socket failed to appear, falling back to unfiltered" >&2
+          exec ${wasistlos}/bin/wasistlos "$@"
+        fi
+
+        DBUS_SESSION_BUS_ADDRESS="unix:path=$PROXY_SOCKET" \
+          exec ${wasistlos}/bin/wasistlos "$@"
+      '';
+    in
+      prev.symlinkJoin {
+        name = "wasistlos-no-mpris";
+        paths = [wasistlos];
+        nativeBuildInputs = [prev.makeWrapper];
+        postBuild = ''
+          rm "$out/bin/wasistlos"
+          makeWrapper ${wrapper} "$out/bin/wasistlos"
+        '';
+        meta = wasistlos.meta // {
+          description = "WasIstLos with MPRIS D-Bus registration blocked";
+        };
+      };
+  })
 ]

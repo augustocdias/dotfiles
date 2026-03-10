@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     cider-2
 
-    wasistlos
+    wasistlos-no-mpris
 
     kitty
 
