@@ -328,6 +328,7 @@
       notificationTimeoutCritical = 0;
       notificationCompactMode = true;
       notificationPopupPosition = 0;
+      notificationFocusedMonitor = true;
       notificationHistoryEnabled = true;
       notificationHistoryMaxCount = 50;
       notificationHistoryMaxAgeDays = 7;
