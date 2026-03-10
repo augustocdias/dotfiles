@@ -3,7 +3,15 @@
   inputs,
   config,
   ...
-}: {
+}: let
+  powerProfileHook = pkgs.writeShellScriptBin "power-profile-hook" ''
+    if [ "$2" = "on-battery" ]; then
+      ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set power-saver
+    else
+      ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set performance
+    fi
+  '';
+in {
   imports = [
     inputs.dms.homeModules.dank-material-shell
     inputs.dms-plugins.modules.default
@@ -238,7 +246,7 @@
 
       acMonitorTimeout = 600;
       acLockTimeout = 180;
-      acSuspendTimeout = 0;
+      acSuspendTimeout = 1800;
       acSuspendBehavior = 0;
 
       batteryMonitorTimeout = 0;
@@ -658,6 +666,15 @@
       };
 
       dankKDEConnect.enable = true;
+
+      wallpaperCarousel.enable = true;
+
+      dankHooks = {
+        enable = true;
+        settings = {
+          batteryPluggedIn = "${powerProfileHook}/bin/power-profile-hook";
+        };
+      };
     };
   };
 
