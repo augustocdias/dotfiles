@@ -33,7 +33,7 @@
     lightbulb = "aa3a8b0f4305b25cfe368f6c9be9923a7c9d0805";
     lualine = "47f91c416daef12db467145e16bed5bbfe00add8";
     lze = "a3ba1a2d469d4ab26acb629aba8c7d70a6cbe558";
-    markdown-plus = "ba5e05c996bdb9da5139405ef0c89ccef403c8ea";
+    markdown-plus = "6ddbb55f1e8be011cdae7f20910034fcd52e8be3";
     markview = "239feb70ed1cfc26e2c91b32590fd63f7b015599";
     mcphub = "7cd5db330f41b7bae02b2d6202218a061c3ebc1f";
     mini-ai = "4b0a6207341d895b6cfe9bcb1e4d3e8607bfe4f4";
@@ -53,11 +53,11 @@
     nvim-notify = "8701bece920b38ea289b457f902e2ad184131a5d";
     nvim-treesitter-context = "529ee357b8c03d76ff71233afed68fd0f5fe10b1";
     nvim-treesitter-textobjects = "4e91b5d0394329a229725b021a8ea217099826ef";
-    octo = "dc203ca88a6d860f0ddfad8a7574dbf6387b83e3";
+    octo = "42e547c08433c22c8311d7848998d2d08bfaf77e";
     plenary = "b9fd5226c2f76c951fc8ed5923d85e4de065e509";
     refactoring = "6784b54587e6d8a6b9ea199318512170ffb9e418";
     rustaceanvim = "f2f0c1231a5b019dbc1fd6dafac1751c878925a3";
-    SchemaStore = "5245c1fc3bf5191b5fd7b03c1141056ebd1fad91";
+    SchemaStore = "47b1e85c020c9c359a2e6438405dd7b382b014af";
     snacks = "9912042fc8bca2209105526ac7534e9a0c2071b2";
     tabby = "3c130e1fcb598ce39a9c292847e32d7c3987cf11";
     tabout = "9a3499480a8e53dcaa665e2836f287e3b7764009";
