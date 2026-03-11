@@ -8,7 +8,6 @@
     bat
     delta
     moreutils
-    lynx
 
     htop
     btop
@@ -25,8 +24,6 @@
     yubikey-manager
     yubikey-personalization
     yubico-piv-tool
-
-    gcalcli
 
     ffmpeg
     imagemagick

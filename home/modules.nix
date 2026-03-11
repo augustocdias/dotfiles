@@ -19,6 +19,8 @@
 
   ./scripts/update-system.nix
 
+  ./gcalcli.nix
+
   ./git.nix
 
   ./kitty.nix
