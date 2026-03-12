@@ -30,5 +30,6 @@
     exiftool
     poppler-utils
     tesseract
+    dragon-drop
   ];
 }
