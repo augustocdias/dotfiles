@@ -34,7 +34,7 @@
     lualine = "47f91c416daef12db467145e16bed5bbfe00add8";
     lze = "a3ba1a2d469d4ab26acb629aba8c7d70a6cbe558";
     markdown-plus = "6ddbb55f1e8be011cdae7f20910034fcd52e8be3";
-    markview = "239feb70ed1cfc26e2c91b32590fd63f7b015599";
+    markview = "918f3f92e87d28a487af89912d774521a52f9888";
     mcphub = "7cd5db330f41b7bae02b2d6202218a061c3ebc1f";
     mini-ai = "4b0a6207341d895b6cfe9bcb1e4d3e8607bfe4f4";
     mini-files = "57eb96a828f80efb8095a611e3aafcfa43548f8b";
@@ -48,7 +48,7 @@
     nvim-dap-ui = "cf91d5e2d07c72903d052f5207511bf7ecdb7122";
     nvim-dap-virtual-text = "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6";
     nvim-lint = "606b823a57b027502a9ae00978ebf4f5d5158098";
-    nvim-lspconfig = "d8bf4c47385340ab2029402201d4d7c9f99f437a";
+    nvim-lspconfig = "0203a9608d63eda57679b01e69f33a7b4c34b0d1";
     nvim-nio = "21f5324bfac14e22ba26553caf69ec76ae8a7662";
     nvim-notify = "8701bece920b38ea289b457f902e2ad184131a5d";
     nvim-treesitter-context = "529ee357b8c03d76ff71233afed68fd0f5fe10b1";
@@ -57,7 +57,7 @@
     plenary = "b9fd5226c2f76c951fc8ed5923d85e4de065e509";
     refactoring = "6784b54587e6d8a6b9ea199318512170ffb9e418";
     rustaceanvim = "f2f0c1231a5b019dbc1fd6dafac1751c878925a3";
-    SchemaStore = "47b1e85c020c9c359a2e6438405dd7b382b014af";
+    SchemaStore = "15e6667f32f8dbf9a8353d9a6ab087dff3ad4246";
     snacks = "9912042fc8bca2209105526ac7534e9a0c2071b2";
     tabby = "3c130e1fcb598ce39a9c292847e32d7c3987cf11";
     tabout = "9a3499480a8e53dcaa665e2836f287e3b7764009";
