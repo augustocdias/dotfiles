@@ -391,11 +391,23 @@
               enabled = true;
             }
             {
-              id = "developerUtilities";
+              id = "separator";
+              enabled = true;
+            }
+            {
+              id = "notificationButton";
               enabled = true;
             }
             {
               id = "clipboard";
+              enabled = true;
+            }
+            {
+              id = "developerUtilities";
+              enabled = true;
+            }
+            {
+              id = "privacyIndicator";
               enabled = true;
             }
             {
@@ -411,14 +423,14 @@
               enabled = true;
             }
             {
-              id = "notificationButton";
-              enabled = true;
-            }
-            {
               id = "controlCenterButton";
               enabled = true;
               showAudioPercent = true;
               showBrightnessIcon = false;
+              showBrightnessPercent = false;
+              showMicIcon = false;
+              showBatteryIcon = false;
+              showPrinterIcon = true;
             }
             {
               id = "sessionPower";
