@@ -115,6 +115,7 @@ in {
         "network.predictor.enabled" = false;
 
         "media.peerconnection.ice.default_address_only" = true;
+        "media.webrtc.camera.allow-pipewire" = true;
       };
 
       search = {
