@@ -1,9 +1,10 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: let
-  customPlugins = import ./plugins.nix {inherit pkgs lib;};
+  customPlugins = import ./plugins.nix {inherit pkgs lib inputs;};
 in {
   programs.neovim = {
     enable = true;

@@ -14,9 +14,9 @@
           type = "remote";
           url = "https://mcp.notion.com/mcp";
         };
-        atlassian = {
+        linear = {
           type = "local";
-          command = ["npx" "-y" "mcp-remote" "https://mcp.atlassian.com/v1/sse"];
+          command = ["npx" "-y" "mcp-remote" "https://mcp.linear.app/mcp"];
         };
         context7 = {
           type = "local";

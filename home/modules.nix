@@ -34,7 +34,6 @@
   ./zellij.nix
 
   ./neovim/neovim.nix
-  ./neovim/update-nvim.nix
 
   ./firefox/firefox.nix
   ./firefox/update-firefox.nix

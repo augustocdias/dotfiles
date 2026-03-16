@@ -1,4 +1,7 @@
--- Plugin update checker for Nix-managed Neovim plugins
+-- Plugin update checker for Nix-managed Neovim plugins (flake-based)
+--
+-- Reads from the neovim sub-flake's flake.lock to get current pinned revisions,
+-- then compares against upstream via the GitHub API.
 --
 -- NOTE: This script assumes all plugins are hosted on GitHub.
 -- If you add plugins from other sources (GitLab, Codeberg, etc.),
@@ -6,9 +9,8 @@
 -- to handle different API endpoints.
 
 -- Config
-local DOTFILES_PATH = vim.fn.expand('~/nixos/home/neovim')
-local PLUGINS_JSON = DOTFILES_PATH .. '/plugins.json'
-local PLUGINS_NIX = DOTFILES_PATH .. '/plugins.nix'
+local NEOVIM_FLAKE_PATH = vim.fn.expand('~/nixos/home/neovim')
+local FLAKE_LOCK = NEOVIM_FLAKE_PATH .. '/flake.lock'
 local MAX_NOTIFICATION_ITEMS = 5
 
 -- Cache (persists in module scope)
@@ -25,48 +27,82 @@ local ui = {
     update_fn = nil, -- function to call when cache updates
 }
 
--- Parse plugins.json
-local function get_plugin_sources()
-    local file = io.open(PLUGINS_JSON, 'r')
+-- Plugins to skip (not actual neovim plugins, used for follows/infrastructure)
+local skip_inputs = {
+    nixpkgs = true,
+    ['flake-utils'] = true,
+    ['flake-parts'] = true,
+    systems = true,
+    fenix = true,
+    ['flake-compat'] = true,
+    ['pre-commit-hooks'] = true,
+    ['treefmt-nix'] = true,
+    ['git-hooks'] = true,
+}
+
+-- Parse flake.lock and extract plugin info
+-- Returns a table: { name = { owner, repo, rev, type, ref } }
+local function get_plugins_from_lockfile()
+    local file = io.open(FLAKE_LOCK, 'r')
     if not file then
         return nil
     end
     local content = file:read('*a')
     file:close()
-    local ok, result = pcall(vim.json.decode, content)
+
+    local ok, lock = pcall(vim.json.decode, content)
     if not ok then
         return nil
     end
-    return result
-end
 
--- Parse plugins.nix for current revs
-local function get_current_revs()
-    local file = io.open(PLUGINS_NIX, 'r')
-    if not file then
+    local nodes = lock.nodes
+    if not nodes or not nodes.root then
         return nil
     end
-    local content = file:read('*a')
-    file:close()
 
-    local revs = {}
-    -- Match: plugin-name = "commit-sha";
-    for name, rev in content:gmatch('([%w_%-]+)%s*=%s*"([a-f0-9]+)";') do
-        revs[name] = rev
+    local plugins = {}
+    local root_inputs = nodes.root.inputs or {}
+
+    for name, node_ref in pairs(root_inputs) do
+        -- Skip infrastructure inputs
+        if not skip_inputs[name] then
+            local node_name = type(node_ref) == 'string' and node_ref or nil
+            if node_name and nodes[node_name] then
+                local node = nodes[node_name]
+                local locked = node.locked
+
+                if locked and locked.type == 'github' then
+                    local original = node.original or {}
+                    plugins[name] = {
+                        owner = locked.owner,
+                        repo = locked.repo,
+                        rev = locked.rev,
+                        -- The ref from the original spec tells us what branch/tag is tracked
+                        ref = original.ref, -- nil means default branch
+                        is_flake = not (node.flake == false),
+                    }
+                end
+            end
+        end
     end
-    return revs
+
+    return plugins
 end
 
--- Check if rev looks like a tag (vX.Y.Z pattern) vs branch name
-local function is_tag(rev)
-    return rev:match('^v?%d+%.%d+') ~= nil
+-- Check if a ref looks like a tag (vX.Y.Z pattern) vs branch name
+local function is_tag(ref)
+    if not ref then
+        return false
+    end
+    return ref:match('^v?%d+%.%d+') ~= nil
 end
 
 -- Fetch updates for a single plugin (async)
-local function fetch_plugin_updates(plugin, current_rev, callback)
+local function fetch_plugin_updates(plugin, callback)
     local owner = plugin.owner
     local repo = plugin.repo
-    local rev = plugin.rev -- branch or tag from plugins.json
+    local current_rev = plugin.rev
+    local ref = plugin.ref -- branch or tag from flake input, nil = default branch
 
     local function on_error(err)
         callback({
@@ -76,7 +112,7 @@ local function fetch_plugin_updates(plugin, current_rev, callback)
         })
     end
 
-    if is_tag(rev) then
+    if is_tag(ref) then
         -- Tag-based: first get latest release tag, then compare
         local cmd = { 'gh', 'api', string.format('repos/%s/%s/releases/latest', owner, repo) }
         vim.system(cmd, { text = true }, function(result)
@@ -92,7 +128,7 @@ local function fetch_plugin_updates(plugin, current_rev, callback)
             end
 
             local latest_tag = release.tag_name
-            if latest_tag == rev then
+            if latest_tag == ref then
                 -- Up to date
                 callback({
                     status = 'up-to-date',
@@ -104,7 +140,7 @@ local function fetch_plugin_updates(plugin, current_rev, callback)
             else
                 -- Has updates - get commits between tags
                 local compare_cmd =
-                    { 'gh', 'api', string.format('repos/%s/%s/compare/%s...%s', owner, repo, rev, latest_tag) }
+                    { 'gh', 'api', string.format('repos/%s/%s/compare/%s...%s', owner, repo, ref, latest_tag) }
                 vim.system(compare_cmd, { text = true }, function(cmp_result)
                     if cmp_result.code ~= 0 then
                         -- Fallback: just report update available without commit details
@@ -142,7 +178,9 @@ local function fetch_plugin_updates(plugin, current_rev, callback)
         end)
     else
         -- Branch-based: compare current SHA with branch HEAD
-        local cmd = { 'gh', 'api', string.format('repos/%s/%s/compare/%s...%s', owner, repo, current_rev, rev) }
+        -- If ref is nil, use the default branch (GitHub resolves HEAD)
+        local compare_ref = ref or 'HEAD'
+        local cmd = { 'gh', 'api', string.format('repos/%s/%s/compare/%s...%s', owner, repo, current_rev, compare_ref) }
         vim.system(cmd, { text = true }, function(result)
             if result.code ~= 0 then
                 on_error('Failed to fetch comparison: ' .. (result.stderr or 'unknown error'))
@@ -236,62 +274,47 @@ local function fetch_all()
         return -- Already in progress
     end
 
-    local sources = get_plugin_sources()
-    local revs = get_current_revs()
+    local plugins = get_plugins_from_lockfile()
 
-    if not sources or not revs then
-        vim.notify('Failed to read plugin files', vim.log.levels.ERROR)
+    if not plugins then
+        vim.notify('Failed to read neovim flake.lock', vim.log.levels.ERROR)
         return
     end
 
     cache = {
         status = 'fetching',
         completed = 0,
-        total = vim.tbl_count(sources),
+        total = vim.tbl_count(plugins),
         results = {},
     }
 
     local pending = cache.total
 
-    for name, plugin in pairs(sources) do
-        local current_rev = revs[name]
-        if not current_rev then
-            cache.completed = cache.completed + 1
-            cache.results[name] = {
-                status = 'error',
-                error = 'No revision found in plugins.nix',
-            }
-            pending = pending - 1
-            if pending == 0 then
-                cache.status = 'done'
-                on_fetch_complete()
-            end
-        else
-            fetch_plugin_updates(plugin, current_rev, function(result)
-                vim.schedule(function()
-                    cache.completed = cache.completed + 1
-                    cache.results[name] = result
-                    pending = pending - 1
+    for name, plugin in pairs(plugins) do
+        fetch_plugin_updates(plugin, function(result)
+            vim.schedule(function()
+                cache.completed = cache.completed + 1
+                cache.results[name] = result
+                pending = pending - 1
 
-                    -- Update UI if open
+                -- Update UI if open
+                if ui.update_fn then
+                    ui.update_fn()
+                end
+
+                if pending == 0 then
+                    cache.status = 'done'
+                    -- Update UI one final time to hide progress bar
                     if ui.update_fn then
                         ui.update_fn()
                     end
-
-                    if pending == 0 then
-                        cache.status = 'done'
-                        -- Update UI one final time to hide progress bar
-                        if ui.update_fn then
-                            ui.update_fn()
-                        end
-                        -- Only show notification if popup is not open
-                        if not ui.popup or not vim.api.nvim_win_is_valid(ui.popup.winid) then
-                            on_fetch_complete()
-                        end
+                    -- Only show notification if popup is not open
+                    if not ui.popup or not vim.api.nvim_win_is_valid(ui.popup.winid) then
+                        on_fetch_complete()
                     end
-                end)
+                end
             end)
-        end
+        end)
     end
 end
 
@@ -414,7 +437,10 @@ local function render_content(buf)
             local line = NuiLine({
                 NuiText('  ✗ ', 'DiagnosticError'),
                 NuiText(name, 'Normal'),
-                NuiText(' - ' .. ((result.error or 'unknown error'):match('^([^\r\n]+)') or 'unknown error'), 'DiagnosticError'),
+                NuiText(
+                    ' - ' .. ((result.error or 'unknown error'):match('^([^\r\n]+)') or 'unknown error'),
+                    'DiagnosticError'
+                ),
             })
             table.insert(lines, line)
         end

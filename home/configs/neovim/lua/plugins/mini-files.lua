@@ -6,7 +6,7 @@ return {
     end,
     keys = {
         {
-            '<F2>',
+            '<leader>vf',
             ':lua MiniFiles.open()<CR>',
             mode = { 'n' },
             desc = 'Toggle File Manager',

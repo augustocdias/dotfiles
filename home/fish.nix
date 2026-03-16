@@ -77,6 +77,8 @@ in {
       nix-preview = "nixos-rebuild build --flake ~/nixos#augusto -o /tmp/nixos-preview && nix store diff-closures /run/current-system /tmp/nixos-preview";
 
       afk = "dms ipc call lock lock";
+      lock-restore = "hyprctl --instance 0 'keyword misc:allow_session_lock_restore 1' && dms ipc call lock lock";
+      gpg-restart = "gpgconf --kill gpg-agent && gpgconf --launch gpg-agent";
     };
 
     functions = {

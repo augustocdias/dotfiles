@@ -31,8 +31,8 @@ if test $show_help = true
     echo "Usage: update-system [options]"
     echo ""
     echo "Update all system components:"
-    echo "  - Nix flake inputs"
-    echo "  - Neovim plugins"
+    echo "  - Neovim plugins (sub-flake)"
+    echo "  - Nix flake inputs (main)"
     echo "  - Firefox extensions"
     echo "  - Thunderbird extensions"
 
@@ -49,14 +49,14 @@ echo -e $BLUE"       System Update"$NC
 echo -e $BLUE"══════════════════════════════════════════"$NC
 echo ""
 
-# Update flake inputs
-echo -e $YELLOW"[1/4] Updating flake inputs..."$NC
-nix flake update --flake ~/nixos
+# Update Neovim plugins (sub-flake)
+echo -e $YELLOW"[1/4] Updating Neovim plugins..."$NC
+nix flake update --flake ~/nixos/home/neovim
 echo ""
 
-# Update Neovim plugins
-echo -e $YELLOW"[2/4] Updating Neovim plugins..."$NC
-update-nvim --update-tags
+# Update main flake inputs (includes neovim-plugins sub-flake)
+echo -e $YELLOW"[2/4] Updating flake inputs..."$NC
+nix flake update --flake ~/nixos
 echo ""
 
 # Update Firefox extensions

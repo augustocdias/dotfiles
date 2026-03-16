@@ -8,9 +8,10 @@ return {
         end,
     },
     {
-        'blink-cmp', -- auto completion
+        'blink.cmp', -- auto completion
         event = 'DeferredUIEnter',
         dep_of = 'nvim-lspconfig',
+        on_require = 'blink.cmp',
         after = function()
             local disabled_filetypes = { 'minifiles' }
 

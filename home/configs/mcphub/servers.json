@@ -13,29 +13,8 @@
       "disabled": false,
       "url": "https://mcp.notion.com/mcp"
     },
-    "atlassian": {
-      "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v1/sse"],
-      "autoApprove": [
-        "atlassianUserInfo",
-        "fetch",
-        "getAccessibleAtlassianResources",
-        "getConfluencePage",
-        "getConfluencePageDescendants",
-        "getConfluencePageFooterComments",
-        "getConfluencePageInlineComments",
-        "getConfluenceSpaces",
-        "getJiraIssue",
-        "getJiraIssueRemoteIssueLinks",
-        "getJiraIssueTypeMetaWithFields",
-        "getJiraProjectIssueTypesMetadata",
-        "getPagesInConfluenceSpace",
-        "getTransitionsForJiraIssue",
-        "getVisibleJiraProjects",
-        "lookupJiraAccountId",
-        "search",
-        "searchConfluenceUsingCql",
-        "searchJiraIssuesUsingJql"
-      ],
+    "linear": {
+      "args": ["-y", "mcp-remote", "https://mcp.linear.app/mcp"],
       "command": "npx",
       "disabled": false
     },

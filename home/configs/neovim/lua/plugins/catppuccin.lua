@@ -22,7 +22,7 @@ end
 
 return {
     'catppuccin',
-    colorscheme = 'catppuccin',
+    colorscheme = 'catppuccin-mocha',
     after = function()
         local flavour = vim.g.flavours.catppuccin
         local colors = require('catppuccin.palettes').get_palette(flavour)

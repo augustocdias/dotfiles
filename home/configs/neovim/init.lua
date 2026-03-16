@@ -29,4 +29,4 @@ require('utils.keymaps').map_keys()
 require('utils.autocommands').setup()
 require('lze').load('plugins')
 
-vim.cmd('colorscheme ' .. vim.g.theme)
+vim.cmd('colorscheme ' .. vim.g.theme .. '-' .. vim.g.flavour)

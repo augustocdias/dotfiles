@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    blueberry
     brightnessctl
     playerctl
     wl-clipboard
