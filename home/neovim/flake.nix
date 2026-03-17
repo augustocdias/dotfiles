@@ -3,29 +3,28 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
     # Flake-enabled plugins (use their package outputs)
     blink-cmp = {
       url = "github:Saghen/blink.cmp";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    blink-pairs = {
+      url = "github:saghen/blink.pairs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     lze = {
       url = "github:BirdeeHub/lze";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     rustaceanvim = {
       url = "github:mrcjkb/rustaceanvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    # Plain source plugins (flake = false)
     gx = {
       url = "github:chrishrb/gx.nvim";
       flake = false;
     };
-
-    # Plain source plugins (flake = false)
     plenary = {
       url = "github:nvim-lua/plenary.nvim";
       flake = false;
@@ -124,10 +123,6 @@
     };
     todo-comments = {
       url = "github:folke/todo-comments.nvim";
-      flake = false;
-    };
-    nvim-autopairs = {
-      url = "github:windwp/nvim-autopairs";
       flake = false;
     };
     vim-matchup = {

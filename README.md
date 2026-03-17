@@ -110,7 +110,7 @@ By default, PWAs show a Firefox toolbar with navigation and settings buttons. To
 2. Enable custom stylesheets and optionally disable MPRIS (prevents the PWA from registering as a media player, stealing media controls from actual music apps). Create a `user.js` file in the profile directory:
 
    ```fish
-   printf 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);\nuser_pref("media.hardwaremediakeys.enabled", false);\n' > \
+   printf 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);\nuser_pref("media.hardwaremediakeys.enabled", false);\nuser_pref("firefoxpwa.openOutOfScopeInDefaultBrowser", true);\nuser_pref("pdfjs.disabled", true);\n' > \
      ~/.local/share/firefoxpwa/profiles/<PROFILE_ID>/user.js
    ```
 

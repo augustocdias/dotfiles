@@ -18,6 +18,7 @@
       useFlakePackage = true;
     };
     blink-cmp = {useFlakePackage = true;};
+    blink-pairs = {useFlakePackage = true;};
     rustaceanvim = {useFlakePackage = true;};
     gx = {};
     codesnap = {buildFromSource = true;};
@@ -46,7 +47,7 @@
     flash = {};
     trouble = {};
     todo-comments = {};
-    nvim-autopairs = {};
+
     vim-matchup = {};
     mini-icons = {};
     mini-ai = {};

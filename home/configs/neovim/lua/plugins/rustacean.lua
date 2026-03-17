@@ -72,6 +72,7 @@ return {
                                     extraEnv = {
                                         CARGO_TARGET_DIR = './ratarget',
                                     },
+                                    target = vim.g.rust_target,
                                 },
                                 procMacro = {
                                     enable = true,

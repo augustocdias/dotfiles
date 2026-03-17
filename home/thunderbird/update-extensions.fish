@@ -20,7 +20,7 @@ end
 
 echo -e $BLUE"Updating Thunderbird extensions..."$NC
 
-set json_file "$HOME/.dotfiles/home/thunderbird/extensions.json"
+set json_file "$HOME/nixos/home/thunderbird/extensions.json"
 set temp_dir (mktemp -d)
 
 function cleanup --on-event fish_exit
