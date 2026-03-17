@@ -33,5 +33,7 @@
     "loglevel=3"
     "udev.log_level=3"
     "rd.systemd.show_status=auto"
+    # https://wiki.nixos.org/wiki/Intel_Graphics
+    "i915.enable_guc=3"
   ];
 }

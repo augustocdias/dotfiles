@@ -1,5 +1,18 @@
-{...}: {
-  hardware.graphics.enable = true;
+{pkgs, ...}: {
+  # https://wiki.nixos.org/wiki/Intel_Graphics
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  };
+  hardware.enableRedistributableFirmware = true;
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vpl-gpu-rt
+      intel-compute-runtime
+    ];
+  };
+
   hardware.i2c.enable = true;
 
   services.pulseaudio.enable = false;

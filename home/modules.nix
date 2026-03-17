@@ -30,6 +30,7 @@
   ./fish.nix
   ./starship.nix
   ./skim.nix
+  ./mpv.nix
 
   ./zellij.nix
 
