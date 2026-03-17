@@ -32,7 +32,7 @@
         # Auto-launch apps on login
         "uwsm app -- slack"
         "uwsm app -- thunderbird"
-        "uwsm app -- firefoxpwa site launch 01KJX7DRY7AH8NJEKJVEQRAQAV"
+        "uwsm app -- lotion"
         "uwsm app -- kitty --class kitty-startup"
         "hyprctl dispatch workspace 7 && uwsm app -- firefox"
         "uwsm app -- datagrip"
@@ -277,7 +277,7 @@
         # Workspace assignments
         "workspace 1 silent, match:class ^(Slack)$"
         "workspace 2 silent, match:class ^(thunderbird)$"
-        "workspace 3 silent, match:class ^(FFPWA-01KJX7DRY7AH8NJEKJVEQRAQAV)$"
+        "workspace 3 silent, match:class ^(Lotion)$"
         "workspace 6 silent, match:class ^(kitty-startup)$"
         "workspace 8 silent, match:class ^(jetbrains-datagrip)$"
         "workspace 9 silent, match:class ^(\\.virt-manager-wrapped)$"

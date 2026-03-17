@@ -81,6 +81,9 @@
       "text/x-go" = "neovide.desktop";
       "text/markdown" = "neovide.desktop";
 
+      # Notion
+      "x-scheme-handler/notion" = "lotion.desktop";
+
       # Email
       "x-scheme-handler/mailto" = "thunderbird.desktop";
       "message/rfc822" = "thunderbird.desktop";
