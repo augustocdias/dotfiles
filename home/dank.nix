@@ -266,6 +266,8 @@
       lockScreenVideoCycling = true;
       enableFprint = true;
       maxFprintTries = 3;
+      enableU2f = true;
+      u2fMode = "or";
       lockScreenActiveMonitor = "all";
       lockScreenInactiveColor = "#000000";
       lockScreenNotificationMode = 0;
