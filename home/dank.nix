@@ -623,6 +623,8 @@
 
       dankBatteryAlerts.enable = true;
 
+      calculator.enable = true;
+
       worldClock = {
         enable = false;
         settings = {
@@ -676,6 +678,13 @@
       dankKDEConnect.enable = true;
 
       wallpaperCarousel.enable = true;
+
+      screenRecorder = {
+        enable = true;
+        settings = {
+          outputDir = "${config.home.homeDirectory}/videos/recordings";
+        };
+      };
     };
   };
 

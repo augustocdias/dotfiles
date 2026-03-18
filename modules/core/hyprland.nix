@@ -12,4 +12,5 @@
 
   programs.dconf.enable = true;
   programs.direnv.enable = true;
+  programs.gpu-screen-recorder.enable = true;
 }

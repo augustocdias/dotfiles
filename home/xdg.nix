@@ -9,10 +9,11 @@
     pictures = "${config.home.homeDirectory}/pictures";
     publicShare = null;
     templates = null;
-    videos = null;
+    videos = "${config.home.homeDirectory}/videos";
     extraConfig = {
       DEV = "${config.home.homeDirectory}/dev";
       SCREENSHOTS = "${config.home.homeDirectory}/pictures/screenshots";
+      RECORDINGS = "${config.home.homeDirectory}/videos/recordings";
     };
   };
 
