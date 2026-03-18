@@ -1,7 +1,7 @@
 layout {
     tab name="neovim" focus=true {
         base {
-            pane command="nvim"
+            pane
         }
     }
     tab name="terminal" {
