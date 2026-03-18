@@ -61,7 +61,7 @@ in {
         "browser.urlbar.placeholderName" = "DuckDuckGo";
 
         "browser.download.folderList" = 2;
-        "browser.download.dir" = "${config.home.homeDirectory}/Downloads";
+        "browser.download.dir" = "${config.home.homeDirectory}/downloads";
         "browser.download.useDownloadDir" = true;
 
         "mailnews.mark_message_read.auto" = true;
