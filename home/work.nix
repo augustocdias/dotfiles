@@ -18,11 +18,11 @@
     # since the IdP redirect (e.g. Google, Okta) gets sent to the external browser.
     # Remove once fixed upstream: https://github.com/puneetsl/lotion/issues/145
     ssoFixPatch = pkgs.writeText "lotion-sso-fix.js" ''
-          // Allow all in-tab navigations (needed for SSO/OAuth login flows).
-          // External links via window.open() are still handled by setWindowOpenHandler above.
-          webContents.on('will-navigate', (event, navigationUrl) => {
-            log.debug("Tab " + this.tabId + ": Navigating to " + navigationUrl);
-          });
+      // Allow all in-tab navigations (needed for SSO/OAuth login flows).
+      // External links via window.open() are still handled by setWindowOpenHandler above.
+      webContents.on('will-navigate', (event, navigationUrl) => {
+        log.debug("Tab " + this.tabId + ": Navigating to " + navigationUrl);
+      });
     '';
 
     # Patch to enforce single instance and handle notion:// URLs by opening a new tab.
@@ -229,8 +229,16 @@ in {
     wireguard-tools
 
     slack
-    jetbrains.datagrip
 
     lotion
+
+    (pkgs.jetbrains-plugins.lib.buildIdeWithPlugins pkgs.jetbrains.datagrip (with pkgs.jetbrains-plugins; [
+      IdeaVIM
+      com.intellij.ml.llm
+      com.intellij.mcpServer
+      aws.toolkit.core
+      aws.toolkit
+      com.github.catppuccin.jetbrains
+    ]))
   ];
 }

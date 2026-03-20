@@ -1,5 +1,6 @@
 inputs: [
   inputs.neovim-nightly-overlay.overlays.default
+  inputs.jetbrains-plugins.overlays.default
   (_: prev: {
     sqlit-with-postgres = let
       sqlitPkg = inputs.sqlit.packages.${prev.stdenv.hostPlatform.system}.default;

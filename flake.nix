@@ -50,6 +50,11 @@
       url = "path:./home/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    jetbrains-plugins = {
+      url = "github:Janrupf/nix-jetbrains-plugin-repository";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
