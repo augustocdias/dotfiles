@@ -162,10 +162,10 @@
         "$mainMod SHIFT, L, exec, dms ipc call lock lock"
 
         # Media controls
-        ", XF86AudioPlay, exec, dms ipc call media play-pause"
-        ", XF86AudioPause, exec, dms ipc call media play-pause"
-        ", XF86AudioPrev, exec, dms ipc call media previous"
-        ", XF86AudioNext, exec, dms ipc call media next"
+        ", XF86AudioPlay, exec, dms ipc call mpris playPause"
+        ", XF86AudioPause, exec, dms ipc call mpris playPause"
+        ", XF86AudioPrev, exec, dms ipc call mpris previous"
+        ", XF86AudioNext, exec, dms ipc call mpris next"
 
         # Volume control
         ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
