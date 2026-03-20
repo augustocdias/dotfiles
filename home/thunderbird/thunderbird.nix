@@ -68,6 +68,8 @@ in {
         "mailnews.mark_message_read.delay" = true;
         "mailnews.mark_message_read.delay.interval" = 5;
 
+        "mail.biff.play_sound" = false;
+
         "mail.identity.default.compose_html" = true;
         "mail.SpellCheckBeforeSend" = true;
 
