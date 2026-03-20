@@ -691,6 +691,5 @@
   home.packages = [
     pkgs.libnotify
     pkgs.inotify-tools
-    pkgs.librepods
   ];
 }
