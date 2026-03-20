@@ -8,6 +8,7 @@
       model = "anthropic/claude-opus-4-6";
       autoupdate = false;
       default_agent = "plan";
+      lsp = false;
 
       mcp = {
         Notion = {
