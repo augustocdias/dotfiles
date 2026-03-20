@@ -6,7 +6,6 @@
 
     gnupg
     pinentry-bemenu
-    pinentry-curses
     bemenu
   ];
 }

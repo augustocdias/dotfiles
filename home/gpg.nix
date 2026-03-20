@@ -1,9 +1,6 @@
 {pkgs, ...}: {
   programs.gpg = {
     enable = true;
-    settings = {
-      pinentry-mode = "loopback";
-    };
     publicKeys = [
       {
         source = pkgs.fetchurl {
@@ -21,8 +18,8 @@
     enableSshSupport = true;
     enableExtraSocket = true;
     pinentry.package = pkgs.pinentry-bemenu;
-    defaultCacheTtl = 60;
-    maxCacheTtl = 120;
+    defaultCacheTtl = 1800;
+    maxCacheTtl = 7200;
     extraConfig = ''
       allow-loopback-pinentry
       extra-socket /tmp/S.gpg-agent.extra
