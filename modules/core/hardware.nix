@@ -25,7 +25,10 @@
     wireplumber.enable = true;
   };
 
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    browsed.enable = false;
+  };
   services.avahi = {
     enable = true;
     nssmdns4 = true;
