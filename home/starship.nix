@@ -69,6 +69,7 @@
       git_status = {
         style = "fg:color_crust bg:prev_bg";
         format = "[($all_status$ahead_behind )]($style)";
+        stashed = "󰜦";
       };
       git_state = {
         style = "fg:color_crust bg:prev_bg";

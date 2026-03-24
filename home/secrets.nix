@@ -21,6 +21,7 @@ in {
       dd_app_key = {};
       dd_api_key = {};
       github_token = {};
+      openai_api_key = {};
     };
 
     templates = {
@@ -28,6 +29,7 @@ in {
         path = "%r/env-secrets.fish";
         content = ''
           set -gx ANTHROPIC_API_KEY ${config.sops.placeholder.anthropic_api_key}
+          set -gx OPENAI_API_KEY ${config.sops.placeholder.openai_api_key}
           set -gx GOOGLE_SEARCH_API_KEY ${config.sops.placeholder.google_search_api_key}
           set -gx GOOGLE_SEARCH_ENGINE_ID ${config.sops.placeholder.google_search_engine_id}
           set -gx TAVILY_API_KEY ${config.sops.placeholder.tavily_api_key}
