@@ -1,134 +1,171 @@
-# Personal Settings and Tools (NixOS + Home-Manager)
+# Personal NixOS Configuration
 
-## NixOS Installer ISO
+Dendritic NixOS configuration using [Den](https://github.com/vic/den) + [flake-parts](https://flake.parts) + [flake-file](https://github.com/vic/flake-file).
 
-To build the iso, run:
+## Hosts
+
+| Host | Platform | Profile | Description |
+|------|----------|---------|-------------|
+| `laptop` | x86_64-linux | workstation | Hyprland desktop with DMS shell |
+| `raspi` | aarch64-linux | server | Headless Raspberry Pi (planned) |
+
+## Building the Installer ISO
 
 ```bash
-docker run --rm -it -v $(pwd):/workspace -w /workspace nixos/nix sh -c "nix build --extra-experimental-features 'nix-command flakes' .#nixosConfigurations.installer.config.system.build.isoImage && cp result/iso/*.iso ."
+nix build .#installer
 ```
 
-The installer will guide through the process and at the end the machine should be ready to roll.
+## Installing NixOS
+
+### Option A: Remote install with nixos-anywhere
+
+From an existing machine, targeting a machine booted with the custom ISO (or any Linux with SSH):
+
+```bash
+# 1. Boot target machine with ISO, note its IP
+
+# 2. Prepare extra-files
+EXTRA=$(mktemp -d)
+cp -r ~/nixos "$EXTRA/home/augusto/nixos"
+mkdir -p "$EXTRA/etc/nixos/secrets"
+read -s -p "Password: " PASS && echo
+echo "$PASS" | mkpasswd -m yescrypt -s > "$EXTRA/etc/nixos/secrets/augusto-password"
+
+# 3. Install WITHOUT auto-reboot
+nixos-anywhere --flake ~/nixos#laptop \
+  --target-host root@<target-ip> \
+  --extra-files "$EXTRA" \
+  --chown /home/augusto 1000:100 \
+  --phases kexec,disko,install
+
+# 4. Run post-install via nixos-enter
+ssh root@<target-ip>
+nixos-enter --root /mnt -- fish /etc/post-install.fish --tpm --fido --sops --git-init
+
+# 5. Reboot
+reboot
+```
+
+The `--extra-files` flag copies the repo to the target. Use `--git-init` in the
+post-install script to restore git history from the remote.
+
+### Option B: Local install from the custom ISO
+
+```bash
+# 1. Boot the custom ISO
+
+# 2. Install (formats disk, copies embedded repo, runs nixos-install)
+install-local laptop
+
+# 3. Run post-install for TPM/FIDO2 enrollment
+sudo nixos-enter --root /mnt -- fish /etc/post-install.fish --tpm --fido --sops
+
+# 4. Reboot
+reboot
+```
+
+### Post-install flags
+
+```
+post-install.fish [FLAGS]
+
+  --tpm          Enroll TPM2 for LUKS auto-unlock
+  --fido         Enroll FIDO2 key(s) for LUKS unlock
+  --fingerprint  Show fingerprint enrollment instructions
+  --sops         Generate age key and configure sops-nix
+  --dotfiles     Clone dotfiles repo to ~/nixos
+  --media        Clone media repo to ~/media
+  --git-init     Initialize git in ~/nixos (for --extra-files installs)
+```
+
+## Updating
+
+```bash
+# Full system rebuild
+sudo nixos-rebuild switch --flake ~/nixos#laptop
+
+# All flake inputs
+nix flake update
+
+# Neovim plugins only
+update-neovim-plugins
+
+# Firefox/Thunderbird extensions
+update-firefox
+update-thunderbird
+
+# Regenerate flake.nix after changing module inputs
+nix run .#write-flake
+```
 
 ## Post Installation
 
-Most apps come already pre-configured from home-manager. All plugins and configurations are pre-installed. Some features require manual setup after the first boot as described below.
-
 ### Fingerprint Enrollment
-
-The fingerprint sensor is enabled but fingerprints must be enrolled on a running system as it requires the `fprintd` daemon. Run:
 
 ```fish
 fprintd-enroll
-```
-
-Follow the prompts to scan your finger. To enroll multiple fingers:
-
-```fish
 fprintd-enroll -f right-index-finger
 fprintd-enroll -f right-middle-finger
 ```
 
-Once enrolled, fingerprint authentication will work for login and sudo.
-
 ### Secrets Management
 
-Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix) with a hybrid age + GPG setup:
-
-- **Age keys**: Per-machine keys for automatic decryption at login
-- **GPG (YubiKey)**: Master key for bootstrapping new machines
+Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix) with age + GPG (YubiKey).
 
 #### First-time setup on a new machine
 
-1. Plug in the YubiKey
-2. Run the setup script:
-
-   ```fish
-   nix-shell -p age sops yq-go --run "fish ~/nixos/home/secrets/sops-setup.fish"
-   ```
-
-3. The script will:
-   - Generate a new age key for this machine
-   - Update `.sops.yaml` with the new key
-   - Re-encrypt secrets
+```fish
+nix-shell -p age sops yq-go --run "fish ~/nixos/modules/security/secrets/sops-setup.fish"
+```
 
 #### Adding new secrets
 
-1. Edit the secrets file:
+```fish
+sops ~/nixos/modules/security/secrets/env.yaml
+```
 
-   ```fish
-   sops ~/.dotfiles/home/secrets/env.yaml
-   ```
-
-2. Add the new secret key to `home/secrets.nix`
-3. Add the environment variable to the template in `home/secrets.nix`
-4. Rebuild
+Add the secret key to `modules/security/secrets/secrets.nix` and the environment variable to the template.
 
 ### FirefoxPWA (Progressive Web Apps)
 
-Web apps can be installed as standalone PWAs using [FirefoxPWA](https://github.com/nicegware/nicegware-nicegpwa). The CLI tool and browser connector are already installed.
-
 #### Creating a profile
-
-Each PWA should have its own profile to isolate cookies and data:
 
 ```fish
 firefoxpwa profile create --name "WhatsApp"
 ```
 
-Note the profile ID printed (e.g., `01KKC8KEY5WQTRM1P0WHT946CX`).
-
-#### Installing a PWA site
+#### Installing a PWA
 
 ```fish
 firefoxpwa site install https://web.whatsapp.com/data/manifest.json \
-  --profile 01KKC8KEY5WQTRM1P0WHT946CX \
+  --profile <PROFILE_ID> \
   --name "WhatsApp" \
   --icon-url "https://pngimg.com/uploads/whatsapp/whatsapp_PNG95154.png" \
   --document-url "https://web.whatsapp.com/" \
   --categories social
 ```
 
-Note the site ID printed (e.g., `01KKC8KPKEX5XZPBBK02D5ZM67`).
-
-#### Listing profiles and sites
-
-```fish
-firefoxpwa profile list
-```
-
 #### Hiding the browser toolbar
 
-By default, PWAs show a Firefox toolbar with navigation and settings buttons. To hide it:
+1. Launch the PWA once: `firefoxpwa site launch <SITE_ID>`
+2. Enable custom stylesheets:
 
-1. Launch the PWA once to initialize its profile directory:
+```fish
+printf 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);\nuser_pref("media.hardwaremediakeys.enabled", false);\nuser_pref("firefoxpwa.openOutOfScopeInDefaultBrowser", true);\nuser_pref("pdfjs.disabled", true);\n' > \
+  ~/.local/share/firefoxpwa/profiles/<PROFILE_ID>/user.js
+```
 
-   ```fish
-   firefoxpwa site launch <SITE_ID>
-   ```
+3. Create userChrome.css:
 
-2. Enable custom stylesheets and optionally disable MPRIS (prevents the PWA from registering as a media player, stealing media controls from actual music apps). Create a `user.js` file in the profile directory:
-
-   ```fish
-   printf 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);\nuser_pref("media.hardwaremediakeys.enabled", false);\nuser_pref("firefoxpwa.openOutOfScopeInDefaultBrowser", true);\nuser_pref("pdfjs.disabled", true);\n' > \
-     ~/.local/share/firefoxpwa/profiles/<PROFILE_ID>/user.js
-   ```
-
-   Alternatively go to `about:config` while inside the PWA application and change those settings manually.
-
-3. Create the `userChrome.css` file:
-
-   ```fish
-   echo '#nav-bar { display: none !important; }
-   #TabsToolbar { display: none !important; }' > \
-     ~/.local/share/firefoxpwa/profiles/<PROFILE_ID>/chrome/userChrome.css
-   ```
-
-4. Restart the PWA.
+```fish
+echo '#nav-bar { display: none !important; }
+#TabsToolbar { display: none !important; }' > \
+  ~/.local/share/firefoxpwa/profiles/<PROFILE_ID>/chrome/userChrome.css
+```
 
 #### Auto-launching on login
 
-Add to the `exec-once` section in `home/hyprland.nix`:
+Add to the `exec-once` section in `modules/desktop/hyprland.nix`:
 
 ```nix
 "uwsm app -- firefoxpwa site launch <SITE_ID>"

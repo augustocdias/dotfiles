@@ -2,7 +2,22 @@
   pkgs,
   lib,
   ...
-}: {
+}: let
+  # Derive SSH public key from GPG key at build time for authorized_keys
+  gpgPublicKey = pkgs.fetchurl {
+    url = "https://keys.openpgp.org/vks/v1/by-fingerprint/7D8396F74725A208D835CE3730E62A1E4F078650";
+    hash = "sha256-v11agJZKThP3/rNN23vyTEwnOk8928JBDlER7Dub4Gc=";
+  };
+
+  sshAuthorizedKey =
+    pkgs.runCommand "gpg-ssh-key" {
+      nativeBuildInputs = [pkgs.gnupg];
+    } ''
+      export GNUPGHOME=$(mktemp -d)
+      gpg --batch --import ${gpgPublicKey}
+      gpg --export-ssh-key 7D8396F74725A208D835CE3730E62A1E4F078650 > $out
+    '';
+in {
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   boot.tmp.useTmpfs = true;
@@ -11,63 +26,22 @@
   networking.networkmanager.enable = true;
   networking.wireless.enable = true;
 
-  services.openssh.enable = true;
-  services.openssh.settings.PermitRootLogin = "yes";
+  services.openssh = {
+    enable = true;
+    settings.PermitRootLogin = "prohibit-password";
+  };
 
   services.getty.autologinUser = "nixos";
+
+  users.users.root.openssh.authorizedKeys.keyFiles = [sshAuthorizedKey];
 
   users.users.nixos = {
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager"];
     initialHashedPassword = lib.mkForce null;
     password = lib.mkForce "nixos";
+    openssh.authorizedKeys.keyFiles = [sshAuthorizedKey];
   };
-
-  users.users.root = {
-    initialHashedPassword = lib.mkForce null;
-    password = lib.mkForce "nixos";
-  };
-
-  environment.etc."auto-install-wrapper.sh" = {
-    text = ''
-      #!/usr/bin/env bash
-
-      # Check if this is the first run (no marker file)
-      if [ ! -f /tmp/.installer-ran ]; then
-        # Mark that we've run
-        touch /tmp/.installer-ran
-
-        # Run the installer
-        sudo fish /etc/install-script.fish
-
-        # After installer exits (completed or cancelled), show message
-        echo ""
-        echo "Installer finished. You now have a shell."
-        echo "Type 'install-system' to run the installer again if needed."
-        echo ""
-      fi
-
-      # Drop to bash shell
-      exec bash
-    '';
-    mode = "0755";
-  };
-
-  programs.bash.loginShellInit = ''
-    # Welcome message
-    clear
-    echo ""
-    echo "╔════════════════════════════════════════════╗"
-    echo "║  NixOS Interactive Installer with Hyprland ║"
-    echo "╚════════════════════════════════════════════╝"
-    echo ""
-
-    # Auto-run installer wrapper for nixos user
-    if [ "$(whoami)" = "nixos" ] && [ -z "$INSTALLER_WRAPPER_RAN" ]; then
-      export INSTALLER_WRAPPER_RAN=1
-      exec /etc/auto-install-wrapper.sh
-    fi
-  '';
 
   environment.systemPackages = with pkgs; [
     vim
@@ -88,6 +62,7 @@
     jq
     networkmanager
     nixos-install-tools
+    gnupg
   ];
 
   console = {
@@ -95,17 +70,53 @@
     packages = [pkgs.terminus_font];
   };
 
-  environment.etc."install-script.fish" = {
+  environment.etc."post-install.fish" = {
     mode = "0755";
-    text = builtins.readFile ./install-script.fish;
+    text = builtins.readFile ./post-install.fish;
   };
 
-  environment.etc."partition-disk.fish" = {
-    mode = "0755";
-    text = builtins.readFile ./partition-disk.fish;
-  };
+  programs.bash.loginShellInit = ''
+    clear
+    echo ""
+    echo "NixOS Installer ISO"
+    echo "==================="
+    echo ""
+    echo "Commands:"
+    echo "  install-local <host>  - Install locally (formats disk, installs NixOS)"
+    echo "  post-install          - Run post-install setup (TPM, FIDO2, sops, etc.)"
+    echo ""
+    echo "For remote installs, use nixos-anywhere from another machine."
+    echo ""
+  '';
 
   environment.shellAliases = {
-    install-system = "sudo fish /etc/install-script.fish";
+    post-install = "sudo fish /etc/post-install.fish";
+    install-local = ''
+      sh -c '
+        HOST="$1"
+        if [ -z "$HOST" ]; then
+          echo "Usage: install-local <host-name>"
+          echo "Available: laptop, raspi"
+          exit 1
+        fi
+        REPO=/etc/nixos-installer/repo
+        echo "Installing NixOS configuration: $HOST"
+        echo "Running disko..."
+        sudo nix run github:nix-community/disko/latest -- --mode destroy,format,mount --flake "$REPO#$HOST"
+        echo "Copying repo to target..."
+        sudo mkdir -p /mnt/home/augusto/nixos
+        sudo cp -r "$REPO"/. /mnt/home/augusto/nixos/
+        sudo mkdir -p /mnt/etc/nixos/secrets
+        echo "Enter password for user augusto:"
+        read -s PASS
+        echo "$PASS" | sudo mkpasswd -m yescrypt -s | sudo tee /mnt/etc/nixos/secrets/augusto-password > /dev/null
+        echo "Running nixos-install..."
+        sudo nixos-install --flake "/mnt/home/augusto/nixos#$HOST" --no-root-password
+        sudo chown -R 1000:100 /mnt/home/augusto
+        echo ""
+        echo "Installation complete. Run post-install for TPM/FIDO2 enrollment:"
+        echo "  sudo nixos-enter --root /mnt -- fish /etc/post-install.fish --tpm --fido"
+        echo "Then reboot."
+      ' _ '';
   };
 }

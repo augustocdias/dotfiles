@@ -1,10 +1,2 @@
-.DS_Store
-pgcli/.config/pgcli/*
-!pgcli/.config/pgcli/config
-fish/.config/fish/*
-!fish/.config/fish/fish_plugins
-!fish/.config/fish/config.fish
-!fish/.config/fish/abbreviations.fish
-
-nixos/nixos/result
+result
 *.iso
