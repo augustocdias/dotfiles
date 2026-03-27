@@ -37,7 +37,7 @@ return {
                         opts = {
                             system_prompt = require('ai.prompt').system_prompt(),
                         },
-                        adapter = 'anthropic',
+                        adapter = 'opencode',
                         tools = {
                             -- builtin auto-approve
                             ['file_search'] = {
@@ -140,13 +140,6 @@ return {
                                     requires_approval_before = false,
                                 },
                             },
-                            ['jira'] = {
-                                callback = 'ai.cc.tools.jira',
-                                description = 'Interact with Atlassian Jira API for ticket management, transitions, and comments',
-                                opts = {
-                                    requires_approval_before = {},
-                                },
-                            },
                             opts = {
                                 system_prompt = {
                                     enabled = true,
@@ -164,7 +157,6 @@ return {
                                     'list_code_usages',
                                     -- custom
                                     'calendar_scheduler',
-                                    -- 'datadog',
                                     'date',
                                     'gh',
                                     'git',
@@ -176,7 +168,6 @@ return {
                                     'gh_status',
                                     'gh_workflow',
                                     'google_calendar',
-                                    'jira',
                                 },
                             },
                         },
@@ -204,6 +195,15 @@ return {
                     },
                 },
                 adapters = {
+                    acp = {
+                        opencode = function()
+                            return require('codecompanion.adapters').extend('opencode', {
+                                defaults = {
+                                    mode = 'plan',
+                                },
+                            })
+                        end,
+                    },
                     http = {
                         anthropic = function()
                             return require('codecompanion.adapters').extend('anthropic', {
@@ -239,6 +239,7 @@ return {
                             },
                             auto_generate_title = true,
                             title_generation_opts = {
+                                adapter = 'anthropic',
                                 ---Number of user prompts after which to refresh the title (0 to disable)
                                 refresh_every_n_prompts = 0,
                                 max_refreshes = 3,
