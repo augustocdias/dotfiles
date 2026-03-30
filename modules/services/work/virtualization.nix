@@ -1,6 +1,8 @@
 {den, ...}: {
   den.aspects.virtualization = {
     nixos = {pkgs, ...}: {
+      users.users.augusto.extraGroups = ["libvirtd"];
+
       virtualisation.libvirtd = {
         enable = true;
         qemu = {

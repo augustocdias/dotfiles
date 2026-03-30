@@ -10,9 +10,6 @@
           "networkmanager"
           "video"
           "render"
-          "greeter"
-          "libvirtd"
-          "i2c"
         ];
         hashedPasswordFile = "/etc/nixos/secrets/augusto-password";
       };

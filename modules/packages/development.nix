@@ -9,7 +9,20 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  den.aspects.development-packages = {
+  den.aspects.development = {
+    nixos = {pkgs, ...}: {
+      # Allows dynamically linked executables
+      programs.nix-ld = {
+        enable = true;
+        libraries = with pkgs; [
+          stdenv.cc.cc
+          libz
+        ];
+      };
+
+      programs.dconf.enable = true;
+    };
+
     homeManager = {
       pkgs,
       config,

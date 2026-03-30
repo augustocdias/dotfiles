@@ -1,10 +1,7 @@
-{ inputs, ... }:
-{
-  perSystem = { pkgs, ... }:
-  let
+{inputs, ...}: {
+  perSystem = {pkgs, ...}: let
     neovimPkg = inputs.self.nixosConfigurations.laptop.config.home-manager.users.augusto.programs.neovim.finalPackage;
-  in
-  {
+  in {
     devShells.nvim-dev = pkgs.mkShell {
       packages = [
         (pkgs.writeShellScriptBin "nvim" ''

@@ -1,27 +1,11 @@
 {den, ...}: {
-  den.aspects.workstation = {
+  den.aspects.augusto = {
     includes = with den.aspects; [
-      # core
-      nix
-      locale
       users
-      development-system
-      disko
-
-      # security
       security
       secrets
-
-      # desktop
-      boot
       hyprland
       login-manager
-
-      # hardware
-      networking
-      input-devices
-
-      # services
       podman
       virtualization
       teamviewer
@@ -30,8 +14,6 @@
       slack
       wireguard
       sqlit
-
-      # programs
       neovim
       git
       fish
@@ -51,14 +33,10 @@
       yamllint
       xdg
       gcalcli
-
-      # packages
       cli-tools
       fonts
-      development-packages
+      development
       applications
-
-      # scripts
       update-system
     ];
   };

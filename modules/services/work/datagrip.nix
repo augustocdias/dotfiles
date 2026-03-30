@@ -10,14 +10,8 @@
   };
 
   den.aspects.datagrip = {
-    includes = [
-      (den.lib.perHost {
-        nixos = {
-          nixpkgs.overlays = lib.optionals (inputs ? jetbrains-plugins) [
-            inputs.jetbrains-plugins.overlays.default
-          ];
-        };
-      })
+    nixos.nixpkgs.overlays = lib.optionals (inputs ? jetbrains-plugins) [
+      inputs.jetbrains-plugins.overlays.default
     ];
 
     homeManager = {pkgs, ...}: {

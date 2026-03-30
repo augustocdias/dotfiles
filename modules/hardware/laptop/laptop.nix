@@ -1,10 +1,17 @@
 {den, ...}: {
   den.aspects.laptop = {
-    includes = [den.aspects.workstation];
-    provides.to-users.includes = [den.aspects.workstation];
+    includes = with den.aspects; [
+      disko
+      boot
+      networking
+      input-devices
+      locale
+    ];
 
     nixos = {pkgs, ...}: {
       imports = [./_hardware-configuration.nix];
+
+      users.users.augusto.extraGroups = ["i2c"];
 
       # Per-machine disko layout (matches existing disk setup)
       disko.devices = {

@@ -7,29 +7,25 @@
   flake-file.inputs.hyprland.url = lib.mkDefault "github:hyprwm/Hyprland";
 
   den.aspects.hyprland = {
-    includes = [
-      (den.lib.perHost {
-        nixos = {
-          imports = lib.optionals (inputs ? hyprland) [inputs.hyprland.nixosModules.default];
+    nixos = {
+      imports = lib.optionals (inputs ? hyprland) [inputs.hyprland.nixosModules.default];
 
-          programs = {
-            hyprland = {
-              enable = true;
-              withUWSM = true;
-              xwayland.enable = true;
-            };
-            dconf.enable = true;
-            direnv.enable = true;
-            gpu-screen-recorder.enable = true;
-          };
-
-          environment.sessionVariables = {
-            WLR_NO_HARDWARE_CURSORS = "1";
-            NIXOS_OZONE_WL = "1";
-          };
+      programs = {
+        hyprland = {
+          enable = true;
+          withUWSM = true;
+          xwayland.enable = true;
         };
-      })
-    ];
+        dconf.enable = true;
+        direnv.enable = true;
+        gpu-screen-recorder.enable = true;
+      };
+
+      environment.sessionVariables = {
+        WLR_NO_HARDWARE_CURSORS = "1";
+        NIXOS_OZONE_WL = "1";
+      };
+    };
 
     homeManager = {pkgs, ...}: {
       wayland.windowManager.hyprland = {

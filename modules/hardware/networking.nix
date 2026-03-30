@@ -18,8 +18,6 @@
           };
         };
       };
-
-      programs.kdeconnect.enable = true;
     };
   };
 }

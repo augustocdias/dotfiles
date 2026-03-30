@@ -14,35 +14,34 @@
   };
 
   den.aspects.dms = {
-    includes = [
-      (den.lib.perHost {
-        nixos = {
-          pkgs,
-          config,
-          ...
-        }: {
-          imports = lib.optionals (inputs ? dms) [inputs.dms.nixosModules.greeter];
+    nixos = {
+      pkgs,
+      config,
+      ...
+    }: {
+      imports = lib.optionals (inputs ? dms) [inputs.dms.nixosModules.greeter];
 
-          qt.enable = true;
+      qt.enable = true;
+      programs.kdeconnect.enable = true;
 
-          programs.dank-material-shell.greeter = {
-            enable = true;
-            compositor.name = "hyprland";
-            compositor.customConfig = ''
-              env = XCURSOR_SIZE,24
-              env = XCURSOR_THEME,catppuccin-mocha-blue-cursors
-              exec-once = hyprctl setcursor catppuccin-mocha-blue-cursors 24
-            '';
-            configHome = config.users.users.augusto.home;
-          };
+      users.users.augusto.extraGroups = ["greeter"];
 
-          environment.systemPackages = [
-            pkgs.catppuccin-cursors.mochaBlue
-            pkgs.papirus-icon-theme
-          ];
-        };
-      })
-    ];
+      programs.dank-material-shell.greeter = {
+        enable = true;
+        compositor.name = "hyprland";
+        compositor.customConfig = ''
+          env = XCURSOR_SIZE,24
+          env = XCURSOR_THEME,catppuccin-mocha-blue-cursors
+          exec-once = hyprctl setcursor catppuccin-mocha-blue-cursors 24
+        '';
+        configHome = config.users.users.augusto.home;
+      };
+
+      environment.systemPackages = [
+        pkgs.catppuccin-cursors.mochaBlue
+        pkgs.papirus-icon-theme
+      ];
+    };
 
     homeManager = {
       pkgs,

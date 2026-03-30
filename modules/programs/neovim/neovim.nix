@@ -78,12 +78,8 @@ in {
   };
 
   den.aspects.neovim = {
-    includes = [
-      (den.lib.perHost {
-        nixos.nixpkgs.overlays = lib.optionals (inputs ? neovim-nightly-overlay) [
-          inputs.neovim-nightly-overlay.overlays.default
-        ];
-      })
+    nixos.nixpkgs.overlays = lib.optionals (inputs ? neovim-nightly-overlay) [
+      inputs.neovim-nightly-overlay.overlays.default
     ];
 
     homeManager = {
