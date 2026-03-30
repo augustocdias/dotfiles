@@ -93,7 +93,6 @@
                 "bluez5.enable-sbc-xq" = true;
                 "bluez5.enable-msbc" = true;
                 "bluez5.enable-hw-volume" = false;
-                "bluez5.codecs" = ["aac" "sbc" "sbc_xq"];
               };
               "99-disable-hdmi-audio"."monitor.alsa.rules" = [
                 {
