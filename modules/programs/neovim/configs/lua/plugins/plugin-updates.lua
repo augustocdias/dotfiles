@@ -62,7 +62,8 @@ local function get_plugins_from_lockfile()
 
                 if locked and locked.type == 'github' then
                     local original = node.original or {}
-                    plugins[name] = {
+                    local display_name = name:gsub('^nvim%-', '')
+                    plugins[display_name] = {
                         owner = locked.owner,
                         repo = locked.repo,
                         rev = locked.rev,
