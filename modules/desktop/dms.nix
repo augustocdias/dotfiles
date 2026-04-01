@@ -37,6 +37,13 @@
         configHome = config.users.users.augusto.home;
       };
 
+      # DMS lock screen runs fingerprint and U2F as separate parallel PAM sessions,
+      # so the password session must NOT include them or they'll block sequentially.
+      security.pam.services.dankshell = {
+        u2fAuth = false;
+        fprintAuth = false;
+      };
+
       environment.systemPackages = [
         pkgs.catppuccin-cursors.mochaBlue
         pkgs.papirus-icon-theme
