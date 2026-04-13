@@ -445,6 +445,10 @@
                   enabled = true;
                 }
                 {
+                  id = "screenRecorder";
+                  enabled = true;
+                }
+                {
                   id = "separator";
                   enabled = true;
                 }
@@ -731,6 +735,7 @@
       home.packages = [
         pkgs.libnotify
         pkgs.inotify-tools
+        (pkgs.writeScriptBin "stop-recording" (builtins.readFile ./stop-recording.fish))
       ];
     };
   };

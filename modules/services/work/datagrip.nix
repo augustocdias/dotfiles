@@ -20,7 +20,6 @@
           IdeaVIM
           com.intellij.ml.llm
           com.intellij.mcpServer
-          aws.toolkit.core
           aws.toolkit
           com.github.catppuccin.jetbrains
         ]))

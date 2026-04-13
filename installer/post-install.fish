@@ -88,7 +88,7 @@ end
 if test "$do_dotfiles" = true
     echo "=== Cloning dotfiles ==="
     if not test -d /home/augusto/nixos/.git
-        su augusto -c "git clone git@github.com:augustocdias/dotfiles.git /home/augusto/nixos"
+        su augusto -c "git clone git@github.com:augustocdias/nixos.git /home/augusto/nixos"
     else
         echo "Dotfiles already present, skipping"
     end
@@ -108,7 +108,7 @@ end
 if test "$do_git_init" = true
     echo "=== Initializing git in ~/nixos ==="
     if not test -d /home/augusto/nixos/.git
-        su augusto -c "cd /home/augusto/nixos && git init && git remote add origin git@github.com:augustocdias/dotfiles.git && git fetch origin && git reset --mixed origin/main"
+        su augusto -c "cd /home/augusto/nixos && git init && git remote add origin git@github.com:augustocdias/nixos.git && git fetch origin && git reset --mixed origin/main"
     else
         echo "Git already initialized, skipping"
     end

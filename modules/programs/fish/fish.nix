@@ -5,12 +5,15 @@
         EDITOR = "nvim";
         VISUAL = "nvim";
         BROWSER = "firefox";
-        TERMINAL = "kitty";
+        TERMINAL = "ghostty";
 
         BAT_THEME = "Catppuccin Mocha";
 
         DD_SITE = "datadoghq.eu";
         JIRA_URL = "https://nelly.atlassian.net";
+
+        GOPATH = "$HOME/.go";
+        GOBIN = "$HOME/.go/bin";
 
         GITHUB_USER = "augustocdias";
         SEARXNG_API_URL = "https://searx.oloke.xyz/";

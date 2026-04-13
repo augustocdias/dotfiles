@@ -1,7 +1,7 @@
 {den, ...}: {
   den.hosts.x86_64-linux.laptop = {
     hostName = "nixos";
-    aspect = "laptop";
+    aspect = den.aspects.laptop;
     users.augusto = {};
   };
 

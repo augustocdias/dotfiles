@@ -57,7 +57,7 @@
             "uwsm app -- slack"
             "uwsm app -- thunderbird"
             "uwsm app -- lotion"
-            "uwsm app -- kitty --class kitty-startup"
+            "uwsm app -- ghostty --class=ghostty-startup +new-window"
             "hyprctl dispatch workspace 7 && uwsm app -- firefox"
             "uwsm app -- datagrip"
             "uwsm app -- virt-manager"
@@ -148,7 +148,7 @@
           "$mainMod" = "SUPER";
 
           bind = [
-            "$mainMod, RETURN, exec, kitty"
+            "$mainMod, RETURN, exec, ghostty +new-window"
             "$mainMod, SPACE, exec, dms ipc call launcher toggle"
             "$mainMod, Q, killactive,"
             "$mainMod SHIFT, SPACE, exec, dms ipc call powermenu toggle"
@@ -160,6 +160,9 @@
             "$mainMod SHIFT, 4, exec, dms screenshot --no-file"
             "$mainMod SHIFT, 3, exec, dms screenshot full --no-file"
             "$mainMod SHIFT, 5, exec, dms screenshot --no-clipboard -d ~/pictures/screenshots"
+
+            "$mainMod SHIFT, R, exec, dms ipc call screenRecorder startRecording"
+            "$mainMod SHIFT CTRL, R, exec, stop-recording"
 
             "$mainMod SHIFT, L, exec, dms ipc call lock lock"
 
@@ -261,7 +264,7 @@
             "workspace 1 silent, match:class ^(Slack)$"
             "workspace 2 silent, match:class ^(thunderbird)$"
             "workspace 3 silent, match:class ^(Lotion)$"
-            "workspace 6 silent, match:class ^(kitty-startup)$"
+            "workspace 6 silent, match:class ^(ghostty-startup)$"
             "workspace 8 silent, match:class ^(jetbrains-datagrip)$"
             "workspace 9 silent, match:class ^(\\.virt-manager-wrapped)$"
             "workspace 5 silent, match:class ^(FFPWA-01KKC8KPKEX5XZPBBK02D5ZM67)$"

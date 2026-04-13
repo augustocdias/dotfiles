@@ -18,6 +18,7 @@
       git
       fish
       kitty
+      ghostty
       firefox
       thunderbird
       zellij
