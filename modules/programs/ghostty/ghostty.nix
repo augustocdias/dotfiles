@@ -19,6 +19,10 @@
 
           # Window appearance
           background-opacity = 0.8;
+          window-padding-x = 0;
+          window-padding-y = 0;
+          window-padding-balance = true;
+          window-padding-color = "extend";
 
           # Features
           copy-on-select = true;
@@ -30,8 +34,8 @@
           # Systemd integration
           gtk-single-instance = true;
           linux-cgroup = "single-instance";
-          linux-cgroup-memory-limit = 25769803776;  # 24GB limit
-          linux-cgroup-processes-limit = 4096;  # Increased for Neovim
+          linux-cgroup-memory-limit = 25769803776; # 24GB limit
+          linux-cgroup-processes-limit = 4096; # Increased for Neovim
           linux-cgroup-hard-fail = false;
 
           # Custom shader for cursor trail
@@ -45,4 +49,3 @@
     };
   };
 }
-
