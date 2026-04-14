@@ -70,6 +70,7 @@
 
             "dom.security.https_only_mode" = true;
             "dom.security.https_only_mode_ever_enabled" = true;
+            "dom.events.testing.asyncClipboard" = true;
 
             "signon.rememberSignons" = false;
             "signon.autofillForms" = false;
