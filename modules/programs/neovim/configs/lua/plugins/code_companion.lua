@@ -1,4 +1,3 @@
-local gh_tool = require('ai.cc.tools.gh')
 return {
     {
         'codecompanion-spinner',
@@ -35,11 +34,10 @@ return {
                 interactions = {
                     chat = {
                         opts = {
-                            system_prompt = require('ai.prompt').system_prompt(),
+                            system_prompt = require('utils.ai').system_prompt(),
                         },
                         adapter = 'opencode',
                         tools = {
-                            -- builtin auto-approve
                             ['file_search'] = {
                                 opts = {
                                     require_cmd_approval = false,
@@ -64,82 +62,6 @@ return {
                                     require_approval_before = false,
                                 },
                             },
-                            ['calendar_scheduler'] = {
-                                callback = 'ai.cc.tools.calendar_scheduler',
-                                description = 'Fetch calendar appointments and manage meeting URL scheduling via Hammerspoon. Never filter out possible duplicates',
-                            },
-                            -- ['datadog'] = {
-                            --     callback = 'ai.cc.tools.datadog',
-                            --     description =
-                            --     'Interact with Datadog API for logs, metrics, events, and monitoring data to help troubleshoot production issues',
-                            -- },
-                            ['date'] = {
-                                callback = 'ai.cc.tools.date',
-                                description = 'Get current date or make date operations',
-                            },
-                            ['gh_issue'] = {
-                                callback = gh_tool.gh_issue,
-                                description = 'GitHub Issue operations (create, list, view, close, reopen)',
-                                opts = {
-                                    requires_approval_before = {},
-                                },
-                            },
-                            ['gh_pr'] = {
-                                callback = gh_tool.gh_pr,
-                                description = 'GitHub Pull Request operations (create, list, view, merge, close, reopen, ready, draft)',
-                                opts = {
-                                    requires_approval_before = {},
-                                },
-                            },
-                            ['gh_repo'] = {
-                                callback = gh_tool.gh_repo,
-                                description = 'GitHub Repository operations (view, list, create, clone, fork)',
-                                opts = {
-                                    requires_approval_before = {},
-                                },
-                            },
-                            ['gh_run'] = {
-                                callback = gh_tool.gh_run,
-                                description = 'GitHub Actions run operations (list, view, cancel, rerun)',
-                                opts = {
-                                    requires_approval_before = {},
-                                },
-                            },
-                            ['gh_search'] = {
-                                callback = gh_tool.gh_search,
-                                description = 'GitHub search operations (repos, issues, prs, code)',
-                                opts = {
-                                    requires_approval_before = {},
-                                },
-                            },
-                            ['gh_status'] = {
-                                callback = gh_tool.gh_status,
-                                description = 'GitHub repository and user status operations',
-                                opts = {
-                                    requires_approval_before = {},
-                                },
-                            },
-                            ['gh_workflow'] = {
-                                callback = gh_tool.gh_workflow,
-                                description = 'GitHub Actions workflow operations (list, view, run)',
-                                opts = {
-                                    requires_approval_before = {},
-                                },
-                            },
-                            ['git'] = {
-                                callback = 'ai.cc.tools.git',
-                                description = 'Git command line tool',
-                                opts = {
-                                    requires_approval_before = {}, -- if not a boolean will call prompt_condition
-                                },
-                            },
-                            ['google_calendar'] = {
-                                callback = 'ai.cc.tools.google_calendar',
-                                description = 'Query events and details from Google Calendar using gcalcli',
-                                opts = {
-                                    requires_approval_before = false,
-                                },
-                            },
                             opts = {
                                 system_prompt = {
                                     enabled = true,
@@ -155,19 +77,6 @@ return {
                                     'fetch_webpage',
                                     'search_web',
                                     'list_code_usages',
-                                    -- custom
-                                    'calendar_scheduler',
-                                    'date',
-                                    'gh',
-                                    'git',
-                                    'gh_issue',
-                                    'gh_pr',
-                                    'gh_repo',
-                                    'gh_run',
-                                    'gh_search',
-                                    'gh_status',
-                                    'gh_workflow',
-                                    'google_calendar',
                                 },
                             },
                         },

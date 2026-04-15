@@ -14,8 +14,11 @@
   };
 in {
   flake-file.inputs = {
-    neovim-nightly-overlay = mkFlakePlugin "github:nix-community/neovim-nightly-overlay";
-    mcp-hub = mkFlakePlugin "github:ravitemer/mcp-hub";
+    # FIXME: pinned to Apr 9 2025 — nixpkgs wrapper.nix does `rm` instead of `rm -f` on
+    # nvim.desktop which was removed in recent neovim nightly builds. Unpin once
+    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/neovim/wrapper.nix
+    # is fixed (change `rm` to `rm -f`) or neovim upstream restores the desktop file.
+    neovim-nightly-overlay = mkFlakePlugin "github:nix-community/neovim-nightly-overlay/21b2795";
 
     # Flake-enabled plugins (use their package outputs)
     nvim-blink-cmp = mkFlakePlugin "github:Saghen/blink.cmp";
@@ -45,7 +48,7 @@ in {
     nvim-tabout = mkPlugin "github:abecodes/tabout.nvim";
     nvim-colorful-menu = mkPlugin "github:xzbdmw/colorful-menu.nvim";
     nvim-gitsigns = mkPlugin "github:lewis6991/gitsigns.nvim";
-    nvim-diffview = mkPlugin "github:sindrets/diffview.nvim";
+    nvim-diffview = mkPlugin "github:dlyongemallo/diffview.nvim";
     nvim-octo = mkPlugin "github:pwntester/octo.nvim";
     nvim-flash = mkPlugin "github:folke/flash.nvim";
     nvim-trouble = mkPlugin "github:folke/trouble.nvim";
@@ -71,7 +74,6 @@ in {
     nvim-codecompanion-spinner = mkPlugin "github:franco-ruggeri/codecompanion-spinner.nvim";
     nvim-nvim-nio = mkPlugin "github:nvim-neotest/nvim-nio";
     nvim-codecompanion-history = mkPlugin "github:ravitemer/codecompanion-history.nvim";
-    nvim-mcphub = mkPlugin "github:ravitemer/mcphub.nvim";
     nvim-crates = mkPlugin "github:Saecki/crates.nvim";
     nvim-refactoring = mkPlugin "github:ThePrimeagen/refactoring.nvim";
     nvim-markdown-plus = mkPlugin "github:yousefhadder/markdown-plus.nvim";
@@ -148,6 +150,7 @@ in {
           ];
 
         extraPackages = with pkgs; [
+          lspmux
           bash-language-server
           yaml-language-server
           vscode-json-languageserver

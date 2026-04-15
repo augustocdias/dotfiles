@@ -1,14 +1,4 @@
-{
-  den,
-  inputs,
-  lib,
-  ...
-}: {
-  flake-file.inputs.mcp-hub = {
-    url = lib.mkDefault "github:ravitemer/mcp-hub";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
+{den, ...}: {
   den.aspects.development = {
     nixos = {pkgs, ...}: {
       # Allows dynamically linked executables
@@ -45,11 +35,6 @@
       '';
 
       home.packages = with pkgs; [
-        (
-          if inputs ? mcp-hub
-          then inputs.mcp-hub.packages.${pkgs.stdenv.hostPlatform.system}.default
-          else null
-        )
         libsecret
 
         cmake

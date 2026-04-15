@@ -130,9 +130,10 @@ return {
 
             vim.lsp.enable('emmylua_ls')
             vim.lsp.config('emmylua_ls', {
+                cmd = lsp_utils.lspmux_cmd('emmylua-ls'),
                 on_attach = lsp_utils.on_attach,
                 capabilities = lsp_utils.capabilities(),
-                settings = {
+                settings = vim.tbl_deep_extend('force', {
                     emmylua = {
                         runtime = {
                             version = 'LuaJIT',
@@ -147,14 +148,16 @@ return {
                             library = get_plugin_paths(),
                         },
                     },
-                },
+                }, lsp_utils.lspmux_init('emmylua-ls')),
             })
 
             -- nix
             vim.lsp.enable('nixd')
             vim.lsp.config('nixd', {
+                cmd = lsp_utils.lspmux_cmd('nixd'),
                 on_attach = lsp_utils.on_attach,
                 capabilities = lsp_utils.capabilities(),
+                settings = lsp_utils.lspmux_init('nixd'),
             })
 
             -- quickshell

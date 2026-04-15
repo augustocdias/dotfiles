@@ -1,15 +1,20 @@
-return {
-    system_prompt = function()
-        local machine = vim.uv.os_uname().sysname
-        if machine == 'Darwin' then
-            machine = 'Mac'
-        end
-        if machine:find('Windows') then
-            machine = 'Windows'
-        end
+local M = {}
 
-        return string.format(
-            [[# Identity
+-- ---------------------------------------------------------------------------
+-- System prompt for CodeCompanion
+-- ---------------------------------------------------------------------------
+
+function M.system_prompt()
+    local machine = vim.uv.os_uname().sysname
+    if machine == 'Darwin' then
+        machine = 'Mac'
+    end
+    if machine:find('Windows') then
+        machine = 'Windows'
+    end
+
+    return string.format(
+        [[# Identity
 You are **CodeCompanion**, an AI programming assistant within Neovim %s on %s. Tone: direct and informal, like a senior colleague in a code review.
 Adapt to the user's stack and preferences as you learn them through conversation and memory.
 
@@ -61,8 +66,63 @@ local new_code = "changed"
 -- ...existing code (lines 25-40)...
 ````
 ]],
-            vim.version().major .. '.' .. vim.version().minor .. '.' .. vim.version().patch,
-            machine
-        )
-    end,
+        vim.version().major .. '.' .. vim.version().minor .. '.' .. vim.version().patch,
+        machine
+    )
+end
+
+-- ---------------------------------------------------------------------------
+-- Lualine spinner component for CodeCompanion
+-- ---------------------------------------------------------------------------
+
+local LualineComponent = require('lualine.component'):extend()
+
+LualineComponent.processing = false
+LualineComponent.spinner_index = 1
+
+local spinner_symbols = {
+    '⠋',
+    '⠙',
+    '⠹',
+    '⠸',
+    '⠼',
+    '⠴',
+    '⠦',
+    '⠧',
+    '⠇',
+    '⠏',
 }
+local spinner_symbols_len = 10
+
+function LualineComponent:init(options)
+    LualineComponent.super.init(self, options)
+
+    local group = vim.api.nvim_create_augroup('CodeCompanionHooks', {})
+
+    vim.api.nvim_create_autocmd({ 'User' }, {
+        pattern = 'CodeCompanionRequest*',
+        group = group,
+        callback = function(request)
+            if request.match == 'CodeCompanionRequestStarted' then
+                self.processing = true
+            elseif request.match == 'CodeCompanionRequestFinished' then
+                self.processing = false
+            end
+        end,
+    })
+end
+
+function LualineComponent:update_status()
+    return function()
+        if self.processing then
+            self.spinner_index = (self.spinner_index % spinner_symbols_len) + 1
+            return '󰧑 ' .. spinner_symbols[self.spinner_index]
+        else
+            return ''
+        end
+    end
+end
+
+M.lualine_component = LualineComponent
+
+return M

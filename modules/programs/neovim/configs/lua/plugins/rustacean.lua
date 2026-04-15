@@ -39,11 +39,12 @@ return {
                         },
                     },
                     server = {
+                        cmd = lsp_utils.lspmux_cmd('rust-analyzer'),
                         on_attach = lsp_utils.on_attach,
                         capabilities = lsp_utils.capabilities(),
                         standalone = false,
                         settings = {
-                            ['rust-analyzer'] = {
+                            ['rust-analyzer'] = vim.tbl_deep_extend('force', lsp_utils.lspmux_init('rust-analyzer'), {
                                 diagnostics = {
                                     enable = true,
                                     enableExperimental = true,
@@ -140,7 +141,7 @@ return {
                                         enable = false,
                                     },
                                 },
-                            },
+                            }),
                         },
                     },
                 }
