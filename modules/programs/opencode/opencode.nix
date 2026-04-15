@@ -5,18 +5,6 @@
       lib,
       ...
     }: {
-      home.packages = [pkgs.lspmux];
-
-      systemd.user.services.lspmux = {
-        Unit.Description = "LSP Multiplexer daemon";
-        Service = {
-          ExecStart = "${pkgs.lspmux}/bin/lspmux server";
-          Restart = "on-failure";
-          RestartSec = 3;
-        };
-        Install.WantedBy = ["default.target"];
-      };
-
       # FIXME: xdg.configFile creates symlinks into /nix/store which breaks Bun's
       # module resolution for @opencode-ai/plugin (it resolves relative to the real
       # path, not the symlink). We copy the files instead until this is fixed upstream.
@@ -40,22 +28,7 @@
           model = "anthropic/claude-opus-4-6";
           autoupdate = false;
           default_agent = "plan";
-          lsp = {
-            rust = {
-              command = ["lspmux" "client" "--server-path" "rust-analyzer"];
-            };
-            nixd = {
-              command = ["lspmux" "client" "--server-path" "nixd"];
-            };
-            lua-ls = {
-              command = ["lspmux" "client" "--server-path" "emmylua-ls"];
-            };
-            typescript = {disabled = true;};
-            tsgo = {
-              command = ["lspmux" "client" "--server-path" "tsgo" "--" "--lsp" "--stdio"];
-              extensions = [".ts" ".tsx" ".js" ".jsx" ".mjs" ".cjs" ".mts" ".cts"];
-            };
-          };
+          lsp = false;
 
           provider = {
             anthropic.options.apiKey = "{env:ANTHROPIC_API_KEY}";

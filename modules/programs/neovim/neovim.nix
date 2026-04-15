@@ -150,7 +150,6 @@ in {
           ];
 
         extraPackages = with pkgs; [
-          lspmux
           bash-language-server
           yaml-language-server
           vscode-json-languageserver
@@ -203,6 +202,7 @@ in {
         EDITOR = "nvim";
         VISUAL = "nvim";
       };
+
     };
   };
 }

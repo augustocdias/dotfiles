@@ -39,7 +39,6 @@ return {
     { import = 'plugins.tokyonight' },
     { import = 'plugins.treesitter' },
     { import = 'plugins.trouble' },
-    { import = 'plugins.typescript' },
     { import = 'plugins.undotree' },
     { import = 'plugins.utils' },
     { import = 'plugins.which-key' },

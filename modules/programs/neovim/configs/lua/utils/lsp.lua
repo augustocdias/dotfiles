@@ -1,30 +1,5 @@
 local M = {}
 
-local LSPMUX_HOST = '127.0.0.1'
-local LSPMUX_PORT = 27631
-
---- Returns a cmd function that connects to lspmux via TCP.
---- Use as the `cmd` field in vim.lsp.config or rustaceanvim server config.
----@param server_name string The LSP server binary name (e.g. "rust-analyzer", "nixd")
----@return function
-M.lspmux_cmd = function(server_name)
-    return vim.lsp.rpc.connect(LSPMUX_HOST, LSPMUX_PORT)
-end
-
---- Returns the lspMux initialization settings to merge into the server's
---- settings or init_options so lspmux knows which server to spawn.
----@param server_name string The LSP server binary name
----@return table
-M.lspmux_init = function(server_name)
-    return {
-        lspMux = {
-            version = '1',
-            method = 'connect',
-            server = server_name,
-        },
-    }
-end
-
 M.on_attach = function(client, bufnr)
     require('utils.autocommands').lsp_autocmds(client, bufnr)
 

@@ -130,10 +130,9 @@ return {
 
             vim.lsp.enable('emmylua_ls')
             vim.lsp.config('emmylua_ls', {
-                cmd = lsp_utils.lspmux_cmd('emmylua-ls'),
                 on_attach = lsp_utils.on_attach,
                 capabilities = lsp_utils.capabilities(),
-                settings = vim.tbl_deep_extend('force', {
+                settings = {
                     emmylua = {
                         runtime = {
                             version = 'LuaJIT',
@@ -148,29 +147,26 @@ return {
                             library = get_plugin_paths(),
                         },
                     },
-                }, lsp_utils.lspmux_init('emmylua-ls')),
+                },
             })
 
             -- nix
             vim.lsp.enable('nixd')
             vim.lsp.config('nixd', {
-                cmd = lsp_utils.lspmux_cmd('nixd'),
                 on_attach = lsp_utils.on_attach,
                 capabilities = lsp_utils.capabilities(),
-                settings = lsp_utils.lspmux_init('nixd'),
             })
 
             -- typescript (tsgo - native Go LSP)
             vim.lsp.enable('tsgo')
             vim.lsp.config('tsgo', {
-                cmd = lsp_utils.lspmux_cmd('tsgo'),
                 on_attach = function(client, bufnr)
                     lsp_utils.on_attach(client, bufnr)
                     client.server_capabilities.documentFormattingProvider = false
                     client.server_capabilities.documentRangeFormattingProvider = false
                 end,
                 capabilities = lsp_utils.capabilities(),
-                settings = vim.tbl_deep_extend('force', lsp_utils.lspmux_init('tsgo --lsp --stdio'), {
+                settings = {
                     typescript = {
                         inlayHints = {
                             parameterNames = {
@@ -184,7 +180,7 @@ return {
                             enumMemberValues = { enabled = true },
                         },
                     },
-                }),
+                },
             })
 
             -- quickshell
