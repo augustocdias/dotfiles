@@ -2204,22 +2204,6 @@
         "type": "github"
       }
     },
-    "nvim-typescript-tools": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1763457127,
-        "narHash": "sha256-CM5iwUUr7fZeGBL8A3L1NdaeWxV7Xai59ZE+l81Bm0A=",
-        "owner": "pmizio",
-        "repo": "typescript-tools.nvim",
-        "rev": "c2f5910074103705661e9651aa841e0d7eea9932",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pmizio",
-        "repo": "typescript-tools.nvim",
-        "type": "github"
-      }
-    },
     "nvim-undotree": {
       "flake": false,
       "locked": {
@@ -2399,7 +2383,6 @@
         "nvim-todo-comments": "nvim-todo-comments",
         "nvim-tokyonight": "nvim-tokyonight",
         "nvim-trouble": "nvim-trouble",
-        "nvim-typescript-tools": "nvim-typescript-tools",
         "nvim-undotree": "nvim-undotree",
         "nvim-vim-matchup": "nvim-vim-matchup",
         "nvim-which-key": "nvim-which-key",

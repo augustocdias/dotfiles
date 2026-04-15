@@ -65,7 +65,7 @@ in {
     nvim-nvim-dap = mkPlugin "github:mfussenegger/nvim-dap";
     nvim-nvim-dap-ui = mkPlugin "github:rcarriga/nvim-dap-ui";
     nvim-nvim-dap-virtual-text = mkPlugin "github:theHamsta/nvim-dap-virtual-text";
-    nvim-typescript-tools = mkPlugin "github:pmizio/typescript-tools.nvim";
+
     nvim-undotree = mkPlugin "github:jiaoshijie/undotree";
     nvim-markview = mkPlugin "github:OXY2DEV/markview.nvim";
     nvim-codecompanion = mkPlugin "github:olimorris/codecompanion.nvim";
@@ -160,6 +160,7 @@ in {
           emmylua-ls
           typescript
           rust-analyzer
+          typescript-go
           nixd
 
           black

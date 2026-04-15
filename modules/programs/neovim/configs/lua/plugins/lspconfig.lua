@@ -160,6 +160,33 @@ return {
                 settings = lsp_utils.lspmux_init('nixd'),
             })
 
+            -- typescript (tsgo - native Go LSP)
+            vim.lsp.enable('tsgo')
+            vim.lsp.config('tsgo', {
+                cmd = lsp_utils.lspmux_cmd('tsgo'),
+                on_attach = function(client, bufnr)
+                    lsp_utils.on_attach(client, bufnr)
+                    client.server_capabilities.documentFormattingProvider = false
+                    client.server_capabilities.documentRangeFormattingProvider = false
+                end,
+                capabilities = lsp_utils.capabilities(),
+                settings = vim.tbl_deep_extend('force', lsp_utils.lspmux_init('tsgo --lsp --stdio'), {
+                    typescript = {
+                        inlayHints = {
+                            parameterNames = {
+                                enabled = 'all',
+                                suppressWhenArgumentMatchesName = false,
+                            },
+                            parameterTypes = { enabled = true },
+                            variableTypes = { enabled = true },
+                            propertyDeclarationTypes = { enabled = true },
+                            functionLikeReturnTypes = { enabled = true },
+                            enumMemberValues = { enabled = true },
+                        },
+                    },
+                }),
+            })
+
             -- quickshell
             vim.lsp.enable('qmlls')
             vim.lsp.config('qmlls', {

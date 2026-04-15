@@ -244,10 +244,6 @@
       url = "github:folke/trouble.nvim";
       flake = false;
     };
-    nvim-typescript-tools = {
-      url = "github:pmizio/typescript-tools.nvim";
-      flake = false;
-    };
     nvim-undotree = {
       url = "github:jiaoshijie/undotree";
       flake = false;

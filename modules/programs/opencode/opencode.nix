@@ -1,6 +1,10 @@
 {den, ...}: {
   den.aspects.opencode = {
-    homeManager = {pkgs, ...}: {
+    homeManager = {
+      pkgs,
+      lib,
+      ...
+    }: {
       home.packages = [pkgs.lspmux];
 
       systemd.user.services.lspmux = {
@@ -12,11 +16,17 @@
         };
         Install.WantedBy = ["default.target"];
       };
-      xdg.configFile = {
-        "opencode/tools/date.ts".source = ./tools/date.ts;
-        "opencode/tools/gh.ts".source = ./tools/gh.ts;
-        "opencode/tools/google_calendar.ts".source = ./tools/google_calendar.ts;
-      };
+
+      # FIXME: xdg.configFile creates symlinks into /nix/store which breaks Bun's
+      # module resolution for @opencode-ai/plugin (it resolves relative to the real
+      # path, not the symlink). We copy the files instead until this is fixed upstream.
+      # https://github.com/anomalyco/opencode/issues/5914
+      home.activation.opencode-tools = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        mkdir -p $HOME/.config/opencode/tools
+        cp -f ${./tools/date.ts} $HOME/.config/opencode/tools/date.ts
+        cp -f ${./tools/gh.ts} $HOME/.config/opencode/tools/gh.ts
+        cp -f ${./tools/google_calendar.ts} $HOME/.config/opencode/tools/google_calendar.ts
+      '';
 
       programs.opencode = {
         enable = true;
@@ -39,6 +49,11 @@
             };
             lua-ls = {
               command = ["lspmux" "client" "--server-path" "emmylua-ls"];
+            };
+            typescript = {disabled = true;};
+            tsgo = {
+              command = ["lspmux" "client" "--server-path" "tsgo" "--" "--lsp" "--stdio"];
+              extensions = [".ts" ".tsx" ".js" ".jsx" ".mjs" ".cjs" ".mts" ".cts"];
             };
           };
 
