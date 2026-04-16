@@ -498,8 +498,8 @@
               spacing = 0;
               innerPadding = -8;
               bottomGap = 0;
-              transparency = 0.5;
-              widgetTransparency = 0.81;
+              transparency = 0.3;
+              widgetTransparency = 0.80;
               squareCorners = true;
               noBackground = false;
               gothCornersEnabled = true;
