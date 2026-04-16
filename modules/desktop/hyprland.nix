@@ -201,10 +201,10 @@
             "$mainMod CTRL, H, swapwindow, l"
             "$mainMod CTRL, L, swapwindow, r"
 
-            "$mainMod CTRL ALT, LEFT, movewindow, mon:-1"
-            "$mainMod CTRL ALT, LEFT, focusmonitor, -1"
-            "$mainMod CTRL ALT, RIGHT, movewindow, mon:+1"
-            "$mainMod CTRL ALT, RIGHT, focusmonitor, +1"
+            "$mainMod SHIFT ALT, H, movewindow, mon:-1"
+            "$mainMod SHIFT ALT, H, focusmonitor, -1"
+            "$mainMod SHIFT ALT, L, movewindow, mon:+1"
+            "$mainMod SHIFT ALT, L, focusmonitor, +1"
 
             "$mainMod ALT, P, movetoworkspace, -1"
             "$mainMod ALT, N, movetoworkspace, +1"
@@ -233,11 +233,11 @@
 
             "$mainMod, mouse_down, workspace, e+1"
             "$mainMod, mouse_up, workspace, e-1"
-            "$mainMod, RIGHT, workspace, e+1"
-            "$mainMod, LEFT, workspace, e-1"
+            "$mainMod, L, workspace, e+1"
+            "$mainMod, H, workspace, e-1"
 
-            "$mainMod, H, togglespecialworkspace, scratchpad"
-            "$mainMod SHIFT, H, movetoworkspace, special:scratchpad"
+            "$mainMod, grave, togglespecialworkspace, scratchpad"
+            "$mainMod SHIFT, grave, movetoworkspace, special:scratchpad"
             "$mainMod SHIFT, N, workspace, empty"
 
             "$mainMod SHIFT CTRL ALT, R, exec, hyprctl reload"
@@ -288,20 +288,10 @@
 
           submap = resize
 
-          binde = , right, resizeactive, 10 0
-          binde = , left, resizeactive, -10 0
-          binde = , up, resizeactive, 0 -10
-          binde = , down, resizeactive, 0 10
-
           binde = , l, resizeactive, 10 0
           binde = , h, resizeactive, -10 0
           binde = , k, resizeactive, 0 -10
           binde = , j, resizeactive, 0 10
-
-          binde = SHIFT, right, resizeactive, 5 0
-          binde = SHIFT, left, resizeactive, -5 0
-          binde = SHIFT, up, resizeactive, 0 -5
-          binde = SHIFT, down, resizeactive, 0 5
 
           binde = SHIFT, l, resizeactive, 5 0
           binde = SHIFT, h, resizeactive, -5 0
