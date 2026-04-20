@@ -67,7 +67,7 @@ modules/
     dms/dms.nix             # DankMaterialShell — full desktop shell (see DMS section)
 
   packages/
-    applications.nix        # GUI apps: Cider, Kitty, Zed, imv, PeaZip, DrawIO
+    applications.nix        # GUI apps: Cider, Zed, imv, PeaZip, DrawIO
     cli-tools.nix           # CLI: eza, fd, rg, bat, delta, btop, zoxide, YubiKey tools
     development.nix         # Dev: Node, Python, Ruby, Rust, GCC, LLVM, direnv, AWS CLI
     fonts.nix               # Noto, Fira Code, all Nerd Fonts, Font Awesome
@@ -79,7 +79,6 @@ modules/
     gcalcli/                # Google Calendar CLI + reminder daemon (systemd timer)
     ghostty/                # Ghostty terminal: Catppuccin, 80% opacity, cursor-trail shader
     git/                    # Git: GPG signing, delta pager, extensive aliases
-    kitty.nix               # Kitty terminal (secondary)
     mpv.nix                 # MPV with hardware decoding
     neovide/                # Neovide (Neovim GUI)
     neovim/                 # Neovim — extensive config (see Neovim section)
@@ -251,12 +250,11 @@ Dockerfile: hadolint | JS/TS: eslint | Lua: selene | Markdown: markdownlint + wr
 
 ### AI integration
 
-CodeCompanion plugin with:
-
-- **Chat**: OpenCode ACP adapter (sends requests through OpenCode CLI, which has MCP servers and custom tools)
-- **Inline/Cmd**: Direct Anthropic adapter (Claude Opus 4, 63k thinking budget)
-- **System prompt**: Custom prompt in `lua/utils/ai.lua` emphasizing conciseness, source citation, and tool usage
-- **History**: persistent per-CWD, auto-generated titles, summaries
+OpenCode TUI (vim fork) runs standalone alongside neovim, connected via nvim-mcp:
+- **Vim mode**: Full modal editing in the TUI prompt input (hjkl, w/b/e, dd, cw, yy, p, u, visual mode)
+- **nvim-mcp**: MCP server connecting OpenCode to the running neovim instance via msgpack-RPC socket. Gives OpenCode access to open buffers, cursor position, diagnostics, selections, and in-buffer editing with full undo support.
+- **Socket discovery**: Neovim creates a socket at `~/.cache/nvim/server-<ZELLIJ_SESSION_NAME>.pipe`. The nvim-mcp wrapper reads `ZELLIJ_SESSION_NAME` at runtime to connect to the correct instance.
+- **Global instructions**: Personal coding style preferences in `~/.config/opencode/AGENTS.md` (managed via `programs.opencode.context`), applied to all projects alongside project-level AGENTS.md files.
 
 ### Notable custom features
 
@@ -281,6 +279,7 @@ CodeCompanion plugin with:
 | Linear | local (npx mcp-remote) | Issue tracking |
 | Context7 | local (@upstash/context7-mcp) | Library documentation (64k min tokens) |
 | Datadog | remote (EU endpoint) | Observability/monitoring |
+| nvim | local (uvx nvim-mcp) | Neovim instance access via msgpack-RPC (auto-connects to zellij session socket) |
 
 ### Custom tools (deployed to `~/.config/opencode/tools/`)
 
@@ -313,7 +312,7 @@ Tools are TypeScript files using `@opencode-ai/plugin` SDK, executing shell comm
 
 The entire system uses **Catppuccin Mocha**:
 
-- GRUB, Plymouth, Hyprland, DMS, Ghostty, Kitty, Neovim, Firefox, bat, delta, starship, skim, yazi, zellij
+- GRUB, Plymouth, Hyprland, DMS, Ghostty, Neovim, Firefox, bat, delta, starship, skim, yazi, zellij
 - Cursors: catppuccin-mocha-blue-cursors
 - GTK/Qt: synced via DMS Matugen templates
 - Monospace font: MonaspiceNe Nerd Font (terminal), MonaspiceRn Nerd Font (italic)

@@ -37,15 +37,6 @@ return {
             return vim.api.nvim_create_augroup(name, { clear = true })
         end
 
-        local pkg_mng = augroup('LazyDone')
-        autocmd('User', {
-            group = pkg_mng,
-            pattern = 'LazyUpdate',
-            callback = function() -- Autocompile colorscheme
-                require('catppuccin').compile()
-            end,
-        })
-
         autocmd({ 'BufRead' }, {
             desc = "Prevent accidental writes to buffers that shouldn't be edited",
             pattern = '*.orig',
@@ -73,71 +64,6 @@ return {
                 if line >= 1 and line <= vim.fn.line('$') then
                     vim.cmd('normal! g`"')
                 end
-            end,
-        })
-
-        local fold_group = augroup('Folds')
-        local IGNORE_FILETYPES = {
-            ['lazy_backdrop'] = true,
-            ['snacks_layout_box'] = true,
-            ['snacks_picker_input'] = true,
-            ['snacks_picker_list'] = true,
-            ['snacks_picker_preview'] = true,
-            ['snacks_win_backdrop'] = true,
-            ['vim-messages'] = true,
-            checkhealth = true,
-            fugitive = true,
-            git = true,
-            gitcommit = true,
-            help = true,
-            lazy = true,
-            lspinfo = true,
-            mason = true,
-            minifiles = true,
-            mininotify = true,
-            terminal = true,
-            vim = true,
-        }
-
-        -- Save view when leaving a buffer
-        autocmd('BufWinLeave', {
-            group = fold_group,
-            callback = function(ev)
-                local ft = vim.bo[ev.buf].filetype
-                if ft == '' or IGNORE_FILETYPES[ft] then
-                    return
-                end
-
-                vim.cmd.mkview({ mods = { emsg_silent = true } })
-            end,
-        })
-
-        -- Load view when entering a buffer
-        autocmd('BufWinEnter', {
-            group = fold_group,
-            callback = function(ev)
-                local ft = vim.bo[ev.buf].filetype
-                if ft == '' or IGNORE_FILETYPES[ft] then
-                    return
-                end
-
-                vim.cmd.loadview({ mods = { emsg_silent = true } })
-            end,
-        })
-
-        local code_companion = augroup('CodeCompanion')
-        autocmd('User', {
-            pattern = 'CodeCompanionChatSubmitted',
-            group = code_companion,
-            callback = function()
-                vim.cmd('stopinsert')
-            end,
-        })
-        autocmd('User', {
-            pattern = 'CodeCompanionChatOpened',
-            group = code_companion,
-            callback = function()
-                vim.wo.winbar = nil
             end,
         })
     end,

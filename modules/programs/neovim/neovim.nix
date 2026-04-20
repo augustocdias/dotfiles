@@ -14,11 +14,7 @@
   };
 in {
   flake-file.inputs = {
-    # FIXME: pinned to Apr 9 2025 — nixpkgs wrapper.nix does `rm` instead of `rm -f` on
-    # nvim.desktop which was removed in recent neovim nightly builds. Unpin once
-    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/neovim/wrapper.nix
-    # is fixed (change `rm` to `rm -f`) or neovim upstream restores the desktop file.
-    neovim-nightly-overlay = mkFlakePlugin "github:nix-community/neovim-nightly-overlay/21b2795";
+    neovim-nightly-overlay = mkFlakePlugin "github:nix-community/neovim-nightly-overlay";
 
     # Flake-enabled plugins (use their package outputs)
     nvim-blink-cmp = mkFlakePlugin "github:Saghen/blink.cmp";
@@ -62,18 +58,12 @@ in {
     nvim-conform = mkPlugin "github:stevearc/conform.nvim";
     nvim-nvim-lint = mkPlugin "github:mfussenegger/nvim-lint";
     nvim-lightbulb = mkPlugin "github:kosayoda/nvim-lightbulb";
-    nvim-nvim-dap = mkPlugin "github:mfussenegger/nvim-dap";
-    nvim-nvim-dap-ui = mkPlugin "github:rcarriga/nvim-dap-ui";
-    nvim-nvim-dap-virtual-text = mkPlugin "github:theHamsta/nvim-dap-virtual-text";
 
-    nvim-undotree = mkPlugin "github:jiaoshijie/undotree";
     nvim-markview = mkPlugin "github:OXY2DEV/markview.nvim";
-    nvim-codecompanion = mkPlugin "github:olimorris/codecompanion.nvim";
+
     nvim-gatekeeper = mkPlugin "github:augustocdias/gatekeeper.nvim";
     nvim-codesnap = mkPlugin "github:mistricky/codesnap.nvim";
-    nvim-codecompanion-spinner = mkPlugin "github:franco-ruggeri/codecompanion-spinner.nvim";
-    nvim-nvim-nio = mkPlugin "github:nvim-neotest/nvim-nio";
-    nvim-codecompanion-history = mkPlugin "github:ravitemer/codecompanion-history.nvim";
+
     nvim-crates = mkPlugin "github:Saecki/crates.nvim";
     nvim-refactoring = mkPlugin "github:ThePrimeagen/refactoring.nvim";
     nvim-markdown-plus = mkPlugin "github:yousefhadder/markdown-plus.nvim";
@@ -190,9 +180,7 @@ in {
           "${config.home.homeDirectory}/nixos/modules/programs/neovim/configs";
       };
 
-      # HM's neovim module generates this from plugin lua deps, which
-      # conflicts with the out-of-store symlink above.
-      xdg.configFile."nvim/init.lua".enable = false;
+      programs.neovim.sideloadInitLua = true;
 
       home.packages = [
         (pkgs.writeScriptBin "update-nvim" (builtins.readFile ./update-plugins.fish))
@@ -202,7 +190,6 @@ in {
         EDITOR = "nvim";
         VISUAL = "nvim";
       };
-
     };
   };
 }

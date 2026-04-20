@@ -6,9 +6,7 @@ else
 end
 
 local pipepath = vim.fn.stdpath('cache') .. '/server-' .. pipe_suffix .. '.pipe'
-if not vim.uv.fs_stat(pipepath) then
-    vim.fn.serverstart(pipepath)
-end
+require('utils').start_server(pipepath)
 
 vim.g.theme = 'catppuccin'
 vim.g.flavours = {

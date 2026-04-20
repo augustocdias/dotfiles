@@ -4,6 +4,7 @@
       home.packages = with pkgs; [
         eza
         fd
+        lsof
         ripgrep
         starship
         bat

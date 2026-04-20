@@ -27,16 +27,7 @@ return {
             noremap = true,
             silent = true,
         },
-        { -- TEST: require('dap').list_breakpoints() adds them to a qflist
-            '<leader>tb',
-            function()
-                require('dap').list_breakpoints()
-                require('trouble').toggle({ mode = 'qflist', focus = true })
-            end,
-            mode = { 'n' },
-            desc = 'Breakpoints',
-            noremap = true,
-        },
+
         {
             '<leader>tc',
             ':Trouble lsp_declarations toggle focus=true<CR>',

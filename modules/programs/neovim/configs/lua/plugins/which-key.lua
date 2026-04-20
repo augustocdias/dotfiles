@@ -3,22 +3,16 @@
 return {
     'which-key',
     event = 'DeferredUIEnter',
-    after = function() 
+    after = function()
         require('which-key').setup({
-        icons = {
-            breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
-            separator = '󰔰', -- symbol used between a key and it's label
-            group = '󰊳 ', -- symbol
-        },
-    }) end,
+            icons = {
+                breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
+                separator = '󰔰', -- symbol used between a key and it's label
+                group = '󰊳 ', -- symbol
+            },
+        })
+    end,
     keys = {
-        {
-            '<leader>a',
-            'rhs',
-            mode = { 'n' },
-            desc = 'AI',
-            noremap = true,
-        },
         {
             '<leader>g',
             'rhs',

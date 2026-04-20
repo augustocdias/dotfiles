@@ -264,6 +264,15 @@ return {
                 noremap = true,
             },
             {
+                '<leader>lc',
+                function()
+                    vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+                end,
+                mode = { 'n' },
+                desc = 'Toggle CodeLens',
+                noremap = true,
+            },
+            {
                 '<leader>ll',
                 '<cmd>lua vim.lsp.codelens.run()<CR>',
                 mode = { 'n' },

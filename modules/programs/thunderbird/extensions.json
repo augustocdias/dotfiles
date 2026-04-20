@@ -30,9 +30,9 @@
   "web-translate": {
     "slug": "web_translate",
     "name": "Web Translate",
-    "url": "https://addons.thunderbird.net/thunderbird/downloads/file/1042097/web_translate-6.1-tb.xpi?src=",
+    "url": "https://addons.thunderbird.net/thunderbird/downloads/file/1046236/web_translate-6.2-tb.xpi?src=",
     "addonId": "admin@fastaddons.com_WebTranslate",
-    "sha256": "1jkmkj70gv9m5q60xxsl2ygr78vl1dpgs30bk12a6wdjzq1rd5ki"
+    "sha256": "05i5ji4xcp6ald6m58rybkny290ngn6p3pkziaiib98xxyj2hz76"
   },
   "dictionary-de-de": {
     "slug": "german-dictionary-de_de-for-sp",

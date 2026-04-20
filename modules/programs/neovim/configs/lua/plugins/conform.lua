@@ -16,6 +16,7 @@ return {
                 markdown = { 'markdownlint' },
                 nix = { 'alejandra' },
                 python = { 'black' },
+                rust = { 'rustfmt', lsp_format = 'fallback' },
                 sh = { 'shfmt' },
                 sql = { 'sqlfluff' },
                 typescript = { 'prettier' },
@@ -40,7 +41,7 @@ return {
     end,
     keys = {
         {
-            '<leader>lc',
+            '<leader>lk',
             function()
                 vim.b.disable_autoformat = not vim.b.disable_autoformat
                 local state = vim.b.disable_autoformat and 'disabled' or 'enabled'

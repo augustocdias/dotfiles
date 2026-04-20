@@ -40,7 +40,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay/21b2795";
+      url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -62,18 +62,6 @@
     };
     nvim-catppuccin = {
       url = "github:catppuccin/nvim";
-      flake = false;
-    };
-    nvim-codecompanion = {
-      url = "github:olimorris/codecompanion.nvim";
-      flake = false;
-    };
-    nvim-codecompanion-history = {
-      url = "github:ravitemer/codecompanion-history.nvim";
-      flake = false;
-    };
-    nvim-codecompanion-spinner = {
-      url = "github:franco-ruggeri/codecompanion-spinner.nvim";
       flake = false;
     };
     nvim-codesnap = {
@@ -168,28 +156,12 @@
       url = "github:MunifTanjim/nui.nvim";
       flake = false;
     };
-    nvim-nvim-dap = {
-      url = "github:mfussenegger/nvim-dap";
-      flake = false;
-    };
-    nvim-nvim-dap-ui = {
-      url = "github:rcarriga/nvim-dap-ui";
-      flake = false;
-    };
-    nvim-nvim-dap-virtual-text = {
-      url = "github:theHamsta/nvim-dap-virtual-text";
-      flake = false;
-    };
     nvim-nvim-lint = {
       url = "github:mfussenegger/nvim-lint";
       flake = false;
     };
     nvim-nvim-lspconfig = {
       url = "github:neovim/nvim-lspconfig";
-      flake = false;
-    };
-    nvim-nvim-nio = {
-      url = "github:nvim-neotest/nvim-nio";
       flake = false;
     };
     nvim-nvim-notify = {
@@ -242,10 +214,6 @@
     };
     nvim-trouble = {
       url = "github:folke/trouble.nvim";
-      flake = false;
-    };
-    nvim-undotree = {
-      url = "github:jiaoshijie/undotree";
       flake = false;
     };
     nvim-vim-matchup = {

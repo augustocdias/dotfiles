@@ -4,8 +4,6 @@ return {
     'lualine',
     event = 'UIEnter',
     after = function()
-        local cc = require('utils.ai').lualine_component
-        cc:init()
         local utils = require('utils')
         local command_status = utils.command_status(require('utils').noice_status_color(vim.g.flavour))
         local host_rust_target = utils.get_host_target()
@@ -49,7 +47,6 @@ return {
                     },
                 },
                 lualine_x = {
-                    cc:update_status(),
                     command_status,
                     search_result,
                     'encoding',

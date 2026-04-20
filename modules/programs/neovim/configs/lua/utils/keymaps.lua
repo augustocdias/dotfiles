@@ -153,28 +153,28 @@ local keymap_table = {
         opts = {},
     },
     {
-        shortcut = '<C-h>',
+        shortcut = '<M-h>',
         cmd = '<Left>',
         mode = { 'i', 'c' },
         desc = 'Move cursor left',
         opts = { noremap = true },
     },
     {
-        shortcut = '<C-j>',
+        shortcut = '<M-j>',
         cmd = '<Down>',
         mode = { 'i', 'c' },
         desc = 'Move cursor down',
         opts = { noremap = true },
     },
     {
-        shortcut = '<C-k>',
+        shortcut = '<M-k>',
         cmd = '<Up>',
         mode = { 'i', 'c' },
         desc = 'Move cursor up',
         opts = { noremap = true },
     },
     {
-        shortcut = '<C-l>',
+        shortcut = '<M-l>',
         cmd = '<Right>',
         mode = { 'i', 'c' },
         desc = 'Move cursor right',
@@ -206,7 +206,7 @@ local keymap_table = {
         cmd = function()
             zellij_move('h')
         end,
-        mode = { 'n' },
+        mode = { 'n', 'i' },
         desc = 'Focus on window to the left',
         opts = { noremap = true, silent = true },
     },
@@ -215,7 +215,7 @@ local keymap_table = {
         cmd = function()
             zellij_move('l')
         end,
-        mode = { 'n' },
+        mode = { 'n', 'i' },
         desc = 'Focus on window to the right',
         opts = { noremap = true, silent = true },
     },
@@ -224,7 +224,7 @@ local keymap_table = {
         cmd = function()
             zellij_move('k')
         end,
-        mode = { 'n' },
+        mode = { 'n', 'i' },
         desc = 'Focus on window up',
         opts = { noremap = true, silent = true },
     },
@@ -233,7 +233,7 @@ local keymap_table = {
         cmd = function()
             zellij_move('j')
         end,
-        mode = { 'n' },
+        mode = { 'n', 'i' },
         desc = 'Focus on window down',
         opts = { noremap = true, silent = true },
     },

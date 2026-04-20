@@ -1,4 +1,15 @@
-{den, ...}: {
+{
+  den,
+  lib,
+  ...
+}: let
+  nvim-mcp-wrapper = pkgs:
+    pkgs.writeShellScriptBin "nvim-mcp" ''
+      session="''${ZELLIJ_SESSION_NAME:-dettached}"
+      export NVIM_ADDRESS="$HOME/.cache/nvim/server-''${session}.pipe"
+      exec ${lib.getExe' pkgs.uv "uvx"} nvim-mcp "$@"
+    '';
+in {
   den.aspects.opencode = {
     homeManager = {
       pkgs,
@@ -23,6 +34,42 @@
         tui = {
           theme = "catppuccin-macchiato";
         };
+
+        context = ''
+          # Global Instructions
+
+          ## Interaction Style
+          - Tone: direct and informal, like a senior colleague in a code review
+          - Default to short answers (1-3 paragraphs). Only give longer responses when the question demands it
+          - Be honest about capabilities and limitations
+          - Challenge incorrect assumptions with clear reasoning
+          - Don't apologize excessively or repeat the question back before answering
+          - If a request is ambiguous, ask for clarification rather than guessing
+          - Don't generate placeholder implementations as final answers — mark scaffolding clearly
+
+          ## Neovim Integration
+          When the nvim MCP server is available:
+          - **Always use nvim MCP tools over native read/write tools** for reading and editing files
+          - Use nvim tools to see what the user sees: open buffers, cursor position, diagnostics, selections
+          - Use nvim tools for buffer edits — changes are immediate with full undo support
+          - Use nvim tools to query LSP diagnostics across buffers
+          - Fall back to native read/write tools only if the nvim MCP server is unavailable
+          - The nvim MCP server auto-connects to the neovim instance in the current zellij session
+            via a socket at ~/.cache/nvim/server-<ZELLIJ_SESSION_NAME>.pipe
+          - **CRITICAL: Before editing any file, display it in the rightmost neovim window without
+            disrupting the user's cursor.** Run via nvim_send_command:
+            `lua require('utils').show_in_rightmost('<filepath>', <line>)` (line is optional)
+            Then perform the edit with nvim_find_and_replace_buf.
+            After editing, save with:
+            `lua require('utils').save_buf('<filepath>')`
+            Always pass paths relative to the workspace root (same path used in nvim_find_and_replace_buf).
+
+          ## Citations & Sources
+          - Use context7 to fetch current documentation before explaining library/API behavior
+          - Provide links to official docs or authoritative sources for technical claims
+          - If no source is available, state the claim is based on general knowledge and may need verification
+          - Never present unverified information as fact
+        '';
 
         settings = {
           model = "anthropic/claude-opus-4-7";
@@ -52,6 +99,14 @@
             datadog = {
               type = "remote";
               url = "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp";
+            };
+            nvim = {
+              type = "local";
+              command = ["${(nvim-mcp-wrapper pkgs)}/bin/nvim-mcp"];
+            };
+            nixos = {
+              type = "local";
+              command = ["nix" "run" "github:utensils/mcp-nixos" "--"];
             };
           };
 

@@ -63,8 +63,6 @@ return {
                 aerial = true,
                 avante = true,
                 blink_cmp = true,
-                dap = true,
-                dap_ui = true,
                 diffview = true,
                 dropbar = {
                     enabled = true,

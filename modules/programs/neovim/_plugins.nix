@@ -60,17 +60,8 @@
     conform = {};
     nvim-lint = {};
     lightbulb = {};
-    nvim-dap = {};
-    nvim-dap-ui = {};
-    nvim-dap-virtual-text = {};
-
-    undotree = {};
     markview = {};
-    codecompanion = {};
     gatekeeper = {};
-    codecompanion-spinner = {};
-    nvim-nio = {};
-    codecompanion-history = {};
     crates = {};
     refactoring = {};
     markdown-plus = {};

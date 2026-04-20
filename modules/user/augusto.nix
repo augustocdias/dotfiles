@@ -17,7 +17,6 @@
       neovim
       git
       fish
-      kitty
       ghostty
       firefox
       thunderbird

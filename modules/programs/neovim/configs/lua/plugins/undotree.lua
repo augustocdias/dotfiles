@@ -1,12 +1,11 @@
--- shows undo history in a window
+-- shows undo history in a window (builtin neovim plugin)
 return {
-    'undotree',
-    event = 'DeferredUIEnter',
+    'nvim.undotree',
     keys = {
         {
             '<leader>u',
             function()
-                require('undotree').toggle()
+                require('undotree').open()
             end,
             mode = { 'n' },
             desc = 'Toggle undotree',

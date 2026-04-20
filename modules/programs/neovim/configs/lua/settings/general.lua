@@ -31,6 +31,8 @@ vim.o.conceallevel = 3
 vim.o.concealcursor = 'n'
 -- current line will have a background
 vim.o.cursorline = true
+-- highlight column at width limit
+vim.o.colorcolumn = '80'
 -- Always draw sign column. Prevent buffer moving when adding/deleting sign.
 vim.o.signcolumn = 'yes'
 vim.o.numberwidth = 1
