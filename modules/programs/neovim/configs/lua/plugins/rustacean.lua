@@ -47,6 +47,7 @@ return {
                                 diagnostics = {
                                     enable = true,
                                     enableExperimental = true,
+                                    disabled = { 'unresolved-proc-macro' },
                                 },
                                 completion = {
                                     autoself = { enable = true },

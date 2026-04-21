@@ -7,7 +7,7 @@
     pkgs.writeShellScriptBin "nvim-mcp" ''
       session="''${ZELLIJ_SESSION_NAME:-dettached}"
       export NVIM_ADDRESS="$HOME/.cache/nvim/server-''${session}.pipe"
-      exec ${lib.getExe' pkgs.uv "uvx"} nvim-mcp "$@"
+      exec ${lib.getExe' pkgs.nix "nix"} run github:paulburgess1357/nvim-mcp -- "$@"
     '';
 in {
   den.aspects.opencode = {
