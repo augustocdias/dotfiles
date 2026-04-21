@@ -47,30 +47,49 @@ return {
         return host
     end,
 
-    --- Display a file in the rightmost window without changing focus.
-    --- Optionally positions the viewport at the given line.
+    --- Focus an upcoming edit location: display file in the rightmost window,
+    --- scroll viewport to center on the edit region, and briefly highlight the
+    --- lines being edited. Does not move the user's cursor or change focus.
+    --- The highlight auto-clears after 2 seconds so subsequent edits get fresh cues.
     ---@param filepath string Path to the file (relative to cwd or absolute)
-    ---@param line? number Line number to center the viewport on
-    show_in_rightmost = function(filepath, line)
+    ---@param start_line number First line of the edit region (1-indexed)
+    ---@param end_line? number Last line of the edit region (defaults to start_line)
+    focus_edit = function(filepath, start_line, end_line)
+        end_line = end_line or start_line
         local wins = vim.api.nvim_tabpage_list_wins(0)
+        -- Filter out floating windows (overlays, popups, completion menus, etc.).
+        -- A floating window has a non-empty `relative` field in its config.
+        wins = vim.tbl_filter(function(w)
+            return vim.api.nvim_win_get_config(w).relative == ''
+        end, wins)
         local rightmost_win = wins[1]
-        local max_col = 0
+        local max_col = -1
         for _, w in ipairs(wins) do
-            local pos = vim.api.nvim_win_get_position(w)
-            if pos[2] > max_col then
-                max_col = pos[2]
+            local col = vim.api.nvim_win_get_position(w)[2]
+            if col > max_col then
+                max_col = col
                 rightmost_win = w
             end
         end
         vim.cmd('badd ' .. vim.fn.fnameescape(filepath))
         local buf = vim.fn.bufnr(filepath)
         vim.api.nvim_win_set_buf(rightmost_win, buf)
-        if line then
-            vim.api.nvim_win_call(rightmost_win, function()
-                vim.api.nvim_win_set_cursor(rightmost_win, { line, 0 })
-                vim.cmd('normal! zz')
-            end)
-        end
+        vim.api.nvim_win_call(rightmost_win, function()
+            -- Position start_line near the top of the viewport (with ~5 lines of
+            -- context above) so large edit ranges stay visible below.
+            local top = math.max(1, start_line - 5)
+            vim.api.nvim_win_set_cursor(rightmost_win, { top, 0 })
+            vim.cmd('normal! zt')
+            vim.api.nvim_win_set_cursor(rightmost_win, { start_line, 0 })
+        end)
+        local ns = vim.api.nvim_create_namespace('focus_edit')
+        vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+        vim.hl.range(buf, ns, 'DiffAdd', { start_line - 1, 0 }, { end_line - 1, -1 })
+        vim.defer_fn(function()
+            if vim.api.nvim_buf_is_valid(buf) then
+                vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+            end
+        end, 2000)
     end,
 
     --- Save a specific buffer by filepath without changing focus.
