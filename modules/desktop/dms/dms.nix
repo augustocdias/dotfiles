@@ -100,6 +100,8 @@
           fontWeight = 400;
           fontScale = 1;
 
+          firstDayOfWeek = 0;
+          showWeekNumber = true;
           use24HourClock = true;
           showSeconds = false;
           useFahrenheit = false;
@@ -328,6 +330,7 @@
           qtThemingEnabled = true;
           syncModeWithPortal = true;
           terminalsAlwaysDark = false;
+          muxType = "zellij";
           runDmsMatugenTemplates = true;
 
           matugenTemplateGtk = true;
