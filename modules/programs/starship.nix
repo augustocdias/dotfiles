@@ -30,7 +30,7 @@
               SUSE = "";
               Raspbian = "󰐿";
               Mint = "󰣭";
-              Macos = "";
+              Macos = "";
               Manjaro = "";
               Linux = "󰌽";
               Gentoo = "󰣨";
@@ -153,7 +153,7 @@
           nix_shell = {
             symbol = "";
             style = "fg:color_crust bg:color_mauve";
-            format = "[ $symbol$state($name) ]($style)";
+            format = "[ $symbol $state\\($name\\) ]($style)";
           };
 
           time = {
