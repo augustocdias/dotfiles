@@ -47,6 +47,11 @@
         linux-cgroup-processes-limit = 4096;
         linux-cgroup-hard-fail = false;
       };
+
+      darwinSettings = {
+        font-family = "MonaspiceNe NFM";
+        font-family-italic = "MonaspiceRn NFM Light Italic";
+      };
     in {
       programs.ghostty = {
         enable = true;
@@ -60,7 +65,7 @@
           commonSettings
           // (
             if isDarwin
-            then {}
+            then darwinSettings
             else linuxSettings
           );
       };

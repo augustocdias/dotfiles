@@ -138,6 +138,7 @@
           "blender"
           "orcaslicer"
           "snapmaker-orca"
+          "mac-mouse-fix"
         ];
 
         masApps = {};
