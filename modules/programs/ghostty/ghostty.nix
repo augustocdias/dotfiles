@@ -10,10 +10,6 @@
       commonSettings = {
         # Theme
         theme = "Catppuccin Mocha";
-
-        # Font configuration
-        font-family = "MonaspiceNe Nerd Font";
-        font-family-italic = "MonaspiceRn Nerd Font Light Italic";
         font-size = 12;
 
         # Cursor
@@ -39,18 +35,22 @@
         custom-shader-animation = true;
       };
 
+      macSettings = {
+        macos-option-as-alt = "left";
+        window-step-resize = true;
+        auto-update = "off";
+        font-family = "MonaspiceNe Nerd Font Mono";
+        font-family-italic = "MonaspiceRn Nerd Font Mono";
+      };
+
       linuxSettings = {
-        # GTK / systemd cgroup integration — Linux-only
+        font-family = "MonaspiceNe Nerd Font";
+        font-family-italic = "MonaspiceRn Nerd Font Light Italic";
         gtk-single-instance = true;
         linux-cgroup = "single-instance";
         linux-cgroup-memory-limit = 25769803776; # 24GB limit
         linux-cgroup-processes-limit = 4096;
         linux-cgroup-hard-fail = false;
-      };
-
-      darwinSettings = {
-        font-family = "MonaspiceNe NFM";
-        font-family-italic = "MonaspiceRn NFM Light Italic";
       };
     in {
       programs.ghostty = {
@@ -65,7 +65,7 @@
           commonSettings
           // (
             if isDarwin
-            then darwinSettings
+            then macSettings
             else linuxSettings
           );
       };

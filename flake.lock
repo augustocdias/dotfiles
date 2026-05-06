@@ -165,6 +165,23 @@
         "type": "github"
       }
     },
+    "eurkey-next": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774211603,
+        "narHash": "sha256-z34EHdZ0mbpfi8vBmlPMQs6fbpkMMIhXVhFdZaq4Vbg=",
+        "owner": "felixfoertsch",
+        "repo": "EurKEY-Next",
+        "rev": "ea4f88ae513a9ca4736c4e39726796fc976120b6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "felixfoertsch",
+        "ref": "2026.03.22",
+        "repo": "EurKEY-Next",
+        "type": "github"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -2200,6 +2217,7 @@
         "disko": "disko",
         "dms": "dms",
         "dms-plugins": "dms-plugins",
+        "eurkey-next": "eurkey-next",
         "flake-aspects": "flake-aspects",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",

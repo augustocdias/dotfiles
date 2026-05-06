@@ -4,12 +4,38 @@
   lib,
   ...
 }: {
+  flake-file.inputs.eurkey-next = {
+    url = lib.mkDefault "github:felixfoertsch/EurKEY-Next/2026.03.22";
+    flake = false;
+  };
+
   den.aspects.macmini = {
     includes = with den.aspects; [
       yabai-skhd
     ];
 
-    darwin = {pkgs, ...}: {
+    darwin = {pkgs, ...}: let
+      eurkey-next-bundle = pkgs.stdenvNoCC.mkDerivation {
+        pname = "eurkey-next-bundle";
+        version = "2026.03.22";
+        src = inputs.eurkey-next;
+        nativeBuildInputs = [pkgs.bash pkgs.python3];
+        dontConfigure = true;
+        dontFixup = true;
+        buildPhase = ''
+          runHook preBuild
+          patchShebangs scripts/build-bundle.sh
+          bash scripts/build-bundle.sh --version "$version"
+          runHook postBuild
+        '';
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out
+          cp -R build/EurKEY-Next.bundle $out/
+          runHook postInstall
+        '';
+      };
+    in {
       imports = lib.optionals (inputs ? nix-homebrew) [
         inputs.nix-homebrew.darwinModules.nix-homebrew
       ];
@@ -102,6 +128,35 @@
               "65".enabled = false;
             };
           };
+
+          "com.apple.HIToolbox" = {
+            AppleEnabledInputSources = [
+              {
+                InputSourceKind = "Keyboard Layout";
+                "KeyboardLayout ID" = -1;
+                "KeyboardLayout Name" = "EurKEY Next";
+              }
+              {
+                "Bundle ID" = "com.apple.PressAndHold";
+                InputSourceKind = "Non Keyboard Input Method";
+              }
+              {
+                "Bundle ID" = "com.apple.CharacterPaletteIM";
+                InputSourceKind = "Non Keyboard Input Method";
+              }
+            ];
+            AppleSelectedInputSources = [
+              {
+                InputSourceKind = "Keyboard Layout";
+                "KeyboardLayout ID" = -1;
+                "KeyboardLayout Name" = "EurKEY Next";
+              }
+              {
+                "Bundle ID" = "com.apple.PressAndHold";
+                InputSourceKind = "Non Keyboard Input Method";
+              }
+            ];
+          };
         };
       };
 
@@ -110,6 +165,13 @@
         enableKeyMapping = true;
         remapCapsLockToControl = true;
       };
+
+      system.activationScripts.postActivation.text = ''
+        echo "Installing EurKEY-Next keyboard layout bundle..."
+        rm -rf "/Library/Keyboard Layouts/EurKEY-Next.bundle"
+        cp -R "${eurkey-next-bundle}/EurKEY-Next.bundle" "/Library/Keyboard Layouts/EurKEY-Next.bundle"
+        chmod -R u+w,go+rX "/Library/Keyboard Layouts/EurKEY-Next.bundle"
+      '';
 
       nix-homebrew = lib.mkIf (inputs ? nix-homebrew) {
         enable = true;

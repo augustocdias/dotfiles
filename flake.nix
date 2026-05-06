@@ -27,6 +27,10 @@
       url = "github:AvengeMedia/dms-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    eurkey-next = {
+      url = "github:felixfoertsch/EurKEY-Next/2026.03.22";
+      flake = false;
+    };
     flake-aspects.url = "github:vic/flake-aspects";
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
