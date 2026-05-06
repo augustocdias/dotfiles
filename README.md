@@ -7,9 +7,9 @@ Dendritic NixOS configuration using [Den](https://github.com/vic/den) + [flake-p
 | Host | Platform | Profile | Description |
 |------|----------|---------|-------------|
 | `laptop` | x86_64-linux | workstation | Hyprland desktop with DMS shell |
-| `raspi` | aarch64-linux | server | Headless Raspberry Pi (planned) |
+| `macmini` | darwin | workstation | MacMini desktop |
 
-## Building the Installer ISO
+## Building the NixOs Installer ISO
 
 ```bash
 nix build .#installer
@@ -118,6 +118,8 @@ Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix) with age
 nix-shell -p age sops yq-go --run "fish ~/nixos/modules/security/secrets/sops-setup.fish"
 ```
 
+Cleanup some potential unused age keys from the `.sops.yaml` file.
+
 #### Adding new secrets
 
 ```fish
@@ -148,7 +150,7 @@ firefoxpwa site install https://web.whatsapp.com/data/manifest.json \
 #### Hiding the browser toolbar
 
 1. Launch the PWA once: `firefoxpwa site launch <SITE_ID>`
-2. Enable custom stylesheets:
+1. Enable custom stylesheets:
 
 ```fish
 printf 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);\nuser_pref("media.hardwaremediakeys.enabled", false);\nuser_pref("firefoxpwa.openOutOfScopeInDefaultBrowser", true);\nuser_pref("pdfjs.disabled", true);\n' > \
