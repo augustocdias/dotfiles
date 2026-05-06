@@ -1,9 +1,13 @@
 -- breadcumbs
-
+-- FIXME: remove when https://github.com/Bekaboo/dropbar.nvim/issues/279 gets fixed
+vim.g.loaded_dropbar = true
 return {
     'dropbar',
     event = 'DeferredUIEnter',
-    after = function() require('dropbar').setup()end,
+    enabled = false,
+    after = function()
+        require('dropbar').setup()
+    end,
     lazy = false,
     keys = {
         {

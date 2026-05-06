@@ -8,9 +8,7 @@ return {
     { import = 'plugins.autosession' },
     { import = 'plugins.catppuccin' },
     { import = 'plugins.cmp' },
-
     { import = 'plugins.codesnap' },
-
     { import = 'plugins.diffview' },
     { import = 'plugins.dropbar' },
     { import = 'plugins.flash' },

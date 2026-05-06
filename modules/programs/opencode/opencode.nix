@@ -39,6 +39,8 @@ in {
         context = ''
           # Global Instructions
 
+          BE CONCISE AND LESS VERBOSE. AVOID WALLS OF TEXT
+
           ## Neovim Integration (HIGHEST PRIORITY)
 
           You are pair-programming with a human. They watch your work in real time

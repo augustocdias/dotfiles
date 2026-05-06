@@ -34,6 +34,10 @@
         systemd.variables = ["all"];
 
         settings = {
+          xwayland = {
+            force_zero_scaling = true;
+          };
+
           monitor = [
             "eDP-1,3072x1920@120,auto,1.5"
             ",preferred,auto,1"
