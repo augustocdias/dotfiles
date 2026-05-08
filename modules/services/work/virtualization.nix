@@ -11,6 +11,10 @@
         };
       };
 
+      environment.systemPackages = [
+        pkgs.quickemu
+      ];
+
       programs.virt-manager.enable = true;
       virtualisation.spiceUSBRedirection.enable = true;
 
