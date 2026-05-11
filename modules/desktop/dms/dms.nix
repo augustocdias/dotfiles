@@ -468,10 +468,6 @@
                   enabled = true;
                 }
                 {
-                  id = "privacyIndicator";
-                  enabled = true;
-                }
-                {
                   id = "cpuUsage";
                   enabled = true;
                 }
