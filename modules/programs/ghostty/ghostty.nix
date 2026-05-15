@@ -41,6 +41,10 @@
         auto-update = "off";
         font-family = "MonaspiceNe Nerd Font Mono";
         font-family-italic = "MonaspiceRn Nerd Font Mono";
+
+        font-thicken = true;
+        font-thicken-strength = 200;
+        alpha-blending = "linear-corrected";
       };
 
       linuxSettings = {

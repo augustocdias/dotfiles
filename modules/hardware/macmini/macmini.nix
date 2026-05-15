@@ -75,6 +75,7 @@
           # Trackpad/mouse: tap to click
           "com.apple.mouse.tapBehavior" = 1;
           "com.apple.swipescrolldirection" = true;
+          AppleFontSmoothing = 2;
         };
 
         dock = {
@@ -201,6 +202,7 @@
           "orcaslicer"
           "snapmaker-orca"
           "mac-mouse-fix"
+          "freecad"
         ];
 
         masApps = {};
