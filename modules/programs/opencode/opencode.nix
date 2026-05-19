@@ -156,6 +156,9 @@ in {
             };
 
           permission = {
+            external_directory = {
+              "/nix/store/**" = "allow";
+            };
             # --- Custom tools ---------------------------------------------------
             gh_issue_read = "allow";
             gh_issue_write = "ask";
