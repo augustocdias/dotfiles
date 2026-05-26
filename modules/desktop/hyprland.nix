@@ -165,8 +165,7 @@
             "$mainMod SHIFT, 3, exec, dms screenshot full --no-file"
             "$mainMod SHIFT, 5, exec, dms screenshot --no-clipboard -d ~/pictures/screenshots"
 
-            "$mainMod SHIFT, R, exec, dms ipc call screenRecorder startRecording"
-            "$mainMod SHIFT CTRL, R, exec, stop-recording"
+            "$mainMod, R, exec, dms ipc call screenCaptureToolbar toggle"
 
             "$mainMod SHIFT, L, exec, dms ipc call lock lock"
 

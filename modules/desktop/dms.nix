@@ -448,10 +448,6 @@
                   enabled = true;
                 }
                 {
-                  id = "screenRecorder";
-                  enabled = true;
-                }
-                {
                   id = "separator";
                   enabled = true;
                 }
@@ -724,9 +720,16 @@
           dankKDEConnect.enable = true;
           wallpaperCarousel.enable = true;
 
-          screenRecorder = {
+          screenCaptureToolbar = {
             enable = true;
-            settings.outputDir = "${config.home.homeDirectory}/videos/recordings";
+            settings = {
+              multiMonitorScreenshot = true;
+              videoFormat = "mp4";
+              recordAudio = false;
+              customPath = "${config.home.homeDirectory}/pictures/screenshots";
+              videoCustomPath = "${config.home.homeDirectory}/videos/recordings";
+              saveToDisk = false;
+            };
           };
         };
       };
@@ -734,7 +737,9 @@
       home.packages = [
         pkgs.libnotify
         pkgs.inotify-tools
-        (pkgs.writeScriptBin "stop-recording" (builtins.readFile ./stop-recording.fish))
+        pkgs.slurp
+        pkgs.grim
+        pkgs.satty
       ];
     };
   };

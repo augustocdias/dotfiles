@@ -11,6 +11,7 @@
         imv
         peazip
         drawio
+        zmk-studio
       ]);
     };
   };
