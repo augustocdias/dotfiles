@@ -66,7 +66,7 @@
             "uwsm app -- datagrip"
             "uwsm app -- virt-manager"
             "uwsm app -- firefoxpwa site launch 01KKC8KPKEX5XZPBBK02D5ZM67"
-            "uwsm app -- cider-2"
+            "uwsm app -- cider-2 --ozone-platform=wayland"
           ];
 
           env = [
@@ -115,7 +115,6 @@
           };
 
           dwindle = {
-            pseudotile = true;
             preserve_split = true;
             force_split = 2;
           };

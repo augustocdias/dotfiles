@@ -48,7 +48,7 @@ function fetch_ext
 
         # Download and calculate sha256
         set -l xpi_file "$temp_dir/$ext.xpi"
-        if not curl -sL "$ext_url" -o "$xpi_file"
+        if not curl -fsL "$ext_url" -o "$xpi_file"
             touch $temp_dir/$ext.fail
             return 1
         end
@@ -61,7 +61,7 @@ function fetch_ext
         echo -e "  $ext (GitHub)"
     else
         # Thunderbird Addons extension - fetch from API
-        set -l api (curl -s "https://addons.thunderbird.net/api/v4/addons/addon/$slug/")
+        set -l api (curl -fs "https://addons.thunderbird.net/api/v4/addons/addon/$slug/")
         set -l ext_url (echo $api | jq -r '.current_version.files[0].url')
         set -l ext_id (echo $api | jq -r '.guid')
         set -l ext_ver (echo $api | jq -r '.current_version.version')
@@ -73,7 +73,7 @@ function fetch_ext
 
         # Download and calculate sha256
         set -l xpi_file "$temp_dir/$ext.xpi"
-        if not curl -sL "$ext_url" -o "$xpi_file"
+        if not curl -fsL "$ext_url" -o "$xpi_file"
             touch $temp_dir/$ext.fail
             return 1
         end
