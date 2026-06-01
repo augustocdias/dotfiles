@@ -114,7 +114,7 @@ in {
         '';
 
         settings = {
-          model = "anthropic/claude-opus-4-7";
+          model = "anthropic/claude-opus-4-8";
           autoupdate = false;
           default_agent = "plan";
           lsp = false;

@@ -122,6 +122,9 @@
 
             "media.peerconnection.ice.default_address_only" = true;
             "media.webrtc.camera.allow-pipewire" = true;
+            "media.webrtc.screen.allow-pipewire" = true;
+            "media.webrtc.platformencoder" = true;
+            "media.getusermedia.screen.gnome-pipewire-portal" = true;
           };
 
           search = {

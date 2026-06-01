@@ -65,7 +65,7 @@ in {
       nix.gc.dates = "weekly";
       nix.optimise.dates = ["weekly"];
 
-      system.stateVersion = "26.05";
+      system.stateVersion = "26.11";
     };
 
     darwin = {...}: {
@@ -83,7 +83,7 @@ in {
       system.stateVersion = 6;
     };
 
-    homeManager.home.stateVersion = "26.05";
+    homeManager.home.stateVersion = "26.11";
 
     includes = [
       den._.define-user

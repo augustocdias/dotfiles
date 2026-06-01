@@ -16,9 +16,9 @@ A fully declarative NixOS configuration for a single-user Intel laptop running H
 ### How it works
 
 1. `import-tree ./modules` discovers every `.nix` file recursively and imports it as a flake-parts module.
-2. Each module registers **aspects** via `den.aspects.<name>` and optionally declares flake inputs via `flake-file.inputs.<name>`.
-3. `flake.nix` is **auto-generated** — run `nix run .#write-flake` to regenerate it from module declarations.
-4. Files prefixed with `_` (e.g., `_plugins.nix`, `_hardware-configuration.nix`) are skipped by import-tree and imported manually where needed.
+1. Each module registers **aspects** via `den.aspects.<name>` and optionally declares flake inputs via `flake-file.inputs.<name>`.
+1. `flake.nix` is **auto-generated** — run `nix run .#write-flake` to regenerate it from module declarations.
+1. Files prefixed with `_` (e.g., `_plugins.nix`, `_hardware-configuration.nix`) are skipped by import-tree and imported manually where needed.
 
 ### Aspects
 
@@ -43,7 +43,7 @@ The composition chain: `den.hosts.x86_64-linux.laptop` -> `den.aspects.laptop` (
 
 ```
 modules/
-  defaults.nix              # Global defaults: nix settings, GC, stateVersion 26.05
+  defaults.nix              # Global defaults: nix settings, GC, stateVersion 26.11
   dendritic.nix             # Bootstraps den + flake-file
   hosts.nix                 # Host definitions (laptop active, raspi planned)
   inputs.nix                # Core flake inputs (nixpkgs, den, home-manager, sops-nix)
@@ -251,6 +251,7 @@ Dockerfile: hadolint | JS/TS: eslint | Lua: selene | Markdown: markdownlint + wr
 ### AI integration
 
 OpenCode TUI (vim fork) runs standalone alongside neovim, connected via nvim-mcp:
+
 - **Vim mode**: Full modal editing in the TUI prompt input (hjkl, w/b/e, dd, cw, yy, p, u, visual mode)
 - **nvim-mcp**: MCP server connecting OpenCode to the running neovim instance via msgpack-RPC socket. Gives OpenCode access to open buffers, cursor position, diagnostics, selections, and in-buffer editing with full undo support.
 - **Socket discovery**: Neovim creates a socket at `~/.cache/nvim/server-<ZELLIJ_SESSION_NAME>.pipe`. The nvim-mcp wrapper reads `ZELLIJ_SESSION_NAME` at runtime to connect to the correct instance.

@@ -21,8 +21,10 @@
       };
 
       environment.sessionVariables = {
-        WLR_NO_HARDWARE_CURSORS = "1";
         NIXOS_OZONE_WL = "1";
+        # ccs is broken in hyprland portal apparently
+        INTEL_DEBUG = "noccs";
+        AQ_NO_MODIFIERS = "1";
       };
     };
 

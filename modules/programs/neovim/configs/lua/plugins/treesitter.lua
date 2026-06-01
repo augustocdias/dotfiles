@@ -138,7 +138,7 @@ return {
                 noremap = true,
             },
             {
-                ']C',
+                '[C',
                 function()
                     require('nvim-treesitter-textobjects.move').goto_previous_start('@class.outer')
                 end,
